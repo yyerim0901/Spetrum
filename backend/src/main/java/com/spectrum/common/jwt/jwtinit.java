@@ -1,2 +1,4 @@
-package com.spectrum.common.jwt;public class jwtinit {
+package com.spectrum.common.jwt;
+
+public class jwtinit {
 }
