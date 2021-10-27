@@ -18,4 +18,9 @@ public class DoggingServiceImpl implements DoggingService{
         return doggingRepository.findByUserId(id);
     }
 
+    @Override
+    public Dogging PostDogging(Dogging dogging){
+        return doggingRepository.save(dogging);
+    }
+
 }
