@@ -14,13 +14,18 @@ public class DoggingServiceImpl implements DoggingService{
     private DoggingRepository doggingRepository;
 
     @Override
-    public List<Dogging> MyDoggingList(Long id){
-        return doggingRepository.findByUserId(id);
+    public List<Dogging> MyDoggingList(Long userid){
+        return doggingRepository.findByUserId(userid);
     }
 
     @Override
     public Dogging PostDogging(Dogging dogging){
         return doggingRepository.save(dogging);
+    }
+
+    @Override
+    public void DeleteDogging(Long id){
+        doggingRepository.deleteById(id);
     }
 
 }

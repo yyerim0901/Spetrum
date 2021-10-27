@@ -33,12 +33,22 @@ public class DoggingController {
 
     @ApiOperation(
             value = "도깅 기록하기",
-            notes = "도깅 완료 후 거리,시간,날짜,지역,사진,사용자 정보를 가지고 DB에 저장"
+            notes = "도깅 완료 후 **거리,시간,날짜,지역,사진,사용자 정보**를 가지고 DB에 저장"
     )
     @PostMapping
     public ResponseEntity<String> postDogging(@RequestBody Dogging dogging){
         doggingService.PostDogging(dogging);
         return new ResponseEntity<>("post dogging success",HttpStatus.OK);
+    }
+
+    @ApiOperation(
+            value = "도깅 기록 삭제",
+            notes = "**도깅 기록의 id**를 이용하여 기록 삭제"
+    )
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteDogging(@PathVariable Long id){
+        doggingService.DeleteDogging(id);
+        return new ResponseEntity<>("delete dogging success",HttpStatus.OK);
     }
 
 }
