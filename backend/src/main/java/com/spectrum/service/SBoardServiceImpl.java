@@ -43,7 +43,7 @@ public class SBoardServiceImpl implements SBoardService {
         sBoard.setContent(sboardinfo.getContent());
         sBoard.setCreated(new Date());
         sBoard.setUpdated(new Date());
-        sBoard.setLike(0);
+        sBoard.setLikes(0);
 
         // 사진 저장하기
         List<SBoardFile> photoList = fileHandler.parseFileInfo(sboardfiles);
