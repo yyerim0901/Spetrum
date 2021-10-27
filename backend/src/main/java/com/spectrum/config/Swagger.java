@@ -25,7 +25,7 @@ public class Swagger {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2).consumes(getConsumeContentTypes()).produces((getProduceContentTypes()))
                 .apiInfo(apiInfo()).select()
-                .apis(RequestHandlerSelectors.basePackage("com.blockback.init"))
+                .apis(RequestHandlerSelectors.basePackage("com.spectrum"))
                 .paths(PathSelectors.any())
                 .build();
 
