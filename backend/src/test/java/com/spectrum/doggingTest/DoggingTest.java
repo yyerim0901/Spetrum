@@ -19,8 +19,13 @@ public class DoggingTest {
         dogging.setDistance(20);
         dogging.setTime(15);
         dogging.setLocation("대전광역시");
-        dogging.setPicture("사진 없다아아");
+        dogging.setPicture("junit test data");
 
         doggingService.PostDogging(dogging);
+    }
+
+    @Test
+    public void deleteDogging(){
+        doggingService.DeleteDogging(2L);
     }
 }

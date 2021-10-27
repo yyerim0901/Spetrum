@@ -9,5 +9,6 @@ import java.util.List;
 @Repository
 public interface DoggingRepository extends JpaRepository<Dogging, Long> {
 
-     public List<Dogging> findByUserId(Long id);
+     public List<Dogging> findByUserId(Long userid);
+     public void deleteById(Long id);
 }
