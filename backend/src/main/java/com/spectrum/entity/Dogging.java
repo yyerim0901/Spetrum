@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.util.Date;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,7 +19,8 @@ import javax.persistence.ManyToOne;
 public class Dogging extends BaseEntity {
 
     private float distance;
-    private String time;
+    private int time;
+    private Date date;
     private String location;
     private String picture;
 
