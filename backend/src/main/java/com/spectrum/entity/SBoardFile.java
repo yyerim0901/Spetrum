@@ -16,6 +16,6 @@ public class SBoardFile extends BaseEntity {
     String save_file;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "boardpk")
+    @JoinColumn(name = "board_pk")
     SBoard sBoard;
 }
