@@ -3,6 +3,7 @@ package com.spectrum.entity;
 import lombok.Getter;
 import lombok.Setter;
 
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -10,12 +11,12 @@ import java.util.Date;
 @Getter
 @Setter
 public class SBoard extends BaseEntity {
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "userpk")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_pk")
     user user;
 
     String content;
-    int like;
+    int likes;
 
     @Temporal(TemporalType.TIMESTAMP)
     Date created;

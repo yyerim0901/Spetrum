@@ -1,19 +1,19 @@
 package com.spectrum.controller;
 
+import com.spectrum.common.request.SBoardRegisterReq;
 import com.spectrum.common.response.SBoardRes;
 import com.spectrum.entity.Quser;
 import com.spectrum.service.SBoardService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 import static com.spectrum.entity.Quser.user;
@@ -27,8 +27,6 @@ public class SBoardController {
     @Autowired
     SBoardService sBoardService;
 
-    Quser me;
-
     @GetMapping("/")
     @ApiOperation(value = "나의 sns 전체 조회")
     @ApiResponses({
@@ -36,8 +34,23 @@ public class SBoardController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
 
-    public ResponseEntity<List<SBoardRes>> searchAll() {
-        List<SBoardRes> sboardList = sBoardService.getSBoardsByUser(me);
+    public ResponseEntity<List<SBoardRes>> searchAll(@ApiParam(value="나중에 지울것", required = true) Quser user) {
+        List<SBoardRes> sboardList = sBoardService.getSBoardsByUser(user);
         return ResponseEntity.status(200).body(sboardList);
+    }
+
+    @PostMapping(value = "/")
+    @ApiOperation(value = "게시글 작성")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "성공"),
+            @ApiResponse(code = 404, message = "작성 오류"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<SBoardRes> createSBoard(
+            @ApiParam(value="나중에 지울것", required = true) Quser user,
+            @ApiParam(value="sns 정보", required = true) SBoardRegisterReq sboardinfo,
+            @RequestPart(value = "사진", required = false) List<MultipartFile> sboardfiles) throws IOException {
+        sBoardService.createSBoard(user, sboardinfo, sboardfiles);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
