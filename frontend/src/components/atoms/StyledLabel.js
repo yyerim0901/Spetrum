@@ -7,6 +7,7 @@ const StyledLabel = styled.label`
   color : ${theme.colors.darkGray};
   font-size: ${theme.fontSizes.md};
   padding: 3px 0;
+  margin: 3px 0;
 `
 
 export default StyledLabel;

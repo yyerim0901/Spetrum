@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import PageNotFound from '../views/PageNotFound'
 import SignIn from '../views/SignIn'
+import Signup from '../views/Signup'
 Vue.use(VueRouter)
 
 const routes = [
@@ -15,7 +16,12 @@ const routes = [
     path: '/',
     name: 'SignIn',
     component: SignIn
-  }
+  },
+  {
+    path: '/signup',
+    name: 'SignUp',
+    component: Signup
+  },
 ]
 
 const router = new VueRouter({
