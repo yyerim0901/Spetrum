@@ -1,7 +1,7 @@
 package com.spectrum.service;
 
 import com.spectrum.common.response.SBoardRes;
-import com.spectrum.entity.Quser;
+import com.spectrum.entity.QUser;
 import com.spectrum.entity.SBoard;
 import com.spectrum.repository.SBoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ public class SBoardServiceImpl implements SBoardService {
     SBoardRepository sBoardRepository;
 
     @Override
-    public List<SBoardRes> getSBoardsByUser(Quser user) {
+    public List<SBoardRes> getSBoardsByUser(QUser user) {
         List<SBoardRes> res = new ArrayList<>();
         List<SBoard> sboards = sBoardRepository.findByUser(user);
         return null;

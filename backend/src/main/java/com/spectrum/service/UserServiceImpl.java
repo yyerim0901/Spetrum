@@ -1,7 +1,7 @@
 package com.spectrum.service;
 
 import com.spectrum.common.request.UserRegisterPostReq;
-import com.spectrum.entity.user;
+import com.spectrum.entity.User;
 import com.spectrum.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,11 +18,16 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void createUser(UserRegisterPostReq registerInfo, MultipartFile thumbnail) {
-        user res = new user();
+        User res = new User();
         res.setUserId(registerInfo.getUserId());
         res.setPassword(passwordEncoder.encode(registerInfo.getPassword()));
         res.setNickname(registerInfo.getNickname());
 
         userRepository.save(res);
+    }
+
+    @Override
+    public User findUserByUserId(String userId) {
+        return userRepository.findByUserId(userId);
     }
 }

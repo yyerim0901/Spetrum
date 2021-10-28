@@ -1,7 +1,7 @@
 package com.spectrum.controller;
 
 import com.spectrum.common.response.SBoardRes;
-import com.spectrum.entity.Quser;
+import com.spectrum.entity.QUser;
 import com.spectrum.service.SBoardService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static com.spectrum.entity.Quser.user;
+import static com.spectrum.entity.QUser.user;
 
 @Api(value = "SNS API", tags = {"SBoard"})
 @RestController
@@ -27,7 +27,7 @@ public class SBoardController {
     @Autowired
     SBoardService sBoardService;
 
-    Quser me;
+    QUser me;
 
     @GetMapping("/")
     @ApiOperation(value = "나의 sns 전체 조회")

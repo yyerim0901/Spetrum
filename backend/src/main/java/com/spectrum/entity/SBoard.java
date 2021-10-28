@@ -12,7 +12,7 @@ import java.util.Date;
 public class SBoard extends BaseEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userpk")
-    user user;
+    User user;
 
     String content;
     int like;
