@@ -76,7 +76,7 @@ public class UserController {
 //            JwtTokenUtil.getToken(userEmail);
             String token = jwtUtil.generateToken(userinfo);
             redisUtil.deleteData(token);
-            System.out.println(jwtUtil.getUsername(token));
+            System.out.println(jwtUtil.getUsername(token)); //토큰 > userID
             return ResponseEntity.ok(UserResponse.of(200, "Success",token));
         }
         return ResponseEntity.ok(UserResponse.of(403, "아이디/비밀번호가 일치하지 않습니다."));
