@@ -5,6 +5,7 @@ import com.spectrum.repository.DoggingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -20,6 +21,10 @@ public class DoggingServiceImpl implements DoggingService{
 
     @Override
     public Dogging PostDogging(Dogging dogging){
+
+        Date date = new Date();
+
+        dogging.setDate(date);
         return doggingRepository.save(dogging);
     }
 
