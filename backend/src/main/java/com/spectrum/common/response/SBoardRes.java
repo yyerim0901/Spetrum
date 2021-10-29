@@ -1,7 +1,6 @@
 package com.spectrum.common.response;
 
 import com.spectrum.entity.SBoardFile;
-import com.spectrum.entity.user;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
