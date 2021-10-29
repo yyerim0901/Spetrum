@@ -28,5 +28,5 @@ public class PetSitter extends BaseEntity{
 
     @JoinColumn(name = "user_pk")
     @ManyToOne
-    private user user;
+    private User user;
 }
