@@ -2,6 +2,7 @@ package com.spectrum.controller;
 
 import com.spectrum.common.jwt.CookieUtil;
 import com.spectrum.common.jwt.JWTUtil;
+import com.spectrum.common.jwt.RedisUtil;
 import com.spectrum.common.request.UserLoginReq;
 import com.spectrum.common.request.UserRegisterPostReq;
 import com.spectrum.common.response.UserResponse;
@@ -37,6 +38,10 @@ public class UserController {
     @Autowired
     private CookieUtil cookieUtil;
 
+    @Autowired
+    RedisUtil redisUtil;
+
+
     @PostMapping("/regist")
     @ApiOperation(value = "회원 가입", notes = "<strong>아이디와 패스워드</strong>를 통해 회원가입 한다.")
     @ApiResponses({
@@ -70,14 +75,9 @@ public class UserController {
         if(passwordEncoder.matches(password, userinfo.getPassword())) {
 //            JwtTokenUtil.getToken(userEmail);
             String token = jwtUtil.generateToken(userinfo);
-            String refreshtoken = jwtUtil.generateRefreshToken(userinfo);
-            Cookie accessToken = cookieUtil.createCookie(JWTUtil.ACCESS_TOKEN_NAME, token);
-            Cookie refreshToken = cookieUtil.createCookie(JWTUtil.REFRESH_TOKEN_NAME, refreshtoken);
-
-            System.out.println(token);
-            System.out.println(refreshtoken);
-
-            return ResponseEntity.ok(UserResponse.of(200, "Success"));
+            redisUtil.deleteData(token);
+            System.out.println(jwtUtil.getUsername(token));
+            return ResponseEntity.ok(UserResponse.of(200, "Success",token));
         }
         return ResponseEntity.ok(UserResponse.of(403, "아이디/비밀번호가 일치하지 않습니다."));
     }

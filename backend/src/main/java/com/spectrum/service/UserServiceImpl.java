@@ -8,6 +8,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Optional;
+
 @Service
 public class UserServiceImpl implements UserService{
     @Autowired
@@ -28,6 +30,14 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User findUserByUserId(String userId) {
-        return userRepository.findByUserId(userId);
+        Optional<User> user = userRepository.findByUserId(userId);
+
+        if(user.isPresent())
+        {
+            return user.get();
+        }
+        else {
+            return null;
+        }
     }
 }
