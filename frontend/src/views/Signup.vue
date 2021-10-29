@@ -77,7 +77,7 @@ export default {
     validPassCheck(e){
       const rule = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&^])[A-Za-z\d$@$!%*#?&^]{3,16}$/ ;
       if (!rule.test(e.target.value)){
-        this.pderror = '비밀번호는 영문, 숫자, 특수문자가 조합되어야 합니다.';
+        this.pderror = '비밀번호는 영문, 숫자, 특수문자가 포함되어야 합니다.';
       }
       else {
         this.pderror = null;
