@@ -11,24 +11,29 @@ export default new Vuex.Store({
   mutations: {
   },
   actions: {
-    requestSignIn(payload){
+    requestSignIn(state,payload){
+      // console.log({state});
+      console.log(typeof(payload.userId));
       axios({
-        url:'/users/login',
+        url:'/users',
         method:'post',
         data:payload
       })
       .then(res=>{
-        console.log(res)
-        const token = res.data.accesstoken
-        localStorage.setItem("token",token);
+        if (res.data.statusCode == '200'){
+          const token = res.data.accesstoken
+          localStorage.setItem("token",token);
+        }
+        else {
+          console.log(res);
+          alert('로그인 실패!');
+        }
 
       })
-      .catch(err=>{
-        console.log(err)
-      })
+
 
     },
-    requestSignup(payload){
+    requestSignup(state,payload){
       axios({
         url: '/users/regist',
         method:'post',

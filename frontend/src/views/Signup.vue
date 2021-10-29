@@ -21,7 +21,7 @@
         <ErrorMessage :message="nickerror" >{{this.nickerror}}</ErrorMessage>
         <div>
           <ErrorMessage >{{this.nickerror}}</ErrorMessage>
-          <p>닉네임 중복확인</p>
+          <button><p>닉네임 중복확인</p></button>
         </div>
       </div>
     </div>

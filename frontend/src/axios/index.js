@@ -8,26 +8,15 @@ export default axios.create({
   baseURL:"http://localhost:8080/api",
   headers:{'Content-Type': DEFAULT_ACCEPT_TYPE,
             'Access-Control-Allow-Origin':'*',
-            'X-ACCESS-TOKEN':getHeader(),
+            // 'X-ACCESS-TOKEN':getHeader(),
           }
 });
 
 
-// export function request(method, url, data) {
-//   return axios({
-//     method,
-//     url: baseURL + url,
-//     data,
-//     headers: getHeader(),
-//   })
-//     .then((result) => result.data)
-//     .catch((error) => error);
+// function getHeader() {
+//   const token = localStorage.getItem("token");
+//   if (!token) return {};
+//   return {
+//     "X-ACCESS-TOKEN": token,
+//   };
 // }
-
-function getHeader() {
-  const token = localStorage.getItem("token");
-  if (!token) return {};
-  return {
-    "X-ACCESS-TOKEN": token,
-  };
-}

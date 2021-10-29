@@ -20,6 +20,7 @@ import StyledButton from '../components/atoms/StyledButton'
 import StyledInput from '../components/atoms/StyledInput'
 import StyledLabel from '../components/atoms/StyledLabel'
 import ErrorMessage from '../components/atoms/ErrorMessage'
+import axios from '../axios/index'
 export default {
   name: 'SignIn',
   components :{
@@ -42,10 +43,25 @@ export default {
     handleSignIn(){
       if (this.idValid && this.pdValid) {
         const data = {
-          'userId':this.userId,
-          'password':this.password,
+          userId:this.userId,
+          password:this.password,
         }
-        this.$store.dispatch('requestSignIn',data);
+        axios({
+        url:'/users',
+        method:'post',
+        data:data
+        })
+        .then(res=>{
+          if (res.data.statusCode == '200'){
+            const token = res.data.accesstoken
+            localStorage.setItem("token",token);
+          }
+          else {
+            console.log(res);
+            alert('로그인 실패!');
+          }
+        })
+        // this.$store.dispatch('requestSignIn',{'userId':this.userId, 'password':this.password});
       }  
     },
     validIdCheck(e){
