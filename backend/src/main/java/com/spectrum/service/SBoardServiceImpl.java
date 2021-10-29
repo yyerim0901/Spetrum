@@ -2,7 +2,7 @@ package com.spectrum.service;
 
 import com.spectrum.common.request.SBoardRegisterReq;
 import com.spectrum.common.response.SBoardRes;
-import com.spectrum.entity.Quser;
+import com.spectrum.entity.QUser;
 import com.spectrum.entity.SBoard;
 import com.spectrum.entity.SBoardFile;
 import com.spectrum.entity.user;
@@ -27,7 +27,7 @@ public class SBoardServiceImpl implements SBoardService {
     FileHandler fileHandler;
 
     @Override
-    public List<SBoardRes> getSBoardsByUser(Quser user) {
+    public List<SBoardRes> getSBoardsByUser(QUser user) {
         List<SBoardRes> res = new ArrayList<>();
         List<SBoard> sboards = sBoardRepository.findByUser(user);
         for (SBoard sBoard : sboards) {

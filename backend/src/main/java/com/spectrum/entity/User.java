@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 @Entity
 @Getter
 @Setter
-public class user extends BaseEntity{
+public class User extends BaseEntity{
     String userId;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     String password;
