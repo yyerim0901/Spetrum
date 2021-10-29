@@ -5,7 +5,7 @@ import com.spectrum.common.response.SBoardRes;
 import com.spectrum.entity.QUser;
 import com.spectrum.entity.SBoard;
 import com.spectrum.entity.SBoardFile;
-import com.spectrum.entity.user;
+import com.spectrum.entity.User;
 import com.spectrum.repository.SBoardFileRepository;
 import com.spectrum.repository.SBoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +37,9 @@ public class SBoardServiceImpl implements SBoardService {
     }
 
     @Override
-    public void createSBoard(Quser user, SBoardRegisterReq sboardinfo, List<MultipartFile> sboardfiles) throws IOException {
+    public void createSBoard(QUser user, SBoardRegisterReq sboardinfo, List<MultipartFile> sboardfiles) throws IOException {
         SBoard sBoard = new SBoard();
-        sBoard.setUser(new user()); // 수정할 것
+        sBoard.setUser(new User()); // 수정할 것
         sBoard.setContent(sboardinfo.getContent());
         sBoard.setCreated(new Date());
         sBoard.setUpdated(new Date());

@@ -36,7 +36,7 @@ public class SBoardController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
 
-    public ResponseEntity<List<SBoardRes>> searchAll(@ApiParam(value="나중에 지울것", required = true) Quser user) {
+    public ResponseEntity<List<SBoardRes>> searchAll(@ApiParam(value="나중에 지울것", required = true) QUser user) {
         List<SBoardRes> sboardList = sBoardService.getSBoardsByUser(user);
         return ResponseEntity.status(200).body(sboardList);
     }
@@ -49,7 +49,7 @@ public class SBoardController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<SBoardRes> createSBoard(
-            @ApiParam(value="나중에 지울것", required = true) Quser user,
+            @ApiParam(value="나중에 지울것", required = true) QUser user,
             @ApiParam(value="sns 정보", required = true) SBoardRegisterReq sboardinfo,
             @RequestPart(value = "사진", required = false) List<MultipartFile> sboardfiles) throws IOException {
         sBoardService.createSBoard(user, sboardinfo, sboardfiles);
