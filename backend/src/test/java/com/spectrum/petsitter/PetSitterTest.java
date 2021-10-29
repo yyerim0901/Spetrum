@@ -23,8 +23,8 @@ public class PetSitterTest {
 
         petSitter.setTitle("안녕");
         petSitter.setContent("안녕");
-        petSitter.setLat(5L);
-        petSitter.setLng(5L);
+//        petSitter.setLat(5L);
+//        petSitter.setLng(5L);
 
         MultipartFile multipartFile = new MultipartFile() {
             @Override
