@@ -1,6 +1,5 @@
 package com.spectrum.service;
 
-import com.spectrum.entity.Quser;
 import com.spectrum.entity.SBoardFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.DefaultResourceLoader;

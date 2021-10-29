@@ -2,7 +2,6 @@ package com.spectrum.service;
 
 import com.spectrum.common.request.SBoardRegisterReq;
 import com.spectrum.common.response.SBoardRes;
-import com.spectrum.entity.Quser;
 import com.spectrum.entity.SBoard;
 import com.spectrum.entity.SBoardFile;
 import com.spectrum.entity.User;
@@ -27,7 +26,7 @@ public class SBoardServiceImpl implements SBoardService {
     FileHandler fileHandler;
 
     @Override
-    public List<SBoardRes> getSBoardsByUser(Quser user) {
+    public List<SBoardRes> getSBoardsByUser(User user) {
         List<SBoardRes> res = new ArrayList<>();
         List<SBoard> sboards = sBoardRepository.findByUser(user);
         for (SBoard sBoard : sboards) {
@@ -45,9 +44,9 @@ public class SBoardServiceImpl implements SBoardService {
     }
 
     @Override
-    public Boolean createSBoard(Quser user, SBoardRegisterReq sboardinfo, List<MultipartFile> sboardfiles) throws IOException {
+    public Boolean createSBoard(User user, SBoardRegisterReq sboardinfo, List<MultipartFile> sboardfiles) throws IOException {
         SBoard sBoard = new SBoard();
-        sBoard.setUser(new User()); // 수정할 것
+        sBoard.setUser(user); // 수정할 것
         sBoard.setContent(sboardinfo.getContent());
         sBoard.setCreated(new Date());
         sBoard.setUpdated(new Date());
