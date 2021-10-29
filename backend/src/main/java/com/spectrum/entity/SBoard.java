@@ -3,6 +3,7 @@ package com.spectrum.entity;
 import lombok.Getter;
 import lombok.Setter;
 
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -15,7 +16,7 @@ public class SBoard extends BaseEntity {
     User user;
 
     String content;
-    int like;
+    int likes;
 
     @Temporal(TemporalType.TIMESTAMP)
     Date created;
