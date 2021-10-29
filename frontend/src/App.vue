@@ -28,7 +28,7 @@ body {
 }
 
 #app{
-  width: 404px;
+  width: 500px;
   background-color: white;
 }
 

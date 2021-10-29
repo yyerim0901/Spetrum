@@ -7,24 +7,25 @@
         <StyledLabel for="userid">아이디</StyledLabel>
         <StyledInput  :value="userId" v-model="userId" @change="validIdCheck"></StyledInput>
         <div>
-          <ErrorMessage >{{this.iderror}}</ErrorMessage>
+          <ErrorMessage :message="iderror" >{{this.iderror}}</ErrorMessage>
           <p>아이디 중복확인</p>
         </div>
         <StyledLabel for="password">비밀번호</StyledLabel>
         <StyledInput  type="password" :value="password" v-model="password" @change="validPassCheck"></StyledInput>
-        <ErrorMessage >{{this.passerror}}</ErrorMessage>
+        <ErrorMessage :message="pderror" >{{this.pderror}}</ErrorMessage>
         <StyledLabel for="pwconfirm">비밀번호확인</StyledLabel>
-        <StyledInput  type="password" :value="pwconfirm" v-model="pwconfirm" @change="validIdCheck"></StyledInput>
-        <ErrorMessage >{{this.iderror}}</ErrorMessage>
+        <StyledInput  type="password" :value="pwconfirm" v-model="pwconfirm" @change="validPassConCheck"></StyledInput>
+        <ErrorMessage :message="pdconerror" >{{this.pdconerror}}</ErrorMessage>
         <StyledLabel for="nickname">닉네임</StyledLabel>
-        <StyledInput  :value="nickname" v-model="nickname" @change="validIdCheck"></StyledInput>
+        <StyledInput  :value="nickname" v-model="nickname" @change="validNickCheck"></StyledInput>
+        <ErrorMessage :message="nickerror" >{{this.nickerror}}</ErrorMessage>
         <div>
-          <ErrorMessage >{{this.iderror}}</ErrorMessage>
+          <ErrorMessage >{{this.nickerror}}</ErrorMessage>
           <p>닉네임 중복확인</p>
         </div>
       </div>
     </div>
-    <FooterButton>회원가입</FooterButton>
+    <FooterButton @click="handleSignup">회원가입</FooterButton>
   </div>
 </template>
 
@@ -52,15 +53,71 @@ export default {
       password:null,
       pwconfirm:null,
       nickname:null,
+      iderror:null,
+      pderror:null,
+      pdconerror:null,
+      nickerror:null,
+      idValid:false,
+      pdValid:false,
+      pdconValid:false,
+      nickValid:false,
     }
   },
+  methods:{
+    validIdCheck(e){
+      console.log('변화');
+      if (e.target.value.length < 2){
+        this.iderror = "아이디를 입력해주세요";
+      }
+      else{
+        this.iderror = null;
+        this.idValid = true;
+      }
+    },
+    validPassCheck(e){
+      const rule = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&^])[A-Za-z\d$@$!%*#?&^]{3,16}$/ ;
+      if (!rule.test(e.target.value)){
+        this.pderror = '비밀번호는 영문, 숫자, 특수문자가 조합되어야 합니다.';
+      }
+      else {
+        this.pderror = null;
+        this.pdValid = true;
+      }
+    },
+    validPassConCheck(e){
+      if (this.password !== e.target.value) {
+        this.pdconerror = '비밀번호가 일치하지 않습니다!';
+      } else {
+        this.pdconValid = true;
+        this.pdconerror = null;
+      }
+    },
+    validNickCheck(e){
+      if (e.target.value.length < 2) {
+        this.nickerror = '닉네임을 입력해주세요!';
+      } else {
+        this.nickValid = true;
+        this.nickerror = null;
+      }
+    },
+    handleSignup(){
+      if (this.nickValid & this.pdValid & this.pdconValid & this.idValid) {
+        const data = {
+          nickname:this.nickname,
+          password: this.password,
+          userId: this.userId,
+        }
+        this.$store.dispatch('requestSignup',data);
+      }
+    }
+
+  }
 }
 </script>
 
 <style>
   .bigbox{
     width:100%;
-    height: 100vh;
   }
   .Signup-Wrap{
     display: flex;
@@ -68,6 +125,7 @@ export default {
     justify-content: center;
     align-items: center;
     justify-content: start;
+    height: 100vh;
     width:100%;
     padding:20px 30px 0 30px;
   }
@@ -75,7 +133,7 @@ export default {
   .dog-img{
     width: 140px;
     padding: 2px 0;
-    margin: 10px 10px 0 0;
+    margin: 50px 10px 0 0;
   }
 
   .form-container{

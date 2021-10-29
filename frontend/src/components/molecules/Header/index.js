@@ -44,7 +44,7 @@ export const Container = styled('div',HeadProps)`
   img{
     width:110px;
     display: ${(props) => (props.isLogo ? "block" : "none")};
-    margin: 0 0 0 120px;
+    margin: 0 0 0 160px;
   }
   p {
     display: ${(props) => (props.isLogo ? "none" : "block")};

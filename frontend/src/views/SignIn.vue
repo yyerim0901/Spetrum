@@ -5,11 +5,11 @@
     <div class="FormContainer">
       <StyledLabel for="userid">아이디</StyledLabel>
       <StyledInput  :value="userId" v-model="userId" @change="validIdCheck"></StyledInput>
-      <ErrorMessage >{{this.iderror}}</ErrorMessage>
+      <ErrorMessage :message="iderror">{{this.iderror}}</ErrorMessage>
       <StyledLabel for="password">비밀번호</StyledLabel>
       <StyledInput type="password" :value="password" v-model="password" @change="validPassCheck"></StyledInput>
-      <ErrorMessage >{{this.pderror}}</ErrorMessage>
-      <StyledButton bcolor="babypink" btype="large" @click="handleSignIn">로그인</StyledButton>
+      <ErrorMessage :message="pderror">{{this.pderror}}</ErrorMessage>
+      <StyledButton class="btn" bcolor="babypink" btype="large" @click="handleSignIn">로그인</StyledButton>
 
     </div>
   </div>
@@ -76,7 +76,8 @@ export default {
   .Wrapper{
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
+    margin: 150px 0 0 0;
     align-items: center;
     height: 100vh;
     width:100%;
@@ -97,5 +98,9 @@ export default {
   .FormContainer{
     width: 100%;
     margin: 20px 0;
+  }
+
+  .btn{
+    margin:40px 0 0 0;
   }
 </style>

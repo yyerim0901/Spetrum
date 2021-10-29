@@ -28,18 +28,20 @@ export default new Vuex.Store({
       })
 
     },
-
-    // requestSignIn(payload){
-    //   const response = request('post','/user/signin',payload)
-    //   if (response.statusCode == '200'){
-    //     const token = response.accessToken
-    //     localStorage.setItem("token",token);
-    //     // this.$router.push({name:''})
-    //   }
-    //   else {
-    //     alert('로그인 실패');
-    //   }
-    // },
+    requestSignup(payload){
+      axios({
+        url: '/users/regist',
+        method:'post',
+        data:payload
+      })
+      .then(res=>{
+        console.log(res);
+        this.$router.push({name:'SignIn'})
+      })
+      .catch(err=>{
+        console.log(err)
+      })
+    }
 
   },
   modules: {
