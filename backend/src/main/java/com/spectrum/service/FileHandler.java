@@ -2,6 +2,8 @@ package com.spectrum.service;
 
 import com.spectrum.entity.SBoardFile;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
@@ -18,8 +20,10 @@ public class FileHandler {
 
     @Autowired
     SBoardService sBoardService;
+    @Autowired
+    ResourceLoader resourceLoader;
 
-    public List<SBoardFile> parseFileInfo(List<MultipartFile> multipartFiles) throws IOException {
+    public List<SBoardFile> parseFileInfo(List<MultipartFile> multipartFiles, int userid) throws IOException {
         // 반환할 파일 리스트
         List<SBoardFile> fileList = new ArrayList<>();
 
@@ -35,8 +39,10 @@ public class FileHandler {
             // 경로 구분자 File.separator 사용
             String absolutePath = new File("").getAbsolutePath() + File.separator + File.separator;
 
+            String realPath = resourceLoader.getResource("resources/sns").getURI().getPath();
+
             // 파일을 저장할 세부 경로 지정
-            String path = "images" + File.separator;
+            String path = realPath + File.separator + userid;
             File file = new File(path);
 
             // 디렉터리가 존재하지 않을 경우
