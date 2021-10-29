@@ -2,6 +2,7 @@ package com.spectrum.controller;
 
 import com.spectrum.common.request.PetSitterPostReq;
 import com.spectrum.common.request.PetSitterUpdateReq;
+import com.spectrum.entity.PetSitter;
 import com.spectrum.service.PetSitterService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -13,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 
 @Api(value = "펫시터 API", tags = {"PetSitter"})
 @RestController
@@ -50,6 +50,18 @@ public class PetSitterController {
             ){
         petSitterService.updatePetSitter(petSitterUpdateReq, newPicture);
         return new ResponseEntity<>("update petsitter success", HttpStatus.OK);
+    }
+
+    @ApiOperation(
+            value = "게시글 삭제",
+            notes = "**게시글 고유 번호**를 입력하여 삭제"
+    )
+    @DeleteMapping
+    private ResponseEntity<String> deletePetsitter(
+            @RequestBody Long petSitterId
+            ){
+        petSitterService.deletePetSitter(petSitterId);
+        return new ResponseEntity<>("delete success", HttpStatus.OK);
     }
 
 }

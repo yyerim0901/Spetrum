@@ -9,4 +9,5 @@ public interface PetSitterService {
     public void postPetSitter(PetSitterPostReq petSitterPostRequest, MultipartFile postPicture);
     public void checkStatus(Long petSitterId);
     public void updatePetSitter(PetSitterUpdateReq petSitterUpdateReq, MultipartFile newPicture);
+    public void deletePetSitter(Long petSitterId);
 }
