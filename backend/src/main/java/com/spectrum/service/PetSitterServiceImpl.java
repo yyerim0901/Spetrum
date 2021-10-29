@@ -79,6 +79,9 @@ public class PetSitterServiceImpl implements PetSitterService{
         petSitterRepository.save(petSitter);
 
     }
+    public void deletePetSitter(Long petSitterId){
+        petSitterRepository.deleteById(petSitterId);
+    }
 
 
 }
