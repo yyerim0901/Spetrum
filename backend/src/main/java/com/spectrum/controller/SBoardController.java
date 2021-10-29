@@ -1,22 +1,24 @@
 package com.spectrum.controller;
 
+import com.spectrum.common.jwt.JWTUtil;
 import com.spectrum.common.request.SBoardRegisterReq;
 import com.spectrum.common.response.SBoardRes;
-import com.spectrum.entity.QUser;
+import com.spectrum.entity.User;
 import com.spectrum.service.SBoardService;
+import com.spectrum.service.UserService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 
-import static com.spectrum.entity.QUser.user;
 
 @Api(value = "SNS API", tags = {"SBoard"})
 @RestController
@@ -27,7 +29,11 @@ public class SBoardController {
     @Autowired
     SBoardService sBoardService;
 
-    QUser me;
+    @Autowired
+    private JWTUtil jwtUtil;
+
+    @Autowired
+    UserService userService;
 
     @GetMapping("/")
     @ApiOperation(value = "나의 sns 전체 조회")
@@ -36,7 +42,10 @@ public class SBoardController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
 
-    public ResponseEntity<List<SBoardRes>> searchAll(@ApiParam(value="나중에 지울것", required = true) QUser user) {
+    public ResponseEntity<List<SBoardRes>> searchAll(@ApiIgnore HttpServletRequest request) {
+        String token = request.getHeader(HttpHeaders.AUTHORIZATION);
+        String userid = jwtUtil.getUsername(token);
+        User user = userService.findUserByUserId(userid);
         List<SBoardRes> sboardList = sBoardService.getSBoardsByUser(user);
         return ResponseEntity.status(200).body(sboardList);
     }
@@ -49,9 +58,12 @@ public class SBoardController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<SBoardRes> createSBoard(
-            @ApiParam(value="나중에 지울것", required = true) QUser user,
+            @ApiIgnore HttpServletRequest request,
             @ApiParam(value="sns 정보", required = true) SBoardRegisterReq sboardinfo,
             @RequestPart(value = "사진", required = false) List<MultipartFile> sboardfiles) throws IOException {
+        String token = request.getHeader(HttpHeaders.AUTHORIZATION);
+        String userid = jwtUtil.getUsername(token);
+        User user = userService.findUserByUserId(userid);
         sBoardService.createSBoard(user, sboardinfo, sboardfiles);
         return new ResponseEntity<>(HttpStatus.OK);
     }

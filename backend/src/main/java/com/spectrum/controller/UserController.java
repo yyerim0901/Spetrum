@@ -76,6 +76,8 @@ public class UserController {
 //            JwtTokenUtil.getToken(userEmail);
             String token = jwtUtil.generateToken(userinfo);
             redisUtil.deleteData(token);
+            System.out.println(token);
+            System.out.println(token.getClass());
             System.out.println(jwtUtil.getUsername(token)); //토큰 > userID
             return ResponseEntity.ok(UserResponse.of(200, "Success",token));
         }
