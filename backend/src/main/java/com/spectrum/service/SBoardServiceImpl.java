@@ -31,13 +31,21 @@ public class SBoardServiceImpl implements SBoardService {
         List<SBoardRes> res = new ArrayList<>();
         List<SBoard> sboards = sBoardRepository.findByUser(user);
         for (SBoard sBoard : sboards) {
-
+            List<SBoardFile> sboardf = sBoardFileRepository.findAllById(sBoard.getId());
+            SBoardRes br = new SBoardRes();
+            br.setFilelist(sboardf);
+            br.setId(sBoard.getId());
+            br.setContent(sBoard.getContent());
+            br.setCreated(sBoard.getCreated());
+            br.setUpdated(sBoard.getUpdated());
+            br.setLikes(sBoard.getLikes());
+            res.add(br);
         }
-        return null;
+        return res;
     }
 
     @Override
-    public void createSBoard(Quser user, SBoardRegisterReq sboardinfo, List<MultipartFile> sboardfiles) throws IOException {
+    public Boolean createSBoard(Quser user, SBoardRegisterReq sboardinfo, List<MultipartFile> sboardfiles) throws IOException {
         SBoard sBoard = new SBoard();
         sBoard.setUser(new user()); // 수정할 것
         sBoard.setContent(sboardinfo.getContent());
@@ -45,8 +53,9 @@ public class SBoardServiceImpl implements SBoardService {
         sBoard.setUpdated(new Date());
         sBoard.setLikes(0);
 
+        int userid = 1;
         // 사진 저장하기
-        List<SBoardFile> photoList = fileHandler.parseFileInfo(sboardfiles);
+        List<SBoardFile> photoList = fileHandler.parseFileInfo(sboardfiles, userid);
 
         // 파일이 존재할 때에만 처리
         if(!photoList.isEmpty()){
@@ -54,5 +63,6 @@ public class SBoardServiceImpl implements SBoardService {
                 // 파일을 DB에 저장
                 sBoardFileRepository.save(photo);
         }
+        return true;
     }
 }

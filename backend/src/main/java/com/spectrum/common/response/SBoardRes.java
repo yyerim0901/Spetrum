@@ -1,5 +1,6 @@
 package com.spectrum.common.response;
 
+import com.spectrum.entity.SBoardFile;
 import com.spectrum.entity.user;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -9,6 +10,7 @@ import lombok.Setter;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -22,11 +24,14 @@ public class SBoardRes {
     String content;
 
     @ApiModelProperty(name="like", example = "좋아요 수")
-    int like;
+    int likes;
 
     @ApiModelProperty(name="created", example = "작성 날짜")
     Date created;
 
     @ApiModelProperty(name="updated", example = "수정 날짜")
     Date updated;
+
+    @ApiModelProperty(name="list", example = "")
+    List<SBoardFile> filelist;
 }

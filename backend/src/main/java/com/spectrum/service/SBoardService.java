@@ -10,5 +10,5 @@ import java.util.List;
 
 public interface SBoardService {
     List<SBoardRes> getSBoardsByUser(Quser user);
-    void createSBoard(Quser user, SBoardRegisterReq sboardinfo, List<MultipartFile> sboardfiles) throws IOException;
+    Boolean createSBoard(Quser user, SBoardRegisterReq sboardinfo, List<MultipartFile> sboardfiles) throws IOException;
 }
