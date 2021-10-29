@@ -10,6 +10,7 @@ import com.spectrum.entity.User;
 import com.spectrum.service.UserService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,8 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/api/users")
@@ -55,7 +59,7 @@ public class UserController {
         return ResponseEntity.ok(UserResponse.of(200, "Success"));
     }
 
-    @PostMapping
+    @PostMapping("/login")
     @ApiOperation(value = "로그인", notes = "<strong>아이디와 패스워드</strong>를 통해 로그인 한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -82,5 +86,18 @@ public class UserController {
             return ResponseEntity.ok(UserResponse.of(200, "Success",token));
         }
         return ResponseEntity.ok(UserResponse.of(403, "아이디/비밀번호가 일치하지 않습니다."));
+    }
+
+    @PostMapping("/logout")
+    @ApiOperation(value = "로그아웃", notes = "로그아웃한다")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+    })
+    public ResponseEntity<UserResponse> logout(@ApiIgnore HttpServletRequest request){
+        String token = request.getHeader(HttpHeaders.AUTHORIZATION);
+        UUID value = UUID.randomUUID();
+        redisUtil.setData(token,value.toString());
+
+        return ResponseEntity.ok(UserResponse.of(200, "로그아웃 성공"));
     }
 }
