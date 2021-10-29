@@ -1,6 +1,7 @@
 package com.spectrum.service;
 
 import com.spectrum.common.request.PetSitterPostReq;
+import com.spectrum.common.request.PetSitterUpdateReq;
 import com.spectrum.entity.PetSitter;
 import com.spectrum.repository.PetSitterRepository;
 import com.spectrum.repository.UserRepository;
@@ -52,6 +53,30 @@ public class PetSitterServiceImpl implements PetSitterService{
     @Override
     public void checkStatus(Long petSitterId){
         //status0인지 체크, 글id 필요
+
+    }
+    public void updatePetSitter(PetSitterUpdateReq petSitterUpdateReq, MultipartFile newPicture){
+
+        Long id = petSitterUpdateReq.getId();
+        PetSitter petSitter = petSitterRepository.getById(id);
+
+        Date date = new Date();
+        petSitter.setUpdated(date);
+
+        petSitter.setTitle(petSitterUpdateReq.getTitle());
+        petSitter.setContent(petSitterUpdateReq.getContent());
+        petSitter.setLat(petSitterUpdateReq.getLat());
+        petSitter.setLng(petSitterUpdateReq.getLng());
+
+        String url = "이미지경로/";
+        if(newPicture != null) {
+            String imgPath = newPicture.getOriginalFilename();
+            petSitter.setPicture(url + imgPath);
+        }else{
+            //새로운 수정이미지가 없는 경우 그냥 이전 이미지 들고와서 사용
+            petSitter.setPicture(petSitterUpdateReq.getPicture());
+        }
+        petSitterRepository.save(petSitter);
 
     }
 
