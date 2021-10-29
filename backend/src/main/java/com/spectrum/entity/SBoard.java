@@ -11,9 +11,9 @@ import java.util.Date;
 @Getter
 @Setter
 public class SBoard extends BaseEntity {
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_pk")
-    user user;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "userpk")
+    User user;
 
     String content;
     int likes;

@@ -47,8 +47,8 @@ public class Swagger {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Blockchain backend API")
-                .description("Blockchain backend API")
+                .title("스펫트럼 API")
+                .description("스펫트럼 backend API")
                 .version("1.0.0")
                 .build();
     }
