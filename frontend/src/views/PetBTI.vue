@@ -24,7 +24,7 @@ export default {
   }
 
   .PET-Wrapper {
-    justify-content: start;
+    justify-content: flex-start;
     display: flex;
     flex-direction: column;
     align-items: center;

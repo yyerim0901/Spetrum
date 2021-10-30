@@ -81,7 +81,7 @@ export default {
   .Wrapper{
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content: flex-start;
     margin: 150px 0 0 0;
     align-items: center;
     height: 100vh;
