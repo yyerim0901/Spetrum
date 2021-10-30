@@ -2,7 +2,7 @@
   <Head >
     <Container :isBack="isBack">
       <button @click="goBack">
-        <i class="el-icon-arrow-left"></i>
+        <i class="fas fa-chevron-left"></i>
       </button>
       <LogoTitle :isLogo="isLogo" :title="title">
         <img src="@/assets/logo.png" alt="spetrum">
