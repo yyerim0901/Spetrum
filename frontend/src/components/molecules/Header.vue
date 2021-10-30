@@ -38,7 +38,7 @@ export default {
   },
   methods:{
     goBack(){
-      console.log('뒤로!');
+      this.$router.go(-1);
     }
   }
 }

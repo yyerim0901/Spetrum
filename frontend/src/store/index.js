@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import axios from '../axios/index'
-
+import router from '../router/index'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -12,8 +12,6 @@ export default new Vuex.Store({
   },
   actions: {
     requestSignIn(state,payload){
-      // console.log({state});
-      console.log(typeof(payload.userId));
       axios({
         url:'/users',
         method:'post',
@@ -21,8 +19,9 @@ export default new Vuex.Store({
       })
       .then(res=>{
         if (res.data.statusCode == '200'){
-          const token = res.data.accesstoken
+          const token = res.data.token
           localStorage.setItem("token",token);
+          router.push({name:'PetBTI'});
         }
         else {
           console.log(res);
@@ -30,8 +29,6 @@ export default new Vuex.Store({
         }
 
       })
-
-
     },
     requestSignup(state,payload){
       axios({
@@ -46,7 +43,26 @@ export default new Vuex.Store({
       .catch(err=>{
         console.log(err)
       })
+    },
+    nickCheck(state,payload){
+      return axios({
+        url: '/users/checkNICK',
+        method:'get',
+        params:{
+          nickname: payload
+        }
+      })
+    },
+    idCheck(state,payload){
+      return axios({
+        url: '/users/checkID',
+        method:'get',
+        params:{
+          userId: payload
+        }
+      })
     }
+
 
   },
   modules: {

@@ -9,8 +9,11 @@
       <StyledLabel for="password">비밀번호</StyledLabel>
       <StyledInput type="password" :value="password" v-model="password" @change="validPassCheck"></StyledInput>
       <ErrorMessage :message="pderror">{{this.pderror}}</ErrorMessage>
+      <div class="isUser">
+        <p>아직 회원이 아니신가요?</p>
+        <button class="userbtn" @click="moveSignup">회원가입</button>
+      </div>
       <StyledButton class="btn" bcolor="babypink" btype="large" @click="handleSignIn">로그인</StyledButton>
-
     </div>
   </div>
 </template>
@@ -20,7 +23,6 @@ import StyledButton from '../components/atoms/StyledButton'
 import StyledInput from '../components/atoms/StyledInput'
 import StyledLabel from '../components/atoms/StyledLabel'
 import ErrorMessage from '../components/atoms/ErrorMessage'
-import axios from '../axios/index'
 export default {
   name: 'SignIn',
   components :{
@@ -42,26 +44,10 @@ export default {
   methods:{
     handleSignIn(){
       if (this.idValid && this.pdValid) {
-        const data = {
-          userId:this.userId,
-          password:this.password,
-        }
-        axios({
-        url:'/users',
-        method:'post',
-        data:data
-        })
-        .then(res=>{
-          if (res.data.statusCode == '200'){
-            const token = res.data.accesstoken
-            localStorage.setItem("token",token);
-          }
-          else {
-            console.log(res);
-            alert('로그인 실패!');
-          }
-        })
-        // this.$store.dispatch('requestSignIn',{'userId':this.userId, 'password':this.password});
+        const formData = new FormData();
+        formData.append("userId",this.userId);
+        formData.append("password",this.password);
+        this.$store.dispatch('requestSignIn',formData);
       }  
     },
     validIdCheck(e){
@@ -82,6 +68,9 @@ export default {
         this.pderror = '';
         this.pdValid = true;
       }
+    },
+    moveSignup(){
+      this.$router.push({name:'SignUp'});
     }
   },
 
@@ -117,6 +106,21 @@ export default {
   }
 
   .btn{
-    margin:40px 0 0 0;
+    margin:10px 0 0 0;
+  }
+
+  .isUser {
+    display: flex;
+    text-align: start;
+    padding: 3px 0 0 0;
+
+  }
+
+  .userbtn{
+    font-size:0.700rem;
+    padding: 0 0 0 290px;
+  }
+  p {
+    font-size:0.625rem;
   }
 </style>
