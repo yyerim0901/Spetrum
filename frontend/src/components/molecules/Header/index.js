@@ -13,7 +13,6 @@ export const Head = styled.div`
   text-align:center;
   display:flex;
   flex-direction: column-reverse;
-
 `;
 
 export const Container = styled('div',HeadProps)`
@@ -31,9 +30,8 @@ export const Container = styled('div',HeadProps)`
     display: ${(props) => (props.isBack ? "block" : "none")};
     font-size: ${theme.fontSizes.xxl};
     font-weight: bold;
-
   };
-  
+
   `
   
   export const LogoTitle = styled('div',HeadProps)`
@@ -49,6 +47,8 @@ export const Container = styled('div',HeadProps)`
   p {
     display: ${(props) => (props.isLogo ? "none" : "block")};
     font-size: ${theme.fontSizes.xxl};
+    color: ${theme.colors.black};
     font-weight: bold;
+    margin: 0 0px 0 100px;
   }
 `;
