@@ -161,7 +161,7 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    justify-content: start;
+    justify-content: flex-start;
     height: 100vh;
     width:100%;
     padding:10px 30px 0 30px;
