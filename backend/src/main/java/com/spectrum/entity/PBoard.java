@@ -13,7 +13,7 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
-public class PetSitter extends BaseEntity{
+public class PBoard extends BaseEntity{
 
     private String title;
     private String content;
