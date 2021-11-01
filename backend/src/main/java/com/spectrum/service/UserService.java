@@ -9,4 +9,6 @@ public interface UserService {
     void createUser(UserRegisterPostReq registerInfo, MultipartFile thumbnail);
 
     User findUserByUserId(String userId);
+
+    User search(String userid);
 }
