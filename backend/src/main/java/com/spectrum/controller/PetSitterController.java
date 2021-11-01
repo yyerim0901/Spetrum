@@ -89,4 +89,16 @@ public class PetSitterController {
         }else return new PetSitterResponse("리스트 출력 완료",list);
     }
 
+    @ApiOperation(
+            value = "전제 petsitter 글 출력",
+            notes = "사용자의 위도 경도에 따라 다르게 정렬...하는거 나중에 추가할게욤..우선은 그냥 다 출력.."
+    )
+    @GetMapping("/list")
+    private PetSitterResponse allPetsitterList(){
+        List<PetSitter> allList = petSitterService.allPetsitterList();
+        if(allList == null || allList.isEmpty()){
+            return new PetSitterResponse("등록된 글이 존재하지 않습니다.",null);
+        }else return new PetSitterResponse("리스트 출력 완료",allList);
+    }
+
 }
