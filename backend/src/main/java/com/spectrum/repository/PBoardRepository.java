@@ -1,14 +1,14 @@
 package com.spectrum.repository;
 
-import com.spectrum.entity.PetSitter;
+import com.spectrum.entity.PBoard;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface PetSitterRepository extends JpaRepository<PetSitter, Long> {
+public interface PBoardRepository extends JpaRepository<PBoard, Long> {
 
-    public List<PetSitter> findAllByUserId(Long userPK);
+    public List<PBoard> findAllByUserId(Long userPK);
 
 }

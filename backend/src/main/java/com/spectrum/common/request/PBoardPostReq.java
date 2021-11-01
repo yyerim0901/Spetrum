@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @ApiModel("PetSitterPostRequest")
-public class PetSitterPostReq {
+public class PBoardPostReq {
     //name이랑 변수명이랑 동일하지 않으면 값이 아예 안 들어감..
     @ApiModelProperty(name = "title", example = "펫시터 구합니다.")
     String title;

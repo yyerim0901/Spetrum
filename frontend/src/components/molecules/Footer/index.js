@@ -1,14 +1,5 @@
 import styled from 'vue-styled-components'
-// import theme from '../../../styles/common'
-
-// const FooterProps = {
-//   isClicked:Number,
-// }
-
-export const Foot = styled.div`
-  width: 100%;
-  height: 60px;
-`;
+import theme from '../../../styles/common'
 
 export const Container = styled.div`
   position: fixed;
@@ -16,12 +7,29 @@ export const Container = styled.div`
   bottom:0;
   height: 60px;
   display:flex;
-  align-items:center;
   justify-content: center;
+  align-itmes: center;
   background-color: white;
-  margin: 0 10px;
+  margin:0 10px;
   img{
     width:30px;
   }
 
+  i{
+    font-size: 1.75rem;
+    margin: 0 0 5px 0;
+  }
+`
+
+export const TabButton = styled.button`
+  width: 90px;
+  padding: 0 0 0 10px;
+
+  p {
+    font-weight: bold;
+    font-size: ${theme.fontSizes.sm};
+  }; 
+  .active {
+    color: ${theme.colors.pink};
+  }
 `

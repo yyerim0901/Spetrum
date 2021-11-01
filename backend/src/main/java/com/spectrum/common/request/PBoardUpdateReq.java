@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @ApiModel("PetSitterUpdateRequest")
-public class PetSitterUpdateReq {
+public class PBoardUpdateReq {
 
     @ApiModelProperty(name = "id", example = "1")
     Long id;
@@ -24,5 +24,7 @@ public class PetSitterUpdateReq {
     BigDecimal lat;
     @ApiModelProperty(name = "picture", example = "image path")
     String picture;
+    @ApiModelProperty(name = "user_pk", example = "9")
+    Long user_pk;
 
 }

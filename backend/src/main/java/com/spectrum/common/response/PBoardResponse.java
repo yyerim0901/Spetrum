@@ -7,15 +7,15 @@ import lombok.Setter;
 @Getter
 @Setter
 @ApiModel("PetSitterResponse")
-public class PetSitterResponse {
+public class PBoardResponse {
 
     private String message;
     private Object data;
 
-    public PetSitterResponse(String message, Object data){
+    public PBoardResponse(String message, Object data){
         this.message = message;
         this.data = data;
     }
-    public PetSitterResponse(){}
+    public PBoardResponse(){}
 
 }

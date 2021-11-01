@@ -23,7 +23,7 @@ public class FileHandler {
     @Autowired
     ResourceLoader resourceLoader;
 
-    public List<SBoardFile> parseFileInfo(List<MultipartFile> multipartFiles, int userid) throws IOException {
+    public List<SBoardFile> parseFileInfo(List<MultipartFile> multipartFiles, String userid) throws IOException {
         // 반환할 파일 리스트
         List<SBoardFile> fileList = new ArrayList<>();
 
@@ -38,9 +38,9 @@ public class FileHandler {
             // 프로젝트 디렉터리 내의 저장을 위한 절대 경로 설정
             // 경로 구분자 File.separator 사용
             String absolutePath = new File("").getAbsolutePath() + File.separator + File.separator;
-
+            System.out.println(absolutePath +"   absolute@@@@@@@");
             String realPath = resourceLoader.getResource("resources/sns").getURI().getPath();
-
+            System.out.println(realPath +"   realpath@@@@@@@");
             // 파일을 저장할 세부 경로 지정
             String path = realPath + File.separator + userid;
             File file = new File(path);
