@@ -14,10 +14,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -99,4 +96,19 @@ public class UserController {
 
         return ResponseEntity.ok(UserResponse.of(200, "로그아웃 성공"));
     }
+
+    @GetMapping("/search/{userid}")
+    @ApiOperation(value = "회원정보 검색", notes = "회원정보를 조회한다")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+    })
+    public ResponseEntity<User> search(@PathVariable("userid") String userid){
+        User user = userService.search(userid);
+        if(user == null)
+        {
+            return null;
+        }
+        return ResponseEntity.ok(user);
+    }
+
 }
