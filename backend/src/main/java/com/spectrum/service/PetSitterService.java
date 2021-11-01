@@ -15,4 +15,5 @@ public interface PetSitterService {
     public void deletePetSitter(Long petSitterId);
     public List<PetSitter> myPetsitterList(String token);
     public List<PetSitter> allPetsitterList();
+    public PetSitter detailOfPetsitter(Long petsitterId);
 }
