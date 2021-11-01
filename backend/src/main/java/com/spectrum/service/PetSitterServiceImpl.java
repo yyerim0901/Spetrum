@@ -32,6 +32,7 @@ public class PetSitterServiceImpl implements PetSitterService{
         PetSitter petSitter = new PetSitter();
 
 //        String token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE2MzU3MzE1NTgsImV4cCI6MTYzNTczMTU2OH0.LWmSTaNvpoqtDKV2SJ5vkOBu21iLnWHGdV6MUYV0jxw";
+        System.out.println(token);
         String userId = jwtUtil.getUsername(token);
         System.out.println(userId);
         Optional<User> userOptional = userRepository.findByUserId(userId);

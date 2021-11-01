@@ -44,6 +44,8 @@ public class PetSitterController {
 
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
 //        String userid = jwtUtil.getUsername(token);
+        System.out.println("**************************");
+        System.out.println(token);
 
         petSitterService.postPetSitter(petSitterPostRequest,petSitterImage, token);
         return new ResponseEntity<>("post petsitter success", HttpStatus.OK);
