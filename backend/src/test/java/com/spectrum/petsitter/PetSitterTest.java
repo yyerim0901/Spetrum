@@ -1,7 +1,7 @@
 package com.spectrum.petsitter;
 
-import com.spectrum.common.request.PetSitterPostReq;
-import com.spectrum.service.PetSitterService;
+import com.spectrum.common.request.PBoardPostReq;
+import com.spectrum.service.PBoardService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,11 +15,11 @@ import java.io.InputStream;
 public class PetSitterTest {
 
     @Autowired
-    private PetSitterService petSitterService;
+    private PBoardService petSitterService;
 
     @Test
     public void postPetSitter(){
-        PetSitterPostReq petSitter = new PetSitterPostReq();
+        PBoardPostReq petSitter = new PBoardPostReq();
 
         petSitter.setTitle("안녕");
         petSitter.setContent("안녕");
@@ -67,7 +67,7 @@ public class PetSitterTest {
 
             }
         };
-        petSitterService.postPetSitter(petSitter, multipartFile);
+//        petSitterService.postPetSitter(petSitter, multipartFile);
 
     }
 
