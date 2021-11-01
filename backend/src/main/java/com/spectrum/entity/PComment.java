@@ -22,6 +22,6 @@ public class PComment extends BaseEntity {
 
     @JoinColumn(name = "boardpk")
     @ManyToOne
-    private PBoard pBoard;
+    private PBoard pboard;
 
 }

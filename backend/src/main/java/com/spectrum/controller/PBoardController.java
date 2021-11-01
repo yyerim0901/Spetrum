@@ -20,9 +20,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
-@Api(value = "펫시터 API", tags = {"PetSitter"})
+@Api(value = "펫시터 API", tags = {"PBoard"})
 @RestController
-@RequestMapping("/api/petsitter")
+@RequestMapping("/api/pboard")
 public class PBoardController {
 
     @Autowired
@@ -53,11 +53,16 @@ public class PBoardController {
     )
     @PutMapping
     private ResponseEntity<String> updatePetsitter(
-            @ApiParam(value = "게시글 수정", required = true) PBoardUpdateReq petSitterUpdateReq,
+            @ApiParam(value = "게시글 수정", required = true) PBoardUpdateReq pBoardUpdateReq,
             @RequestPart(value = "image", required = false) MultipartFile newPicture
             ){
-        petSitterService.updatePetSitter(petSitterUpdateReq, newPicture);
-        return new ResponseEntity<>("update petsitter success", HttpStatus.OK);
+//        String token = request.getHeader(HttpHeaders.AUTHORIZATION);
+//        if(!petSitterService.checkWriterOfBoard(pBoardUpdateReq,token)) {
+//            petSitterService.updatePetSitter(pBoardUpdateReq, newPicture);
+//            return new ResponseEntity<>("글 수정 권한 없음", HttpStatus.UNAUTHORIZED);
+//        }else
+        petSitterService.updatePetSitter(pBoardUpdateReq, newPicture);
+        return new ResponseEntity<>("펫 시터 글 수정 완료",HttpStatus.OK);
     }
 
     @ApiOperation(
