@@ -13,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.Cookie;
@@ -65,7 +62,7 @@ public class UserController {
     public ResponseEntity<UserResponse> login(@ApiParam(value="로그인", required = true) UserLoginReq loginInfo){
        String userId = loginInfo.getUserId();
        String password = loginInfo.getPassword();
-
+       System.out.println(userId);
        User userinfo = userService.findUserByUserId(userId);
 
        if(userinfo == null)
@@ -83,4 +80,5 @@ public class UserController {
         }
         return ResponseEntity.ok(UserResponse.of(403, "아이디/비밀번호가 일치하지 않습니다."));
     }
+
 }
