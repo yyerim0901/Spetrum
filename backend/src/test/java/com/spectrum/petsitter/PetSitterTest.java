@@ -67,7 +67,7 @@ public class PetSitterTest {
 
             }
         };
-        petSitterService.postPetSitter(petSitter, multipartFile);
+//        petSitterService.postPetSitter(petSitter, multipartFile);
 
     }
 
