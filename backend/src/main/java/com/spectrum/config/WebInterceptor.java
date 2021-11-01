@@ -23,6 +23,11 @@ public class WebInterceptor implements HandlerInterceptor {
         {
             System.out.println("api url pattern");
             String bearer = request.getHeader(HttpHeaders.AUTHORIZATION);
+            if(bearer == null)
+            {
+                System.out.println("토큰없음");
+                return false;
+            }
             String CheckLogoutToken = redisUtil.getData(bearer);
             if(CheckLogoutToken == null)
             {
