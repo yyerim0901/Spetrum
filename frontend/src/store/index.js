@@ -13,7 +13,7 @@ export default new Vuex.Store({
   actions: {
     requestSignIn(state,payload){
       axios({
-        url:'/users',
+        url:'/users/login',
         method:'post',
         data:payload
       })
