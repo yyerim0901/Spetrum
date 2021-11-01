@@ -62,7 +62,6 @@ public class UserController {
     public ResponseEntity<UserResponse> login(@ApiParam(value="로그인", required = true) UserLoginReq loginInfo){
        String userId = loginInfo.getUserId();
        String password = loginInfo.getPassword();
-       System.out.println(userId);
        User userinfo = userService.findUserByUserId(userId);
 
        if(userinfo == null)

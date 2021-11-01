@@ -1,8 +1,10 @@
 package com.spectrum.service;
 
+import com.spectrum.common.jwt.JWTUtil;
 import com.spectrum.common.request.PetSitterPostReq;
 import com.spectrum.common.request.PetSitterUpdateReq;
 import com.spectrum.entity.PetSitter;
+import com.spectrum.entity.User;
 import com.spectrum.repository.PetSitterRepository;
 import com.spectrum.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PetSitterServiceImpl implements PetSitterService{
@@ -20,9 +24,20 @@ public class PetSitterServiceImpl implements PetSitterService{
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private JWTUtil jwtUtil;
+
     @Override
-    public void postPetSitter(PetSitterPostReq petSitterPostRequest, MultipartFile postPicture){
+    public void postPetSitter(PetSitterPostReq petSitterPostRequest, MultipartFile postPicture, String token){
         PetSitter petSitter = new PetSitter();
+
+//        String token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE2MzU3MzE1NTgsImV4cCI6MTYzNTczMTU2OH0.LWmSTaNvpoqtDKV2SJ5vkOBu21iLnWHGdV6MUYV0jxw";
+        System.out.println(token);
+        String userId = jwtUtil.getUsername(token);
+        System.out.println(userId);
+        Optional<User> userOptional = userRepository.findByUserId(userId);
+        petSitter.setUser(userOptional.get());
+
         Date date = new Date();
 
         petSitter.setTitle(petSitterPostRequest.getTitle());
@@ -55,6 +70,8 @@ public class PetSitterServiceImpl implements PetSitterService{
         //status0인지 체크, 글id 필요
 
     }
+
+    @Override
     public void updatePetSitter(PetSitterUpdateReq petSitterUpdateReq, MultipartFile newPicture){
 
         Long id = petSitterUpdateReq.getId();
@@ -79,6 +96,31 @@ public class PetSitterServiceImpl implements PetSitterService{
         petSitterRepository.save(petSitter);
 
     }
+    @Override
+    public void deletePetSitter(Long petSitterId){
+        petSitterRepository.deleteById(petSitterId);
+    }
 
+    @Override
+    public List<PetSitter> myPetsitterList(String token){
+//        String userId = jwtUtil.getUsername(token);
+        String userId = "test";
+        Optional<User> userOptional = userRepository.findByUserId(userId);
+        User user = userOptional.get();
+        System.out.println(user.getId());
+        return petSitterRepository.findAllByUserId(user.getId());
+    }
+
+    @Override
+    public List<PetSitter> allPetsitterList(){
+        List<PetSitter> allList = petSitterRepository.findAll();
+        return allList;
+    }
+
+    @Override
+    public PetSitter detailOfPetsitter(Long petsitterId){
+        Optional<PetSitter> petOp = petSitterRepository.findById(petsitterId);
+        return petOp.get();
+    }
 
 }
