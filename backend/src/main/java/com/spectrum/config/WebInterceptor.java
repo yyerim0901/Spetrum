@@ -19,7 +19,8 @@ public class WebInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        if(!request.getRequestURI().equals("/api/users/login") && !request.getRequestURI().equals("/api/users/regist"))
+        System.out.println(request.getRequestURI());
+        if(!request.getRequestURI().startsWith("/api/users"))
         {
             System.out.println("api url pattern");
             String bearer = request.getHeader(HttpHeaders.AUTHORIZATION);
