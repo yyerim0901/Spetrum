@@ -1,11 +1,11 @@
 package com.spectrum.service;
 
 import com.spectrum.common.jwt.JWTUtil;
-import com.spectrum.common.request.PetSitterPostReq;
-import com.spectrum.common.request.PetSitterUpdateReq;
-import com.spectrum.entity.PetSitter;
+import com.spectrum.common.request.PBoardPostReq;
+import com.spectrum.common.request.PBoardUpdateReq;
+import com.spectrum.entity.PBoard;
 import com.spectrum.entity.User;
-import com.spectrum.repository.PetSitterRepository;
+import com.spectrum.repository.PBoardRepository;
 import com.spectrum.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,10 +16,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class PetSitterServiceImpl implements PetSitterService{
+public class PBoardServiceImpl implements PBoardService {
 
     @Autowired
-    private PetSitterRepository petSitterRepository;
+    private PBoardRepository petSitterRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -28,13 +28,10 @@ public class PetSitterServiceImpl implements PetSitterService{
     private JWTUtil jwtUtil;
 
     @Override
-    public void postPetSitter(PetSitterPostReq petSitterPostRequest, MultipartFile postPicture, String token){
-        PetSitter petSitter = new PetSitter();
+    public void postPetSitter(PBoardPostReq petSitterPostRequest, MultipartFile postPicture, String token){
+        PBoard petSitter = new PBoard();
 
-//        String token = "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE2MzU3MzE1NTgsImV4cCI6MTYzNTczMTU2OH0.LWmSTaNvpoqtDKV2SJ5vkOBu21iLnWHGdV6MUYV0jxw";
-        System.out.println(token);
         String userId = jwtUtil.getUsername(token);
-        System.out.println(userId);
         Optional<User> userOptional = userRepository.findByUserId(userId);
         petSitter.setUser(userOptional.get());
 
@@ -72,10 +69,10 @@ public class PetSitterServiceImpl implements PetSitterService{
     }
 
     @Override
-    public void updatePetSitter(PetSitterUpdateReq petSitterUpdateReq, MultipartFile newPicture){
+    public void updatePetSitter(PBoardUpdateReq petSitterUpdateReq, MultipartFile newPicture){
 
         Long id = petSitterUpdateReq.getId();
-        PetSitter petSitter = petSitterRepository.getById(id);
+        PBoard petSitter = petSitterRepository.getById(id);
 
         Date date = new Date();
         petSitter.setUpdated(date);
@@ -102,9 +99,8 @@ public class PetSitterServiceImpl implements PetSitterService{
     }
 
     @Override
-    public List<PetSitter> myPetsitterList(String token){
-//        String userId = jwtUtil.getUsername(token);
-        String userId = "test";
+    public List<PBoard> myPetsitterList(String token){
+        String userId = jwtUtil.getUsername(token);
         Optional<User> userOptional = userRepository.findByUserId(userId);
         User user = userOptional.get();
         System.out.println(user.getId());
@@ -112,14 +108,14 @@ public class PetSitterServiceImpl implements PetSitterService{
     }
 
     @Override
-    public List<PetSitter> allPetsitterList(){
-        List<PetSitter> allList = petSitterRepository.findAll();
+    public List<PBoard> allPetsitterList(){
+        List<PBoard> allList = petSitterRepository.findAll();
         return allList;
     }
 
     @Override
-    public PetSitter detailOfPetsitter(Long petsitterId){
-        Optional<PetSitter> petOp = petSitterRepository.findById(petsitterId);
+    public com.spectrum.entity.PBoard detailOfPetsitter(Long petsitterId){
+        Optional<com.spectrum.entity.PBoard> petOp = petSitterRepository.findById(petsitterId);
         return petOp.get();
     }
 
