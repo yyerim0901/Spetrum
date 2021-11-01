@@ -116,4 +116,10 @@ public class PetSitterServiceImpl implements PetSitterService{
         return allList;
     }
 
+    @Override
+    public PetSitter detailOfPetsitter(Long petsitterId){
+        Optional<PetSitter> petOp = petSitterRepository.findById(petsitterId);
+        return petOp.get();
+    }
+
 }

@@ -101,4 +101,18 @@ public class PetSitterController {
         }else return new PetSitterResponse("리스트 출력 완료",allList);
     }
 
+    @ApiOperation(
+            value = "펫시터 상세 페이지 출력",
+            notes = "url에 **글 번호(id)**를 넣고 출력"
+    )
+    @GetMapping("/detail/{petsitterId}")
+    private PetSitterResponse detailPetsitterPage(
+            @PathVariable Long petsitterId
+    ){
+        PetSitter petSitter = petSitterService.detailOfPetsitter(petsitterId);
+
+        if(petSitter == null){
+            return new PetSitterResponse("존재하지 않는 글입니다.",null);
+        }else return new PetSitterResponse("petsitter 글 출력 완료",petSitter);
+    }
 }
