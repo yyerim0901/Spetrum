@@ -10,7 +10,7 @@ import java.util.List;
 public interface PBoardService {
 
     public void postPetSitter(PBoardPostReq petSitterPostRequest, MultipartFile postPicture, String token);
-    public void checkStatus(Long petSitterId);
+    public boolean checkWriterOfBoard(PBoardUpdateReq pBoardUpdateReq, String token);
     public void updatePetSitter(PBoardUpdateReq petSitterUpdateReq, MultipartFile newPicture);
     public void deletePetSitter(Long petSitterId);
     public List<PBoard> myPetsitterList(String token);

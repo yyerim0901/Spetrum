@@ -1,22 +1,25 @@
 package com.spectrum.controller;
 
 import com.spectrum.common.request.PCommentPostReq;
+import com.spectrum.common.request.PCommentUpdateReq;
+import com.spectrum.common.response.PBoardResponse;
 import com.spectrum.entity.PComment;
 import com.spectrum.service.PCommentService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.concurrent.atomic.LongAdder;
 
-@Api(value = "펫시터 댓글 API", tags = {"PetSitterComment"})
+@Api(value = "펫시터 댓글 API", tags = {"PComment"})
 @RestController
 @RequestMapping("/api/pcomment")
 public class PCommentController {
@@ -35,6 +38,44 @@ public class PCommentController {
 
         pCommentService.writePComment(pCommentPostReq,token);
         return new ResponseEntity<>("write comment success", HttpStatus.OK);
+    }
+    
+    @ApiOperation(
+            value = "댓글 리스트",
+            notes = "**글번호**를 이용해서 댓글 출력"
+    )
+    @GetMapping
+    private PBoardResponse listOfPComment(@ApiParam(value = "댓글 리스트",required = true) @RequestParam Long pboardId){
+        List<PComment> list = pCommentService.listPComment(pboardId);
+        if(list.isEmpty() || list == null){
+            return new PBoardResponse("작성된 댓글이 없습니다.",null);
+        }else return new PBoardResponse("댓글 리스트 출력 완료",list);
+    }
+    
+    @ApiOperation(
+            value = "댓글 수정",
+            notes = "**댓글 id,내용**으로 수정"
+    )
+    @PutMapping
+    private ResponseEntity<String> updateComment(
+                                                 @ApiParam(value = "댓글 수정", required = true)PCommentUpdateReq pCommentUpdateReq){
+//        String token = request.getHeader(HttpHeaders.AUTHORIZATION);
+//        if(!pCommentService.checkPCommentWriter(pCommentUpdateReq.getPCommentId(), token)){
+//            pCommentService.updatePComment(pCommentUpdateReq);
+//            return new ResponseEntity<>("댓글 수정 권한 없음",HttpStatus.UNAUTHORIZED);
+//        }else
+            pCommentService.updatePComment(pCommentUpdateReq);
+            return new ResponseEntity<>("댓글 수정 완료",HttpStatus.OK);
+    }
+    
+    @ApiOperation(
+            value = "댓글 삭제",
+            notes = "**댓글 id**를 이용해서 삭제"
+    )
+    @DeleteMapping
+    private ResponseEntity<String> deletePComment(@ApiParam(value = "댓글 삭제", required = true) @RequestParam Long commentId){
+        pCommentService.deletePComment(commentId);
+        return new ResponseEntity("댓글 삭제 완료",HttpStatus.OK);
     }
 
 }

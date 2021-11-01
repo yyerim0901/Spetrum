@@ -24,5 +24,7 @@ public class PBoardUpdateReq {
     BigDecimal lat;
     @ApiModelProperty(name = "picture", example = "image path")
     String picture;
+    @ApiModelProperty(name = "user_pk", example = "9")
+    Long user_pk;
 
 }

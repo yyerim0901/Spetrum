@@ -4,6 +4,7 @@ import com.spectrum.common.jwt.JWTUtil;
 import com.spectrum.common.request.PBoardPostReq;
 import com.spectrum.common.request.PBoardUpdateReq;
 import com.spectrum.entity.PBoard;
+import com.spectrum.entity.PComment;
 import com.spectrum.entity.User;
 import com.spectrum.repository.PBoardRepository;
 import com.spectrum.repository.UserRepository;
@@ -19,7 +20,7 @@ import java.util.Optional;
 public class PBoardServiceImpl implements PBoardService {
 
     @Autowired
-    private PBoardRepository petSitterRepository;
+    private PBoardRepository pBoardRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -58,21 +59,29 @@ public class PBoardServiceImpl implements PBoardService {
 //        userRepository.findById(petSitterPostRequest.getUser_pk());
 //        petSitter.setUser();
 
-        petSitterRepository.save(petSitter);
+        pBoardRepository.save(petSitter);
     }
 
-    //글 작성 후 거래 시 인증 과정
+    //글 수정 시 권한 검사
     @Override
-    public void checkStatus(Long petSitterId){
+    public boolean checkWriterOfBoard(PBoardUpdateReq pBoardUpdateReq, String token){
         //status0인지 체크, 글id 필요
+        Optional<PBoard> pBoardOptional = pBoardRepository.findById(pBoardUpdateReq.getId());
+        PBoard pBoard = pBoardOptional.get();
 
+        String userId = jwtUtil.getUsername(token);
+        Optional<User> userOptional = userRepository.findByUserId(userId);
+        User user = userOptional.get();
+
+        if(pBoard.getUser().equals(user)) return true;
+        else return false;
     }
 
     @Override
     public void updatePetSitter(PBoardUpdateReq petSitterUpdateReq, MultipartFile newPicture){
 
         Long id = petSitterUpdateReq.getId();
-        PBoard petSitter = petSitterRepository.getById(id);
+        PBoard petSitter = pBoardRepository.getById(id);
 
         Date date = new Date();
         petSitter.setUpdated(date);
@@ -90,12 +99,12 @@ public class PBoardServiceImpl implements PBoardService {
             //새로운 수정이미지가 없는 경우 그냥 이전 이미지 들고와서 사용
             petSitter.setPicture(petSitterUpdateReq.getPicture());
         }
-        petSitterRepository.save(petSitter);
+        pBoardRepository.save(petSitter);
 
     }
     @Override
     public void deletePetSitter(Long petSitterId){
-        petSitterRepository.deleteById(petSitterId);
+        pBoardRepository.deleteById(petSitterId);
     }
 
     @Override
@@ -104,18 +113,18 @@ public class PBoardServiceImpl implements PBoardService {
         Optional<User> userOptional = userRepository.findByUserId(userId);
         User user = userOptional.get();
         System.out.println(user.getId());
-        return petSitterRepository.findAllByUserId(user.getId());
+        return pBoardRepository.findAllByUserId(user.getId());
     }
 
     @Override
     public List<PBoard> allPetsitterList(){
-        List<PBoard> allList = petSitterRepository.findAll();
+        List<PBoard> allList = pBoardRepository.findAll();
         return allList;
     }
 
     @Override
     public com.spectrum.entity.PBoard detailOfPetsitter(Long petsitterId){
-        Optional<com.spectrum.entity.PBoard> petOp = petSitterRepository.findById(petsitterId);
+        Optional<com.spectrum.entity.PBoard> petOp = pBoardRepository.findById(petsitterId);
         return petOp.get();
     }
 
