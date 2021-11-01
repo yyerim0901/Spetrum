@@ -9,12 +9,13 @@ import java.time.Duration;
 
 @Service
 public class RedisUtil {
-
     @Autowired
     StringRedisTemplate stringRedisTemplate;
 
     public String getData(String key){
         ValueOperations<String,String> valueOperations = stringRedisTemplate.opsForValue();
+        if(valueOperations.get(key)==null)
+            return null;
         return valueOperations.get(key);
     }
 
