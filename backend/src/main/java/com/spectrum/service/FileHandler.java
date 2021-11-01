@@ -1,6 +1,9 @@
 package com.spectrum.service;
 
+import com.spectrum.entity.SBoard;
 import com.spectrum.entity.SBoardFile;
+import com.spectrum.entity.User;
+import com.spectrum.repository.SBoardFileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.ResourceLoader;
@@ -23,7 +26,7 @@ public class FileHandler {
     @Autowired
     ResourceLoader resourceLoader;
 
-    public List<SBoardFile> parseFileInfo(List<MultipartFile> multipartFiles, int userid) throws IOException {
+    public List<SBoardFile> parseFileInfo(List<MultipartFile> multipartFiles, User user, SBoard sboard) throws IOException {
         // 반환할 파일 리스트
         List<SBoardFile> fileList = new ArrayList<>();
 
@@ -37,12 +40,11 @@ public class FileHandler {
 
             // 프로젝트 디렉터리 내의 저장을 위한 절대 경로 설정
             // 경로 구분자 File.separator 사용
-            String absolutePath = new File("").getAbsolutePath() + File.separator + File.separator;
+            String absolutePath = new File("").getAbsolutePath();
 
-            String realPath = resourceLoader.getResource("resources/sns").getURI().getPath();
 
             // 파일을 저장할 세부 경로 지정
-            String path = realPath + File.separator + userid;
+            String path = absolutePath + "/src/main/resources/sns/" + user.getUserId() + File.separator + sboard.getId();
             File file = new File(path);
 
             // 디렉터리가 존재하지 않을 경우
@@ -73,16 +75,17 @@ public class FileHandler {
                     else  // 다른 확장자일 경우 처리 x
                         break;
                 }
-                String final_name = path + '_' + originalFileExtension;
+                String final_name = path + File.separator + multipartFile.getOriginalFilename();
+                System.out.println(final_name +" final name@@@@@@@");
                 // 파일 DTO 이용하여 Photo 엔티티 생성
                 SBoardFile photo = new SBoardFile();
                 photo.setSave_file(final_name);
+                photo.setSBoard(sboard);
 
                 // 생성 후 리스트에 추가
                 fileList.add(photo);
-
                 // 업로드 한 파일 데이터를 지정한 파일에 저장
-                file = new File(absolutePath + final_name);
+                file = new File(final_name);
                 multipartFile.transferTo(file);
 
                 // 파일 권한 설정(쓰기, 읽기)
