@@ -4,6 +4,11 @@ import PageNotFound from '../views/PageNotFound'
 import SignIn from '../views/SignIn'
 import Signup from '../views/Signup'
 import PetBTI from '../views/PetBTI'
+import Moment from '../views/Moment'
+import Dogging from '../views/Dogging'
+import MyPage from '../views/MyPage'
+import PetTest from '../views/PetTest'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -28,6 +33,26 @@ const routes = [
     path: '/',
     name: 'PetBTI',
     component: PetBTI,
+  },
+  {
+    path: '/moment',
+    name:'Moment',
+    component: Moment,
+  },
+  {
+    path: '/dogging',
+    name:'Dogging',
+    component: Dogging
+  },
+  {
+    path: '/mypage',
+    name:'MyPage',
+    component: MyPage
+  },
+  {
+    path: '/petbti/test',
+    name:'PetTest',
+    component: PetTest
   },
 ]
 
