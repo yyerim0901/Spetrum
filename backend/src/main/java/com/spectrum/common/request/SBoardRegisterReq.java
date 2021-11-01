@@ -15,6 +15,6 @@ import java.util.List;
 public class SBoardRegisterReq {
     @ApiModelProperty(name="content", example="반갑습니다")
     private String content;
-    @ApiModelProperty(name="token", example="eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InNzYWZ5IiwiaWF0IjoxNjM1NzY4MTE2LCJleHAiOjE2MzU3Nzg5MTZ9.c7ZmNk-tK-IHrxR5ZEgBwLsGrk01uuWElIEOBwMYCWE")
-    private String token;
+    @ApiModelProperty(name="files")
+    private List<MultipartFile> snsfiles;
 }
