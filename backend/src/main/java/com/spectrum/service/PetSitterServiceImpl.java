@@ -103,11 +103,17 @@ public class PetSitterServiceImpl implements PetSitterService{
     @Override
     public List<PetSitter> myPetsitterList(String token){
 //        String userId = jwtUtil.getUsername(token);
-        String userId = "ssafy";
+        String userId = "test";
         Optional<User> userOptional = userRepository.findByUserId(userId);
         User user = userOptional.get();
+        System.out.println(user.getId());
+        return petSitterRepository.findAllByUserId(user.getId());
+    }
 
-        return petSitterRepository.findAllByUser(user.getId());
+    @Override
+    public List<PetSitter> allPetsitterList(){
+        List<PetSitter> allList = petSitterRepository.findAll();
+        return allList;
     }
 
 }

@@ -14,4 +14,5 @@ public interface PetSitterService {
     public void updatePetSitter(PetSitterUpdateReq petSitterUpdateReq, MultipartFile newPicture);
     public void deletePetSitter(Long petSitterId);
     public List<PetSitter> myPetsitterList(String token);
+    public List<PetSitter> allPetsitterList();
 }
