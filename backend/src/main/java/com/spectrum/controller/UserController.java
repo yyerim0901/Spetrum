@@ -5,6 +5,7 @@ import com.spectrum.common.jwt.JWTUtil;
 import com.spectrum.common.jwt.RedisUtil;
 import com.spectrum.common.request.UserLoginReq;
 import com.spectrum.common.request.UserRegisterPostReq;
+import com.spectrum.common.request.UserUpdateReq;
 import com.spectrum.common.response.UserResponse;
 import com.spectrum.entity.User;
 import com.spectrum.service.UserService;
@@ -20,6 +21,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.UUID;
 
 @RestController
@@ -137,5 +139,17 @@ public class UserController {
             return ResponseEntity.ok(UserResponse.of(200, "true"));
         }
         return ResponseEntity.ok(UserResponse.of(404, "false"));
+    }
+
+    @PutMapping("/{userid}")
+    @ApiOperation(value = "회원정보 수정", notes = "회원 정보 수정")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+    })
+    public ResponseEntity<UserResponse> userUpdate(@ApiParam(value="수정 정보", required = true) UserUpdateReq updateInfo,
+                                                   @PathVariable("userid") String userid) throws IOException {
+        userService.updateUser(updateInfo,userid);
+
+        return ResponseEntity.ok(UserResponse.of(200, "회원정보수정 완료"));
     }
 }
