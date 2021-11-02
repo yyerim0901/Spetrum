@@ -35,7 +35,7 @@ public class FileHandler {
             File file = new File(photo.getSave_file());
             file.delete();
         }
-        String path = absolutePath + "/src/main/resources/image/sns/" + user.getUserId() + File.separator + sboardid;
+        String path = absolutePath + "/src/main/resources/image/sns/" + user.getUserId() + '/' + sboardid;
         System.out.println(path);
         File folder = new File(path);
         Boolean isOk = folder.delete();
@@ -54,12 +54,10 @@ public class FileHandler {
 //                    DateTimeFormatter.ofPattern("yyyyMMdd");
 //            String current_date = now.format(dateTimeFormatter);
 
-            // 프로젝트 디렉터리 내의 저장을 위한 절대 경로 설정
-            // 경로 구분자 File.separator 사용
 
 
             // 파일을 저장할 세부 경로 지정
-            String path = absolutePath + "/src/main/resources/image/sns/" + user.getUserId() + File.separator + sboard.getId();
+            String path = absolutePath + "/src/main/resources/image/sns/" + user.getUserId() + '/' + sboard.getId();
             File file = new File(path);
 
             // 디렉터리가 존재하지 않을 경우
@@ -90,7 +88,7 @@ public class FileHandler {
                     else  // 다른 확장자일 경우 처리 x
                         break;
                 }
-                String final_name = path + File.separator + multipartFile.getOriginalFilename();
+                String final_name = path + '/' + multipartFile.getOriginalFilename();
                 System.out.println(final_name +" final name@@@@@@@");
                 // 파일 DTO 이용하여 Photo 엔티티 생성
                 SBoardFile photo = new SBoardFile();
