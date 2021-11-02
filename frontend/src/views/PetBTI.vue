@@ -70,7 +70,7 @@ export default {
   .if-box{
     width: 380px;
     height: 450px;
-    margin:30px 0;
+    margin:10px 0;
     display:flex;
     flex-direction: column;
     align-items: center;
