@@ -125,4 +125,17 @@ public class UserController {
         return ResponseEntity.ok(UserResponse.of(404, "false"));
     }
 
+    @GetMapping("/checkNICK/{usernickname}")
+    @ApiOperation(value = "닉네임 중복체크", notes = "회원 닉네임 중복검사")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+    })
+    public ResponseEntity<UserResponse> checkNICK(@PathVariable("usernickname") String usernickname){
+        User user = userService.searchNick(usernickname);
+        if(user == null)
+        {
+            return ResponseEntity.ok(UserResponse.of(200, "true"));
+        }
+        return ResponseEntity.ok(UserResponse.of(404, "false"));
+    }
 }

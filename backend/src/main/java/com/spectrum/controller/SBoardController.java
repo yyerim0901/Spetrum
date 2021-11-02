@@ -10,7 +10,7 @@ import com.spectrum.repository.SBoardRepository;
 import com.spectrum.service.SBoardService;
 import com.spectrum.service.UserService;
 import io.swagger.annotations.*;
-import org.graalvm.compiler.core.common.type.ArithmeticOpTable;
+//import org.graalvm.compiler.core.common.type.ArithmeticOpTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
