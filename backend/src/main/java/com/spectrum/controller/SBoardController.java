@@ -50,7 +50,7 @@ public class SBoardController {
     })
 
     public ResponseEntity<List<SBoardRes>> searchAll(@ApiIgnore HttpServletRequest request) {
-        String token = request.getHeader(HttpHeaders.AUTHORIZATION); 
+        String token = request.getHeader(HttpHeaders.AUTHORIZATION);
         String userid = jwtUtil.getUsername(token);
         User user = userService.findUserByUserId(userid);
         List<SBoardRes> sboardList = sBoardService.getSBoardsByUser(user);
