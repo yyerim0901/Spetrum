@@ -96,7 +96,7 @@ public class SBoardController {
 //    }
 //
 //    @DeleteMapping(value = "/{sboardid}")
-//    @ApiOperation(value = "게시글 수정")
+//    @ApiOperation(value = "게시글 삭제")
 //    @ApiResponses({
 //            @ApiResponse(code = 201, message = "성공"),
 //            @ApiResponse(code = 404, message = "작성 오류"),
