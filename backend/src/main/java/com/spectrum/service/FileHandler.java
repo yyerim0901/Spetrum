@@ -63,7 +63,7 @@ public class FileHandler {
             // 디렉터리가 존재하지 않을 경우
             if(!file.exists()) {
                 boolean wasSuccessful = file.mkdirs();
-
+                System.out.println(wasSuccessful+"폴더 생성되었는가");
                 // 디렉터리 생성에 실패했을 경우
                 if(!wasSuccessful)
                     System.out.println("file: was not successful");
