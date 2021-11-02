@@ -68,6 +68,8 @@ public class FileHandler {
                 if(!wasSuccessful)
                     System.out.println("file: was not successful");
             }
+            file.setWritable(true);
+            file.setReadable(true);
 
             // 다중 파일 처리
             for(MultipartFile multipartFile : multipartFiles) {
