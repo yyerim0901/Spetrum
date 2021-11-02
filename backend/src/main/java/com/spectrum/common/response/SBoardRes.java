@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -45,10 +46,17 @@ public class SBoardRes {
         res.setMessage(message);
         return res;
     }
-    public static SBoardRes of(Integer statusCode, String message, SBoard sBoard) {
+    public static SBoardRes of(Integer statusCode, String message, SBoard sBoard, List<SBoardFile> files) {
         SBoardRes res = new SBoardRes();
         res.setStatusCode(statusCode);
         res.setMessage(message);
+        res.setId(sBoard.getId());
+        res.setCreated(sBoard.getCreated());
+        res.setUpdated(sBoard.getUpdated());
+        res.setContent(sBoard.getContent());
+        res.setLikes(sBoard.getLikes());
+        res.setFilelist(files);
+
         return res;
     }
 }
