@@ -95,7 +95,7 @@ public class SBoardController {
 //        return ResponseEntity.ok(SBoardRes.of(200, "Success"));
 //    }
 //
-//    @DeleteMapping(value = "/{sboardid}")
+//    @DeleteMapping(value = "/{sboardid}") 
 //    @ApiOperation(value = "게시글 삭제")
 //    @ApiResponses({
 //            @ApiResponse(code = 201, message = "성공"),
