@@ -111,4 +111,18 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    @GetMapping("/checkID/{userid}")
+    @ApiOperation(value = "아이디 중복체크", notes = "회원 아이디 중복검사")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+    })
+    public ResponseEntity<UserResponse> checkID(@PathVariable("userid") String userid){
+        User user = userService.search(userid);
+        if(user == null)
+        {
+            return ResponseEntity.ok(UserResponse.of(200, "true"));
+        }
+        return ResponseEntity.ok(UserResponse.of(404, "false"));
+    }
+
 }
