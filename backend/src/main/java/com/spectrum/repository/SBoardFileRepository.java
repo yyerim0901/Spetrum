@@ -11,5 +11,5 @@ import java.util.List;
 public interface SBoardFileRepository extends JpaRepository<SBoardFile, Long> {
     List<SBoardFile> findAllById(Long id);
 
-    List<SBoardFile> findAllBySBoard(SBoard sBoard);
+//    List<SBoardFile> findAllBySBoard(SBoard sBoard);
 }
