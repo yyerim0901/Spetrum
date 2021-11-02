@@ -51,7 +51,7 @@ export const Container = styled('div',HeadProps)`
     font-size: ${theme.fontSizes.xxl};
     color: ${theme.colors.black};
     font-weight: bold;
-    margin:0 0px 0 200px ;
+    margin:0 0px 0 165px ;
 
   }
 `;
