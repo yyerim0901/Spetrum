@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService{
     @Autowired
     UserRepository userRepository;
 
-
+    String BASE_PATH = new File("").getAbsolutePath() +"/src/main/resources/image/";
 
     @Override
     public void createUser(UserRegisterPostReq registerInfo, MultipartFile thumbnail) {
@@ -31,7 +31,16 @@ public class UserServiceImpl implements UserService{
         res.setPassword(passwordEncoder.encode(registerInfo.getPassword()));
         res.setNickname(registerInfo.getNickname());
 
-        userRepository.save(res);
+
+        User tmpuser = userRepository.save(res);
+        // sns 유저 폴더 생성
+        String user_path = BASE_PATH + "sns/" + tmpuser.getId();
+        File createFolder = new File(user_path);
+        if(!createFolder.exists()) {
+            createFolder.mkdirs();
+        }
+        createFolder.setWritable(true);
+        createFolder.setReadable(true);
     }
 
     @Override

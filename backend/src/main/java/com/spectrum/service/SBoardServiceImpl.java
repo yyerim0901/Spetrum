@@ -27,6 +27,8 @@ public class SBoardServiceImpl implements SBoardService {
     @Autowired
     FileHandler fileHandler;
 
+    String BASE_PATH = new File("").getAbsolutePath() +"/src/main/resources/image/";
+
     @Override
     public List<SBoardRes> getSBoardsByUser(User user) {
         List<SBoardRes> res = new ArrayList<>();
@@ -57,6 +59,21 @@ public class SBoardServiceImpl implements SBoardService {
         sBoard.setUpdated(new Date());
         sBoard.setLikes(0);
         SBoard tmpsboard =  sBoardRepository.save(sBoard);
+
+        // 파일을 저장할 세부 경로 지정
+        String path = BASE_PATH + "sns/" + user.getUserId() +'/'+ tmpsboard.getId();
+        File file = new File(path);
+
+        // 디렉터리가 존재하지 않을 경우
+        if(!file.exists()) {
+            boolean wasSuccessful = file.mkdirs();
+            // 디렉터리 생성에 실패했을 경우
+            if(!wasSuccessful)
+                System.out.println("file: was not successful");
+        }
+        file.setWritable(true);
+        file.setReadable(true);
+
         // 사진 저장하기
         List<SBoardFile> photoList = fileHandler.parseFileInfo(sboardfiles, user, tmpsboard);
         System.out.println(photoList);
