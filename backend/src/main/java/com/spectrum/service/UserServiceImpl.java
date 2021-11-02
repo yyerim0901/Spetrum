@@ -49,4 +49,13 @@ public class UserServiceImpl implements UserService{
         else
             return null;
     }
+
+    @Override
+    public User searchNick(String usernickname) {
+        Optional<User> user = userRepository.findByNickname(usernickname);
+        if(user.isPresent())
+            return user.get();
+        else
+            return null;
+    }
 }
