@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.concurrent.atomic.LongAdder;
 
 @Api(value = "펫시터 댓글 API", tags = {"PComment"})
 @RestController
