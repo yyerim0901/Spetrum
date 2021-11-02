@@ -35,7 +35,7 @@ public class FileHandler {
             File file = new File(photo.getSave_file());
             file.delete();
         }
-        String path = BASE_PATH + "sns/" + user.getUserId() + '/' + sboardid;
+        String path = BASE_PATH + "sns/" + user.getId() + '/' + sboardid;
         System.out.println(path);
         File folder = new File(path);
         Boolean isOk = folder.delete();
@@ -57,7 +57,7 @@ public class FileHandler {
 
 
             // 파일을 저장할 세부 경로 지정
-            String boardpath = BASE_PATH + "sns/" + user.getUserId() +'/'+ sboard.getId();
+            String boardpath = BASE_PATH + "sns/" + user.getId() +'/'+ sboard.getId();
 
             // 다중 파일 처리
             for(MultipartFile multipartFile : multipartFiles) {
