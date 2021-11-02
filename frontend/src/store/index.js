@@ -13,7 +13,7 @@ export default new Vuex.Store({
   actions: {
     requestSignIn(state,payload){
       axios({
-        url:'/users',
+        url:'/users/login',
         method:'post',
         data:payload
       })
@@ -24,8 +24,8 @@ export default new Vuex.Store({
           router.push({name:'PetBTI'});
         }
         else {
-          console.log(res);
-          alert('로그인 실패!');
+
+          alert(res.data.message);
         }
 
       })
@@ -38,7 +38,7 @@ export default new Vuex.Store({
       })
       .then(res=>{
         console.log(res);
-        this.$router.push({name:'SignIn'})
+        router.push({name:'SignIn'})
       })
       .catch(err=>{
         console.log(err)
