@@ -44,10 +44,7 @@ public class SBoardServiceImpl implements SBoardService {
         return res;
     }
 
-    @Override
-    public SBoard getSBoardsById(Long sboardid) {
-        return sBoardRepository.getById(sboardid);
-    }
+
 
     @Override
     public SBoard createSBoard(User user, SBoardRegisterReq sboardinfo, List<MultipartFile> sboardfiles) throws IOException {
@@ -70,33 +67,36 @@ public class SBoardServiceImpl implements SBoardService {
         return sBoard;
     }
 
+//    @Override
+//    public SBoard getSBoardsById(Long sboardid) {
+//        return sBoardRepository.getById(sboardid);
+//    }
 
-
-    @Override
-    public SBoard putSBoard(User user, SBoardRegisterReq sboardinfo, List<MultipartFile> sboardfiles, Long sboardid) {
-        SBoard sBoard = sBoardRepository.getById(sboardid);
-        sBoard.setUser(user);
-        sBoard.setContent(sboardinfo.getContent());
-        sBoard.setUpdated(new Date());
-        SBoard tmpsboard =  sBoardRepository.save(sBoard);
-        // 사진은 수정 못하게 하자.
-        return sBoard;
-    }
-
-    @Override
-    public Boolean deleteSBoard(User user, Long sboardid) {
-        SBoard sBoard = sBoardRepository.getById(sboardid);
-        if (sBoard == null){
-            return false;
-        }
-        sBoardRepository.delete(sBoard);
-        List<SBoardFile> photoList = sBoardFileRepository.findAllBySBoard(sBoard);
-        if(!photoList.isEmpty()){
-            for(SBoardFile photo : photoList)
-                // 파일을 DB에 저장
-                sBoardFileRepository.delete(photo);
-        }
-        return true;
-    }
+//    @Override
+//    public SBoard putSBoard(User user, SBoardRegisterReq sboardinfo, List<MultipartFile> sboardfiles, Long sboardid) {
+//        SBoard sBoard = sBoardRepository.getById(sboardid);
+//        sBoard.setUser(user);
+//        sBoard.setContent(sboardinfo.getContent());
+//        sBoard.setUpdated(new Date());
+//        SBoard tmpsboard =  sBoardRepository.save(sBoard);
+//        // 사진은 수정 못하게 하자.
+//        return sBoard;
+//    }
+//
+//    @Override
+//    public Boolean deleteSBoard(User user, Long sboardid) throws IOException {
+//        SBoard sBoard = sBoardRepository.getById(sboardid);
+//        if (sBoard == null){
+//            return false;
+//        }
+//        sBoardRepository.delete(sBoard);
+//        List<SBoardFile> photoList = sBoardFileRepository.findAllBySBoard(sBoard);
+//        if(!photoList.isEmpty()){
+//            for(SBoardFile photo : photoList)
+//                // 파일을 DB에 저장
+//                sBoardFileRepository.delete(photo);
+//        }
+//        return true;
+//    }
 
 }
