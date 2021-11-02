@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService{
     @Autowired
     UserRepository userRepository;
 
-
+    String BASE_PATH = System.getProperty("user.dir") + "/src/main/resources/image/profile/";
 
     @Override
     public void createUser(UserRegisterPostReq registerInfo, MultipartFile thumbnail) {
@@ -78,7 +78,9 @@ public class UserServiceImpl implements UserService{
             MultipartFile multipartFile = updateInfo.getThumbnail();
 
             String absolutePath = new File("").getAbsolutePath();
-            String path = absolutePath + "/src/main/resources/profile/" + userinfo.getUserId();
+            String path = BASE_PATH + "/src/main/resources/image/profile/" + userinfo.getUserId();
+
+
             File file = new File(path);
 
             if(!file.exists()) {
