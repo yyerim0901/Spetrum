@@ -27,7 +27,7 @@ public class FileHandler {
     @Autowired
     ResourceLoader resourceLoader;
 
-    String absolutePath = new File("").getAbsolutePath();
+    String BASE_PATH = new File("").getAbsolutePath() +"/src/main/resources/image/";
 
     public void deleteFile(User user, Long sboardid, Optional<List<SBoardFile>> photoList) {
 
@@ -35,7 +35,7 @@ public class FileHandler {
             File file = new File(photo.getSave_file());
             file.delete();
         }
-        String path = absolutePath + "/src/main/resources/image/sns/" + user.getUserId() + '/' + sboardid;
+        String path = BASE_PATH + "sns/" + user.getUserId() + '/' + sboardid;
         System.out.println(path);
         File folder = new File(path);
         Boolean isOk = folder.delete();
@@ -57,19 +57,7 @@ public class FileHandler {
 
 
             // 파일을 저장할 세부 경로 지정
-            String path = absolutePath + "/src/main/resources/image/sns/" + user.getUserId() + '/' + sboard.getId();
-            File file = new File(path);
-
-            // 디렉터리가 존재하지 않을 경우
-            if(!file.exists()) {
-                boolean wasSuccessful = file.mkdirs();
-                System.out.println(wasSuccessful+"폴더 생성되었는가");
-                // 디렉터리 생성에 실패했을 경우
-                if(!wasSuccessful)
-                    System.out.println("file: was not successful");
-            }
-            file.setWritable(true);
-            file.setReadable(true);
+            String boardpath = BASE_PATH + "sns/" + user.getUserId() +'/'+ sboard.getId();
 
             // 다중 파일 처리
             for(MultipartFile multipartFile : multipartFiles) {
@@ -90,7 +78,7 @@ public class FileHandler {
                     else  // 다른 확장자일 경우 처리 x
                         break;
                 }
-                String final_name = path + '/' + multipartFile.getOriginalFilename();
+                String final_name = boardpath + '/' + multipartFile.getOriginalFilename();
                 System.out.println(final_name +" final name@@@@@@@");
                 // 파일 DTO 이용하여 Photo 엔티티 생성
                 SBoardFile photo = new SBoardFile();
@@ -100,7 +88,7 @@ public class FileHandler {
                 // 생성 후 리스트에 추가
                 fileList.add(photo);
                 // 업로드 한 파일 데이터를 지정한 파일에 저장
-                file = new File(final_name);
+                File file = new File(final_name);
                 multipartFile.transferTo(file);
 
                 // 파일 권한 설정(쓰기, 읽기)
