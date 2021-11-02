@@ -113,12 +113,12 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
-    @GetMapping("/checkID/{userid}")
+    @GetMapping("/checkID")
     @ApiOperation(value = "아이디 중복체크", notes = "회원 아이디 중복검사")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
     })
-    public ResponseEntity<UserResponse> checkID(@PathVariable("userid") String userid){
+    public ResponseEntity<UserResponse> checkID(@RequestParam("userId") String userid){
         User user = userService.search(userid);
         if(user == null)
         {
@@ -127,12 +127,12 @@ public class UserController {
         return ResponseEntity.ok(UserResponse.of(404, "false"));
     }
 
-    @GetMapping("/checkNICK/{usernickname}")
+    @GetMapping("/checkNICK")
     @ApiOperation(value = "닉네임 중복체크", notes = "회원 닉네임 중복검사")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
     })
-    public ResponseEntity<UserResponse> checkNICK(@PathVariable("usernickname") String usernickname){
+    public ResponseEntity<UserResponse> checkNICK(@RequestParam("nickname") String usernickname){
         User user = userService.searchNick(usernickname);
         if(user == null)
         {
