@@ -8,7 +8,7 @@ import Moment from '../views/Moment'
 import Dogging from '../views/Dogging'
 import MyPage from '../views/MyPage'
 import PetTest from '../views/PetTest'
-
+import TestResult from '../views/TestResult'
 Vue.use(VueRouter)
 
 const routes = [
@@ -53,6 +53,11 @@ const routes = [
     path: '/petbti/test',
     name:'PetTest',
     component: PetTest
+  },
+  {
+    path: '/petbti/result',
+    name:'TestResult',
+    component: TestResult
   },
 ]
 
