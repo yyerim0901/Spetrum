@@ -19,7 +19,10 @@ public class WebInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        System.out.println(request.getRequestURI());
+        String url = request.getRequestURI();
+        if (url.contains("swagger") || url.contains("api-docs") || url.contains("webjars")) {
+            return true;
+        }
         if(!request.getRequestURI().startsWith("/api/users"))
         {
             System.out.println("api url pattern");
