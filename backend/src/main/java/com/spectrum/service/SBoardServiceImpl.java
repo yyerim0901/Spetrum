@@ -11,10 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SBoardServiceImpl implements SBoardService {
@@ -24,6 +26,8 @@ public class SBoardServiceImpl implements SBoardService {
     SBoardFileRepository sBoardFileRepository;
     @Autowired
     FileHandler fileHandler;
+
+    String BASE_PATH = new File("").getAbsolutePath() +"/src/main/resources/image/";
 
     @Override
     public List<SBoardRes> getSBoardsByUser(User user) {
@@ -55,6 +59,21 @@ public class SBoardServiceImpl implements SBoardService {
         sBoard.setUpdated(new Date());
         sBoard.setLikes(0);
         SBoard tmpsboard =  sBoardRepository.save(sBoard);
+
+        // 파일을 저장할 세부 경로 지정
+        String path = BASE_PATH + "sns/" + user.getId() +'/'+ tmpsboard.getId();
+        File file = new File(path);
+
+        // 디렉터리가 존재하지 않을 경우
+        if(!file.exists()) {
+            boolean wasSuccessful = file.mkdirs();
+            // 디렉터리 생성에 실패했을 경우
+            if(!wasSuccessful)
+                System.out.println("file: was not successful");
+        }
+        file.setWritable(true);
+        file.setReadable(true);
+
         // 사진 저장하기
         List<SBoardFile> photoList = fileHandler.parseFileInfo(sboardfiles, user, tmpsboard);
         System.out.println(photoList);
@@ -67,36 +86,37 @@ public class SBoardServiceImpl implements SBoardService {
         return sBoard;
     }
 
-//    @Override
-//    public SBoard getSBoardsById(Long sboardid) {
-//        return sBoardRepository.getById(sboardid);
-//    }
+    @Override
+    public SBoard getSBoardsById(Long sboardid) {
+        return sBoardRepository.getById(sboardid);
+    }
 
-//    @Override
-//    public SBoard putSBoard(User user, SBoardRegisterReq sboardinfo, List<MultipartFile> sboardfiles, Long sboardid) {
-//        SBoard sBoard = sBoardRepository.getById(sboardid);
-//        sBoard.setUser(user);
-//        sBoard.setContent(sboardinfo.getContent());
-//        sBoard.setUpdated(new Date());
-//        SBoard tmpsboard =  sBoardRepository.save(sBoard);
-//        // 사진은 수정 못하게 하자.
-//        return sBoard;
-//    }
-//
-//    @Override
-//    public Boolean deleteSBoard(User user, Long sboardid) throws IOException {
-//        SBoard sBoard = sBoardRepository.getById(sboardid);
-//        if (sBoard == null){
-//            return false;
-//        }
-//        sBoardRepository.delete(sBoard);
-//        List<SBoardFile> photoList = sBoardFileRepository.findAllBySBoard(sBoard);
-//        if(!photoList.isEmpty()){
-//            for(SBoardFile photo : photoList)
-//                // 파일을 DB에 저장
-//                sBoardFileRepository.delete(photo);
-//        }
-//        return true;
-//    }
+    @Override
+    public SBoard putSBoard(User user, SBoardRegisterReq sboardinfo, List<MultipartFile> sboardfiles, Long sboardid) {
+        SBoard sBoard = sBoardRepository.getById(sboardid);
+        sBoard.setUser(user);
+        sBoard.setContent(sboardinfo.getContent());
+        sBoard.setUpdated(new Date());
+        SBoard tmpsboard =  sBoardRepository.save(sBoard);
+        // 사진은 수정 못하게 하자.
+        return sBoard;
+    }
+
+    @Override
+    public Boolean deleteSBoard(User user, Long sboardid) {
+        Optional<SBoard> sb = sBoardRepository.findById(sboardid);
+        if (sb == null){
+            return false;
+        }
+        sBoardRepository.delete(sb.get());
+        Optional<List<SBoardFile>> photoList = sBoardFileRepository.findBysBoard(sb.get());
+        fileHandler.deleteFile(user, sboardid, photoList);
+        if(!photoList.get().isEmpty()){
+            for(SBoardFile photo : photoList.get())
+                // 파일을 DB에 저장
+                sBoardFileRepository.delete(photo);
+        }
+        return true;
+    }
 
 }

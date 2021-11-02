@@ -68,8 +68,8 @@ export default {
       pdValid:false,
       pdconValid:false,
       nickValid:false,
-      idcheck:false,
-      nickcheck:false,
+      idcheck:true,
+      nickcheck:true,
       profileImg:null,
       imgprev:null,
     }
@@ -117,6 +117,7 @@ export default {
         formData.append("password",this.password);
         formData.append("userId",this.userId);
         formData.append("image",this.profileImg);
+        console.log(this.profileImg,'프로필이미지');
         this.$store.dispatch('requestSignup',formData);
       }
       else {
