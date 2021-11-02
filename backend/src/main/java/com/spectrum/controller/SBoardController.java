@@ -73,52 +73,52 @@ public class SBoardController {
         return ResponseEntity.ok(SBoardRes.of(200, "Success"));
     }
 
-//    @PutMapping(value = "/{sboardid}")
-//    @ApiOperation(value = "게시글 수정")
-//    @ApiResponses({
-//            @ApiResponse(code = 201, message = "성공"),
-//            @ApiResponse(code = 404, message = "작성 오류"),
-//            @ApiResponse(code = 500, message = "서버 오류")
-//    })
-//    public ResponseEntity<SBoardRes> putSBoard(
-//            @ApiIgnore HttpServletRequest request,
-//            @ApiParam(value="sns 정보", required = true) SBoardRegisterReq sboardinfo,
-//            @PathVariable("sboardid") Long sboardid ) throws IOException {
-//        String token = request.getHeader(HttpHeaders.AUTHORIZATION);
-//        String userid = jwtUtil.getUsername(token);
-//        String userid2 = sBoardService.getSBoardsById(sboardid).getUser().getUserId();
-//        if (!userid.equals(userid2)){
-//            return ResponseEntity.status(401).body(SBoardRes.of(401, "작성한 사람만 수정할 수 있습니다."));
-//        }
-//        User user = userService.findUserByUserId(userid);
-//        SBoard sboard = sBoardService.putSBoard(user, sboardinfo, sboardinfo.getSnsfiles(), sboardid);
-//        return ResponseEntity.ok(SBoardRes.of(200, "Success"));
-//    }
-//
-//    @DeleteMapping(value = "/{sboardid}") 
-//    @ApiOperation(value = "게시글 삭제")
-//    @ApiResponses({
-//            @ApiResponse(code = 201, message = "성공"),
-//            @ApiResponse(code = 404, message = "작성 오류"),
-//            @ApiResponse(code = 500, message = "서버 오류")
-//    })
-//    public ResponseEntity<SBoardRes> deleteSBoard(
-//            @ApiIgnore HttpServletRequest request,
-//            @PathVariable("sboardid") Long sboardid ) throws IOException {
-//        String token = request.getHeader(HttpHeaders.AUTHORIZATION);
-//        String userid = jwtUtil.getUsername(token);
-//        String userid2 = sBoardService.getSBoardsById(sboardid).getUser().getUserId();
-//        if (!userid.equals(userid2)){
-//            return ResponseEntity.status(401).body(SBoardRes.of(401, "작성한 사람만 삭제할 수 있습니다."));
-//        }
-//        User user = userService.findUserByUserId(userid);
-//        Boolean isDelete = sBoardService.deleteSBoard(user, sboardid);
-//        if (isDelete) {
-//            return ResponseEntity.ok(SBoardRes.of(200, "Success"));
-//        }
-//        else {
-//            return ResponseEntity.status(401).body(SBoardRes.of(401, "삭제되지 않았습니다. 잘못된 요청입니다."));
-//        }
-//
-//    }
+    @PutMapping(value = "/{sboardid}")
+    @ApiOperation(value = "게시글 수정")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "성공"),
+            @ApiResponse(code = 404, message = "작성 오류"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<SBoardRes> putSBoard(
+            @ApiIgnore HttpServletRequest request,
+            @ApiParam(value="sns 정보", required = true) SBoardRegisterReq sboardinfo,
+            @PathVariable("sboardid") Long sboardid ) throws IOException {
+        String token = request.getHeader(HttpHeaders.AUTHORIZATION);
+        String userid = jwtUtil.getUsername(token);
+        String userid2 = sBoardService.getSBoardsById(sboardid).getUser().getUserId();
+        if (!userid.equals(userid2)){
+            return ResponseEntity.status(401).body(SBoardRes.of(401, "작성한 사람만 수정할 수 있습니다."));
+        }
+        User user = userService.findUserByUserId(userid);
+        SBoard sboard = sBoardService.putSBoard(user, sboardinfo, sboardinfo.getSnsfiles(), sboardid);
+        return ResponseEntity.ok(SBoardRes.of(200, "Success"));
+    }
+
+    @DeleteMapping(value = "/{sboardid}")
+    @ApiOperation(value = "게시글 삭제")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "성공"),
+            @ApiResponse(code = 404, message = "작성 오류"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<SBoardRes> deleteSBoard(
+            @ApiIgnore HttpServletRequest request,
+            @PathVariable("sboardid") Long sboardid ) {
+        String token = request.getHeader(HttpHeaders.AUTHORIZATION);
+        String userid = jwtUtil.getUsername(token);
+        String userid2 = sBoardService.getSBoardsById(sboardid).getUser().getUserId();
+        if (!userid.equals(userid2)){
+            return ResponseEntity.status(401).body(SBoardRes.of(401, "작성한 사람만 삭제할 수 있습니다."));
+        }
+        User user = userService.findUserByUserId(userid);
+        Boolean isDelete = sBoardService.deleteSBoard(user, sboardid);
+        if (isDelete) {
+            return ResponseEntity.ok(SBoardRes.of(200, "Success"));
+        }
+        else {
+            return ResponseEntity.status(401).body(SBoardRes.of(401, "삭제되지 않았습니다. 잘못된 요청입니다."));
+        }
+
+    }
 }

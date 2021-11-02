@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class FileHandler {
@@ -25,6 +26,21 @@ public class FileHandler {
     SBoardService sBoardService;
     @Autowired
     ResourceLoader resourceLoader;
+
+    String absolutePath = new File("").getAbsolutePath();
+
+    public void deleteFile(User user, Long sboardid, Optional<List<SBoardFile>> photoList) {
+
+        for (SBoardFile photo : photoList.get()){
+            File file = new File(photo.getSave_file());
+            file.delete();
+        }
+        String path = absolutePath + "/src/main/resources/sns/" + user.getUserId() + File.separator + sboardid;
+        System.out.println(path);
+        File folder = new File(path);
+        Boolean isOk = folder.delete();
+        System.out.println(isOk);
+    }
 
     public List<SBoardFile> parseFileInfo(List<MultipartFile> multipartFiles, User user, SBoard sboard) throws IOException {
         // 반환할 파일 리스트
@@ -40,7 +56,6 @@ public class FileHandler {
 
             // 프로젝트 디렉터리 내의 저장을 위한 절대 경로 설정
             // 경로 구분자 File.separator 사용
-            String absolutePath = new File("").getAbsolutePath();
 
 
             // 파일을 저장할 세부 경로 지정
