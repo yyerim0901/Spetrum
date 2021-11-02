@@ -35,7 +35,7 @@ public class FileHandler {
             File file = new File(photo.getSave_file());
             file.delete();
         }
-        String path = absolutePath + "/src/main/resources/sns/" + user.getUserId() + File.separator + sboardid;
+        String path = absolutePath + "/src/main/resources/image/sns/" + user.getUserId() + File.separator + sboardid;
         System.out.println(path);
         File folder = new File(path);
         Boolean isOk = folder.delete();
@@ -59,7 +59,7 @@ public class FileHandler {
 
 
             // 파일을 저장할 세부 경로 지정
-            String path = absolutePath + "/src/main/resources/sns/" + user.getUserId() + File.separator + sboard.getId();
+            String path = absolutePath + "/src/main/resources/image/sns/" + user.getUserId() + File.separator + sboard.getId();
             File file = new File(path);
 
             // 디렉터리가 존재하지 않을 경우
