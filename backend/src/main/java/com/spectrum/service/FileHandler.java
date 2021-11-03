@@ -27,7 +27,7 @@ public class FileHandler {
     @Autowired
     ResourceLoader resourceLoader;
 
-    String BASE_PATH = new File("").getAbsolutePath() +"/src/main/resources/image/";
+    String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/image/";
 
     public void deleteFile(User user, Long sboardid, Optional<List<SBoardFile>> photoList) {
 

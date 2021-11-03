@@ -27,7 +27,7 @@ public class SBoardServiceImpl implements SBoardService {
     @Autowired
     FileHandler fileHandler;
 
-    String BASE_PATH = new File("").getAbsolutePath() +"/src/main/resources/image/";
+    String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/image/";
 
     @Override
     public List<SBoardRes> getSBoardsByUser(User user) {
