@@ -3,9 +3,7 @@ package com.spectrum.service;
 import com.spectrum.entity.SBoard;
 import com.spectrum.entity.SBoardFile;
 import com.spectrum.entity.User;
-import com.spectrum.repository.SBoardFileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -14,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
