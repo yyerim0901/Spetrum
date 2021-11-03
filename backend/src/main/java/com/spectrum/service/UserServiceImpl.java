@@ -89,8 +89,10 @@ public class UserServiceImpl implements UserService{
             String absolutePath = new File("").getAbsolutePath();
             String path = BASE_PATH  + userinfo.getUserId();
 
-
             File file = new File(path);
+
+            file.setWritable(true);
+            file.setReadable(true);
 
             if(!file.exists()) {
                 file.mkdirs();
