@@ -8,6 +8,7 @@ import com.spectrum.entity.User;
 import com.spectrum.repository.SBoardFileRepository;
 import com.spectrum.repository.SBoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,9 +31,9 @@ public class SBoardServiceImpl implements SBoardService {
     String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/image/";
 
     @Override
-    public List<SBoardRes> getSBoardsByUser(User user) {
+    public List<SBoardRes> getSBoardsByUser(User user, Pageable pageable) {
         List<SBoardRes> res = new ArrayList<>();
-        List<SBoard> sboards = sBoardRepository.findByUser(user);
+        List<SBoard> sboards = sBoardRepository.findAllByUser(user, pageable);
         for (SBoard sBoard : sboards) {
             List<SBoardFile> sboardf = sBoardFileRepository.findAllById(sBoard.getId());
             SBoardRes br = new SBoardRes();
@@ -117,6 +118,12 @@ public class SBoardServiceImpl implements SBoardService {
                 sBoardFileRepository.delete(photo);
         }
         return true;
+    }
+
+    @Override
+    public List<SBoardFile> getFilesBysBoard(SBoard sboard) {
+        Optional<List<SBoardFile>> files = sBoardFileRepository.findBysBoard(sboard);
+        return files.get();
     }
 
 }
