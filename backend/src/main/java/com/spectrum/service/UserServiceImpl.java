@@ -87,7 +87,7 @@ public class UserServiceImpl implements UserService{
             MultipartFile multipartFile = updateInfo.getThumbnail();
 
             String absolutePath = new File("").getAbsolutePath();
-            String path = BASE_PATH + "/src/main/resources/image/profile/" + userinfo.getUserId();
+            String path = BASE_PATH  + userinfo.getUserId();
 
 
             File file = new File(path);
