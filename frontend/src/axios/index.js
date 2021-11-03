@@ -8,7 +8,7 @@ export default axios.create({
   baseURL:"http://localhost:8080/api",
   headers:{'Content-Type': DEFAULT_ACCEPT_TYPE,
             'Access-Control-Allow-Origin':'*',
-            'X-ACCESS-TOKEN':getHeader(),
+            'Authorization':getHeader(),
           }
 });
 

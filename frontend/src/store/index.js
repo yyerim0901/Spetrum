@@ -7,10 +7,13 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    userid:null,
-    profileImg:null,
-    nickname:null,
-    type:null,
+    userInfo:{
+      userid:null,
+      profileImg:null,
+      nickname:null,
+      type:null,
+      introduce:null,
+    },
     page:0,
     questions:[
       {
@@ -66,10 +69,6 @@ export default new Vuex.Store({
     result:{'cat':0,'dog':0,'a':0,'c':0,'i':0,'e':0}
   },
   mutations: {
-    setUser(state,payload){
-      state.userid = payload.userid;
-      state.profileImg = payload.image;
-    },
     SET_USER_TYPE(state,payload){
       state.result[payload] += 1;
       state.page += 1
@@ -79,7 +78,13 @@ export default new Vuex.Store({
       state.result = {'cat':0,'dog':0,'a':0,'c':0,'i':0,'e':0};
     },
     SET_MY_TYPE(state,payload){
-      state.type = payload;
+      state.userInfo.type = payload;
+    },
+    SET_USER_INFO(state,payload){
+      state.userInfo.nickname = payload.nickname;
+      state.userInfo.thumbnamil = payload.thumbnamil;
+      state.userInfo.introduce = payload.introduce;
+      state.userInfo.userid = payload.userid;
     }
   },
   actions: {
@@ -95,6 +100,7 @@ export default new Vuex.Store({
           localStorage.setItem("token",token);
           router.push({name:'PetBTI'});
           const user = payload.get('userId');
+          localStorage.setItem('userid',user);
           this.dispatch('requestUser',user);
         }
         else {
@@ -137,18 +143,19 @@ export default new Vuex.Store({
       })
     },
     requestUser(state,payload){
+
       axios({
         url:`/users/search/${payload}`,
         method:'get',
-
       })
         .then(res=>{
           const data = {
-            userid: res.data.userId,
             nickname: res.data.nickname,
-            profileImg: res.data.thumbnamil,
+            thumbnamil: res.data.thumbnamil,
+            introduce: res.data.introduce,
+            userid: res.data.userId
           }
-          this.commit('setUser',data);
+          this.commit('SET_USER_INFO',data);
         })
         .catch(err=>{
           console.log(err);
