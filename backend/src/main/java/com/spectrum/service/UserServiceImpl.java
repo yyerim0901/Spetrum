@@ -143,8 +143,18 @@ public class UserServiceImpl implements UserService{
             file.setWritable(true);
             file.setReadable(true);
         }
-        userinfo.setPassword(passwordEncoder.encode(updateInfo.getPassword()));
-        userinfo.setNickname(updateInfo.getNickname());
+        if(updateInfo.getPassword() != null)
+        {
+            userinfo.setPassword(passwordEncoder.encode(updateInfo.getPassword()));
+        }
+        if(updateInfo.getNickname() != null)
+            userinfo.setNickname(updateInfo.getNickname());
+        if(updateInfo.getIntroduce() != null)
+            userinfo.setIntroduce(updateInfo.getIntroduce());
+
+        userinfo.setTemperature(updateInfo.getTemperature());
+        userinfo.setPetpit(updateInfo.getPETPTI());
+        userinfo.setKeyword(updateInfo.getKeyword());
 
         userRepository.save(userinfo);
     }
