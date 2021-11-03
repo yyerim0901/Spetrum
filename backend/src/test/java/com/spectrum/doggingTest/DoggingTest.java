@@ -21,7 +21,7 @@ public class DoggingTest {
         dogging.setLocation("대전광역시");
         dogging.setPicture("junit test data");
 
-        doggingService.PostDogging(dogging);
+//        doggingService.PostDogging(dogging);
     }
 
     @Test

@@ -5,11 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,6 +22,8 @@ public class Dogging extends BaseEntity {
     private Date date;
     private String location;
     private String picture;
+    @ElementCollection
+//    private List<Path> path = new ArrayList<>();
 
     @JoinColumn(name = "user_pk")
     @ManyToOne
