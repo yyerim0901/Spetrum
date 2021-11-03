@@ -35,6 +35,7 @@ public class UserServiceImpl implements UserService{
         User tmpuser = userRepository.save(res);
         // sns 유저 폴더 생성
         String user_path = BASE_PATH + "sns/" + tmpuser.getId();
+        System.out.println(user_path);
         File createFolder = new File(user_path);
         if(!createFolder.exists()) {
             createFolder.mkdirs();
