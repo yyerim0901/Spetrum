@@ -93,9 +93,7 @@ public class UserServiceImpl implements UserService{
             File file = new File(path);
 
             if(!file.exists()) {
-                boolean wasSuccessful = file.mkdirs();
-                if(!wasSuccessful)
-                    System.out.println("file: was not successful");
+                file.mkdirs();
             }
 
             // 파일의 확장자 추출
