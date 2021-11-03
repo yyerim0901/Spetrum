@@ -25,8 +25,33 @@ public class UserServiceImpl implements UserService{
     String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/image/profile/";
 
     @Override
-    public void createUser(UserRegisterPostReq registerInfo, MultipartFile thumbnail) {
+    public void createUser(UserRegisterPostReq registerInfo, MultipartFile thumbnail) throws IOException {
         User res = new User();
+
+        if(thumbnail == null)
+        {
+            res.setThumbnail(BASE_PATH+res.getUserId()+File.separator+"default.jpg");
+        }
+        else
+        {
+            String path = BASE_PATH  + registerInfo.getUserId();
+            File file = new File(path);
+            if(!file.exists()) {
+                file.mkdirs();
+            }
+            String final_name = path + File.separator + thumbnail.getOriginalFilename();
+            res.setThumbnail(final_name);
+            file = new File(final_name);
+            thumbnail.transferTo(file);
+
+            System.out.println(final_name);
+
+            // 파일 권한 설정(쓰기, 읽기)
+            file.setWritable(true);
+            file.setReadable(true);
+        }
+
+
         res.setUserId(registerInfo.getUserId());
         res.setPassword(passwordEncoder.encode(registerInfo.getPassword()));
         res.setNickname(registerInfo.getNickname());
@@ -101,7 +126,7 @@ public class UserServiceImpl implements UserService{
             String contentType = multipartFile.getContentType();
             // 확장자명이 존재하지 않을 경우 처리 x
             if(ObjectUtils.isEmpty(contentType)) {
-
+                return;
             }
             else {  // 확장자가 jpeg, png인 파일들만 받아서 처리
                 if(contentType.contains("image/jpeg"))
@@ -110,7 +135,7 @@ public class UserServiceImpl implements UserService{
                     originalFileExtension = ".png";
                 else  // 다른 확장자일 경우 처리 x
                 {
-
+                    return;
                 }
             }
 

@@ -52,8 +52,7 @@ public class UserController {
     })
     public ResponseEntity<UserResponse> register(
             @ApiParam(value="회원가입 정보", required = true) UserRegisterPostReq registerInfo,
-            @RequestPart(value = "image", required = false) MultipartFile thumbnail)
-    {
+            @RequestPart(value = "image", required = false) MultipartFile thumbnail) throws IOException {
         userService.createUser(registerInfo,thumbnail);
         return ResponseEntity.ok(UserResponse.of(200, "Success"));
     }
