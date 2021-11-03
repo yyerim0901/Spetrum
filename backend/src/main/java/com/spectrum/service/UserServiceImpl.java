@@ -89,10 +89,8 @@ public class UserServiceImpl implements UserService{
             String absolutePath = new File("").getAbsolutePath();
             String path = BASE_PATH  + userinfo.getUserId();
 
-            File file = new File(path);
 
-            file.setWritable(true);
-            file.setReadable(true);
+            File file = new File(path);
 
             if(!file.exists()) {
                 file.mkdirs();
@@ -120,6 +118,8 @@ public class UserServiceImpl implements UserService{
             userinfo.setThumbnail(final_name);
             file = new File(final_name);
             multipartFile.transferTo(file);
+
+            System.out.println(final_name);
 
             // 파일 권한 설정(쓰기, 읽기)
             file.setWritable(true);
