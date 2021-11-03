@@ -150,4 +150,15 @@ public class UserController {
 
         return ResponseEntity.ok(UserResponse.of(200, "회원정보수정 완료"));
     }
+
+    @DeleteMapping("/{userid}")
+    @ApiOperation(value = "회원탈퇴", notes = "회원탈퇴")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+    })    public ResponseEntity<UserResponse> userDelete(@PathVariable("userid") String userid) throws IOException {
+
+        userService.deleteUser(userid);
+
+        return ResponseEntity.ok(UserResponse.of(200, "회원정보수정 완료"));
+    }
 }
