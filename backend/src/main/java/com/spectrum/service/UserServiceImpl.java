@@ -25,9 +25,9 @@ public class UserServiceImpl implements UserService{
     String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/image/profile/";
 
     @Override
-    public void createUser(UserRegisterPostReq registerInfo, MultipartFile thumbnail) throws IOException {
+    public void createUser(UserRegisterPostReq registerInfo) throws IOException {
         User res = new User();
-
+        MultipartFile thumbnail = registerInfo.getThumbnail();
         if(thumbnail == null)
         {
             res.setThumbnail(BASE_PATH+res.getUserId()+File.separator+"default.jpg");

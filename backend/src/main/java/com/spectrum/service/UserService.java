@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public interface UserService {
 
-    void createUser(UserRegisterPostReq registerInfo, MultipartFile thumbnail) throws IOException;
+    void createUser(UserRegisterPostReq registerInfo) throws IOException;
 
     User findUserByUserId(String userId);
 
