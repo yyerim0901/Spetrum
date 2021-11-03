@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService{
     @Autowired
     UserRepository userRepository;
 
-    String BASE_PATH = System.getProperty("user.dir") + "/src/main/resources/image/profile/";
+    String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/image/profile/";
 
     @Override
     public void createUser(UserRegisterPostReq registerInfo, MultipartFile thumbnail) {
@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService{
         User userinfo = user.get();
 
         System.out.println("파일");
-        System.out.println(updateInfo.getThumbnail());
+        System.out.println(BASE_PATH);
 
         if(updateInfo.getThumbnail() != null) //이미지 변경이 있으면
         {
@@ -90,10 +90,8 @@ public class UserServiceImpl implements UserService{
             String absolutePath = new File("").getAbsolutePath();
             String path = BASE_PATH  + userinfo.getUserId();
 
-            File file = new File(path);
 
-            file.setWritable(true);
-            file.setReadable(true);
+            File file = new File(path);
 
             if(!file.exists()) {
                 file.mkdirs();
@@ -121,6 +119,8 @@ public class UserServiceImpl implements UserService{
             userinfo.setThumbnail(final_name);
             file = new File(final_name);
             multipartFile.transferTo(file);
+
+            System.out.println(final_name);
 
             // 파일 권한 설정(쓰기, 읽기)
             file.setWritable(true);
