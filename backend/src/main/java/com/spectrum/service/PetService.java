@@ -6,6 +6,6 @@ import java.util.Optional;
 
 public interface PetService {
 
-    public Pet AssignPet(int keyword);
+    public Pet AssignPet(int keyword, String token);
 
 }
