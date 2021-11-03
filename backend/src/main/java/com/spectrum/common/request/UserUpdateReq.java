@@ -16,6 +16,14 @@ public class UserUpdateReq {
     private String password;
     @ApiModelProperty(name="nickname", example="codingprince")
     private String nickname;
+    @ApiModelProperty(name="introduce", example="i'm korean")
+    private String introduce;
+    @ApiModelProperty(name="temperature", example="36.5")
+    private float temperature;
+    @ApiModelProperty(name="PETPTI", example="100")
+    private int PETPTI;
+    @ApiModelProperty(name="keyword", example="활발")
+    private String keyword;
     @ApiModelProperty(name="files")
     private MultipartFile thumbnail;
 }
