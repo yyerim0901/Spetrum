@@ -11,13 +11,14 @@
       </div>
       <div class="l-box">
         <div class="m-box">
-          <h3 style="#636E72">{{this.userInfo.nickname}}</h3>
-          <h5 style="color:#B2BEC3">@{{this.userInfo.userid}}</h5>
-          <!-- <p>{{this.userInfo.introduce}}</p> -->
+          <h3 style="#636E72">{{this.nickname}}</h3>
+          <h5 style="color:#B2BEC3">@{{this.userid}}</h5>
+          <!-- <p>{{this.introduce}}</p> -->
           <span class="intro">방가방가</span>
         </div>
+        <button v-if="isfollowed" class="follow-button">팔로우</button>
+        <button v-else class="unfollow-button">언팔로우</button>
       </div>
-
     </div>
     <hr class="fott">
     <Footer :isActive="isActive"></Footer>
@@ -27,10 +28,9 @@
 <script>
 import Footer from '../components/molecules/Footer.vue'
 import Header from '../components/molecules/Header.vue'
-
-import {mapState} from 'vuex';
+import axios from '@/axios/index'
 export default {
-  name:'Moment',
+  name:'YourMoment',
   components:{
     Footer,
     Header,
@@ -38,28 +38,43 @@ export default {
   },
   data(){
     return{
-      DEFAULT_IMAGE: '@/assets/img_logo.jpg',
       isActive:4,
-      userid: '',
+      userid:null,
+      nickname:null,
+      thumbnail:null,
+      introduce:null,
       isfollowed:true,
-      notme:true,
     }
-  },
-  computed:{
-    ...mapState(['userInfo']),
   },
   methods:{
     getthumbnail(){
-      if (this.userInfo.thumbnail) {
-        return this.userInfo.thumbnail
+      if (this.thumbnail) {
+        return this.thumbnail
       }else{
         return require("@/assets/img_logo.jpg")
       }
     }
   },
   created(){
-    this.userid = localStorage.getItem('userid');
-    this.$store.dispatch('requestUser',this.userid);
+    const nowUser = this.$route.params.userid;
+    console.log(nowUser);
+    if (nowUser == localStorage.getItem('userid')){
+      this.$router.push({name:'Moment'});
+      console.log('돌아가');
+    }
+    else{
+      axios({
+          url:`/users/search/${nowUser}`,
+          method:'get',
+        })
+        .then(res=>{
+          console.log(res);
+          this.nickname = res.data.nickname;
+          this.userid = res.data.userId;
+          this.thumbnail = res.data.thumbnail;
+          this.introduce = res.data.introduce;
+        })
+    }
   }
 
 }
@@ -88,7 +103,7 @@ export default {
 
   .p-box{
     width:100%;
-    padding:10px 3px;
+    padding:10px 15px;
     display: flex;
     flex-direction: column;
   }

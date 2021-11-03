@@ -9,6 +9,7 @@ import Dogging from '../views/Dogging'
 import MyPage from '../views/MyPage'
 import PetTest from '../views/PetTest'
 import TestResult from '../views/TestResult'
+import YourMoment from '../views/YourMoment'
 Vue.use(VueRouter)
 
 const routes = [
@@ -35,9 +36,14 @@ const routes = [
     component: PetBTI,
   },
   {
-    path: '/moment',
+    path: '/mymoment',
     name:'Moment',
     component: Moment,
+  },
+  {
+    path: '/moment/:userid',
+    name:'YourMoment',
+    component: YourMoment,
   },
   {
     path: '/dogging',

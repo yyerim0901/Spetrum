@@ -68,8 +68,8 @@ export default {
       pdValid:false,
       pdconValid:false,
       nickValid:false,
-      idcheck:true,
-      nickcheck:true,
+      idcheck:false,
+      nickcheck:false,
       profileImg:null,
       imgprev:null,
     }
