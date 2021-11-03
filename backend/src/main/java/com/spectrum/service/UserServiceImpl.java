@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService{
     @Autowired
     UserRepository userRepository;
 
-    String BASE_PATH = System.getProperty("user.dir") + "/src/main/resources/image/profile/";
+    String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/image/profile/";
 
     @Override
     public void createUser(UserRegisterPostReq registerInfo, MultipartFile thumbnail) {
@@ -80,7 +80,7 @@ public class UserServiceImpl implements UserService{
         User userinfo = user.get();
 
         System.out.println("파일");
-        System.out.println(updateInfo.getThumbnail());
+        System.out.println(BASE_PATH);
 
         if(updateInfo.getThumbnail() != null) //이미지 변경이 있으면
         {
