@@ -12,6 +12,9 @@ import com.spectrum.service.UserService;
 import io.swagger.annotations.*;
 //import org.graalvm.compiler.core.common.type.ArithmeticOpTable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -39,21 +42,22 @@ public class SBoardController {
     @Autowired
     UserService userService;
 
-    @Autowired
-    SBoardFileRepository sBoardFileRepository;
 
     @GetMapping("/")
-    @ApiOperation(value = "나의 sns 전체 조회")
+    @ApiOperation(value = "나의 sns 전체 조회 _ paging")
     @ApiResponses({
             @ApiResponse(code = 201, message = "성공"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
 
-    public ResponseEntity<List<SBoardRes>> searchAll(@ApiIgnore HttpServletRequest request) {
+    public ResponseEntity<List<SBoardRes>> searchAll(
+            @ApiIgnore HttpServletRequest request) {
+        int pagenum = Integer.parseInt(request.getParameter("page"));
+        Pageable pageable = PageRequest.of(pagenum-1, 10, Sort.by(Sort.Direction.DESC, "created"));
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
         String userid = jwtUtil.getUsername(token);
         User user = userService.findUserByUserId(userid);
-        List<SBoardRes> sboardList = sBoardService.getSBoardsByUser(user);
+        List<SBoardRes> sboardList = sBoardService.getSBoardsByUser(user, pageable);
         return ResponseEntity.status(200).body(sboardList);
     }
 
@@ -71,8 +75,8 @@ public class SBoardController {
         String userid = jwtUtil.getUsername(token);
         User user = userService.findUserByUserId(userid);
         SBoard sboard = sBoardService.getSBoardsById((sboardid));
-        Optional<List<SBoardFile>> files = sBoardFileRepository.findBysBoard(sboard);
-        return ResponseEntity.status(200).body(SBoardRes.of(200, "성공", sboard, files.get()));
+        List<SBoardFile> files = sBoardService.getFilesBysBoard(sboard);
+        return ResponseEntity.status(200).body(SBoardRes.of(200, "성공", sboard, files));
     }
 
     @PostMapping(value = "/", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
