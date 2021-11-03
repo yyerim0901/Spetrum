@@ -104,16 +104,12 @@ public class UserServiceImpl implements UserService{
         Optional<User> user = userRepository.findByUserId(userid);
         User userinfo = user.get();
 
-        System.out.println("파일");
-        System.out.println(BASE_PATH);
-
         if(updateInfo.getThumbnail() != null) //이미지 변경이 있으면
         {
             MultipartFile multipartFile = updateInfo.getThumbnail();
 
             String absolutePath = new File("").getAbsolutePath();
             String path = BASE_PATH  + userinfo.getUserId();
-
 
             File file = new File(path);
 
@@ -138,24 +134,43 @@ public class UserServiceImpl implements UserService{
                     return;
                 }
             }
-
             String final_name = path + File.separator + updateInfo.getThumbnail().getOriginalFilename();
             userinfo.setThumbnail(final_name);
             file = new File(final_name);
             multipartFile.transferTo(file);
 
-            System.out.println(final_name);
-
             // 파일 권한 설정(쓰기, 읽기)
             file.setWritable(true);
             file.setReadable(true);
-
         }
-
         userinfo.setPassword(passwordEncoder.encode(updateInfo.getPassword()));
         userinfo.setNickname(updateInfo.getNickname());
 
         userRepository.save(userinfo);
+    }
 
+    @Override
+    public void deleteUser(String userid) {
+        Optional<User> user = userRepository.findByUserId(userid);
+        userRepository.delete(user.get());
+
+        String path = BASE_PATH  + userid;
+        File file = new File(path);
+
+        try {
+            while(file.exists()) {
+                File[] folder_list = file.listFiles(); //파일리스트 얻어오기
+
+                for (int j = 0; j < folder_list.length; j++) {
+                    folder_list[j].delete(); //파일 삭제
+                }
+
+                if(folder_list.length == 0 && file.isDirectory()){
+                    file.delete(); //대상폴더 삭제
+                }
+            }
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
     }
 }

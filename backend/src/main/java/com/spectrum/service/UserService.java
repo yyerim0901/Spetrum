@@ -18,4 +18,6 @@ public interface UserService {
     User searchNick(String usernickname);
 
     void updateUser(UserUpdateReq updateInfo, String userid) throws IOException;
+
+    void deleteUser(String userid);
 }
