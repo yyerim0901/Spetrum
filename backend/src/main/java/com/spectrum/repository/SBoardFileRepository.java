@@ -10,6 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface SBoardFileRepository extends JpaRepository<SBoardFile, Long> {
-    List<SBoardFile> findAllById(Long id);
+
     Optional<List<SBoardFile>> findBysBoard(SBoard sb);
 }
