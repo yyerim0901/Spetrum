@@ -28,8 +28,8 @@ public class SBoardServiceImpl implements SBoardService {
     @Autowired
     FileHandler fileHandler;
 
-    String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/image/";
-//    String BASE_PATH = new File("").getAbsolutePath() + "/src/main/resources/image/";
+    String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/";
+//    String BASE_PATH = new File("").getAbsolutePath() + "/src/main/resources/";
 
     @Override
     public List<SBoardRes> getSBoardsByUser(User user, Pageable pageable) {
@@ -64,7 +64,7 @@ public class SBoardServiceImpl implements SBoardService {
         SBoard tmpsboard =  sBoardRepository.save(sBoard);
 
         // 파일을 저장할 세부 경로 지정
-        String path = BASE_PATH + "sns/" + user.getId() +'/'+ tmpsboard.getId();
+        String path = BASE_PATH + "image/sns/" + user.getId() +'/'+ tmpsboard.getId();
         File file = new File(path);
 
         // 디렉터리가 존재하지 않을 경우

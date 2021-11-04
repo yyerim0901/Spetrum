@@ -2,6 +2,8 @@ package com.spectrum.controller;
 
 import com.spectrum.common.jwt.JWTUtil;
 import com.spectrum.common.request.SBoardRegisterReq;
+import com.spectrum.common.response.MessageResponse;
+import com.spectrum.common.response.SBoardListRes;
 import com.spectrum.common.response.SBoardRes;
 import com.spectrum.entity.SBoard;
 import com.spectrum.entity.SBoardFile;
@@ -50,7 +52,7 @@ public class SBoardController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
 
-    public ResponseEntity<List<SBoardRes>> searchAll(
+    public ResponseEntity<SBoardListRes> searchAll(
             @ApiIgnore HttpServletRequest request) {
         int pagenum = Integer.parseInt(request.getParameter("page"));
         Pageable pageable = PageRequest.of(pagenum-1, 10, Sort.by(Sort.Direction.DESC, "created"));
@@ -58,7 +60,7 @@ public class SBoardController {
         String userid = jwtUtil.getUsername(token);
         User user = userService.findUserByUserId(userid);
         List<SBoardRes> sboardList = sBoardService.getSBoardsByUser(user, pageable);
-        return ResponseEntity.status(200).body(sboardList);
+        return ResponseEntity.status(200).body(SBoardListRes.of(200, "성공", sboardList));
     }
 
     @GetMapping("/{sboardid}")
@@ -68,7 +70,7 @@ public class SBoardController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
 
-    public ResponseEntity<SBoardRes> searchOne(
+    public ResponseEntity<SBoardListRes> searchOne(
             @ApiIgnore HttpServletRequest request,
             @PathVariable("sboardid") Long sboardid) {
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
@@ -76,7 +78,8 @@ public class SBoardController {
         User user = userService.findUserByUserId(userid);
         SBoard sboard = sBoardService.getSBoardsById((sboardid));
         List<SBoardFile> files = sBoardService.getFilesBysBoard(sboard);
-        return ResponseEntity.status(200).body(SBoardRes.of(200, "성공", sboard, files));
+        SBoardRes sboardres = new SBoardRes().of(sboard, files);
+        return ResponseEntity.status(200).body(SBoardListRes.of(200, "성공", sboardres));
     }
 
     @PostMapping(value = "/", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
@@ -86,14 +89,14 @@ public class SBoardController {
             @ApiResponse(code = 404, message = "작성 오류"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<SBoardRes> createSBoard(
+    public ResponseEntity<MessageResponse> createSBoard(
             @ApiIgnore HttpServletRequest request,
             @ApiParam(value="sns 정보", required = true) SBoardRegisterReq sboardinfo) throws IOException {
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
         String userid = jwtUtil.getUsername(token);
         User user = userService.findUserByUserId(userid);
         SBoard sboard = sBoardService.createSBoard(user, sboardinfo, sboardinfo.getSnsfiles());
-        return ResponseEntity.ok(SBoardRes.of(200, "Success"));
+        return ResponseEntity.status(200).body(MessageResponse.of(200, "Success"));
     }
 
     @PutMapping(value = "/{sboardid}")
@@ -103,7 +106,7 @@ public class SBoardController {
             @ApiResponse(code = 404, message = "작성 오류"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<SBoardRes> putSBoard(
+    public ResponseEntity<MessageResponse> putSBoard(
             @ApiIgnore HttpServletRequest request,
             @ApiParam(value="sns 정보", required = true) SBoardRegisterReq sboardinfo,
             @PathVariable("sboardid") Long sboardid ) throws IOException {
@@ -111,11 +114,11 @@ public class SBoardController {
         String userid = jwtUtil.getUsername(token);
         String userid2 = sBoardService.getSBoardsById(sboardid).getUser().getUserId();
         if (!userid.equals(userid2)){
-            return ResponseEntity.status(401).body(SBoardRes.of(401, "작성한 사람만 수정할 수 있습니다."));
+            return ResponseEntity.status(401).body(MessageResponse.of(401, "작성한 사람만 수정할 수 있습니다."));
         }
         User user = userService.findUserByUserId(userid);
         SBoard sboard = sBoardService.putSBoard(user, sboardinfo, sboardinfo.getSnsfiles(), sboardid);
-        return ResponseEntity.ok(SBoardRes.of(200, "Success"));
+        return ResponseEntity.ok(MessageResponse.of(200, "Success"));
     }
 
     @DeleteMapping(value = "/{sboardid}")
@@ -125,22 +128,22 @@ public class SBoardController {
             @ApiResponse(code = 404, message = "작성 오류"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<SBoardRes> deleteSBoard(
+    public ResponseEntity<MessageResponse> deleteSBoard(
             @ApiIgnore HttpServletRequest request,
             @PathVariable("sboardid") Long sboardid ) {
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
         String userid = jwtUtil.getUsername(token);
         String userid2 = sBoardService.getSBoardsById(sboardid).getUser().getUserId();
         if (!userid.equals(userid2)){
-            return ResponseEntity.status(401).body(SBoardRes.of(401, "작성한 사람만 삭제할 수 있습니다."));
+            return ResponseEntity.status(401).body(MessageResponse.of(401, "작성한 사람만 삭제할 수 있습니다."));
         }
         User user = userService.findUserByUserId(userid);
         Boolean isDelete = sBoardService.deleteSBoard(user, sboardid);
         if (isDelete) {
-            return ResponseEntity.ok(SBoardRes.of(200, "Success"));
+            return ResponseEntity.ok(MessageResponse.of(200, "Success"));
         }
         else {
-            return ResponseEntity.status(401).body(SBoardRes.of(401, "삭제되지 않았습니다. 잘못된 요청입니다."));
+            return ResponseEntity.status(401).body(MessageResponse.of(401, "삭제되지 않았습니다. 잘못된 요청입니다."));
         }
 
     }
