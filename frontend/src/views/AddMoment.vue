@@ -43,13 +43,13 @@ export default {
         formData.append('content',this.contents);
         formData.append('snsfiles',this.addimage);
         axios({
-          url:'http://localhost:8080/api/sns/',
+          url:'http://k5b101.p.ssafy.io:8080/api/sns/',
           method:'post',
           data:formData,
           headers:{
             'Content-Type': 'multipart/form-data',
             'Access-Control-Allow-Origin':'*',
-            'Authorization':'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InRlc3QxMjM0IiwiaWF0IjoxNjM1OTkwNDYyLCJleHAiOjE2MzYwMDEyNjJ9.-J3R3H5J4fVKZHahvTnfs1fcr_se_PTmiErBgXnNifI',
+            'Authorization':localStorage.getItem('token'),
           }
         })
           .then(res=>{
@@ -72,14 +72,14 @@ export default {
   .prev-img{
     width: 400px;
     height:400px;
-    margin: 10px 0;
+    margin: 20px 0;
   }
 
   .con-box{
     border: solid 1px;
     border-color: #E5EAEF;
     width:400px;
-    height: 150px;
+    height: 100px;
     margin:10px 0;
     text-align:start;
 

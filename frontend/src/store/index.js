@@ -164,6 +164,34 @@ export default new Vuex.Store({
     decideAns({commit},payload){
       commit('SET_USER_TYPE',payload)
     },
+    detailSBoard(state,payload){
+      return axios({
+        url:`/sns/${payload}`,
+        method:'get'
+      })
+    },
+    bringSBoardComments(state,payload){
+      return axios({
+        url:`/scomments/${payload}`,
+        method:'get'
+      })
+    },
+    requestSComment(state,payload){
+      axios({
+        url:`/scomments/${payload.sboardid}`,
+        method:'post',
+        data:payload,
+      })
+      .then(res=>{
+        console.log(res);
+        this.dispatch('bringSBoardComments',payload.sboardid)
+      })
+    }
+    // bringWrites(state,payload){
+    //   return axios({
+    //     url:'/sns/'
+    //   })
+    // }
 
   },
   modules: {

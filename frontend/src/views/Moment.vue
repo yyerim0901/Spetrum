@@ -16,8 +16,15 @@
           <!-- <p>{{this.userInfo.introduce}}</p> -->
           <span class="intro">방가방가</span>
         </div>
+        <StyledButton bcolor="pink" btype="small" @click="AddWrite">글작성하기</StyledButton>
       </div>
-
+      <div>
+        <div class="write-box">
+          <div v-for="mywrite in mywrites" :key="mywrite.id">
+            <img :src="fullURL(mywrite.filelist[0].save_file)" alt="없다" class="w-img" @click="moveDetail(mywrite.id)">
+          </div>
+        </div>
+      </div>
     </div>
     <hr class="fott">
     <Footer :isActive="isActive"></Footer>
@@ -27,6 +34,7 @@
 <script>
 import Footer from '../components/molecules/Footer.vue'
 import Header from '../components/molecules/Header.vue'
+import StyledButton from '../components/atoms/StyledButton'
 import axios from '@/axios/index'
 import {mapState} from 'vuex';
 export default {
@@ -34,6 +42,7 @@ export default {
   components:{
     Footer,
     Header,
+    StyledButton
 
   },
   data(){
@@ -41,8 +50,8 @@ export default {
       isActive:4,
       userid: '',
       isfollowed:true,
-      notme:true,
       mywrites:null,
+      BASE_URL : 'http://k5b101.p.ssafy.io/resources/'
     }
   },
   computed:{
@@ -55,6 +64,17 @@ export default {
       }else{
         return require("@/assets/img_logo.jpg")
       }
+    },
+    fullURL(url){
+      const full = this.BASE_URL + url;
+      return full;
+    },
+    AddWrite(){
+      this.$router.push({name:'AddMoment'})
+    },
+    moveDetail(id){
+      console.log(id);
+      this.$router.push({name:'MDetail',params:{'boardid':id}});
     }
   },
   created(){
@@ -68,8 +88,8 @@ export default {
       }
     })
       .then(res=>{
-        this.mywrites = res.data.filelist;
-        console.log(res);
+        this.mywrites = res.data.data;
+        console.log(this.mywrites);
       })
   }
 
@@ -77,6 +97,12 @@ export default {
 </script>
 
 <style>
+  
+  .w-img{
+    width:150px;
+    height:150px;
+    /* border:solid 1px #E5EAEF; */
+  }
   .Moment-Wrapper {
     justify-content: flex-start;
     display: flex;
@@ -95,6 +121,7 @@ export default {
   .l-box{
     display:flex;
     align-items: center;
+    margin:0 0 20px 0;
   }
 
   .p-box{
@@ -102,6 +129,7 @@ export default {
     padding:10px 3px;
     display: flex;
     flex-direction: column;
+    overflow-y: scroll;
   }
 
   .i-box{
@@ -146,6 +174,13 @@ export default {
     width:100px;
     border-radius:6px;
     font-size:1rem;
+  }
+
+  .write-box{
+    display: grid;
+    margin:0 0 0 10px;
+    grid-gap:0px;
+    grid-template-columns: 150px 150px 150px;
   }
 
 </style>
