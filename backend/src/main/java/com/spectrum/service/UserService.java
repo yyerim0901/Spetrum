@@ -1,5 +1,6 @@
 package com.spectrum.service;
 
+import com.spectrum.common.request.FollowReq;
 import com.spectrum.common.request.UserRegisterPostReq;
 import com.spectrum.common.request.UserUpdateReq;
 import com.spectrum.entity.User;
@@ -20,4 +21,6 @@ public interface UserService {
     void updateUser(UserUpdateReq updateInfo, String userid) throws IOException;
 
     void deleteUser(String userid);
+
+    void follow(FollowReq followReq);
 }
