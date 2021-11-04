@@ -24,15 +24,16 @@ public class FileHandler {
     @Autowired
     ResourceLoader resourceLoader;
 
-    String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/image/";
-//    String BASE_PATH = new File("").getAbsolutePath() + "/src/main/resources/image/";
+    String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/";
+//    String BASE_PATH = new File("").getAbsolutePath() + "/src/main/resources/";
     public void deleteFile(User user, Long sboardid, Optional<List<SBoardFile>> photoList) {
 
         for (SBoardFile photo : photoList.get()){
-            File file = new File(photo.getSave_file());
+            String wholepath = BASE_PATH + photo.getSave_file();
+            File file = new File(wholepath);
             file.delete();
         }
-        String path = BASE_PATH + "sns/" + user.getId() + '/' + sboardid;
+        String path = BASE_PATH + "image/sns/" + user.getId() + '/' + sboardid;
         System.out.println(path);
         File folder = new File(path);
         Boolean isOk = folder.delete();
@@ -54,7 +55,7 @@ public class FileHandler {
 
 
             // 파일을 저장할 세부 경로 지정
-            String boardpath = BASE_PATH + "sns/" + user.getId() +'/'+ sboard.getId();
+            String boardpath = BASE_PATH + "image/sns/" + user.getId() +'/'+ sboard.getId();
 
             // 다중 파일 처리
             for(MultipartFile multipartFile : multipartFiles) {
@@ -77,16 +78,19 @@ public class FileHandler {
                 }
                 String final_name = boardpath + '/' + multipartFile.getOriginalFilename();
                 System.out.println(final_name +" final name@@@@@@@");
-                // 파일 DTO 이용하여 Photo 엔티티 생성
-                SBoardFile photo = new SBoardFile();
-                photo.setSave_file(final_name);
-                photo.setSBoard(sboard);
 
-                // 생성 후 리스트에 추가
-                fileList.add(photo);
                 // 업로드 한 파일 데이터를 지정한 파일에 저장
                 File file = new File(final_name);
                 multipartFile.transferTo(file);
+
+
+                // 파일 DTO 이용하여 Photo 엔티티 생성
+                SBoardFile photo = new SBoardFile();
+                final_name = getShortFilePath(final_name);
+                photo.setSave_file(final_name);
+                photo.setSBoard(sboard);
+                // 생성 후 리스트에 추가
+                fileList.add(photo);
 
                 // 파일 권한 설정(쓰기, 읽기)
                 file.setWritable(true);
@@ -95,5 +99,10 @@ public class FileHandler {
         }
 
         return fileList;
+    }
+
+    private String getShortFilePath(String path) {
+        int idx = path.indexOf("image");
+        return path.substring(idx, path.length());
     }
 }

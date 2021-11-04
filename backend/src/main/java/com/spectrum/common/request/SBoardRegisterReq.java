@@ -15,6 +15,6 @@ import java.util.List;
 public class SBoardRegisterReq {
     @ApiModelProperty(name="content", example="반갑습니다")
     private String content;
-    @ApiModelProperty(name="files")
+    @ApiModelProperty(name="snsfiles")
     private List<MultipartFile> snsfiles;
 }

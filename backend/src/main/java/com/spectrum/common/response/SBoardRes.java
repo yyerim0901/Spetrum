@@ -17,10 +17,6 @@ import java.util.List;
 @Setter
 @ApiModel("SBoardRes")
 public class SBoardRes {
-    @ApiModelProperty(name="응답 메시지", example = "정상")
-    String message = null;
-    @ApiModelProperty(name="응답 코드", example = "200")
-    Integer statusCode = null;
 
     @ApiModelProperty(name="id", example = "1")
     long id;
@@ -40,16 +36,8 @@ public class SBoardRes {
     @ApiModelProperty(name="list", example = "")
     List<SBoardFile> filelist;
 
-    public static SBoardRes of(Integer statusCode, String message) {
+    public static SBoardRes of(SBoard sBoard, List<SBoardFile> files) {
         SBoardRes res = new SBoardRes();
-        res.setStatusCode(statusCode);
-        res.setMessage(message);
-        return res;
-    }
-    public static SBoardRes of(Integer statusCode, String message, SBoard sBoard, List<SBoardFile> files) {
-        SBoardRes res = new SBoardRes();
-        res.setStatusCode(statusCode);
-        res.setMessage(message);
         res.setId(sBoard.getId());
         res.setCreated(sBoard.getCreated());
         res.setUpdated(sBoard.getUpdated());
