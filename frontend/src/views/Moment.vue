@@ -27,7 +27,7 @@
 <script>
 import Footer from '../components/molecules/Footer.vue'
 import Header from '../components/molecules/Header.vue'
-
+import axios from '@/axios/index'
 import {mapState} from 'vuex';
 export default {
   name:'Moment',
@@ -38,11 +38,11 @@ export default {
   },
   data(){
     return{
-      DEFAULT_IMAGE: '@/assets/img_logo.jpg',
       isActive:4,
       userid: '',
       isfollowed:true,
       notme:true,
+      mywrites:null,
     }
   },
   computed:{
@@ -60,6 +60,17 @@ export default {
   created(){
     this.userid = localStorage.getItem('userid');
     this.$store.dispatch('requestUser',this.userid);
+    axios({
+      url:'/sns/',
+      method:'get',
+      params:{
+        page:1,
+      }
+    })
+      .then(res=>{
+        this.mywrites = res.data.filelist;
+        console.log(res);
+      })
   }
 
 }
