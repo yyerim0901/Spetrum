@@ -206,4 +206,20 @@ public class UserServiceImpl implements UserService{
 
         followRepository.save(follow);
     }
+
+    @Override
+    public void followAccept(FollowReq followReq) {
+        String to = followReq.getFrom();
+        String from = followReq.getTo();
+
+        User fromuser = userRepository.findByUserId(from).get();
+        User touser = userRepository.findByUserId(to).get();
+        Follow follow = followRepository.findByFollow(fromuser).get();
+
+        follow.setFollow(fromuser);
+        follow.setFollower(touser);
+        follow.setStatus(true);
+
+        followRepository.save(follow);
+    }
 }
