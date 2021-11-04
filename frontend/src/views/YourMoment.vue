@@ -19,6 +19,9 @@
         <button v-if="isfollowed" class="follow-button">팔로우</button>
         <button v-else class="unfollow-button">언팔로우</button>
       </div>
+      <div>
+
+      </div>
     </div>
     <hr class="fott">
     <Footer :isActive="isActive"></Footer>
@@ -68,7 +71,6 @@ export default {
           method:'get',
         })
         .then(res=>{
-          console.log(res);
           this.nickname = res.data.nickname;
           this.userid = res.data.userId;
           this.thumbnail = res.data.thumbnail;

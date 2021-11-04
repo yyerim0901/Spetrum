@@ -18,9 +18,14 @@ const sizes = {
     size : "0.875rem",
   },
   small : {
+    width:"80px",
+    height:"30px",
+    size : "0.725rem"
+  },
+  realsmall:{
     width:"40px",
     height:"30px",
-    size : "0.625rem"
+    size : "0.65rem"
   }
 }
 const StyledButton = styled('button', buttonProps)`

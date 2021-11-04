@@ -7,6 +7,7 @@ const colors ={
   white: "#fff",
   pink: "#F7797D",
   babypink: "#EE9CA7",
+  strawberry:"#FFDDE1",
   Gray: "#B2BEC3"
 };
 

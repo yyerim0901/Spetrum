@@ -11,6 +11,7 @@ import PetTest from '../views/PetTest'
 import TestResult from '../views/TestResult'
 import YourMoment from '../views/YourMoment'
 import AddMoment from '../views/AddMoment'
+import MDetail from '../views/MDetail'
 Vue.use(VueRouter)
 
 const routes = [
@@ -45,6 +46,11 @@ const routes = [
     path: '/mymoment/write',
     name:'AddMoment',
     component: AddMoment,
+  },
+  {
+    path: '/moment/:boardid',
+    name:'MDetail',
+    component: MDetail,
   },
   {
     path: '/moment/:userid',
