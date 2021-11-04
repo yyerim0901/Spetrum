@@ -1,8 +1,11 @@
 package com.spectrum.service;
 
+import com.spectrum.common.request.FollowReq;
 import com.spectrum.common.request.UserRegisterPostReq;
 import com.spectrum.common.request.UserUpdateReq;
+import com.spectrum.entity.Follow;
 import com.spectrum.entity.User;
+import com.spectrum.repository.FollowRepository;
 import com.spectrum.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,6 +24,9 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    FollowRepository followRepository;
 
     String BASE_PATH = "resources/image/profile/";
 
@@ -183,5 +189,21 @@ public class UserServiceImpl implements UserService{
         } catch (Exception e) {
             e.getStackTrace();
         }
+    }
+
+    @Override
+    public void follow(FollowReq followReq) {
+        String from = followReq.getFrom();
+        String to = followReq.getTo();
+        Follow follow = new Follow();
+
+        User fromuser = userRepository.findByUserId(from).get();
+        User touser = userRepository.findByUserId(to).get();
+
+        follow.setFollow(fromuser);
+        follow.setFollower(touser);
+        follow.setStatus(false);
+
+        followRepository.save(follow);
     }
 }

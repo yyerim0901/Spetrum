@@ -3,6 +3,7 @@ package com.spectrum.controller;
 import com.spectrum.common.jwt.CookieUtil;
 import com.spectrum.common.jwt.JWTUtil;
 import com.spectrum.common.jwt.RedisUtil;
+import com.spectrum.common.request.FollowReq;
 import com.spectrum.common.request.UserLoginReq;
 import com.spectrum.common.request.UserRegisterPostReq;
 import com.spectrum.common.request.UserUpdateReq;
@@ -160,5 +161,17 @@ public class UserController {
         userService.deleteUser(userid);
 
         return ResponseEntity.ok(UserResponse.of(200, "회원정보수정 완료"));
+    }
+
+    @PostMapping("/follow")
+    @ApiOperation(value = "팔로우", notes = "팔로우 신청")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+    })
+    public ResponseEntity<UserResponse> follow(@ApiParam(value="로그인", required = true) FollowReq followReq){
+
+        userService.follow(followReq);
+
+        return ResponseEntity.ok(UserResponse.of(200, "팔로우 성공"));
     }
 }
