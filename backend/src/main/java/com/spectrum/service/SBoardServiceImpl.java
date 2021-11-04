@@ -29,21 +29,23 @@ public class SBoardServiceImpl implements SBoardService {
     FileHandler fileHandler;
 
     String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/image/";
+//    String BASE_PATH = new File("").getAbsolutePath() + "/src/main/resources/image/";
 
     @Override
     public List<SBoardRes> getSBoardsByUser(User user, Pageable pageable) {
         List<SBoardRes> res = new ArrayList<>();
         List<SBoard> sboards = sBoardRepository.findAllByUser(user, pageable);
         for (SBoard sBoard : sboards) {
-            List<SBoardFile> sboardf = sBoardFileRepository.findAllById(sBoard.getId());
+            Optional<List<SBoardFile>> sboardf = sBoardFileRepository.findBysBoard(sBoard);
+            System.out.println(sboardf.get());
             SBoardRes br = new SBoardRes();
-            br.setFilelist(sboardf);
+            br.setFilelist(sboardf.get());
             br.setId(sBoard.getId());
             br.setContent(sBoard.getContent());
             br.setCreated(sBoard.getCreated());
             br.setUpdated(sBoard.getUpdated());
             br.setLikes(sBoard.getLikes());
-            br.setFilelist(sboardf);
+            br.setFilelist(sboardf.get());
             res.add(br);
         }
         return res;

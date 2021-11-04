@@ -60,6 +60,7 @@ public class UserServiceImpl implements UserService{
         User tmpuser = userRepository.save(res);
         // sns 유저 폴더 생성
         String user_path = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/image/sns/" + tmpuser.getId();
+//        String user_path = new File("").getAbsolutePath() + "/src/main/resources/image/sns/" + tmpuser.getId();
         File createFolder = new File(user_path);
         if(!createFolder.exists()) {
             createFolder.mkdirs();
