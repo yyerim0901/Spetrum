@@ -22,8 +22,7 @@ public class Dogging extends BaseEntity {
     private Date date;
     private String location;
     private String picture;
-    @ElementCollection
-//    private List<Path> path = new ArrayList<>();
+//    private String doggingPath; //도깅 gpx 파일 경로 저장(userId+doggingId.gpx)
 
     @JoinColumn(name = "user_pk")
     @ManyToOne
