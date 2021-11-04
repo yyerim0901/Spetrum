@@ -23,15 +23,12 @@ export default {
     }
   },
   computed:{
-    ...mapState(['type'])
+    ...mapState(['userInfo'])
   },
   created(){
     axios({
-      url:'petbti',
+      url:`/petbti?keyword=${Number(this.userInfo.type)}`,
       method:'get',
-      parmas:{
-        keyword:this.type,
-      }
     })
     .then(res=>{
       console.log(res);

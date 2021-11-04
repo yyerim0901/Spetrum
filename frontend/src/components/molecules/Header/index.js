@@ -48,10 +48,10 @@ export const Container = styled('div',HeadProps)`
   }
   p {
     display: ${(props) => (props.isLogo ? "none" : "block")};
-    font-size: ${theme.fontSizes.xxl};
+    font-size: ${theme.fontSizes.xl};
     color: ${theme.colors.black};
     font-weight: bold;
-    margin:0 0px 0 165px ;
+    margin:0 0px 0 170px ;
 
   }
 `;

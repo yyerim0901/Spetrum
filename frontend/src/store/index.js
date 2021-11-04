@@ -165,7 +165,6 @@ export default new Vuex.Store({
       commit('SET_USER_TYPE',payload)
     },
 
-
   },
   modules: {
   }

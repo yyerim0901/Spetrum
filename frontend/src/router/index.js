@@ -10,6 +10,7 @@ import MyPage from '../views/MyPage'
 import PetTest from '../views/PetTest'
 import TestResult from '../views/TestResult'
 import YourMoment from '../views/YourMoment'
+import AddMoment from '../views/AddMoment'
 Vue.use(VueRouter)
 
 const routes = [
@@ -39,6 +40,11 @@ const routes = [
     path: '/mymoment',
     name:'Moment',
     component: Moment,
+  },
+  {
+    path: '/mymoment/write',
+    name:'AddMoment',
+    component: AddMoment,
   },
   {
     path: '/moment/:userid',
