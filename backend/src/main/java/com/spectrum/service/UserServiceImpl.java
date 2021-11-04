@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService{
     @Autowired
     UserRepository userRepository;
 
-    String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/image/profile/";
+    String BASE_PATH = "resources/image/profile/";
 
     @Override
     public void createUser(UserRegisterPostReq registerInfo) throws IOException {
