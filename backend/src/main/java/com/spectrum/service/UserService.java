@@ -23,4 +23,6 @@ public interface UserService {
     void deleteUser(String userid);
 
     void follow(FollowReq followReq);
+
+    void followAccept(FollowReq followReq);
 }

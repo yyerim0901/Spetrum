@@ -168,9 +168,20 @@ public class UserController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
     })
-    public ResponseEntity<UserResponse> follow(@ApiParam(value="로그인", required = true) FollowReq followReq){
+    public ResponseEntity<UserResponse> follow(@ApiParam(value="팔로우", required = true) FollowReq followReq){
 
         userService.follow(followReq);
+
+        return ResponseEntity.ok(UserResponse.of(200, "팔로우 성공"));
+    }
+    @PutMapping("/followAccept")
+    @ApiOperation(value = "팔로우 요청 수락", notes = "팔로우 요청 수락")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+    })
+    public ResponseEntity<UserResponse> followAccept(@ApiParam(value="팔로우 요청", required = true) FollowReq followReq){
+
+        userService.followAccept(followReq);
 
         return ResponseEntity.ok(UserResponse.of(200, "팔로우 성공"));
     }
