@@ -28,4 +28,6 @@ public interface UserService {
     void followAccept(FollowReq followReq);
 
     List<String> searchUserId(String userid);
+
+    String followCheck(String userid, String myid);
 }

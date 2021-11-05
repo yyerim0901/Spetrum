@@ -201,4 +201,6 @@ public class UserController {
 
         return ResponseEntity.ok(UserResponse.of(200, "팔로우 성공"));
     }
+
+
 }
