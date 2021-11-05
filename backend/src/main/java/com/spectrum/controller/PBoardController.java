@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 
 
@@ -39,7 +40,7 @@ public class PBoardController {
     private ResponseEntity<String> postPetsitter(
             @ApiParam(value = "게시글 작성", required = true) PBoardPostReq petSitterPostRequest,
             @RequestPart(value = "image", required = false) MultipartFile petSitterImage,
-            HttpServletRequest request){
+            HttpServletRequest request) throws IOException {
 
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
 
@@ -53,15 +54,15 @@ public class PBoardController {
     )
     @PutMapping
     private ResponseEntity<String> updatePetsitter(
+            HttpServletRequest request,
             @ApiParam(value = "게시글 수정", required = true) PBoardUpdateReq pBoardUpdateReq,
             @RequestPart(value = "image", required = false) MultipartFile newPicture
-            ){
-//        String token = request.getHeader(HttpHeaders.AUTHORIZATION);
-//        if(!petSitterService.checkWriterOfBoard(pBoardUpdateReq,token)) {
-//            petSitterService.updatePetSitter(pBoardUpdateReq, newPicture);
-//            return new ResponseEntity<>("글 수정 권한 없음", HttpStatus.UNAUTHORIZED);
-//        }else
-        petSitterService.updatePetSitter(pBoardUpdateReq, newPicture);
+            ) throws IOException {
+        String token = request.getHeader(HttpHeaders.AUTHORIZATION);
+        if(!petSitterService.checkWriterOfBoard(pBoardUpdateReq,token)) {
+            return new ResponseEntity<>("글 수정 권한 없음", HttpStatus.UNAUTHORIZED);
+        }
+        petSitterService.updatePetSitter(pBoardUpdateReq, newPicture, token);
         return new ResponseEntity<>("펫 시터 글 수정 완료",HttpStatus.OK);
     }
 
@@ -71,8 +72,8 @@ public class PBoardController {
     )
     @DeleteMapping
     private ResponseEntity<String> deletePetsitter(
-            @RequestBody Long petSitterId
-            ){
+            @ApiParam(value = "게시글 id", required = true) Long petSitterId
+            ) throws IOException {
         petSitterService.deletePetSitter(petSitterId);
         return new ResponseEntity<>("delete success", HttpStatus.OK);
     }

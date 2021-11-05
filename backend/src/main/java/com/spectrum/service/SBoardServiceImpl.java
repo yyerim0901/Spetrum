@@ -41,6 +41,7 @@ public class SBoardServiceImpl implements SBoardService {
             SBoardRes br = new SBoardRes();
             br.setFilelist(sboardf.get());
             br.setId(sBoard.getId());
+            br.setUserid(sBoard.getUser().getUserId());
             br.setContent(sBoard.getContent());
             br.setCreated(sBoard.getCreated());
             br.setUpdated(sBoard.getUpdated());
@@ -66,7 +67,6 @@ public class SBoardServiceImpl implements SBoardService {
         // 파일을 저장할 세부 경로 지정
         String path = BASE_PATH + "image/sns/" + user.getId() +'/'+ tmpsboard.getId();
         File file = new File(path);
-
         // 디렉터리가 존재하지 않을 경우
         if(!file.exists()) {
             boolean wasSuccessful = file.mkdirs();

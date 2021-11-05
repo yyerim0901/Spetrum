@@ -21,6 +21,9 @@ public class SBoardRes {
     @ApiModelProperty(name="id", example = "1")
     long id;
 
+    @ApiModelProperty(name="userid", example = "ssafy")
+    String userid;
+
     @ApiModelProperty(name="content", example = "한줄sns내용")
     String content;
 
@@ -39,6 +42,7 @@ public class SBoardRes {
     public static SBoardRes of(SBoard sBoard, List<SBoardFile> files) {
         SBoardRes res = new SBoardRes();
         res.setId(sBoard.getId());
+        res.setUserid(sBoard.getUser().getUserId());
         res.setCreated(sBoard.getCreated());
         res.setUpdated(sBoard.getUpdated());
         res.setContent(sBoard.getContent());
