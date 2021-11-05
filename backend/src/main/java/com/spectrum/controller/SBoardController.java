@@ -64,12 +64,12 @@ public class SBoardController {
     }
 
     @GetMapping("/users/{userid}")
-    @ApiOperation(value = "나의 sns 전체 조회 _ paging")
+    @ApiOperation(value = "나의 sns 전체 조회 _ paging",
+            notes = "A: 팔로우상태, B: 요청했지만 아직 수락하지 않은 상태 [요청됨], C: 요청받았지만 수락하지 않은 상태 [수락]/[거절]")
     @ApiResponses({
             @ApiResponse(code = 201, message = "성공"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-
     public ResponseEntity<SBoardListRes> searchAllOther(
             @ApiIgnore HttpServletRequest request,
             @PathVariable("userid") String userid) {
@@ -77,7 +77,11 @@ public class SBoardController {
         Pageable pageable = PageRequest.of(pagenum-1, 10, Sort.by(Sort.Direction.DESC, "created"));
         User user = userService.findUserByUserId(userid);
         List<SBoardRes> sboardList = sBoardService.getSBoardsByUser(user, pageable);
-        return ResponseEntity.status(200).body(SBoardListRes.of(200, "성공", sboardList));
+
+        String token = request.getHeader(HttpHeaders.AUTHORIZATION);
+        String myid = jwtUtil.getUsername(token);
+        String status = userService.followCheck(userid,myid);
+        return ResponseEntity.status(200).body(SBoardListRes.of(200, "성공", sboardList,status));
     }
 
     @GetMapping("/{sboardid}")

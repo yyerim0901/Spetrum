@@ -242,4 +242,33 @@ public class UserServiceImpl implements UserService{
 
         return res;
     }
+
+    @Override
+    public String followCheck(String userid, String myid) {
+
+        User my = userRepository.findByUserId(myid).get();
+        User user = userRepository.findByUserId(userid).get();
+//        System.out.println("myid "+ my.getUserId());
+//        System.out.println("userid "+ user.getUserId());
+
+        Optional<Follow> follow = followRepository.findByFollowAndFollower(my,user);
+        if(follow.isPresent())
+        {
+            if(follow.get().isStatus())
+            {
+                return "A"; // 언팔로우 버튼
+            }
+            else
+                return "B"; // 요청됨
+        }
+        else
+        {
+            follow = followRepository.findByFollowAndFollower(user,my);
+            if(follow.get().isStatus())
+                return "A"; // 언팔로우 버튼
+            else
+                return "C"; // 수락, 거절 버튼
+        }
+
+    }
 }
