@@ -108,12 +108,12 @@ public class UserController {
     public ResponseEntity<UesrInfoResponse> search(@PathVariable("userid") String userid){
         User user = userService.search(userid);
         List<User> followList = userService.followList(userid);
-
+        List<User> followerList = userService.followerList(userid);
         if(user == null)
         {
             return null;
         }
-        return ResponseEntity.ok(UesrInfoResponse.of(user,followList));
+        return ResponseEntity.ok(UesrInfoResponse.of(user,followList,followerList));
     }
 
     @GetMapping("/searchUserId/{userid}")
