@@ -23,6 +23,7 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -112,6 +113,18 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    @GetMapping("/searchUserId/{userid}")
+    @ApiOperation(value = "회원정보 검색", notes = "userid가 포함되어있는 회원 id를 조회한다")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+    })
+    public ResponseEntity<UserResponse> searchUserId(@PathVariable("userid") String userid){
+
+        List<String> user =  userService.searchUserId(userid);
+
+        return ResponseEntity.ok(UserResponse.of(user));
+    }
+
     @GetMapping("/checkID")
     @ApiOperation(value = "아이디 중복체크", notes = "회원 아이디 중복검사")
     @ApiResponses({
@@ -163,6 +176,8 @@ public class UserController {
         return ResponseEntity.ok(UserResponse.of(200, "회원정보수정 완료"));
     }
 
+
+
     @PostMapping("/follow")
     @ApiOperation(value = "팔로우", notes = "팔로우 신청")
     @ApiResponses({
@@ -174,6 +189,7 @@ public class UserController {
 
         return ResponseEntity.ok(UserResponse.of(200, "팔로우 성공"));
     }
+
     @PutMapping("/followAccept")
     @ApiOperation(value = "팔로우 요청 수락", notes = "팔로우 요청 수락")
     @ApiResponses({

@@ -15,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -221,5 +223,23 @@ public class UserServiceImpl implements UserService{
         follow.setStatus(true);
 
         followRepository.save(follow);
+    }
+
+    @Override
+    public List<String> searchUserId(String userid) {
+        List<User> userlist = userRepository.findAll();
+        List<String> res = new ArrayList();
+        for (User user : userlist)
+        {
+//            System.out.println(user.getUserId());
+            if(user.getUserId().contains(userid))
+            {
+//                System.out.println("★");
+                res.add(user.getUserId());
+            }
+        }
+
+
+        return res;
     }
 }
