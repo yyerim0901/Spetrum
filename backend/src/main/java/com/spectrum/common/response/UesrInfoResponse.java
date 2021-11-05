@@ -16,11 +16,13 @@ public class UesrInfoResponse {
 
     User user;
     List<User> followList;
+    List<User> followerList;
 
-    public static UesrInfoResponse of(User user, List<User> followList) {
+    public static UesrInfoResponse of(User user, List<User> followList,List<User> followerList) {
         UesrInfoResponse res = new UesrInfoResponse();
         res.setUser(user);
         res.setFollowList(followList);
+        res.setFollowerList(followerList);
         return res;
     }
 }

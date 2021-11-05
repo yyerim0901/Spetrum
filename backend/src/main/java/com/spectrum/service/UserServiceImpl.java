@@ -242,7 +242,6 @@ public class UserServiceImpl implements UserService{
         else
             return "B";
     }
-
     @Override
     public List<User> followList(String userid) {
         User user = userRepository.findByUserId(userid).get();
@@ -252,6 +251,18 @@ public class UserServiceImpl implements UserService{
         for (Follow follow : followlist)
         {
             userList.add(follow.getFollow());
+        }
+        return userList;
+    }
+    @Override
+    public List<User> followerList(String userid) {
+        User user = userRepository.findByUserId(userid).get();
+        List<Follow> followlist = followRepository.findAllByFollow(user);
+        List<User> userList = new ArrayList();
+
+        for (Follow follow : followlist)
+        {
+            userList.add(follow.getFollower());
         }
         return userList;
     }
