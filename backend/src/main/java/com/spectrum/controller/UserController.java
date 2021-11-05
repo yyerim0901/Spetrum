@@ -7,6 +7,7 @@ import com.spectrum.common.request.FollowReq;
 import com.spectrum.common.request.UserLoginReq;
 import com.spectrum.common.request.UserRegisterPostReq;
 import com.spectrum.common.request.UserUpdateReq;
+import com.spectrum.common.response.UesrInfoResponse;
 import com.spectrum.common.response.UserResponse;
 import com.spectrum.entity.User;
 import com.spectrum.service.UserService;
@@ -104,13 +105,15 @@ public class UserController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
     })
-    public ResponseEntity<User> search(@PathVariable("userid") String userid){
+    public ResponseEntity<UesrInfoResponse> search(@PathVariable("userid") String userid){
         User user = userService.search(userid);
+        List<User> followList = userService.followList(userid);
+
         if(user == null)
         {
             return null;
         }
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(UesrInfoResponse.of(user,followList));
     }
 
     @GetMapping("/searchUserId/{userid}")
@@ -189,18 +192,5 @@ public class UserController {
 
         return ResponseEntity.ok(UserResponse.of(200, "팔로우 성공"));
     }
-
-    @PutMapping("/followAccept")
-    @ApiOperation(value = "팔로우 요청 수락", notes = "팔로우 요청 수락")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "성공"),
-    })
-    public ResponseEntity<UserResponse> followAccept(@ApiParam(value="팔로우 요청", required = true) FollowReq followReq){
-
-        userService.followAccept(followReq);
-
-        return ResponseEntity.ok(UserResponse.of(200, "팔로우 성공"));
-    }
-
 
 }

@@ -65,7 +65,7 @@ public class SBoardController {
 
     @GetMapping("/users/{userid}")
     @ApiOperation(value = "나의 sns 전체 조회 _ paging",
-            notes = "A: 팔로우상태, B: 요청했지만 아직 수락하지 않은 상태 [요청됨], C: 요청받았지만 수락하지 않은 상태 [수락]/[거절]")
+            notes = "A: 팔로우상태, B: 팔로우 아닌상태")
     @ApiResponses({
             @ApiResponse(code = 201, message = "성공"),
             @ApiResponse(code = 500, message = "서버 오류")

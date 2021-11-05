@@ -202,25 +202,8 @@ public class UserServiceImpl implements UserService{
         User fromuser = userRepository.findByUserId(from).get();
         User touser = userRepository.findByUserId(to).get();
 
-        follow.setFollow(fromuser);
-        follow.setFollower(touser);
-        follow.setStatus(false);
-
-        followRepository.save(follow);
-    }
-
-    @Override
-    public void followAccept(FollowReq followReq) {
-        String to = followReq.getFrom();
-        String from = followReq.getTo();
-
-        User fromuser = userRepository.findByUserId(from).get();
-        User touser = userRepository.findByUserId(to).get();
-        Follow follow = followRepository.findByFollow(fromuser).get();
-
-        follow.setFollow(fromuser);
-        follow.setFollower(touser);
-        follow.setStatus(true);
+        follow.setFollower(fromuser);
+        follow.setFollow(touser);
 
         followRepository.save(follow);
     }
@@ -251,24 +234,25 @@ public class UserServiceImpl implements UserService{
 //        System.out.println("myid "+ my.getUserId());
 //        System.out.println("userid "+ user.getUserId());
 
-        Optional<Follow> follow = followRepository.findByFollowAndFollower(my,user);
-        if(follow.isPresent())
+        Optional<Follow> follow = followRepository.findByFollowAndFollower(user,my);
+        if (follow.isPresent())
         {
-            if(follow.get().isStatus())
-            {
-                return "A"; // 언팔로우 버튼
-            }
-            else
-                return "B"; // 요청됨
+            return "A";
         }
         else
-        {
-            follow = followRepository.findByFollowAndFollower(user,my);
-            if(follow.get().isStatus())
-                return "A"; // 언팔로우 버튼
-            else
-                return "C"; // 수락, 거절 버튼
-        }
+            return "B";
+    }
 
+    @Override
+    public List<User> followList(String userid) {
+        User user = userRepository.findByUserId(userid).get();
+        List<Follow> followlist = followRepository.findAllByFollower(user);
+        List<User> userList = new ArrayList();
+
+        for (Follow follow : followlist)
+        {
+            userList.add(follow.getFollow());
+        }
+        return userList;
     }
 }

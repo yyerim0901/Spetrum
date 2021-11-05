@@ -13,8 +13,6 @@ import javax.persistence.ManyToOne;
 @Setter
 public class Follow extends BaseEntity{
 
-    boolean status;
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "follow")
     User follow;
