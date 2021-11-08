@@ -32,4 +32,6 @@ public interface UserService {
     List<User> followList(String userid);
 
     List<User> followerList(String userid);
+
+    void unfollow(String myid,String userid);
 }
