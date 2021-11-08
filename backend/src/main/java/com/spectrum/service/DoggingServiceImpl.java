@@ -16,6 +16,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
 import io.jenetics.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -67,14 +68,14 @@ public class DoggingServiceImpl implements DoggingService{
         res.setTime(dogging.getTime());
         res.setDate(dogging.getDate());
         res.setLocation(dogging.getLocation());
-        res.setPicture(dogging.getPicture()); //얘를 줄일 수 있을 것 같은뎅
+        res.setPicture(dogging.getCustomPicturePath()); //얘를 줄일 수 있을 것 같은뎅
         res.setObjects(objects);
 
         return res;
     }
 
     @Override
-    public void PostDogging(DoggingPostReq doggingPostReq) throws IOException {
+    public void PostDogging(DoggingPostReq doggingPostReq)  {
         Date date = new Date();
 
         Dogging dogging = new Dogging();
@@ -84,12 +85,21 @@ public class DoggingServiceImpl implements DoggingService{
         dogging.setDate(date);
         dogging.setUser(user);
 
-        doggingRepository.save(dogging); //저장하고 여기 도깅 아이디가 뭔지 바로 찾을 수 있으려나
-        System.out.println(dogging.getId());
-        Long doggingId = dogging.getId();
-        SaveDoggingPath(user.getId(),doggingId,doggingPostReq.getLats(),doggingPostReq.getLngs());
-        
+        doggingRepository.save(dogging);
     }
+
+    @Override
+    public void customImage(MultipartFile multipartFile, Long doggingId) throws IOException{
+
+        Optional<Dogging> doggingOptional = doggingRepository.findById(doggingId);
+        Dogging dogging = doggingOptional.get();
+
+        CustomImage customImage = new CustomImage();
+        String path = customImage.customImage(multipartFile, dogging);
+        dogging.setCustomPicturePath(path);
+        doggingRepository.save(dogging);
+    }
+
 
     @Override
     public void SaveDoggingPath(Long userId, Long doggingId, float[] lats, float[] lngs) throws IOException{
@@ -101,14 +111,13 @@ public class DoggingServiceImpl implements DoggingService{
         for(int i=0; i<lats.length; i++){
             wayPoints.add(WayPoint.of(lats[i], lngs[i]));
         }
-        final GPX gpx1 = GPX.builder()
+        final GPX gpx = GPX.builder()
                 .addTrack(track -> track
                         .addSegment(segment -> segment
                                 .points(wayPoints)))
                 .build();
 
-
-        GPX.write(gpx1, filePath+fileName+".gpx");
+        GPX.write(gpx, filePath+fileName+".gpx");
         return;
     }
 
