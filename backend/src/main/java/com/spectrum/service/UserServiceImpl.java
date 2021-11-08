@@ -222,7 +222,6 @@ public class UserServiceImpl implements UserService{
             }
         }
 
-
         return res;
     }
 
@@ -265,5 +264,16 @@ public class UserServiceImpl implements UserService{
             userList.add(follow.getFollower());
         }
         return userList;
+    }
+
+    @Override
+    public void unfollow(String myid,String userid) {
+
+        User fromuser = userRepository.findByUserId(myid).get();
+        User touser = userRepository.findByUserId(userid).get();
+
+        Optional<Follow> follow = followRepository.findByFollowAndFollower(touser,fromuser);
+
+        followRepository.delete(follow.get());
     }
 }

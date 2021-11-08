@@ -179,8 +179,6 @@ public class UserController {
         return ResponseEntity.ok(UserResponse.of(200, "회원정보수정 완료"));
     }
 
-
-
     @PostMapping("/follow")
     @ApiOperation(value = "팔로우", notes = "팔로우 신청")
     @ApiResponses({
@@ -192,5 +190,23 @@ public class UserController {
 
         return ResponseEntity.ok(UserResponse.of(200, "팔로우 성공"));
     }
+
+    @DeleteMapping("/unfollow/{userid}")
+    @ApiOperation(value = "팔로우", notes = "팔로우 신청")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+    })
+    public ResponseEntity<UserResponse> unfollow(@ApiIgnore HttpServletRequest request,
+                                                 @PathVariable("userid") String userid){
+        String token = request.getHeader(HttpHeaders.AUTHORIZATION);
+        String myid = jwtUtil.getUsername(token);
+        System.out.println("myid "+myid);
+
+        userService.unfollow(myid,userid);
+
+        return ResponseEntity.ok(UserResponse.of(200, "언팔로우 성공"));
+    }
+
+
 
 }
