@@ -4,37 +4,25 @@ import com.spectrum.common.jwt.JWTUtil;
 import com.spectrum.common.request.DoggingPostReq;
 import com.spectrum.common.response.DoggingDetailResponse;
 import com.spectrum.entity.Dogging;
-import com.spectrum.entity.Path;
 import com.spectrum.entity.User;
 import com.spectrum.repository.UserRepository;
+import com.spectrum.service.CustomImage;
 import com.spectrum.service.DoggingService;
 import io.jenetics.jpx.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.Column;
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import static org.apache.tomcat.util.descriptor.Constants.PACKAGE_NAME;
 
 @Api(value = "도깅 API", tags = {"Dogging"})
 @RestController
@@ -124,6 +112,19 @@ public class DoggingController {
     }
 
     @ApiOperation(
+            value = "도깅 완료 후 사진 커스텀",
+            notes = "도깅 완료 후 버튼을 통해 커스텀을 실행시키면 **이미지 파일, doggingId**로 이미지 커스텀"
+    )
+    @PostMapping("/image")
+    public ResponseEntity<?> customImageTest(@ApiParam(value = "imageTest", required = true) MultipartFile multipartFile,
+                                             @RequestParam Long doggingId) throws IOException{
+
+        doggingService.customImage(multipartFile,doggingId);
+        return new ResponseEntity<String>("success to make Image",HttpStatus.OK);
+    }
+
+
+    @ApiOperation(
             value = "도깅 기록하기",
             notes = "**거리,시간,지역,Float[]위경도 배열 따로 두 개**를 받아서 저장 / 사진 추후 수정"
     )
@@ -132,7 +133,7 @@ public class DoggingController {
                                               HttpServletRequest request) throws IOException {
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
         doggingService.saveUserInfo(token);
-        System.out.println(doggingPostReq.getLats()[0]);
+
         doggingService.PostDogging(doggingPostReq);
         return new ResponseEntity<>("post dogging success",HttpStatus.OK);
     }
