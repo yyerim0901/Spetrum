@@ -107,8 +107,8 @@ public class UserController {
     })
     public ResponseEntity<UesrInfoResponse> search(@PathVariable("userid") String userid){
         User user = userService.search(userid);
-        List<User> followList = userService.followList(userid);
-        List<User> followerList = userService.followerList(userid);
+        List<String> followList = userService.followList(userid);
+        List<String> followerList = userService.followerList(userid);
         if(user == null)
         {
             return null;
@@ -200,11 +200,25 @@ public class UserController {
                                                  @PathVariable("userid") String userid){
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
         String myid = jwtUtil.getUsername(token);
-        System.out.println("myid "+myid);
 
         userService.unfollow(myid,userid);
 
         return ResponseEntity.ok(UserResponse.of(200, "언팔로우 성공"));
+    }
+
+    @DeleteMapping("/followcheck/{userid}")
+    @ApiOperation(value = "팔로우", notes = "팔로우 신청")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+    })
+    public ResponseEntity<UserResponse> followcheck(@ApiIgnore HttpServletRequest request,
+                                                 @PathVariable("userid") String userid){
+        String token = request.getHeader(HttpHeaders.AUTHORIZATION);
+        String myid = jwtUtil.getUsername(token);
+
+        String message = userService.followCheck(userid,myid);
+
+        return ResponseEntity.ok(UserResponse.of(200, message));
     }
 
 

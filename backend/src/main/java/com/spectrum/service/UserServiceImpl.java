@@ -242,26 +242,26 @@ public class UserServiceImpl implements UserService{
             return "B";
     }
     @Override
-    public List<User> followList(String userid) {
+    public List<String> followList(String userid) {
         User user = userRepository.findByUserId(userid).get();
         List<Follow> followlist = followRepository.findAllByFollower(user);
-        List<User> userList = new ArrayList();
+        List<String> userList = new ArrayList();
 
         for (Follow follow : followlist)
         {
-            userList.add(follow.getFollow());
+            userList.add(follow.getFollow().getUserId());
         }
         return userList;
     }
     @Override
-    public List<User> followerList(String userid) {
+    public List<String> followerList(String userid) {
         User user = userRepository.findByUserId(userid).get();
         List<Follow> followlist = followRepository.findAllByFollow(user);
-        List<User> userList = new ArrayList();
+        List<String> userList = new ArrayList();
 
         for (Follow follow : followlist)
         {
-            userList.add(follow.getFollower());
+            userList.add(follow.getFollower().getUserId());
         }
         return userList;
     }

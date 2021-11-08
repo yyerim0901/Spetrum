@@ -15,10 +15,10 @@ import java.util.List;
 public class UesrInfoResponse {
 
     User user;
-    List<User> followList;
-    List<User> followerList;
+    List<String> followList;
+    List<String> followerList;
 
-    public static UesrInfoResponse of(User user, List<User> followList,List<User> followerList) {
+    public static UesrInfoResponse of(User user, List<String> followList,List<String> followerList) {
         UesrInfoResponse res = new UesrInfoResponse();
         res.setUser(user);
         res.setFollowList(followList);

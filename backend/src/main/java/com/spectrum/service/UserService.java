@@ -29,9 +29,9 @@ public interface UserService {
 
     String followCheck(String userid, String myid);
 
-    List<User> followList(String userid);
+    List<String> followList(String userid);
 
-    List<User> followerList(String userid);
+    List<String> followerList(String userid);
 
     void unfollow(String myid,String userid);
 }
