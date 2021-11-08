@@ -1,5 +1,6 @@
 package com.spectrum.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,6 +20,7 @@ public class SComment extends BaseEntity {
     @ManyToOne
     User user;
 
+    @JsonIgnore
     @JoinColumn(name = "sboard_pk")
     @ManyToOne
     SBoard sBoard;
