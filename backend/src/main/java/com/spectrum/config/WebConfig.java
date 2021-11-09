@@ -20,7 +20,8 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000", "http://k5b101.p.ssafy.io","http://localhost:8081")
+                .allowedOrigins("http://localhost:3000", "http://k5b101.p.ssafy.io","http://localhost:8081"
+                ,"http://spetrum.io")
                 .allowedHeaders("*")
                 .allowedMethods("*")
                 .allowCredentials(true);
@@ -30,14 +31,6 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(webInterceptor())
                 .addPathPatterns("/api/**");
-
     }
 
-//    @Bean
-//    public CommonsMultipartResolver multipartResolver() {
-//        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-//        multipartResolver.setDefaultEncoding("UTF-8"); // 파일 인코딩 설정
-//        multipartResolver.setMaxUploadSizePerFile(5 * 1024 * 1024); // 파일당 업로드 크기 제한 (5MB)
-//        return multipartResolver;
-//    }
 }

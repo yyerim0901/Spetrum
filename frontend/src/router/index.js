@@ -10,6 +10,10 @@ import MyPage from '../views/MyPage'
 import PetTest from '../views/PetTest'
 import PetSitter from '../views/PetSitter'
 import PetSitterEachDetail from '../components/molecules/PetSitterEachDetail'
+import TestResult from '../views/TestResult'
+import YourMoment from '../views/YourMoment'
+import AddMoment from '../views/AddMoment'
+import MDetail from '../views/MDetail'
 Vue.use(VueRouter)
 
 const routes = [
@@ -36,9 +40,24 @@ const routes = [
     component: PetBTI,
   },
   {
-    path: '/moment',
+    path: '/mymoment',
     name:'Moment',
     component: Moment,
+  },
+  {
+    path: '/mymoment/write',
+    name:'AddMoment',
+    component: AddMoment,
+  },
+  {
+    path: '/moment/:boardid',
+    name:'MDetail',
+    component: MDetail,
+  },
+  {
+    path: '/moment/:userid',
+    name:'YourMoment',
+    component: YourMoment,
   },
   {
     path: '/dogging',
@@ -64,6 +83,11 @@ const routes = [
     path: '/petsitter/:board_id',
     name:'PetSitterEachDetail',
     component: PetSitterEachDetail
+  },
+  {
+    path: '/petbti/result',
+    name:'TestResult',
+    component: TestResult
   },
 ]
 

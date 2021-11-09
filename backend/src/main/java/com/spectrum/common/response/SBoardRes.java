@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -16,13 +17,12 @@ import java.util.List;
 @Setter
 @ApiModel("SBoardRes")
 public class SBoardRes {
-    @ApiModelProperty(name="응답 메시지", example = "정상")
-    String message = null;
-    @ApiModelProperty(name="응답 코드", example = "200")
-    Integer statusCode = null;
 
     @ApiModelProperty(name="id", example = "1")
     long id;
+
+    @ApiModelProperty(name="userid", example = "ssafy")
+    String userid;
 
     @ApiModelProperty(name="content", example = "한줄sns내용")
     String content;
@@ -39,16 +39,16 @@ public class SBoardRes {
     @ApiModelProperty(name="list", example = "")
     List<SBoardFile> filelist;
 
-    public static SBoardRes of(Integer statusCode, String message) {
+    public static SBoardRes of(SBoard sBoard, List<SBoardFile> files) {
         SBoardRes res = new SBoardRes();
-        res.setStatusCode(statusCode);
-        res.setMessage(message);
-        return res;
-    }
-    public static SBoardRes of(Integer statusCode, String message, SBoard sBoard) {
-        SBoardRes res = new SBoardRes();
-        res.setStatusCode(statusCode);
-        res.setMessage(message);
+        res.setId(sBoard.getId());
+        res.setUserid(sBoard.getUser().getUserId());
+        res.setCreated(sBoard.getCreated());
+        res.setUpdated(sBoard.getUpdated());
+        res.setContent(sBoard.getContent());
+        res.setLikes(sBoard.getLikes());
+        res.setFilelist(files);
+
         return res;
     }
 }

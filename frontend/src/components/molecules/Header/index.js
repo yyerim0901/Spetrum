@@ -23,13 +23,14 @@ export const Container = styled('div',HeadProps)`
   display:flex;
   width: 500px;
   align-items:center;
-  justify-content: center;
+  justify-content: start;
   background-color: white;
 
   i {
     display: ${(props) => (props.isBack ? "block" : "none")};
     font-size: ${theme.fontSizes.xxl};
     font-weight: bold;
+    margin:0 10px;
   };
 
   `
@@ -42,13 +43,15 @@ export const Container = styled('div',HeadProps)`
   img{
     width:110px;
     display: ${(props) => (props.isLogo ? "block" : "none")};
-    margin: 0 0 0 160px;
+    margin:0 170px ;
+
   }
   p {
     display: ${(props) => (props.isLogo ? "none" : "block")};
-    font-size: ${theme.fontSizes.xxl};
+    font-size: ${theme.fontSizes.xl};
     color: ${theme.colors.black};
     font-weight: bold;
+    margin:0 0px 0 170px ;
 
   }
 `;

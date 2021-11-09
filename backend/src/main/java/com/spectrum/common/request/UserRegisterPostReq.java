@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
@@ -15,5 +16,7 @@ public class UserRegisterPostReq {
     String password;
     @ApiModelProperty(name="nickname", example="codingprince")
     String nickname;
+    @ApiModelProperty(name="thumbnail", example="")
+    MultipartFile thumbnail;
 
 }

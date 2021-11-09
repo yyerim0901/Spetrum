@@ -3,9 +3,7 @@ package com.spectrum.service;
 import com.spectrum.entity.SBoard;
 import com.spectrum.entity.SBoardFile;
 import com.spectrum.entity.User;
-import com.spectrum.repository.SBoardFileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -14,9 +12,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class FileHandler {
@@ -25,6 +23,22 @@ public class FileHandler {
     SBoardService sBoardService;
     @Autowired
     ResourceLoader resourceLoader;
+
+    String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/";
+//    String BASE_PATH = new File("").getAbsolutePath() + "/src/main/resources/";
+    public void deleteFile(User user, Long sboardid, Optional<List<SBoardFile>> photoList) {
+
+        for (SBoardFile photo : photoList.get()){
+            String wholepath = BASE_PATH + photo.getSave_file();
+            File file = new File(wholepath);
+            file.delete();
+        }
+        String path = BASE_PATH + "image/sns/" + user.getId() + '/' + sboardid;
+        System.out.println(path);
+        File folder = new File(path);
+        Boolean isOk = folder.delete();
+        System.out.println(isOk);
+    }
 
     public List<SBoardFile> parseFileInfo(List<MultipartFile> multipartFiles, User user, SBoard sboard) throws IOException {
         // 반환할 파일 리스트
@@ -38,23 +52,10 @@ public class FileHandler {
 //                    DateTimeFormatter.ofPattern("yyyyMMdd");
 //            String current_date = now.format(dateTimeFormatter);
 
-            // 프로젝트 디렉터리 내의 저장을 위한 절대 경로 설정
-            // 경로 구분자 File.separator 사용
-            String absolutePath = new File("").getAbsolutePath();
 
 
             // 파일을 저장할 세부 경로 지정
-            String path = absolutePath + "/src/main/resources/sns/" + user.getUserId() + File.separator + sboard.getId();
-            File file = new File(path);
-
-            // 디렉터리가 존재하지 않을 경우
-            if(!file.exists()) {
-                boolean wasSuccessful = file.mkdirs();
-
-                // 디렉터리 생성에 실패했을 경우
-                if(!wasSuccessful)
-                    System.out.println("file: was not successful");
-            }
+            String boardpath = BASE_PATH + "image/sns/" + user.getId() +'/'+ sboard.getId();
 
             // 다중 파일 처리
             for(MultipartFile multipartFile : multipartFiles) {
@@ -75,18 +76,21 @@ public class FileHandler {
                     else  // 다른 확장자일 경우 처리 x
                         break;
                 }
-                String final_name = path + File.separator + multipartFile.getOriginalFilename();
+                String final_name = boardpath + '/' + multipartFile.getOriginalFilename();
                 System.out.println(final_name +" final name@@@@@@@");
+
+                // 업로드 한 파일 데이터를 지정한 파일에 저장
+                File file = new File(final_name);
+                multipartFile.transferTo(file);
+
+
                 // 파일 DTO 이용하여 Photo 엔티티 생성
                 SBoardFile photo = new SBoardFile();
+                final_name = getShortFilePath(final_name);
                 photo.setSave_file(final_name);
                 photo.setSBoard(sboard);
-
                 // 생성 후 리스트에 추가
                 fileList.add(photo);
-                // 업로드 한 파일 데이터를 지정한 파일에 저장
-                file = new File(final_name);
-                multipartFile.transferTo(file);
 
                 // 파일 권한 설정(쓰기, 읽기)
                 file.setWritable(true);
@@ -95,5 +99,10 @@ public class FileHandler {
         }
 
         return fileList;
+    }
+
+    private String getShortFilePath(String path) {
+        int idx = path.indexOf("image");
+        return path.substring(idx, path.length());
     }
 }

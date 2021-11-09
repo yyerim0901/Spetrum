@@ -1,5 +1,6 @@
 package com.spectrum.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +16,7 @@ public class SBoardFile extends BaseEntity {
 
     String save_file;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_pk")
     SBoard sBoard;
