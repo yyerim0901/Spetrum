@@ -7,8 +7,13 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    Boards: [],
   },
   mutations: {
+    GET_BOARDS(state, boards) {
+      console.log('mutation GET_BOARDS실행!!')
+      state.Boards = boards.data
+    }
   },
   actions: {
     requestSignIn(state,payload){
@@ -61,9 +66,21 @@ export default new Vuex.Store({
           userId: payload
         }
       })
+    },
+    getBoards(context) {
+      console.log('actions의 getboards실행!')
+      axios({
+        method: "GET",
+        url: '/pboard/list',
+        headers: {
+          "Authorization": `Bearer ${localStorage.getItem("token")}`
+        },
+      }).then(res => {
+        context.commit("GET_BOARDS", res.data)
+      }).catch(err => {
+        console.log(err)
+      })
     }
-
-
   },
   modules: {
   }
