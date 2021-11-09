@@ -8,12 +8,6 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     Boards: [],
-  },
-  mutations: {
-    GET_BOARDS(state, boards) {
-      console.log('mutation GET_BOARDS실행!!')
-      state.Boards = boards.data
-    },
     userInfo:{
       userid:null,
       profileImg:null,
@@ -76,6 +70,10 @@ export default new Vuex.Store({
     result:{'cat':0,'dog':0,'a':0,'c':0,'i':0,'e':0}
   },
   mutations: {
+    GET_BOARDS(state, boards) {
+      console.log('mutation GET_BOARDS실행!!')
+      state.Boards = boards.data
+    },
     SET_USER_TYPE(state,payload){
       state.result[payload] += 1;
       state.page += 1
