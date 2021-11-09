@@ -45,8 +45,8 @@ export default {
       this.$router.push({name:'Dogging'});
     },
     moveSitter(){
-      console.log('펫시터');
-      // this.$router.push({name:'PetBTI'});
+      this.$store.dispatch('getBoards')
+      this.$router.push({name:'PetSitter'});
     },
     moveMoment(){
       this.$router.push({name:'Moment'});

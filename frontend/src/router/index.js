@@ -8,6 +8,8 @@ import Moment from '../views/Moment'
 import Dogging from '../views/Dogging'
 import MyPage from '../views/MyPage'
 import PetTest from '../views/PetTest'
+import PetSitter from '../views/PetSitter'
+import PetSitterEachDetail from '../components/molecules/PetSitterEachDetail'
 import TestResult from '../views/TestResult'
 import YourMoment from '../views/YourMoment'
 import AddMoment from '../views/AddMoment'
@@ -71,6 +73,16 @@ const routes = [
     path: '/petbti/test',
     name:'PetTest',
     component: PetTest
+  },
+  {
+    path: '/petsitter',
+    name:'PetSitter',
+    component: PetSitter
+  },
+  {
+    path: '/petsitter/:board_id',
+    name:'PetSitterEachDetail',
+    component: PetSitterEachDetail
   },
   {
     path: '/petbti/result',
