@@ -69,29 +69,29 @@ public class PBoardServiceImpl implements PBoardService {
     }
 
     @Override
-    public void postPetSitter(PBoardPostReq petSitterPostRequest, MultipartFile postPicture, String token) throws Exception {
-        PBoard petSitter = new PBoard();
+    public void postPetSitter(PBoardPostReq pBoardPostReq, MultipartFile postPicture, String token) throws Exception {
+        PBoard pBoard = new PBoard();
 
         String userId = jwtUtil.getUsername(token);
         Optional<User> userOptional = userRepository.findByUserId(userId);
-        petSitter.setUser(userOptional.get());
+        pBoard.setUser(userOptional.get());
 
         Date date = new Date();
 
-        petSitter.setTitle(petSitterPostRequest.getTitle());
-        petSitter.setContent(petSitterPostRequest.getContent());
+        pBoard.setTitle(pBoardPostReq.getTitle());
+        pBoard.setContent(pBoardPostReq.getContent());
         //위경도 프론트에서 가지고 오기
-        Double latitude = petSitterPostRequest.getLat().doubleValue();
-        Double longitude = petSitterPostRequest.getLng().doubleValue();
+        Double latitude = pBoardPostReq.getLat().doubleValue();
+        Double longitude = pBoardPostReq.getLng().doubleValue();
         String pointWKT = String.format("POINT(%s %s)", longitude, latitude);
 
         Point point = (Point) new WKTReader().read(pointWKT);
-        petSitter.setPoint(point);
+        pBoard.setPoint(point);
 
-        petSitter.setCreated(date);
-        petSitter.setStatus(0); //글 작성시에는 0으로 default
+        pBoard.setCreated(date);
+        pBoard.setStatus(0); //글 작성시에는 0으로 default
 
-        PBoard tmppboard =  pBoardRepository.save(petSitter);
+        PBoard tmppboard =  pBoardRepository.save(pBoard);
 
         String url = BASE_PATH + "image/petsitter/";
         url += userOptional.get().getId();
@@ -137,9 +137,9 @@ public class PBoardServiceImpl implements PBoardService {
     }
 
     @Override
-    public void updatePetSitter(PBoardUpdateReq petSitterUpdateReq, MultipartFile newPicture, String token) throws Exception {
+    public void updatePetSitter(PBoardUpdateReq pBoardUpdateReq, MultipartFile newPicture, String token) throws Exception {
 
-        Long id = petSitterUpdateReq.getId();
+        Long id = pBoardUpdateReq.getId();
         String userId = jwtUtil.getUsername(token);
         Optional<User> userOptional = userRepository.findByUserId(userId);
         Long user_pk = userOptional.get().getId();
@@ -148,11 +148,11 @@ public class PBoardServiceImpl implements PBoardService {
         Date date = new Date();
         petSitter.setUpdated(date);
 
-        petSitter.setTitle(petSitterUpdateReq.getTitle());
-        petSitter.setContent(petSitterUpdateReq.getContent());
+        petSitter.setTitle(pBoardUpdateReq.getTitle());
+        petSitter.setContent(pBoardUpdateReq.getContent());
 
-        Double latitude = petSitterUpdateReq.getLat().doubleValue();
-        Double longitude = petSitterUpdateReq.getLng().doubleValue();
+        Double latitude = pBoardUpdateReq.getLat().doubleValue();
+        Double longitude = pBoardUpdateReq.getLng().doubleValue();
         String pointWKT = String.format("POINT(%s %s)", longitude, latitude);
 
         Point point = (Point) new WKTReader().read(pointWKT);
@@ -177,14 +177,14 @@ public class PBoardServiceImpl implements PBoardService {
 
     }
     @Override
-    public void deletePetSitter(Long petSitterId) throws IOException {
-        PBoard petSitter = pBoardRepository.getById(petSitterId);
+    public void deletePetSitter(Long pboardId) throws IOException {
+        PBoard petSitter = pBoardRepository.getById(pboardId);
         if (!petSitter.getPicture().equals("image/petsitter/default.png")){
             String absolutepath = BASE_PATH + petSitter.getPicture();
             Path deleteFilePath = Paths.get(absolutepath);
             Files.deleteIfExists(deleteFilePath);
         }
-        pBoardRepository.deleteById(petSitterId);
+        pBoardRepository.deleteById(pboardId);
     }
 
     @Override
@@ -203,6 +203,7 @@ public class PBoardServiceImpl implements PBoardService {
         String nativeQuery = "select *, "+sortOfDis+" as distance\n" +
                 "from pboard\n" +
                 "where "+sortOfDis+"<15000\n"+ //15km이내
+                "and status = 0\n"+
                 "order by distance;";
 
         Query query = em.createNativeQuery(nativeQuery, PBoard.class);
@@ -216,13 +217,25 @@ public class PBoardServiceImpl implements PBoardService {
     }
 
     @Override
-    public com.spectrum.entity.PBoard detailOfPetsitter(Long petsitterId){
-        Optional<com.spectrum.entity.PBoard> petOp = pBoardRepository.findById(petsitterId);
+    public com.spectrum.entity.PBoard detailOfPetsitter(Long pboardId){
+        Optional<com.spectrum.entity.PBoard> petOp = pBoardRepository.findById(pboardId);
         return petOp.get();
     }
 
     private String getShortFilePath(String path) {
         int idx = path.indexOf("image");
         return path.substring(idx, path.length());
+    }
+
+    @Override
+    public int completedPetsitter(Long pboardId){
+        Optional<PBoard> pBoardOptional = pBoardRepository.findById(pboardId);
+        PBoard pBoard = pBoardOptional.get();
+
+        if(pBoard.getStatus() == 0){
+            pBoard.setStatus(1);
+            pBoardRepository.save(pBoard);
+        }
+        return pBoard.getStatus();
     }
 }
