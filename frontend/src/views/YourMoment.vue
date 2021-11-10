@@ -15,7 +15,7 @@
           <h5 style="color:#B2BEC3">@{{this.userid}}</h5>
           <span class="intro">{{this.introduce}}</span>
         </div>
-        <button v-if="followStatus" class="unfollow-button">언팔로우</button>
+        <button v-if="followStatus" class="unfollow-button" @click="requestFollow">언팔로우</button>
         <button v-else class="follow-button" @click="requestFollow">팔로우</button>
       </div>
       <div>
@@ -51,7 +51,8 @@ export default {
       introduce:'',
       followerList:[],
       followList:[],
-      writes:[]
+      writes:[],
+      page:1
     }
   },
   methods:{
@@ -71,6 +72,7 @@ export default {
         from:localStorage.getItem('userid'),
         to:this.userid
       }
+      console.log(data);
       this.$store.dispatch('handleFollow',data)
     }
 
@@ -85,25 +87,23 @@ export default {
       this.$store.dispatch('requestSBoardUser',nowUser)
       .then(res=>{
         this.userid = res.data.user.userId;
-        this.nickname = res.data.user.nickname,
+        this.nickname = res.data.user.nickname;
         this.thumbnail = res.data.user.thumbnail;
         this.introduce = res.data.user.introduce;
         this.followerList = res.data.followerList;
         this.followList = res.data.followList;
       })
-      this.$store.dispatch('bringOtherSBoard',nowUser)
+      this.$store.dispatch('bringOtherSBoard',{userid:nowUser, page:this.page})
       .then(res=>{
-        console.log(res);
+        this.writes = res.data.data;
       })
     }
   },
   computed:{
     followStatus(){
-      if (localStorage.getItem('userid') in this.followerList){
-          console.log("하이");
+      if (this.followerList.includes(localStorage.getItem('userid'))){
           return true
         } else{
-          console.log("롱");
           return false
         }
     }

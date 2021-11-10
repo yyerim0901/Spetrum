@@ -94,6 +94,20 @@ export default new Vuex.Store({
       state.userInfo.userid = payload.userid;
       state.userInfo.followerList = payload.followerList;
       state.userInfo.followList = payload.followList;
+    },
+    SET_LOGOUT(state){
+      state.userInfo = {
+        userid:'',
+        profileImg:'',
+        nickname:'',
+        type:'',
+        introduce:'',
+        followerList:[],
+        followList:[],
+      },
+      localStorage.removeItem('userid')
+      localStorage.removeItem('token')
+      router.push({name:'SignIn'})
     }
   },
   actions: {
@@ -213,6 +227,9 @@ export default new Vuex.Store({
         method:'get',
         params:{
           page:1,
+        },
+        headers:{
+          Authorization:localStorage.getItem('token')
         }
       })
     },
@@ -234,9 +251,11 @@ export default new Vuex.Store({
     },
     bringOtherSBoard(state,payload){
       return axios({
-        url:`/sns/users/${payload}`,
+        url:`/sns/users/${payload.userid}`,
         method:'get',
-        
+        params:{
+          page:payload.page
+        }
       })
     }
   },
