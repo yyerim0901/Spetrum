@@ -192,7 +192,7 @@ public class UserController {
     }
 
     @DeleteMapping("/unfollow")
-    @ApiOperation(value = "팔로우", notes = "팔로우 신청")
+    @ApiOperation(value = "언팔로우", notes = "언팔로우하기")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
     })
@@ -205,7 +205,7 @@ public class UserController {
         return ResponseEntity.ok(UserResponse.of(200, "언팔로우 성공"));
     }
 
-    @DeleteMapping("/followcheck/{userid}")
+    @GetMapping("/followcheck/{userid}")
     @ApiOperation(value = "팔로우", notes = "팔로우 신청")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
