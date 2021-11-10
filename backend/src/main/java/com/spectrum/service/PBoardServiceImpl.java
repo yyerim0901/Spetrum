@@ -7,10 +7,19 @@ import com.spectrum.entity.PBoard;
 import com.spectrum.entity.User;
 import com.spectrum.repository.PBoardRepository;
 import com.spectrum.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.locationtech.jts.geom.Point;
+//import org.locationtech.jts.io.WKTReader;
+import org.locationtech.jts.io.WKTReader;
+import org.qlrm.mapper.JpaResultMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.data.geo.Point;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -21,6 +30,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class PBoardServiceImpl implements PBoardService {
 
     @Autowired
@@ -34,8 +44,30 @@ public class PBoardServiceImpl implements PBoardService {
 
     String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/";
 //    String BASE_PATH = new File("").getAbsolutePath() + "/src/main/resources/";
+
+    private final EntityManager em;
+
     @Override
-    public void postPetSitter(PBoardPostReq petSitterPostRequest, MultipartFile postPicture, String token) throws IOException {
+    public List<PBoard> sortOfDistance() throws Exception{
+
+        Double latitude = 35.20504260934892;
+        Double longitude = 129.07708972645435;
+
+        //현재 위치에서 가장 가까운 순으로 정렬 -> POINT(경도, 위도)를 현재위치로 잡으면 됨
+        String sortOfDis = "ST_Distance_Sphere(POINT('"+longitude+"', '"+latitude+"'), point)";
+        String nativeQuery = "select *, "+sortOfDis+" as distance\n" +
+                "from pboard\n" +
+                "where "+sortOfDis+"<15000\n"+ //15km이내
+                "order by distance;";
+
+        Query query = em.createNativeQuery(nativeQuery, PBoard.class);
+        List<PBoard> list = query.getResultList();
+
+        return list;
+    }
+
+    @Override
+    public void postPetSitter(PBoardPostReq petSitterPostRequest, MultipartFile postPicture, String token) throws Exception {
         PBoard petSitter = new PBoard();
 
         String userId = jwtUtil.getUsername(token);
@@ -47,8 +79,12 @@ public class PBoardServiceImpl implements PBoardService {
         petSitter.setTitle(petSitterPostRequest.getTitle());
         petSitter.setContent(petSitterPostRequest.getContent());
         //위경도 프론트에서 가지고 오기
-        petSitter.setLng(petSitterPostRequest.getLng());
-        petSitter.setLat(petSitterPostRequest.getLat());
+        Double latitude = petSitterPostRequest.getLat().doubleValue();
+        Double longitude = petSitterPostRequest.getLng().doubleValue();
+        String pointWKT = String.format("POINT(%s %s)", longitude, latitude);
+
+        Point point = (Point) new WKTReader().read(pointWKT);
+        petSitter.setPoint(point);
 
         petSitter.setCreated(date);
         petSitter.setStatus(0); //글 작성시에는 0으로 default
@@ -80,9 +116,6 @@ public class PBoardServiceImpl implements PBoardService {
         tmppboard.setPicture(getShortFilePath(url));
 
         pBoardRepository.save(tmppboard);
-//        user user = new user();
-//        userRepository.findById(petSitterPostRequest.getUser_pk());
-//        petSitter.setUser();
 
     }
 
@@ -102,7 +135,7 @@ public class PBoardServiceImpl implements PBoardService {
     }
 
     @Override
-    public void updatePetSitter(PBoardUpdateReq petSitterUpdateReq, MultipartFile newPicture, String token) throws IOException {
+    public void updatePetSitter(PBoardUpdateReq petSitterUpdateReq, MultipartFile newPicture, String token) throws Exception {
 
         Long id = petSitterUpdateReq.getId();
         String userId = jwtUtil.getUsername(token);
@@ -115,8 +148,13 @@ public class PBoardServiceImpl implements PBoardService {
 
         petSitter.setTitle(petSitterUpdateReq.getTitle());
         petSitter.setContent(petSitterUpdateReq.getContent());
-        petSitter.setLat(petSitterUpdateReq.getLat());
-        petSitter.setLng(petSitterUpdateReq.getLng());
+
+        Double latitude = petSitterUpdateReq.getLat().doubleValue();
+        Double longitude = petSitterUpdateReq.getLng().doubleValue();
+        String pointWKT = String.format("POINT(%s %s)", longitude, latitude);
+
+        Point point = (Point) new WKTReader().read(pointWKT);
+        petSitter.setPoint(point);
 
         String url = BASE_PATH + "image/petsitter/";
         if (!petSitter.getPicture().equals("image/petsitter/default.png")){
@@ -157,9 +195,18 @@ public class PBoardServiceImpl implements PBoardService {
     }
 
     @Override
-    public List<PBoard> allPetsitterList(){
-        List<PBoard> allList = pBoardRepository.findAll();
-        return allList;
+    public List<PBoard> allPetsitterList(float longitude, float latitude){
+
+        String sortOfDis = "ST_Distance_Sphere(POINT('"+longitude+"', '"+latitude+"'), point)";
+        String nativeQuery = "select *, "+sortOfDis+" as distance\n" +
+                "from pboard\n" +
+                "where "+sortOfDis+"<15000\n"+ //15km이내
+                "order by distance;";
+
+        Query query = em.createNativeQuery(nativeQuery, PBoard.class);
+        List<PBoard> list = query.getResultList();
+
+        return list;
     }
 
     @Override

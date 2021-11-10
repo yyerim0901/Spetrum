@@ -33,6 +33,16 @@ public class PBoardController {
     private JWTUtil jwtUtil;
 
     @ApiOperation(
+            value = "거리순 글 정렬 TEST API",
+            notes = "프론트까지 다 완성되면 지울 예정"
+    )
+    @GetMapping("/test")
+    private ResponseEntity<?> testOfList() throws Exception{
+        List<PBoard> list = petSitterService.sortOfDistance();
+        return new ResponseEntity<List<PBoard>>(list,HttpStatus.OK);
+    }
+
+    @ApiOperation(
             value = "펫시터 게시글 작성",
             notes = "**제목, 내용, 위도, 경도** 입력 ~~작성자는 토큰 구현 이후 수정 예정~~ "
     )
@@ -40,7 +50,7 @@ public class PBoardController {
     private ResponseEntity<String> postPetsitter(
             @ApiParam(value = "게시글 작성", required = true) PBoardPostReq petSitterPostRequest,
             @RequestPart(value = "image", required = false) MultipartFile petSitterImage,
-            HttpServletRequest request) throws IOException {
+            HttpServletRequest request) throws Exception {
 
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
 
@@ -57,7 +67,7 @@ public class PBoardController {
             HttpServletRequest request,
             @ApiParam(value = "게시글 수정", required = true) PBoardUpdateReq pBoardUpdateReq,
             @RequestPart(value = "image", required = false) MultipartFile newPicture
-            ) throws IOException {
+            ) throws Exception {
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
         if(!petSitterService.checkWriterOfBoard(pBoardUpdateReq,token)) {
             return new ResponseEntity<>("글 수정 권한 없음", HttpStatus.UNAUTHORIZED);
@@ -91,14 +101,20 @@ public class PBoardController {
             return new PBoardResponse("나의 리스트가 존재하지 않습니다.",null);
         }else return new PBoardResponse("리스트 출력 완료",list);
     }
+    
+    //mongoDB의 mindistance, maxdistance 쓰면 일정 거리에 따라 글 sort 가능
+    //mongoDB가 위치정보를 저장하기에도 더 쉬움
 
+    //mysql -> ST_DISTANCE_SPHERE()
+
+    //페이징=> pageable 사용
     @ApiOperation(
             value = "전제 petsitter 글 출력",
             notes = "사용자의 위도 경도에 따라 다르게 정렬...하는거 나중에 추가할게욤..우선은 그냥 다 출력.."
     )
     @GetMapping("/list")
-    private PBoardResponse allPetsitterList(){
-        List<PBoard> allList = petSitterService.allPetsitterList();
+    private PBoardResponse allPetsitterList(@RequestParam float latitude, @RequestParam float longitude){
+        List<PBoard> allList = petSitterService.allPetsitterList(longitude, latitude);
         if(allList == null || allList.isEmpty()){
             return new PBoardResponse("등록된 글이 존재하지 않습니다.",null);
         }else return new PBoardResponse("리스트 출력 완료",allList);
