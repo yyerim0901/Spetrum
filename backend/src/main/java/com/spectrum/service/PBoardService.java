@@ -13,11 +13,12 @@ import java.util.List;
 public interface PBoardService {
 
     public List<PBoard> sortOfDistance() throws Exception;
-    public void postPetSitter(PBoardPostReq petSitterPostRequest, MultipartFile postPicture, String token) throws Exception;
+    public void postPetSitter(PBoardPostReq pBoardPostReq, MultipartFile postPicture, String token) throws Exception;
     public boolean checkWriterOfBoard(PBoardUpdateReq pBoardUpdateReq, String token);
-    public void updatePetSitter(PBoardUpdateReq petSitterUpdateReq, MultipartFile newPicture, String token) throws Exception;
-    public void deletePetSitter(Long petSitterId) throws IOException;
+    public void updatePetSitter(PBoardUpdateReq pBoardUpdateReq, MultipartFile newPicture, String token) throws Exception;
+    public void deletePetSitter(Long pboardId) throws IOException;
     public List<PBoard> myPetsitterList(String token);
     public Object allPetsitterList(float longitude, float latitude, int pagenum);
-    public PBoard detailOfPetsitter(Long petsitterId);
+    public PBoard detailOfPetsitter(Long pboardId);
+    public int completedPetsitter(Long pboardId);
 }
