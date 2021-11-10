@@ -202,10 +202,18 @@ public class UserServiceImpl implements UserService{
         User fromuser = userRepository.findByUserId(from).get();
         User touser = userRepository.findByUserId(to).get();
 
-        follow.setFollower(fromuser);
-        follow.setFollow(touser);
+        Optional<Follow> fw = followRepository.findByFollowAndFollower(touser,fromuser);
+        if(fw.isPresent())
+        {
+            unfollow(fw.get());
+        }
+        else
+        {
+            follow.setFollower(fromuser);
+            follow.setFollow(touser);
 
-        followRepository.save(follow);
+            followRepository.save(follow);
+        }
     }
 
     @Override
@@ -267,13 +275,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void unfollow(String myid,String userid) {
+    public void unfollow(Follow follow) {
 
-        User fromuser = userRepository.findByUserId(myid).get();
-        User touser = userRepository.findByUserId(userid).get();
-
-        Optional<Follow> follow = followRepository.findByFollowAndFollower(touser,fromuser);
-
-        followRepository.delete(follow.get());
+        followRepository.delete(follow);
     }
 }
