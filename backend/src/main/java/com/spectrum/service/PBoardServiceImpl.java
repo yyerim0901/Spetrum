@@ -14,12 +14,14 @@ import org.locationtech.jts.io.WKTReader;
 import org.qlrm.mapper.JpaResultMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.data.geo.Point;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.awt.print.Pageable;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -195,7 +197,7 @@ public class PBoardServiceImpl implements PBoardService {
     }
 
     @Override
-    public List<PBoard> allPetsitterList(float longitude, float latitude){
+    public Object allPetsitterList(float longitude, float latitude, int pagenum){
 
         String sortOfDis = "ST_Distance_Sphere(POINT('"+longitude+"', '"+latitude+"'), point)";
         String nativeQuery = "select *, "+sortOfDis+" as distance\n" +
@@ -206,7 +208,11 @@ public class PBoardServiceImpl implements PBoardService {
         Query query = em.createNativeQuery(nativeQuery, PBoard.class);
         List<PBoard> list = query.getResultList();
 
-        return list;
+        int start = pagenum*5;
+        int end = Math.min(start+5, list.size());
+        Object pageOfList = list.subList(start,end);
+
+        return pageOfList;
     }
 
     @Override

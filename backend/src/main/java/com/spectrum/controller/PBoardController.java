@@ -10,6 +10,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.awt.print.Pageable;
 import java.io.IOException;
 import java.util.List;
 
@@ -110,12 +113,13 @@ public class PBoardController {
     //페이징=> pageable 사용
     @ApiOperation(
             value = "전제 petsitter 글 출력",
-            notes = "사용자의 위도 경도에 따라 다르게 정렬...하는거 나중에 추가할게욤..우선은 그냥 다 출력.."
+            notes = "**사용자의 위도, 경도, page**에 따라 글 정렬"
     )
     @GetMapping("/list")
-    private PBoardResponse allPetsitterList(@RequestParam float latitude, @RequestParam float longitude){
-        List<PBoard> allList = petSitterService.allPetsitterList(longitude, latitude);
-        if(allList == null || allList.isEmpty()){
+    private PBoardResponse allPetsitterList(@RequestParam float latitude, @RequestParam float longitude,
+                                            @RequestParam int pagenum){
+        Object allList = petSitterService.allPetsitterList(longitude, latitude, pagenum);
+        if(allList == null){
             return new PBoardResponse("등록된 글이 존재하지 않습니다.",null);
         }else return new PBoardResponse("리스트 출력 완료",allList);
     }
