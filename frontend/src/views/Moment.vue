@@ -5,16 +5,15 @@
     <div class="p-box">
       <div class="i-box">
         <img :src="getthumbnail()" alt="profilImg" class="pimg-box">
-        <button bcolor="babypink" btype="medium" class="f-button"><h3>게시글</h3><span>32</span></button>
-        <button bcolor="babypink" btype="medium" class="f-button"><h3>팔로워</h3><span>32</span></button>
-        <button bcolor="babypink" btype="medium" class="f-button"><h3>팔로우</h3><span>32</span></button>
+        <button bcolor="babypink" btype="medium" class="f-button"><h3>게시글</h3><span>{{mywrites.length}}</span></button>
+        <button bcolor="babypink" btype="medium" class="f-button"><h3>팔로워</h3><span>{{this.userInfo.followerList.length}}</span></button>
+        <button bcolor="babypink" btype="medium" class="f-button"><h3>팔로우</h3><span>{{this.userInfo.followList.length}}</span></button>
       </div>
       <div class="l-box">
         <div class="m-box">
           <h3 style="#636E72">{{this.userInfo.nickname}}</h3>
           <h5 style="color:#B2BEC3">@{{this.userInfo.userid}}</h5>
-          <!-- <p>{{this.userInfo.introduce}}</p> -->
-          <span class="intro">방가방가</span>
+          <span class="intro">{{this.userInfo.introduce}}</span>
         </div>
         <StyledButton bcolor="pink" btype="small" @click="AddWrite">글작성하기</StyledButton>
       </div>
@@ -35,7 +34,6 @@
 import Footer from '../components/molecules/Footer.vue'
 import Header from '../components/molecules/Header.vue'
 import StyledButton from '../components/atoms/StyledButton'
-import axios from '@/axios/index'
 import {mapState} from 'vuex';
 export default {
   name:'Moment',
@@ -50,12 +48,13 @@ export default {
       isActive:4,
       userid: '',
       isfollowed:true,
-      mywrites:null,
+      mywrites:[],
       BASE_URL : 'http://k5b101.p.ssafy.io/resources/'
     }
   },
   computed:{
     ...mapState(['userInfo']),
+
   },
   methods:{
     getthumbnail(){
@@ -80,19 +79,11 @@ export default {
   created(){
     this.userid = localStorage.getItem('userid');
     this.$store.dispatch('requestUser',this.userid);
-    axios({
-      url:'/sns/',
-      method:'get',
-      params:{
-        page:1,
-      }
+    this.$store.dispatch('bringSBoard')
+    .then(res=>{
+      this.mywrites = res.data.data;
     })
-      .then(res=>{
-        this.mywrites = res.data.data;
-        console.log(this.mywrites);
-      })
   }
-
 }
 </script>
 
