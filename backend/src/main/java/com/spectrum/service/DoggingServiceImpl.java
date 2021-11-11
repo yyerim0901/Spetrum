@@ -141,7 +141,7 @@ public class DoggingServiceImpl implements DoggingService{
         Long userId = doggingOptional.get().getId();
 
 
-        String path = BASE_PATH + "image/petsitter/"+userId+"/"+doggingId+".png";
+        String path = BASE_PATH + "image/dogging/"+userId+"_"+doggingId+".png";
 
         try {
             Path filePath = Paths.get(path);
