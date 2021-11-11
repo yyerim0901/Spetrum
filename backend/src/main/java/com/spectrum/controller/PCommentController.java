@@ -60,7 +60,6 @@ public class PCommentController {
                                                  @ApiParam(value = "댓글 수정", required = true)PCommentUpdateReq pCommentUpdateReq){
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
         if(!pCommentService.checkPCommentWriter(pCommentUpdateReq.getPCommentId(), token)){
-            pCommentService.updatePComment(pCommentUpdateReq);
             return new ResponseEntity<>("댓글 수정 권한 없음",HttpStatus.UNAUTHORIZED);
         }else
             pCommentService.updatePComment(pCommentUpdateReq);
