@@ -148,4 +148,15 @@ public class DoggingController {
         return new ResponseEntity<>("delete dogging success",HttpStatus.OK);
     }
 
+    @ApiOperation(
+            value = "도깅 사진 다운로드",
+            notes = "도깅 사진 커스텀 후 다운로드"
+    )
+    @GetMapping("/download")
+    public ResponseEntity<?> downloadCustomImage(@RequestParam Long doggingId){
+        doggingService.downloadCustomImage(doggingId);
+        return new ResponseEntity<String>("다운로드 확인하기",HttpStatus.OK);
+    }
+
+
 }
