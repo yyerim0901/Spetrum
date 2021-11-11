@@ -217,7 +217,7 @@ public class PBoardServiceImpl implements PBoardService {
     }
 
     @Override
-    public com.spectrum.entity.PBoard detailOfPetsitter(Long pboardId){
+    public PBoard detailOfPetsitter(Long pboardId){
         Optional<com.spectrum.entity.PBoard> petOp = pBoardRepository.findById(pboardId);
         return petOp.get();
     }

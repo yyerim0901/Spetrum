@@ -12,13 +12,20 @@ import io.jenetics.jpx.Track;
 import io.jenetics.jpx.TrackSegment;
 import io.jenetics.jpx.WayPoint;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
 import io.jenetics.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,6 +47,7 @@ public class DoggingServiceImpl implements DoggingService{
 
     private static User user;
     private static String filePath = "src/main/resources/dogging/";
+    String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/";
 
     @Override
     public void saveUserInfo(String token){
@@ -124,6 +132,31 @@ public class DoggingServiceImpl implements DoggingService{
     @Override
     public void DeleteDogging(Long id){
         doggingRepository.deleteById(id);
+    }
+
+    @Override
+    public void downloadCustomImage(Long doggingId){
+
+        Optional<Dogging> doggingOptional = doggingRepository.findById(doggingId);
+        Long userId = doggingOptional.get().getId();
+
+
+        String path = BASE_PATH + "image/petsitter/"+userId+"/"+doggingId+".png";
+
+        try {
+            Path filePath = Paths.get(path);
+            Resource resource = new InputStreamResource(Files.newInputStream(filePath)); // 파일 resource 얻기
+
+            File file = new File(path);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentDisposition(ContentDisposition.builder("attachment").filename(file.getName()).build());
+            // 다운로드 되거나 로컬에 저장되는 용도로 쓰이는지를 알려주는 헤더
+            System.out.println(resource);
+
+        } catch(Exception e) {
+
+        }
     }
 
 }
