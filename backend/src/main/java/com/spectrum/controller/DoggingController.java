@@ -1,22 +1,27 @@
 package com.spectrum.controller;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import com.spectrum.repository.DoggingRepository;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+
 import com.spectrum.common.jwt.JWTUtil;
 import com.spectrum.common.request.DoggingPostReq;
 import com.spectrum.common.response.DoggingDetailResponse;
 import com.spectrum.entity.Dogging;
 import com.spectrum.entity.User;
 import com.spectrum.repository.UserRepository;
-import com.spectrum.service.CustomImage;
 import com.spectrum.service.DoggingService;
 import io.jenetics.jpx.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,6 +39,9 @@ public class DoggingController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private DoggingRepository doggingRepository;
 
     @Autowired
     private JWTUtil jwtUtil;
@@ -153,9 +161,28 @@ public class DoggingController {
             notes = "도깅 사진 커스텀 후 다운로드"
     )
     @GetMapping("/download")
-    public ResponseEntity<?> downloadCustomImage(@RequestParam Long doggingId){
-        doggingService.downloadCustomImage(doggingId);
-        return new ResponseEntity<String>("다운로드 확인하기",HttpStatus.OK);
+    public ResponseEntity<Object> downloadCustomImage(@RequestParam Long doggingId){
+
+        Optional<Dogging> doggingOptional = doggingRepository.findById(doggingId);
+        Long userId = doggingOptional.get().getId();
+
+        String path = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/image/dogging/"+userId+"_"+doggingId+".png";
+//        String path = "src/main/resources/image/dogging/black_logo.png";
+
+        try {
+            Path filePath = Paths.get(path);
+            Resource resource = new InputStreamResource(Files.newInputStream(filePath)); // 파일 resource 얻기
+
+            File file = new File(path);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentDisposition(ContentDisposition.builder("attachment").filename(file.getName()).build());
+            // 다운로드 되거나 로컬에 저장되는 용도로 쓰이는지를 알려주는 헤더
+            return new ResponseEntity<Object>(resource, headers, HttpStatus.OK);
+
+        } catch(Exception e) {
+            return new ResponseEntity<Object>(null, HttpStatus.CONFLICT);
+        }
     }
 
 
