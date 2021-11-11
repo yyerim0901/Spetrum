@@ -14,6 +14,7 @@ import TestResult from '../views/TestResult'
 import YourMoment from '../views/YourMoment'
 import AddMoment from '../views/AddMoment'
 import MDetail from '../views/MDetail'
+import AddPetSitter from '../views/AddPetSitter'
 Vue.use(VueRouter)
 
 const routes = [
@@ -88,6 +89,11 @@ const routes = [
     path: '/petbti/result',
     name:'TestResult',
     component: TestResult
+  },
+  {
+    path: '/wirte/petsitter',
+    name:'AddPetSitter',
+    component: AddPetSitter
   },
 ]
 

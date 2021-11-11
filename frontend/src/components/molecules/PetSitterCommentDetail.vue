@@ -3,7 +3,7 @@
       <h4>댓글!!</h4>
       <p>{{ comment.content }}</p>
       <input v-if="commentFlag" type="text" :placeholder=comment.content v-model="changedComment">
-      <button @click="deleteComment">삭제</button>
+      <button v-if="!commentFlag" @click="deleteComment">삭제</button>
       <button v-if="!commentFlag" @click="changFlag">수정</button>
       <button v-if="commentFlag" @click="changeComment">수정완료</button>
   </div>
