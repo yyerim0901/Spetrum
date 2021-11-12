@@ -1,6 +1,7 @@
 package com.spectrum.controller;
 
 import com.spectrum.common.jwt.JWTUtil;
+import com.spectrum.common.request.SBoardPutReq;
 import com.spectrum.common.request.SBoardRegisterReq;
 import com.spectrum.common.response.MessageResponse;
 import com.spectrum.common.response.SBoardListRes;
@@ -129,7 +130,7 @@ public class SBoardController {
     })
     public ResponseEntity<MessageResponse> putSBoard(
             @ApiIgnore HttpServletRequest request,
-            @ApiParam(value="sns 정보", required = true) SBoardRegisterReq sboardinfo,
+            @ApiParam(value="sns 정보", required = true) SBoardPutReq sboardinfo,
             @PathVariable("sboardid") Long sboardid ) throws IOException {
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
         String userid = jwtUtil.getUsername(token);
@@ -138,7 +139,7 @@ public class SBoardController {
             return ResponseEntity.status(401).body(MessageResponse.of(401, "작성한 사람만 수정할 수 있습니다."));
         }
         User user = userService.findUserByUserId(userid);
-        SBoard sboard = sBoardService.putSBoard(user, sboardinfo, sboardinfo.getSnsfiles(), sboardid);
+        SBoard sboard = sBoardService.putSBoard(user, sboardinfo, sboardid);
         return ResponseEntity.ok(MessageResponse.of(200, "Success"));
     }
 

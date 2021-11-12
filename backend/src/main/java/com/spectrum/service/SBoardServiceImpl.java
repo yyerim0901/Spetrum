@@ -1,5 +1,6 @@
 package com.spectrum.service;
 
+import com.spectrum.common.request.SBoardPutReq;
 import com.spectrum.common.request.SBoardRegisterReq;
 import com.spectrum.common.response.SBoardRes;
 import com.spectrum.entity.SBoard;
@@ -95,7 +96,7 @@ public class SBoardServiceImpl implements SBoardService {
     }
 
     @Override
-    public SBoard putSBoard(User user, SBoardRegisterReq sboardinfo, List<MultipartFile> sboardfiles, Long sboardid) {
+    public SBoard putSBoard(User user, SBoardPutReq sboardinfo, Long sboardid) {
         SBoard sBoard = sBoardRepository.getById(sboardid);
         sBoard.setUser(user);
         sBoard.setContent(sboardinfo.getContent());

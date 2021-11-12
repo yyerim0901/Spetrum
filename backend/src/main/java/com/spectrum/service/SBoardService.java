@@ -1,5 +1,6 @@
 package com.spectrum.service;
 
+import com.spectrum.common.request.SBoardPutReq;
 import com.spectrum.common.request.SBoardRegisterReq;
 import com.spectrum.common.response.SBoardRes;
 import com.spectrum.entity.SBoard;
@@ -18,7 +19,7 @@ public interface SBoardService {
 
     SBoard getSBoardsById(Long sboardid);
 
-    SBoard putSBoard(User user, SBoardRegisterReq sboardinfo, List<MultipartFile> sboardfiles, Long sboardid);
+    SBoard putSBoard(User user, SBoardPutReq sboardinfo, Long sboardid);
 
     Boolean deleteSBoard(User user, Long sboardid);
 
