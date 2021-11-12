@@ -44,8 +44,8 @@ public class PBoardServiceImpl implements PBoardService {
     @Autowired
     private JWTUtil jwtUtil;
 
-    String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/";
-//    String BASE_PATH = new File("").getAbsolutePath() + "/src/main/resources/";
+   String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/";
+    // String BASE_PATH = new File("").getAbsolutePath() + "/src/main/resources/";
 
     private final EntityManager em;
 
@@ -177,9 +177,15 @@ public class PBoardServiceImpl implements PBoardService {
 
     }
     @Override
+<<<<<<< HEAD
+    public void deletePetSitter(Long petSitterId) throws IOException {
+        PBoard petSitter = pBoardRepository.getById(petSitterId);
+        if (!petSitter.getPicture().isEmpty() && !petSitter.getPicture().equals("image/petsitter/default.png")){
+=======
     public void deletePetSitter(Long pboardId) throws IOException {
         PBoard petSitter = pBoardRepository.getById(pboardId);
         if (!petSitter.getPicture().equals("image/petsitter/default.png")){
+>>>>>>> 2c2f1708537d9c82b9cb565f14ec0100ec83919e
             String absolutepath = BASE_PATH + petSitter.getPicture();
             Path deleteFilePath = Paths.get(absolutepath);
             Files.deleteIfExists(deleteFilePath);

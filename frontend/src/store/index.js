@@ -159,6 +159,10 @@ export default new Vuex.Store({
         headers: {
           "Authorization": `Bearer ${localStorage.getItem("token")}`
         },
+        params: {
+          latitude : 35.09538792839069, 
+          longitude : 128.85568955530704,
+        }
       }).then(res => {
         context.commit("GET_BOARDS", res.data)
       }).catch(err => {
