@@ -7,7 +7,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    petpage = 0,
+    petpage: 0,
     Boards: [],
     userInfo:{
       userid:'',
