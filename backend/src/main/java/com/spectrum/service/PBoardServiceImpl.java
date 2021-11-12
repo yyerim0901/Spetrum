@@ -177,20 +177,14 @@ public class PBoardServiceImpl implements PBoardService {
 
     }
     @Override
-<<<<<<< HEAD
     public void deletePetSitter(Long petSitterId) throws IOException {
         PBoard petSitter = pBoardRepository.getById(petSitterId);
         if (!petSitter.getPicture().isEmpty() && !petSitter.getPicture().equals("image/petsitter/default.png")){
-=======
-    public void deletePetSitter(Long pboardId) throws IOException {
-        PBoard petSitter = pBoardRepository.getById(pboardId);
-        if (!petSitter.getPicture().equals("image/petsitter/default.png")){
->>>>>>> 2c2f1708537d9c82b9cb565f14ec0100ec83919e
             String absolutepath = BASE_PATH + petSitter.getPicture();
             Path deleteFilePath = Paths.get(absolutepath);
             Files.deleteIfExists(deleteFilePath);
         }
-        pBoardRepository.deleteById(pboardId);
+        pBoardRepository.deleteById(petSitterId);
     }
 
     @Override
