@@ -11,10 +11,12 @@ public class PBoardResponse {
 
     private String message;
     private Object data;
+    private Object status;
 
-    public PBoardResponse(String message, Object data){
+    public PBoardResponse(String message, Object data, Object status){
         this.message = message;
         this.data = data;
+        this.status = status;
     }
     public PBoardResponse(){}
 

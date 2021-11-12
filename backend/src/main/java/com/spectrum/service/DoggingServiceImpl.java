@@ -103,6 +103,7 @@ public class DoggingServiceImpl implements DoggingService{
     @Override
     public void SaveDoggingPath(Long userId, Long doggingId, float[] lats, float[] lngs) throws IOException{
 
+        //GPX파일 안 만들고 MySQL 데이터 타입 중에 polygon으로 만들 수 있는지 보자~!
         String fileName = userId+"_"+doggingId;
 
         List<WayPoint> wayPoints = new ArrayList<>();
