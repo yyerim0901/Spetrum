@@ -25,7 +25,6 @@ export default {
   data(){
     return{
       BASE_URL : 'https://spetrum.io/resources/',
-      addimage:null,
       imgprev:null,
       contents:null,
       boardid:null,
@@ -33,10 +32,12 @@ export default {
   },
   created(){
     this.boardid = this.$route.params.boardid;
+    console.log(this.boardid + "보드id")
     this.$store.dispatch('detailSBoard',this.$route.params.boardid)
     .then(res=>{
       this.imgprev = this.fullURL(res.data.data.filelist[0].save_file);
       this.contents = res.data.data.content;
+      console.log(this.contents + "내용");
     })
   },
   methods:{
