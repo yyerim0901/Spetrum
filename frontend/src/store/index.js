@@ -7,6 +7,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    petpage = 0,
     Boards: [],
     userInfo:{
       userid:'',
@@ -152,7 +153,17 @@ export default new Vuex.Store({
       })
     },
     getBoards(context) {
-      console.log('actions의 getboards실행!')
+      var curlat = 0
+      var curlon = 0
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(pos) {
+          curlat = pos.coords.latitude
+          curlon = pos.coords.longitude
+        })
+      } else {
+        console.log('위치를 찾을 수 없어요')
+      }
+      console.log(curlat, curlon, 'axios들어가기 전 위치!')
       axios({
         method: "GET",
         url: '/pboard/list',
@@ -160,8 +171,9 @@ export default new Vuex.Store({
           "Authorization": `Bearer ${localStorage.getItem("token")}`
         },
         params: {
-          latitude : 35.09538792839069, 
-          longitude : 128.85568955530704,
+          latitude : curlat, 
+          longitude : curlon,
+          pagenum : this.state.petpage, 
         }
       }).then(res => {
         context.commit("GET_BOARDS", res.data)
