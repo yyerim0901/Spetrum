@@ -6,7 +6,7 @@
       <div style="display:flex; margin:2px 0 2px 35px; align-items:center; justify-content:flex-start;">
         <img :src="getthumbnail()" alt="" class="pimg-box-small">
         <h3 style="padding:0 5px;">{{this.writernickname}}</h3>
-        <i class="[isWriter ? fas fa-edit : '',edit-icon ]" style="margin:0 0 0 270px;" ></i>
+        <i class="[isWriter ? fas fa-edit : '',edit-icon ]" style="margin:0 0 0 270px;" @click="updateSBoard" ></i>
         <i class="[!isWriter ? fas fa-trash : '',edit-icon ]" style="margin:0 0 0 10px;" @click="deleteSBoard"></i>
       </div>
       <img :src="fullURL(this.files)" alt="" class="pre-img">
@@ -122,6 +122,9 @@ export default {
           console.log(res);
           this.$router.push({name:'Moment'})
         })
+    },
+    updateSBoard() {
+      this.$router.push({name:'MUpdate'})
     },
   }
 }
