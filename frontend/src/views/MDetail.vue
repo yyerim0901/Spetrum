@@ -43,7 +43,7 @@ export default {
       files:undefined,
       content:undefined,
       likes:undefined,
-      BASE_URL : 'http://k5b101.p.ssafy.io/resources/',
+      BASE_URL : 'https://spetrum.io/resources/',
       created:undefined,
       comment:undefined,
       boardid:undefined,

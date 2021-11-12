@@ -49,7 +49,7 @@ export default {
       userid: '',
       isfollowed:true,
       mywrites:[],
-      BASE_URL : 'http://k5b101.p.ssafy.io/resources/'
+      BASE_URL : 'https://spetrum.io/resources/'
     }
   },
   computed:{
