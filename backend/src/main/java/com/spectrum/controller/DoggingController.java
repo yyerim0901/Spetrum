@@ -165,7 +165,8 @@ public class DoggingController {
 
         Optional<Dogging> doggingOptional = doggingRepository.findById(doggingId);
         Long userId = doggingOptional.get().getId();
-
+        
+        //이거 여기서 안 받아오고 db에 저장된 경로 그대로 받아오면 됨
         String path = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/image/dogging/"+userId+"_"+doggingId+".png";
 //        String path = "src/main/resources/image/dogging/black_logo.png";
 

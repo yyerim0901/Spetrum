@@ -9,6 +9,7 @@ import com.spectrum.service.PBoardService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.json.HTTP;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -101,8 +102,8 @@ public class PBoardController {
         List<PBoard> list = pBoardService.myPetsitterList(token);
 
         if(list == null || list.isEmpty()){
-            return new PBoardResponse("나의 리스트가 존재하지 않습니다.",null);
-        }else return new PBoardResponse("리스트 출력 완료",list);
+            return new PBoardResponse("나의 리스트가 존재하지 않습니다.",null,HttpStatus.NO_CONTENT);
+        }else return new PBoardResponse("리스트 출력 완료",list,HttpStatus.OK);
     }
     
     //mongoDB의 mindistance, maxdistance 쓰면 일정 거리에 따라 글 sort 가능
@@ -120,8 +121,8 @@ public class PBoardController {
                                             @RequestParam int pagenum){
         Object allList = pBoardService.allPetsitterList(longitude, latitude, pagenum);
         if(allList == null){
-            return new PBoardResponse("등록된 글이 존재하지 않습니다.",null);
-        }else return new PBoardResponse("리스트 출력 완료",allList);
+            return new PBoardResponse("등록된 글이 존재하지 않습니다.",null,HttpStatus.NO_CONTENT);
+        }else return new PBoardResponse("리스트 출력 완료",allList, HttpStatus.OK);
     }
 
     @ApiOperation(
@@ -135,8 +136,8 @@ public class PBoardController {
         PBoard pBoard = pBoardService.detailOfPetsitter(pboardId);
 
         if(pBoard == null){
-            return new PBoardResponse("존재하지 않는 글입니다.",null);
-        }else return new PBoardResponse("petsitter 글 출력 완료",pBoard);
+            return new PBoardResponse("존재하지 않는 글입니다.",null,HttpStatus.NO_CONTENT);
+        }else return new PBoardResponse("petsitter 글 출력 완료",pBoard,HttpStatus.OK);
     }
 
     @ApiOperation(
@@ -146,7 +147,7 @@ public class PBoardController {
     @PutMapping("/status")
     private PBoardResponse changeStatus(@RequestParam Long pboardId){
         int status = pBoardService.completedPetsitter(pboardId);
-        return new PBoardResponse("상태 변경 완료",status);
+        return new PBoardResponse("상태 변경 완료",status,HttpStatus.OK);
     }
 
 
