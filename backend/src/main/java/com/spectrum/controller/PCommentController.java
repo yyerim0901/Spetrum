@@ -47,8 +47,8 @@ public class PCommentController {
     private PBoardResponse listOfPComment(@ApiParam(value = "댓글 리스트",required = true) @RequestParam Long pboardId){
         List<PComment> list = pCommentService.listPComment(pboardId);
         if(list.isEmpty() || list == null){
-            return new PBoardResponse("작성된 댓글이 없습니다.",null);
-        }else return new PBoardResponse("댓글 리스트 출력 완료",list);
+            return new PBoardResponse("작성된 댓글이 없습니다.",null,HttpStatus.NO_CONTENT);
+        }else return new PBoardResponse("댓글 리스트 출력 완료",list,HttpStatus.OK);
     }
     
     @ApiOperation(
