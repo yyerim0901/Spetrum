@@ -9,11 +9,13 @@ export default new Vuex.Store({
   state: {
     Boards: [],
     userInfo:{
-      userid:null,
-      profileImg:null,
-      nickname:null,
-      type:null,
-      introduce:null,
+      userid:'',
+      profileImg:'',
+      nickname:'',
+      type:'',
+      introduce:'',
+      followerList:[],
+      followList:[],
     },
     page:0,
     questions:[
@@ -90,6 +92,8 @@ export default new Vuex.Store({
       state.userInfo.thumbnamil = payload.thumbnamil;
       state.userInfo.introduce = payload.introduce;
       state.userInfo.userid = payload.userid;
+      state.userInfo.followerList = payload.followerList;
+      state.userInfo.followList = payload.followList;
     }
   },
   actions: {
@@ -166,17 +170,18 @@ export default new Vuex.Store({
       })
     },
     requestUser(state,payload){
-
       axios({
         url:`/users/search/${payload}`,
         method:'get',
       })
         .then(res=>{
           const data = {
-            nickname: res.data.nickname,
-            thumbnamil: res.data.thumbnamil,
-            introduce: res.data.introduce,
-            userid: res.data.userId
+            nickname: res.data.user.nickname,
+            thumbnamil: res.data.user.thumbnamil,
+            introduce: res.data.user.introduce,
+            userid: res.data.user.userId,
+            followList: res.data.followList,
+            followerList: res.data.followerList,
           }
           this.commit('SET_USER_INFO',data);
         })
@@ -200,21 +205,44 @@ export default new Vuex.Store({
       })
     },
     requestSComment(state,payload){
+      return axios({
+        url:`/scomments/${payload}`,
+        method:'post',
+        data:payload,
+      })
+    },
+    bringSBoard(){
+      return axios({
+        url:'/sns/',
+        method:'get',
+        params:{
+          page:1,
+        }
+      })
+    },
+    requestSBoardUser(state,payload){
+      return axios({
+        url:`/users/search/${payload}`,
+        method:'get',
+      })
+    },
+    handleFollow(state,payload){
       axios({
-        url:`/scomments/${payload.sboardid}`,
+        url:'/users/follow',
         method:'post',
         data:payload,
       })
       .then(res=>{
         console.log(res);
-        this.dispatch('bringSBoardComments',payload.sboardid)
+      })
+    },
+    bringOtherSBoard(state,payload){
+      return axios({
+        url:`/sns/users/${payload}`,
+        method:'get',
+        
       })
     }
-    // bringWrites(state,payload){
-    //   return axios({
-    //     url:'/sns/'
-    //   })
-    // }
   },
   modules: {
   }

@@ -5,22 +5,25 @@
     <div class="p-box">
       <div class="i-box">
         <img :src="getthumbnail()" alt="profilImg" class="pimg-box">
-        <button bcolor="babypink" btype="medium" class="f-button"><h3>게시글</h3><span>32</span></button>
-        <button bcolor="babypink" btype="medium" class="f-button"><h3>팔로워</h3><span>32</span></button>
-        <button bcolor="babypink" btype="medium" class="f-button"><h3>팔로우</h3><span>32</span></button>
+        <button bcolor="babypink" btype="medium" class="f-button"><h3>게시글</h3><span>{{writes.length}}</span></button>
+        <button bcolor="babypink" btype="medium" class="f-button"><h3>팔로워</h3><span>{{this.followerList.length}}</span></button>
+        <button bcolor="babypink" btype="medium" class="f-button"><h3>팔로우</h3><span>{{this.followList.length}}</span></button>
       </div>
       <div class="l-box">
         <div class="m-box">
           <h3 style="#636E72">{{this.nickname}}</h3>
           <h5 style="color:#B2BEC3">@{{this.userid}}</h5>
-          <!-- <p>{{this.introduce}}</p> -->
-          <span class="intro">방가방가</span>
+          <span class="intro">{{this.introduce}}</span>
         </div>
-        <button v-if="isfollowed" class="follow-button">팔로우</button>
-        <button v-else class="unfollow-button">언팔로우</button>
+        <button v-if="followStatus" class="unfollow-button">언팔로우</button>
+        <button v-else class="follow-button" @click="requestFollow">팔로우</button>
       </div>
       <div>
-
+        <div class="write-box">
+          <div v-for="write in writes" :key="write.id">
+            <img :src="fullURL(write.filelist[0].save_file)" alt="없다" class="w-img" @click="moveDetail(write.id)">
+          </div>
+        </div>
       </div>
     </div>
     <hr class="fott">
@@ -31,7 +34,7 @@
 <script>
 import Footer from '../components/molecules/Footer.vue'
 import Header from '../components/molecules/Header.vue'
-import axios from '@/axios/index'
+
 export default {
   name:'YourMoment',
   components:{
@@ -42,11 +45,13 @@ export default {
   data(){
     return{
       isActive:4,
-      userid:null,
-      nickname:null,
-      thumbnail:null,
-      introduce:null,
-      isfollowed:true,
+      userid:'',
+      nickname:'',
+      thumbnail:'',
+      introduce:'',
+      followerList:[],
+      followList:[],
+      writes:[]
     }
   },
   methods:{
@@ -56,29 +61,53 @@ export default {
       }else{
         return require("@/assets/img_logo.jpg")
       }
+    },
+    moveDetail(id){
+      console.log(id);
+      this.$router.push({name:'MDetail',params:{'boardid':id}});
+    },
+    requestFollow(){
+      const data = {
+        from:localStorage.getItem('userid'),
+        to:this.userid
+      }
+      this.$store.dispatch('handleFollow',data)
     }
+
   },
   created(){
     const nowUser = this.$route.params.userid;
-    console.log(nowUser);
     if (nowUser == localStorage.getItem('userid')){
       this.$router.push({name:'Moment'});
       console.log('돌아가');
     }
     else{
-      axios({
-          url:`/users/search/${nowUser}`,
-          method:'get',
-        })
-        .then(res=>{
-          this.nickname = res.data.nickname;
-          this.userid = res.data.userId;
-          this.thumbnail = res.data.thumbnail;
-          this.introduce = res.data.introduce;
-        })
+      this.$store.dispatch('requestSBoardUser',nowUser)
+      .then(res=>{
+        this.userid = res.data.user.userId;
+        this.nickname = res.data.user.nickname,
+        this.thumbnail = res.data.user.thumbnail;
+        this.introduce = res.data.user.introduce;
+        this.followerList = res.data.followerList;
+        this.followList = res.data.followList;
+      })
+      this.$store.dispatch('bringOtherSBoard',nowUser)
+      .then(res=>{
+        console.log(res);
+      })
+    }
+  },
+  computed:{
+    followStatus(){
+      if (localStorage.getItem('userid') in this.followerList){
+          console.log("하이");
+          return true
+        } else{
+          console.log("롱");
+          return false
+        }
     }
   }
-
 }
 </script>
 
@@ -146,7 +175,7 @@ export default {
   }
 
   .unfollow-button{
-    background-color:#FBD786; 
+    background-color:#636E72; 
     color:white; 
     height:33px;
     width:100px;

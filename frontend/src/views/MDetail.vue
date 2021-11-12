@@ -2,18 +2,20 @@
   <div class="Moment-Wrapper">
     <Header :isBack="true" title="MY MOMENT" :isLogo="false"></Header>
     <hr>
-    <div style="width:100%; padding:10px 10px; display:flex; flex-direction:column">
+    <div style="width:100%; padding:10px 10px; display:flex; flex-direction:column; overflow:scroll">
       <div style="display:flex; margin:2px 0 2px 35px; align-items:center; justify-content:flex-start;">
         <img :src="getthumbnail()" alt="" class="pimg-box-small">
-        <h3 style="padding:0 5px;">{{this.userInfo.nickname}}</h3>
-        <i class="fas fa-trash" style="margin:0 0 0 270px;"></i>
-        <i class="fas fa-edit" style="margin:0 0 0 10px;"></i>
+        <h3 style="padding:0 5px;">{{this.writernickname}}</h3>
+        <i class="[isWriter ? fas fa-edit : '',edit-icon ]" style="margin:0 0 0 270px;" ></i>
+        <i class="[!isWriter ? fas fa-trash : '',edit-icon ]" style="margin:0 0 0 10px;"></i>
       </div>
       <img :src="fullURL(this.files)" alt="" class="pre-img">
       <div style="margin:5px 40px; display:flex; flex-direction:column;">
         <i class="fas fa-paw"> {{this.likes}}개</i>
         <span style="text-align:start; border:solid; border-width:1px 0; border-color:#E5EAEF;">{{this.content}}</span>
-        <!-- <p v-for></p> -->
+        <div v-for="c in commentList" :key="c.id">
+          <p class="comment">{{c.content}} - 작성자: {{c.user.nickname }}</p>
+        </div>
         <div>
           <i class="far fa-comment-dots" style="margin:0 5px 0 0; font-size:1rem"></i>
           <CommentInput :value="comment" v-model="comment" />
@@ -45,6 +47,10 @@ export default {
       created:undefined,
       comment:undefined,
       boardid:undefined,
+      commentList:null,
+      writerid:null,
+      writernickname:null,
+      isWriter:false,
     }
   },
   created(){
@@ -54,15 +60,28 @@ export default {
       this.files = res.data.data.filelist[0].save_file;
       this.content = res.data.data.content;
       this.likes = res.data.data.likes;
+      this.writerid = res.data.data.userid;
+      if (localStorage.getItem('userid') === this.writerid ){
+        this.isWriter = true
+      }else{
+        this.isWriter = false
+      }
+      this.$store.dispatch('requestSBoardUser',this.writerid)
+      .then(res=>{
+        this.writernickname = res.data.user.nickname;
+      })
+      .catch(err=>{
+        console.log(err);
+      })
     })
-    this.$store.dispatch('bringSBoardComments',this.$route.params.boardid)
+    this.$store.dispatch('bringSBoardComments',this.boardid)
     .then(res=>{
       console.log(res);
+      this.commentList = res.data.data;
     })
   },
   computed:{
     ...mapState(['userInfo']),
-
   },
   methods:{
     fullURL(url){
@@ -77,12 +96,15 @@ export default {
       }
     },
     sendComment(){
-      const data = {
-        sboardid:this.boardid,
-        content:this.comment,
-      }
-      console.log(this.comment);
-      this.$store.dispatch('requestSComment',data);
+      const formdata = new FormData();
+      formdata.append('sboardid',this.boardid);
+      formdata.append('content',this.comment);
+      this.$store.dispatch('requestSComment',formdata)
+        // this.$store.dispatch('bringSBoardComments',this.boardid)
+        // .then(res=>{
+        //   console.log(res);
+        //   this.commentList = res.data.data;
+        // })
     }
   }
 }
@@ -104,5 +126,13 @@ export default {
     height: 40px;
     border-radius: 70%;
     border:solid #E5EAEF 1px;
+  }
+
+  .edit-icon{
+    display:none;
+  }
+
+  .comment{
+    font-size:0.9rem;
   }
 </style>

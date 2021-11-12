@@ -3,6 +3,7 @@ package com.spectrum.service;
 import com.spectrum.common.request.FollowReq;
 import com.spectrum.common.request.UserRegisterPostReq;
 import com.spectrum.common.request.UserUpdateReq;
+import com.spectrum.entity.Follow;
 import com.spectrum.entity.User;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,5 +34,5 @@ public interface UserService {
 
     List<String> followerList(String userid);
 
-    void unfollow(String myid,String userid);
+    void unfollow(Follow follow);
 }

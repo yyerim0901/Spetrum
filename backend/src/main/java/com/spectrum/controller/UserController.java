@@ -188,25 +188,24 @@ public class UserController {
 
         userService.follow(followReq);
 
-        return ResponseEntity.ok(UserResponse.of(200, "팔로우 성공"));
+        return ResponseEntity.ok(UserResponse.of(200, "성공"));
     }
 
-    @DeleteMapping("/unfollow/{userid}")
-    @ApiOperation(value = "팔로우", notes = "팔로우 신청")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "성공"),
-    })
-    public ResponseEntity<UserResponse> unfollow(@ApiIgnore HttpServletRequest request,
-                                                 @PathVariable("userid") String userid){
-        String token = request.getHeader(HttpHeaders.AUTHORIZATION);
-        String myid = jwtUtil.getUsername(token);
+//    @DeleteMapping("/unfollow")
+//    @ApiOperation(value = "언팔로우", notes = "언팔로우하기")
+//    @ApiResponses({
+//            @ApiResponse(code = 200, message = "성공"),
+//    })
+//    public ResponseEntity<UserResponse> unfollow(@ApiParam(value="팔로우", required = true) FollowReq followReq){
+//        String myid = followReq.getFrom();
+//        String userid = followReq.getTo();
+//
+//        userService.unfollow(myid,userid);
+//
+//        return ResponseEntity.ok(UserResponse.of(200, "언팔로우 성공"));
+//    }
 
-        userService.unfollow(myid,userid);
-
-        return ResponseEntity.ok(UserResponse.of(200, "언팔로우 성공"));
-    }
-
-    @DeleteMapping("/followcheck/{userid}")
+    @GetMapping("/followcheck/{userid}")
     @ApiOperation(value = "팔로우", notes = "팔로우 신청")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),

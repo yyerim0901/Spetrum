@@ -12,10 +12,8 @@ import io.jenetics.jpx.Track;
 import io.jenetics.jpx.TrackSegment;
 import io.jenetics.jpx.WayPoint;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
-import io.jenetics.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -39,7 +37,8 @@ public class DoggingServiceImpl implements DoggingService{
     private JWTUtil jwtUtil;
 
     private static User user;
-    private static String filePath = "src/main/resources/dogging/";
+    private static String filePath = "src/main/resources/";
+    String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/";
 
     @Override
     public void saveUserInfo(String token){
@@ -117,7 +116,7 @@ public class DoggingServiceImpl implements DoggingService{
                                 .points(wayPoints)))
                 .build();
 
-        GPX.write(gpx, filePath+fileName+".gpx");
+        GPX.write(gpx, filePath+"dogging/"+fileName+".gpx");
         return;
     }
 
@@ -125,5 +124,4 @@ public class DoggingServiceImpl implements DoggingService{
     public void DeleteDogging(Long id){
         doggingRepository.deleteById(id);
     }
-
 }

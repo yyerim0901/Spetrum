@@ -51,7 +51,7 @@ const routes = [
     component: AddMoment,
   },
   {
-    path: '/moment/:boardid',
+    path: '/moment/board/:boardid',
     name:'MDetail',
     component: MDetail,
   },
