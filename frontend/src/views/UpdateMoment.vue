@@ -36,12 +36,12 @@ export default {
     this.$store.dispatch('detailSBoard',this.$route.params.boardid)
     .then(res=>{
       this.imgprev = this.fullURL(res.data.data.filelist[0].save_file);
-      this.content = res.data.data.content;
+      this.contents = res.data.data.content;
     })
   },
   methods:{
     updateWrite(){
-      if (this.addimage && this.contents){
+      if (this.contents){
         const formData = new FormData();
         formData.append('content',this.contents);
         axios({
