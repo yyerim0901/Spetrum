@@ -68,22 +68,26 @@ export default {
             })
         },
         createComment() {
-            axios({
-                method: "POST",
-                url: '/pcomment',
-                headers: {
-                    "Authorization": localStorage.getItem("token")
-                },
-                params: {
-                    content : this.inputContent,
-                    pboardId : this.boardId
-                }
-            }).then(res => {
-                console.log(res.data)
-                this.$router.go();
-            }).catch(err => {
-                console.log(err)
-            })
+            if (this.inputContent){
+                axios({
+                    method: "POST",
+                    url: '/pcomment/',
+                    headers: {
+                        "Authorization": localStorage.getItem("token")
+                    },
+                    params: {
+                        content : this.inputContent,
+                        pboardId : this.boardId
+                    }
+                }).then(res => {
+                    console.log(res.data)
+                    this.$router.go();
+                }).catch(err => {
+                    console.log(err)
+                })
+            } else{
+                alert('댓글을 입력해주세요')
+            }
         }
     },
     created() {

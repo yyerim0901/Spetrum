@@ -60,6 +60,9 @@ export default {
         alert('내용을 작성해주세요');
       }
     }
+  },
+  created() {
+  
   }
 }
 </script>

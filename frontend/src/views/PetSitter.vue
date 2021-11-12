@@ -14,6 +14,7 @@
             </div>
             <PetSitterDetail v-for="(board, idx) in Boards" :key="idx" :board="board" />
         </div>
+        <button @click="moveAddSitter">게시글 작성</button>
         <Footer :isActive="isActive"/>
         <hr class="fott">
     </div>
@@ -41,6 +42,11 @@ export default {
         ...mapState([
             'Boards',
         ])
+    },
+    methods: {
+        moveAddSitter() {
+            this.$router.push({name:'AddPetSitter'})
+        }
     },
     created() {
         this.$store.dispatch('getBoards')
