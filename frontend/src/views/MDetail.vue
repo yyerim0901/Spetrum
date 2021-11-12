@@ -7,7 +7,7 @@
         <img :src="getthumbnail()" alt="" class="pimg-box-small">
         <h3 style="padding:0 5px;">{{this.writernickname}}</h3>
         <i class="[isWriter ? fas fa-edit : '',edit-icon ]" style="margin:0 0 0 270px;" ></i>
-        <i class="[!isWriter ? fas fa-trash : '',edit-icon ]" style="margin:0 0 0 10px;"></i>
+        <i class="[!isWriter ? fas fa-trash : '',edit-icon ]" style="margin:0 0 0 10px;" @click="deleteSBoard"></i>
       </div>
       <img :src="fullURL(this.files)" alt="" class="pre-img">
       <div style="margin:5px 40px; display:flex; flex-direction:column;">
@@ -105,7 +105,23 @@ export default {
         //   console.log(res);
         //   this.commentList = res.data.data;
         // })
-    }
+    },
+    deleteSBoard() {
+      axios({
+        url:'https://spetrum.io:8080/api/sns/' + this.boardid,
+        method:'delete',
+        data:formData,
+        headers:{
+          'Content-Type': 'multipart/form-data',
+          'Access-Control-Allow-Origin':'*',
+          'Authorization':localStorage.getItem('token'),
+        }
+      })
+        .then(res=>{
+          console.log(res);
+          this.$router.push({name:'Moment'})
+        })
+    },
   }
 }
 </script>
