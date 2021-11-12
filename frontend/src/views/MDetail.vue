@@ -31,6 +31,8 @@ import {mapState} from 'vuex'
 import Header from '../components/molecules/Header.vue'
 import CommentInput from '../components/atoms/CommentInput'
 import StyledButton from '../components/atoms/StyledButton'
+import axios from 'axios';
+
 export default {
   name:'MDetail',
   components:{
@@ -110,7 +112,6 @@ export default {
       axios({
         url:'https://spetrum.io:8080/api/sns/' + this.boardid,
         method:'delete',
-        data:formData,
         headers:{
           'Content-Type': 'multipart/form-data',
           'Access-Control-Allow-Origin':'*',
