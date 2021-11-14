@@ -15,6 +15,8 @@ import YourMoment from '../views/YourMoment'
 import AddMoment from '../views/AddMoment'
 import MDetail from '../views/MDetail'
 import AddPetSitter from '../views/AddPetSitter'
+import MUpdate from '../views/UpdateMoment'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -54,6 +56,11 @@ const routes = [
     path: '/moment/board/:boardid',
     name:'MDetail',
     component: MDetail,
+  },
+  {
+    path: '/moment/update/:boardid',
+    name:'MUpdate',
+    component: MUpdate,
   },
   {
     path: '/moment/:userid',
