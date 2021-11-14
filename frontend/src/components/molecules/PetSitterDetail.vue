@@ -20,7 +20,7 @@ export default {
     },
     data () {
         return{
-            
+            BASE_URL : 'https://spetrum.io/resources/',
         }
     },
     props: {
@@ -33,7 +33,7 @@ export default {
             this.$router.push({
                 name: "PetSitterEachDetail",
                 params: {
-                    board_id: this.board.id
+                    board_id: this.board.id,
                 }
             })
         },
