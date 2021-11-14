@@ -44,6 +44,7 @@ export default {
             const inputtedImage = this.inputImage
             const inputtedContent = this.inputContent
             const inputtedTitle = this.inputTitle
+            const push = this.$router.push({name:'PetSitter'})
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function(pos) {
                     var curlat = pos.coords.latitude
@@ -69,7 +70,8 @@ export default {
                             }
                         }).then(res=> {
                             console.log(res);
-                            this.$router.push({name:'PetSitter'})
+                            console.log(push, 'const의 선언된 push는 어떻게 되는거지?')
+                            push;
                         }).catch(err =>{
                             console.log(err)
                         })
