@@ -70,7 +70,6 @@ export default {
                             }
                         }).then(res=> {
                             console.log(res);
-                            console.log(push, 'const의 선언된 push는 어떻게 되는거지?')
                             push;
                         }).catch(err =>{
                             console.log(err)

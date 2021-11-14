@@ -1,6 +1,6 @@
 <template>
     <div class="sitter-detail-box">
-        <img class="img-box" :src=board.picture alt="이미지가 없습니다">
+        <img class="img-box" :src="fullURL(board.picture)" alt="이미지가 없습니다">
         <div class="board-box" @click="moveEachDetail">
             <p>{{ board.title }}</p>
             <p>{{ board.created }}</p>
@@ -50,6 +50,10 @@ export default {
                 console.log(err)
             })
         },
+        fullURL(url){
+            const full = this.BASE_URL + url;
+            return full;
+        },        
     }
 
 }
