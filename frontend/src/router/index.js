@@ -16,6 +16,9 @@ import AddMoment from '../views/AddMoment'
 import MDetail from '../views/MDetail'
 import AddPetSitter from '../views/AddPetSitter'
 import MUpdate from '../views/UpdateMoment'
+import UpdateUserInfo from '../views/UpdateUserInfo'
+import MyDoggingList from '../views/MyDoggingList'
+import MyPetsitterList from '../views/MyPetsitterList'
 
 Vue.use(VueRouter)
 
@@ -102,6 +105,21 @@ const routes = [
     name:'AddPetSitter',
     component: AddPetSitter
   },
+  {
+    path: '/updateUserInfo',
+    name: 'UpdateUserInfo',
+    component : UpdateUserInfo
+  },
+  {
+    path: '/mydogging',
+    name: 'MyDoggingList',
+    component : MyDoggingList
+  },
+  {
+    path: '/mypetsitter',
+    name: 'MyPetsitterList',
+    component : MyPetsitterList
+  }
 ]
 
 const router = new VueRouter({
