@@ -3,9 +3,9 @@
       <Header :isLogo="false" :isBack="false" title="겟!시터"/>
       <hr>
       <div class="detail-box">
-          <img class="detail-img-box" :src="fullURL(board.picture)" alt="이미지가 없습니다">
+          <img class="detail-img-box" :src="fullURL(board.data.picture)" alt="이미지가 없습니다">
           <p>{{ board }}</p>
-          <p>{{ board.picture }}</p>
+          <p>{{ board.data.picture }}</p>
           <hr>
       </div>
       <PetSitterCommentDetail v-for="(comment, idx) in comments" :key="idx" :comment="comment" />
