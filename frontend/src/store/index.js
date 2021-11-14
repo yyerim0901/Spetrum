@@ -169,7 +169,7 @@ export default new Vuex.Store({
             params: {
               latitude : curlat, 
               longitude : curlon,
-              pagenum : this.state.petpage, 
+              pagenum : state.petpage, 
             }
           }).then(res => {
             context.commit("GET_BOARDS", res.data)
