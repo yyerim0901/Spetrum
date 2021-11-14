@@ -41,14 +41,15 @@ export default {
             }
         },
         createPetSitter() {
+            const inputtedImage = this.inputImage
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function(pos) {
                     var curlat = pos.coords.latitude
                     var curlon = pos.coords.longitude
                     console.log(curlat, curlon, 'addpetsitter의 위치!!')
-                    if (this.inputImage && this.inputContent && this.inputTitle){
+                    if (inputtedImage && this.inputContent && this.inputTitle){
                         const formData = new FormData();
-                        formData.append('image', this.inputImage);
+                        formData.append('image', inputtedImage);
                         axios({
                             url: 'https://spetrum.io:8080/api/pboard/',
                             method: 'POST',
