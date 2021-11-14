@@ -129,7 +129,7 @@ public class PBoardController {
             value = "펫시터 상세 페이지 출력",
             notes = "url에 **글 번호(id)**를 넣고 출력"
     )
-    @GetMapping("/detail/{petsitterId}")
+    @GetMapping("/detail/{pboardId}")
     private PBoardResponse detailPetsitterPage(
             @PathVariable Long pboardId
     ){
