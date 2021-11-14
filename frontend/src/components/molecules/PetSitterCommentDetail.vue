@@ -29,7 +29,7 @@ export default {
                 method: "DELETE",
                 url: '/pcomment',
                 headers: {
-                    "Authorization": `Bearer ${localStorage.getItem("toekn")}`
+                    "Authorization": localStorage.getItem("toekn")
                 },
                 params: {
                     commentId: this.comment.id
@@ -49,7 +49,7 @@ export default {
                 method: "PUT",
                 url: '/pcomment',
                 headers: {
-                    "Authorization": {localStorage.getItem("token")}
+                    "Authorization": localStorage.getItem("token")
                 },
                 params: {
                     PCommentId: this.comment.id,
