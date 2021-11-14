@@ -40,10 +40,13 @@ export default {
         getPetSitterDetail() {
             axios({
                 method: "GET",
-                url: `/pboard/detail/${this.boardId}`,
+                url: '/pboard/detail/',
                 headers: {
                     "Authorization": `Bearer ${localStorage.getItem("toekn")}`
                 },
+                params: {
+                    pboardId : this.boardId,
+                }
             }).then(res => {
                 this.board = res.data
             }).catch(err => {
