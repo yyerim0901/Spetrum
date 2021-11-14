@@ -155,6 +155,7 @@ export default new Vuex.Store({
     getBoards(context) {
       var curlat = 0
       var curlon = 0
+      var curpagenum = this.state.petpage
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(pos) {
           curlat = pos.coords.latitude
@@ -169,7 +170,7 @@ export default new Vuex.Store({
             params: {
               latitude : curlat, 
               longitude : curlon,
-              pagenum : state.petpage, 
+              pagenum : curpagenum,
             }
           }).then(res => {
             context.commit("GET_BOARDS", res.data)
