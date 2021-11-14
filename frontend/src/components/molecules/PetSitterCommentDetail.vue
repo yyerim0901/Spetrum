@@ -49,7 +49,7 @@ export default {
                 method: "PUT",
                 url: '/pcomment',
                 headers: {
-                    "Authorization": `Bearer ${localStorage.getItem("toekn")}`
+                    "Authorization": {localStorage.getItem("token")}
                 },
                 params: {
                     PCommentId: this.comment.id,
