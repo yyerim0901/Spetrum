@@ -42,12 +42,14 @@ export default {
         },
         createPetSitter() {
             const inputtedImage = this.inputImage
+            const inputtedContent = this.inputContent
+            const inputtedTitle = this.inputTitle
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function(pos) {
                     var curlat = pos.coords.latitude
                     var curlon = pos.coords.longitude
                     console.log(curlat, curlon, 'addpetsitter의 위치!!')
-                    if (inputtedImage && this.inputContent && this.inputTitle){
+                    if (inputtedImage && inputtedContent && inputtedTitle){
                         const formData = new FormData();
                         formData.append('image', inputtedImage);
                         axios({
@@ -60,8 +62,8 @@ export default {
                                 'Authorization':localStorage.getItem('token'),
                             },
                             params:{
-                                content : this.inputContent,
-                                title : this.inputTitle,
+                                content : inputtedContent,
+                                title : inputtedTitle,
                                 lat : curlat,
                                 lng : curlon,
                             }
