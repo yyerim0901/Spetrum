@@ -3,8 +3,9 @@
       <Header :isLogo="false" :isBack="false" title="겟!시터"/>
       <hr>
       <div class="detail-box">
-          <img class="detail-img-box" src="@/assets/test.jpg" alt="이미지가 없습니다">
+          <img class="detail-img-box" :src="fullURL(board.picture)" alt="이미지가 없습니다">
           <p>{{ board }}</p>
+          <p>{{ board.picture }}</p>
           <hr>
       </div>
       <PetSitterCommentDetail v-for="(comment, idx) in comments" :key="idx" :comment="comment" />
@@ -34,6 +35,7 @@ export default {
             comments: {},
             isActive: 3,
             inputContent: '',
+            BASE_URL : 'https://spetrum.io/resources/',
         }
     },
     methods: {
@@ -88,7 +90,11 @@ export default {
             } else{
                 alert('댓글을 입력해주세요')
             }
-        }
+        },
+        fullURL(url){
+            const full = this.BASE_URL + url;
+            return full;
+        },
     },
     created() {
         this.getPetSitterDetail()
