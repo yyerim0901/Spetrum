@@ -42,7 +42,7 @@ export default {
                 method: "GET",
                 url: '/pboard/detail/',
                 headers: {
-                    "Authorization": `Bearer ${localStorage.getItem("toekn")}`
+                    "Authorization": localStorage.getItem("token")
                 },
                 params: {
                     pboardId : this.boardId,
@@ -58,7 +58,7 @@ export default {
                 method: "GET",
                 url: '/pcomment',
                 headers: {
-                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                    "Authorization": localStorage.getItem("token")
                 },
                 params: {
                     pboardId: this.boardId
