@@ -41,32 +41,41 @@ export default {
             }
         },
         createPetSitter() {
-            if (this.inputImage && this.inputContent && this.inputTitle){
-                const formData = new FormData();
-                formData.append('image', this.inputImage);
-                axios({
-                    url: 'https://spetrum.io:8080/api/pboard/',
-                    method: 'POST',
-                    data: formData,
-                    headers:{
-                        'Content-Type': 'multipart/form-data',
-                        'Access-Control-Allow-Origin':'*',
-                        'Authorization':localStorage.getItem('token'),
-                    },
-                    params:{
-                        content : this.inputContent,
-                        title : this.inputTitle,
-                        lat : 35.09538792839069, 
-                        lng : 128.85568955530704,
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(pos) {
+                    var curlat = pos.coords.latitude
+                    var curlon = pos.coords.longitude
+                    console.log(curlat, curlon, 'addpetsitter의 위치!!')
+                    if (this.inputImage && this.inputContent && this.inputTitle){
+                        const formData = new FormData();
+                        formData.append('image', this.inputImage);
+                        axios({
+                            url: 'https://spetrum.io:8080/api/pboard/',
+                            method: 'POST',
+                            data: formData,
+                            headers:{
+                                'Content-Type': 'multipart/form-data',
+                                'Access-Control-Allow-Origin':'*',
+                                'Authorization':localStorage.getItem('token'),
+                            },
+                            params:{
+                                content : this.inputContent,
+                                title : this.inputTitle,
+                                lat : curlat,
+                                lng : curlon,
+                            }
+                        }).then(res=> {
+                            console.log(res);
+                            this.$router.push({name:'PetSitter'})
+                        }).catch(err =>{
+                            console.log(err)
+                        })
+                    } else {
+                        alert('내용을 작성해주세요')
                     }
-                }).then(res=> {
-                    console.log(res);
-                    this.$router.push({name:'PetSitter'})
-                }).catch(err =>{
-                    console.log(err)
                 })
             } else {
-                alert('내용을 작성해주세요')
+                alert('위치를 찾을 수 없어요!')
             }
         }   
     }
