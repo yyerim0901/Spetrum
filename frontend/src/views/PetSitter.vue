@@ -10,11 +10,11 @@
                 <div>
                     <h3>대충 주소가 들어간다는 뜻</h3>
                 </div>
-                <hr class="hr-box">
+                <StyledButton bcolor="pink" btype="small" @click="moveAddSitter">글작성하기</StyledButton>
+                <hr class="hr-box" style="text-align:start; border:solid; border-width:1px 0; border-color:#E5EAEF;">
             </div>
             <PetSitterDetail v-for="(board, idx) in Boards" :key="idx" :board="board" />
         </div>
-        <button @click="moveAddSitter">게시글 작성</button>
         <Footer :isActive="isActive"/>
         <hr class="fott">
     </div>
@@ -26,12 +26,15 @@ import Header from '../components/molecules/Header';
 import Footer from '../components/molecules/Footer';
 import PetSitterDetail from '../components/molecules/PetSitterDetail';
 import { mapState } from 'vuex'
+import StyledButton from '../components/atoms/StyledButton'
+
 export default {
     name: 'PetSitter',
     components: {
         Header,
         Footer,
         PetSitterDetail,
+        StyledButton
     },
     data() {
         return{
@@ -66,7 +69,8 @@ export default {
         margin-bottom: 4px;
     }
     .hr-box{
-        width: 90%;
+        width: 100%;
         margin-top: 8px;
     }
+  
 </style>
