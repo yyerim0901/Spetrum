@@ -57,7 +57,7 @@ export default {
       //로그아웃 -> 모달창 띄우기 어떻게 하는지 알아 보기
     },
     updateUserInfo(){
-      this.$router.push("/updateUserInfo")
+      this.$router.push("/update/user")
     },
     mydoggingList(){
       this.$router.push("/mydogging")

@@ -255,6 +255,20 @@ export default new Vuex.Store({
         method:'get',
         
       })
+    },
+    requestUpdateUserInfo(state, payload) {
+      axios({
+        url: `/users/${payload.userid}`,
+        method:'put',
+        data:payload
+      })
+      .then(res=>{
+        console.log(res);
+        router.push({name:'MyPage'})
+      })
+      .catch(err=>{
+        console.log(err)
+      })
     }
   },
   modules: {
