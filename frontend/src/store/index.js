@@ -298,9 +298,8 @@ export default new Vuex.Store({
     },
     bringPBoard(state, payload) {
       axios({
-        url: '/pboard/mylist',
+        url: `/pboard/mylist/${payload}`,
         method: 'get',
-        data:payload,
       })
     }
   },
