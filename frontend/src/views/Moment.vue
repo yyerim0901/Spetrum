@@ -84,10 +84,8 @@ export default {
       const { scrollTop, clientHeight, scrollHeight } = e.target;
       if (parseInt(scrollTop) + parseInt(clientHeight) + 1 !== parseInt(scrollHeight))
         return;
-      if (this.mywrites && this.mywrites.length % 10 !== 0) {
-        return
-      } else{
-        console.log('넘엇어');
+      if (this.mywrites && this.mywrites.length % 10 === 0) {
+        //게시물이 1페이지 전채 개수가 넘으면
         this.page = parseInt(this.mywrites.length / 10) + 1;
         console.log(this.page);
         this.$store.dispatch('bringSBoard',this.page)
@@ -96,7 +94,7 @@ export default {
           this.mywrites.push(...res.data.data);
           console.log(this.mywrites,'게시물');
         })
-      }
+      } 
     }
   },
   created(){
