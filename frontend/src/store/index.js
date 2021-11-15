@@ -277,7 +277,6 @@ export default new Vuex.Store({
       axios({
         url:'/users/logout',
         method:'post',
-        data:payload,
       })
       .then(res=>{
         console.log(res);
@@ -292,7 +291,6 @@ export default new Vuex.Store({
       axios({
         url:`/users/${payload}`,
         method:'delete',
-        data:payload,
       })
       .then(res=>{
         console.log(res);
