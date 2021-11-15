@@ -218,12 +218,12 @@ export default new Vuex.Store({
         data:payload,
       })
     },
-    bringSBoard(){
+    bringSBoard(state,page){
       return axios({
         url:'/sns/',
         method:'get',
         params:{
-          page:1,
+          page:page,
         }
       })
     },
