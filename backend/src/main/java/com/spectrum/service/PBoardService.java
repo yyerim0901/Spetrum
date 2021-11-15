@@ -17,7 +17,7 @@ public interface PBoardService {
     public boolean checkWriterOfBoard(PBoardUpdateReq pBoardUpdateReq, String token);
     public void updatePetSitter(PBoardUpdateReq pBoardUpdateReq, MultipartFile newPicture, String token) throws Exception;
     public void deletePetSitter(Long pboardId) throws IOException;
-    public List<PBoard> myPetsitterList(String token);
+    public List<PBoard> myPetsitterList(String userid);
     public Object allPetsitterList(float longitude, float latitude, int pagenum);
     public PBoard detailOfPetsitter(Long pboardId);
     public int completedPetsitter(Long pboardId);
