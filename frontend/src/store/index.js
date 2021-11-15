@@ -213,7 +213,7 @@ export default new Vuex.Store({
     },
     requestSComment(state,payload){
       return axios({
-        url:`/scomments/${payload}`,
+        url:`/scomments/${payload.get('sboardid')}`,
         method:'post',
         data:payload,
       })
