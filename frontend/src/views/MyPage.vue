@@ -73,10 +73,7 @@ export default {
     }
   },
   created(){
-    console.log("안녕 여기는 마이페이지")
-    console.log(this.userInfo.userid)
     this.userid = this.userInfo.userid;
-    console.log(this.userid)
     this.$store.dispatch('requestUser',this.userid);
   }
 }

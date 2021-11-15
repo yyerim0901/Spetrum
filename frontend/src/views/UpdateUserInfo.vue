@@ -33,7 +33,6 @@
 
 <script>
 import FooterButton from '../components/atoms/FooterButton'
-// import Footer from '../components/molecules/Footer.vue'
 import Header from '../components/molecules/Header.vue'
 import StyledInput from '../components/atoms/StyledInput'
 import StyledLabel from '../components/atoms/StyledLabel'
@@ -41,7 +40,6 @@ import {mapState} from 'vuex';
 export default {
   name:'Dogging',
   components:{
-    // Footer,
     Header,
     StyledInput,
     StyledLabel,
