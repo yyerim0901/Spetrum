@@ -14,7 +14,7 @@
         <StyledInput  type="password" :value="pwconfirm" v-model="pwconfirm" @change="validPassConCheck"></StyledInput>
         <ErrorMessage :message="pdconerror" >{{this.pdconerror}}</ErrorMessage>
         <StyledLabel for="nickname">닉네임</StyledLabel>
-        <StyledInput v-model="this.userInfo.nickname" @change="validNickCheck"></StyledInput>
+        <StyledInput :value="nickname" v-model="this.userInfo.nickname" @change="validNickCheck"></StyledInput>
         <ErrorMessage :message="nickerror" >{{this.nickerror}}</ErrorMessage>
         <div class="msg-box">
           <ErrorMessage >{{this.nickerror}}</ErrorMessage>
@@ -99,6 +99,7 @@ export default {
       }
     },
     validNickCheck(e){
+      if(this.nickname == null) this.nickname = this.userInfo.nickname;
       if (e.target.value.length < 2) {
         this.nickerror = '2자 이상의 닉네임을 입력해주세요!';
       } else {
@@ -130,6 +131,7 @@ export default {
         formData.append("nickname",this.nickname);
         formData.append("password",this.password);
         formData.append("image",this.profileImg);
+        console.log(formData);
         console.log(this.profileImg,'프로필이미지');
         this.$store.dispatch('requestUpdateUserInfo',formData);
       }
