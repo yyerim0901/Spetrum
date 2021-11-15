@@ -317,6 +317,13 @@ export default new Vuex.Store({
         router.push({name:'Moment'})
       })
     },
+    detailSBoard(state,payload){
+      return axios({
+        url:`/sns/${payload}`,
+        method:'get'
+      })
+    },
+
 
   },
   modules: {
