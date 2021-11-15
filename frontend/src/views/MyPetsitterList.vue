@@ -40,9 +40,9 @@ export default {
     this.userid = localStorage.getItem('userid')
     this.$store.dispatch('bringPBoard',this.userid)
     .then(res=>{
-      console.log(res.data)
-      console.log(res.data.data)
-      this.mypetsitters = res.data.data;
+      console.log(res)
+      // console.log(res.data.data)
+      this.mypetsitters = res;
     })
   },
 }
