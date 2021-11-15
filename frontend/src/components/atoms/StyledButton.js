@@ -26,7 +26,12 @@ const sizes = {
     width:"40px",
     height:"30px",
     size : "0.65rem"
-  }
+  },
+  xsmall: {
+    width: "35px",
+    height: "25px",
+    size:"0.75rem"
+  },
 }
 const StyledButton = styled('button', buttonProps)`
   height: ${sizes.large.height};
