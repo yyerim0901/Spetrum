@@ -6,18 +6,12 @@
             <p>{{ board.created }}</p>
             <p>{{ board.user }}</p>
         </div>
-        <StyledButton bcolor="pink" btype="small" @click="deletePetSitter">삭제하기</StyledButton>
     </div>
 </template>
 
 <script>
-import StyledButton from '../../components/atoms/StyledButton'
-import axios from '../../axios/index'
 export default {
     name: "PetSitterDetail",
-    components: {
-        StyledButton
-    },
     data () {
         return{
             BASE_URL : 'https://spetrum.io/resources/',
@@ -37,23 +31,10 @@ export default {
                 }
             })
         },
-        deletePetSitter() {
-            axios({
-                method: "DELETE",
-                url: "/pboard/",
-                params: {
-                    petSitterId : this.board.id
-                }
-            }).then(res => {
-                console.log(res.data)
-            }).catch(err => {
-                console.log(err)
-            })
-        },
         fullURL(url){
             const full = this.BASE_URL + url;
             return full;
-        },        
+        },
     }
 
 }
