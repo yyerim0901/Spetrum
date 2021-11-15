@@ -205,12 +205,6 @@ export default new Vuex.Store({
     decideAns({commit},payload){
       commit('SET_USER_TYPE',payload)
     },
-    detailSBoard(state,payload){
-      return axios({
-        url:`/sns/${payload}`,
-        method:'get'
-      })
-    },
     bringSBoardComments(state,payload){
       return axios({
         url:`/scomments/${payload}`,
@@ -301,7 +295,29 @@ export default new Vuex.Store({
         url: '/pboard/mylist',
         method : 'get',
       })
-    }
+    },
+    handleMomentEdit(state,payload){
+      axios({
+        url:`/sns/${payload.get('sboardid')}`,
+        method:'put',
+        data:payload,
+      })
+      .then(res=>{
+        console.log(res);
+        router.push({name:'Moment'})
+      })
+    },
+    handleMomentDelete(state,boardid){
+      axios({
+        url:`/sns/${boardid}`,
+        method:'delete',
+      })
+      .then(res=>{
+        console.log(res);
+        router.push({name:'Moment'})
+      })
+    },
+
   },
   modules: {
   }
