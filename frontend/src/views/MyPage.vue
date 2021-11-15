@@ -72,7 +72,7 @@ export default {
     }
   },
   created(){
-    this.$store.dispatch('requestUser',this.userid);
+    this.$store.dispatch('requestUser',this.userInfo.userid);
   }
 }
 </script>

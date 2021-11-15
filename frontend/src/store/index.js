@@ -95,20 +95,6 @@ export default new Vuex.Store({
       state.userInfo.userid = payload.userid;
       state.userInfo.followerList = payload.followerList;
       state.userInfo.followList = payload.followList;
-    },
-    SET_LOGOUT(state){
-      state.userInfo = {
-        userid:'',
-        profileImg:'',
-        nickname:'',
-        type:'',
-        introduce:'',
-        followerList:[],
-        followList:[],
-      },
-      localStorage.removeItem('userid')
-      localStorage.removeItem('token')
-      router.push({name:'SignIn'})
     }
   },
   actions: {
@@ -233,20 +219,17 @@ export default new Vuex.Store({
     },
     requestSComment(state,payload){
       return axios({
-        url:`/scomments/${payload.get('sboardid')}`,
+        url:`/scomments/${payload}`,
         method:'post',
-        data:payload
+        data:payload,
       })
     },
-    bringSBoard(state,page){
+    bringSBoard(){
       return axios({
         url:'/sns/',
         method:'get',
         params:{
-          page:page,
-        },
-        headers:{
-          Authorization:localStorage.getItem('token')
+          page:1,
         }
       })
     },
@@ -268,39 +251,12 @@ export default new Vuex.Store({
     },
     bringOtherSBoard(state,payload){
       return axios({
-        url:`/sns/users/${payload.userid}`,
+        url:`/sns/users/${payload}`,
         method:'get',
-        params:{
-          page:payload.page
-        }
+        
       })
     },
-    handleMomentEdit(state,payload){
-      axios({
-        url:`/sns/${payload.get('sboardid')}`,
-        method:'put',
-        data:payload,
-      })
-      .then(res=>{
-        console.log(res);
-        router.push({name:'Moment'})
-      })
-    },
-    handleMomentDelete(state,boardid){
-      axios({
-        url:`/sns/${boardid}`,
-        method:'delete',
-      })
-      .then(res=>{
-        console.log(res);
-        router.push({name:'Moment'})
-      })
-    },
-
     requestUpdateUserInfo(state, payload) {
-      console.log("store로 잘 넘어옴")
-      console.log(payload.get('userid'))
-      console.log(payload)
       axios({
         url: `/users/${payload.get('userid')}`,
         method:'put',
