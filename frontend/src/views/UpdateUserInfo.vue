@@ -55,6 +55,7 @@ export default {
   data(){
     return{
       isActive:5,
+      userid:null,
       password:null,
       pwconfirm:null,
       nickname:null,
