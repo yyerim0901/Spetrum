@@ -7,8 +7,8 @@
                 <img :src="this.imgprev" alt="" class="prev-img">
                 <input  type="file" @change="imageChange" ref="profileImage">
             </div>
-            <textarea name="content"  cols="30" rows="10" class="con-box" :placeholder=board.data.title v-model="inputTitle"></textarea>
-            <textarea name="content"  cols="30" rows="10" class="con-box" :placeholder=board.data.content v-model="inputContent"></textarea>
+            <textarea name="content"  cols="30" rows="10" class="con-box" :placeholder="this.board.data.title" v-model="inputTitle"></textarea>
+            <textarea name="content"  cols="30" rows="10" class="con-box" :placeholder="this.board.data.content" v-model="inputContent"></textarea>
         </div>
         <FooterButton @click="changePetSitter">게시글 수정하냥</FooterButton>
     </div>
@@ -52,7 +52,7 @@ export default {
                 navigator.geolocation.getCurrentPosition(function(pos) {
                     var curlat = pos.coords.latitude
                     var curlon = pos.coords.longitude
-                    console.log(curlat, curlon, 'addpetsitter의 위치!!')
+                    console.log(curlat, curlon, 'changepetsitter의 위치!!')
                     if (inputtedImage && inputtedContent && inputtedTitle){
                         const formData = new FormData();
                         formData.append('image', inputtedImage);
