@@ -291,12 +291,9 @@ export default new Vuex.Store({
       })
     },
     bringMyPBoard(state, payload) {
-      axios({
+      return axios({
         url: `/pboard/mylist/${payload}`,
         method: 'get',
-      }).then(res => {
-        console.log(res)
-        console.log(res.data)
       })
     },
     handleMomentEdit(state,payload){
