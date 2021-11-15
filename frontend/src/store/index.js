@@ -272,6 +272,32 @@ export default new Vuex.Store({
       .catch(err=>{
         console.log(err)
       })
+    },
+    logout() {
+      axios({
+        url:'/users/logout',
+        method:'post',
+        data:payload,
+      })
+      .then(res=>{
+        console.log(res);
+        if (res.data.statusCode == '200') {
+          localStorage.removeItem('token');
+          localStorage.removeItem('userid');
+        }
+        router.push({name:'SignIn'})
+      })
+    },
+    deleteUser(state, payload) {
+      axios({
+        url:`/users/${payload}`,
+        method:'delete',
+        data:payload,
+      })
+      .then(res=>{
+        console.log(res);
+        router.push({name:'SignIn'})
+      })
     }
   },
   modules: {

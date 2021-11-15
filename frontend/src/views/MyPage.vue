@@ -55,6 +55,7 @@ export default {
     },
     logout(){
       //로그아웃 -> 모달창 띄우기 어떻게 하는지 알아 보기
+      this.$store.dispatch('logout');
     },
     updateUserInfo(){
       this.$router.push("/update/user")
@@ -66,7 +67,8 @@ export default {
       this.$router.push("/mypetsitter")
     },
     deleteUser(){
-      //탈퇴
+      console.log(this.userInfo.userid)
+      this.$store.dispatch('deleteUser',this.userInfo.userid);
     }
   },
 }
