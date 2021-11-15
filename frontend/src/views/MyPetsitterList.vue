@@ -27,6 +27,7 @@ export default {
       isActive:5,
       mypetsitters:[],
       BASE_URL : 'https://spetrum.io/resources/',
+      userid:"",
     }
   },
   methods: {
@@ -36,8 +37,10 @@ export default {
         },
   },
   created() {
-    this.$store.dispatch('bringPBoard')
+    this.userid = localStorage.getItem('userid')
+    this.$store.dispatch('bringPBoard',this.userid)
     .then(res=>{
+      console.log(res.data)
       console.log(res.data.data)
       this.mypetsitters = res.data.data;
     })
