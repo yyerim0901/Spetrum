@@ -106,7 +106,7 @@ const routes = [
     component: AddPetSitter
   },
   {
-    path: '/updateUserInfo',
+    path: '/update/user',
     name: 'UpdateUserInfo',
     component : UpdateUserInfo
   },
