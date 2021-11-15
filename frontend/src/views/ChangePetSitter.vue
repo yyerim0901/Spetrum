@@ -80,6 +80,7 @@ export default {
                 },
             }).then(res => {
                 this.board = res.data
+                console.log(this.board, '수정페이지의 board는 이 내용입니다.')
             }).catch(err => {
                 console.log(err)
             })
