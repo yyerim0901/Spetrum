@@ -294,6 +294,10 @@ export default new Vuex.Store({
       })
       .then(res=>{
         console.log(res);
+        if (res.data.statusCode == '200') {
+          localStorage.removeItem('token');
+          localStorage.removeItem('userid');
+        }
         router.push({name:'SignIn'})
       })
     }
