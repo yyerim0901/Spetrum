@@ -96,8 +96,8 @@ public class PBoardController {
             value = "내 펫시터 리스트",
             notes = "**userid**을 이용하여 리스트 출력"
     )
-    @GetMapping("/mylist")
-    private PBoardResponse myPetsitterList(@ApiParam String userid){
+    @GetMapping("/mylist/{userid}")
+    private PBoardResponse myPetsitterList(@PathVariable String userid){
         List<PBoard> list = pBoardService.myPetsitterList(userid);
 
         if(list == null || list.isEmpty()){
