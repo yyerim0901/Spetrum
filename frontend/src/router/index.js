@@ -14,8 +14,9 @@ import TestResult from '../views/TestResult'
 import YourMoment from '../views/YourMoment'
 import AddMoment from '../views/AddMoment'
 import MDetail from '../views/MDetail'
-import AddPetSitter from '../views/AddPetSitter'
 import MUpdate from '../views/UpdateMoment'
+import AddPetSitter from '../views/AddPetSitter'
+import ChangePetSitter from '../views/ChangePetSitter'
 
 Vue.use(VueRouter)
 
@@ -98,9 +99,14 @@ const routes = [
     component: TestResult
   },
   {
-    path: '/wirte/petsitter',
+    path: '/write/petsitter',
     name:'AddPetSitter',
     component: AddPetSitter
+  },
+  {
+    path: '/change/petsitter',
+    name:'ChangePetSitter',
+    component: ChangePetSitter
   },
 ]
 
