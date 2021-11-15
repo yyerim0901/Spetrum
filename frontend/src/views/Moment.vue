@@ -94,7 +94,7 @@ export default {
         .then(res=>{
           console.log(res);
           this.mywrites.push(...res.data.data);
-          console.log(this.mywrites);
+          console.log(this.mywrites,'게시물');
         })
       }
     }

@@ -6,8 +6,11 @@
       <div style="display:flex; margin:2px 0 2px 20px; align-items:center; justify-content:flex-start">
         <img :src="getthumbnail()" alt="" class="pimg-box-small">
         <h3 style="padding:0 5px;">{{this.writernickname}}</h3>
-        <i class="[isWriter ? fas fa-edit : '',edit-icon ]" style="margin:0 0 0 270px;" @click="updateSBoard" ></i>
-        <i class="[!isWriter ? fas fa-trash : '',edit-icon ]" style="margin:0 0 0 10px;" @click="deleteSBoard"></i>
+        <div :class="[isWriter ? 'edit-icon' : '']">
+          <i class="fas fa-edit" style="margin:0 0 0 10px;" @click="moveEdit"></i>
+          <i class="fas fa-trash" style="margin:0 0 0 10px;" @click="handleDelete"></i>
+        </div>
+
       </div>
       <img :src="fullURL(this.files)" alt="" class="pre-img">
       <div style="margin:5px 40px; display:flex; flex-direction:column;">
@@ -45,7 +48,6 @@ export default {
       content:undefined,
       likes:undefined,
       BASE_URL : 'http://spetrum.io/resources/',
-      created:undefined,
       comment:undefined,
       boardid:undefined,
       commentList:null,
@@ -58,6 +60,7 @@ export default {
     this.boardid = this.$route.params.boardid;
     this.$store.dispatch('detailSBoard',this.$route.params.boardid)
     .then(res=>{
+      console.log(res);
       this.files = res.data.data.filelist;
       this.content = res.data.data.content;
       this.likes = res.data.data.likes;
@@ -69,6 +72,8 @@ export default {
       }
       this.$store.dispatch('requestSBoardUser',this.writerid)
       .then(res=>{
+        console.log(res);
+        console.log('유저인포');
         this.writernickname = res.data.user.nickname;
       })
       .catch(err=>{
@@ -106,10 +111,6 @@ export default {
       const formdata = new FormData();
       formdata.append('sboardid',this.boardid);
       formdata.append('content',this.comment);
-      // const data =  {
-      //   'sbaordid':parseInt(this.boardid),
-      //   'content':this.comment
-      // }
       this.$store.dispatch('requestSComment',formdata)
       .then(res=>{
         console.log(res);
@@ -126,9 +127,9 @@ export default {
       }
     },
     updateSBoard() {
-      this.$router.push({name:'MUpdate'})
+      this.$router.push({name:'EditMoment'})
     },
-  }
+  },
 }
 </script>
 
