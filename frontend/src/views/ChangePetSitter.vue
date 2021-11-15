@@ -74,10 +74,12 @@ export default {
         getPetSitterDetail() {
             axios({
                 method: "GET",
-                url: `/pboard/detail/${this.boardId}`,
-                headers: {
-                    "Authorization": localStorage.getItem("token")
-                },
+                url: `https://spetrum.io:8080/api/pboard/detail/${this.boardId}`,
+                headers:{
+                    'Content-Type': DEFAULT_ACCEPT_TYPE,
+                    'Access-Control-Allow-Origin':'*',
+                    'Authorization':localStorage.getItem("token"),
+                }
             }).then(res => {
                 this.board = res.data
                 console.log(this.board, '수정페이지의 board는 이 내용입니다.')
