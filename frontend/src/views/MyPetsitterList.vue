@@ -1,7 +1,13 @@
 <template>
   <div class="MyPetsitter-Wrapper">
-    <Header :isLogo="false" :isBack="false" title="나의 게시글"></Header>
+    <Header :isLogo="false" :isBack="true" title="나의 게시글"></Header>
     <hr>
+    <div v-for="mypetsitter in mypetsitters" :key="mypetsitter.id">
+      <img class="img-box" :src="fullURL(mypetsitter.picture)" alt="사진 안 뜸">
+      <p>{{mypetsitter.title}}</p>
+      <p>{{mypetsitter.created}}</p>
+      <p>{{mypetsitter.user}}</p>
+    </div>
     <hr class="fott">
     <Footer :isActive="isActive"></Footer>
   </div>
@@ -11,16 +17,31 @@
 import Footer from '../components/molecules/Footer.vue'
 import Header from '../components/molecules/Header.vue'
 export default {
-  name:'Dogging',
+  name:'MyPetsitter',
   components:{
     Footer,
     Header
   },
   data(){
     return{
-      isActive:5
+      isActive:5,
+      mypetsitters:[],
+      BASE_URL : 'https://spetrum.io/resources/',
     }
-  }
+  },
+  methods: {
+    fullURL(url){
+            const full = this.BASE_URL + url;
+            return full;
+        },
+  },
+  created() {
+    this.$store.dispatch('bringPBoard')
+    .then(res=>{
+      console.log(res.data.data)
+      this.mypetsitters = res.data.data;
+    })
+  },
 }
 </script>
 
