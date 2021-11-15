@@ -10,7 +10,7 @@
             <textarea name="content"  cols="30" rows="10" class="con-box" :placeholder=board.data.title v-model="inputTitle"></textarea>
             <textarea name="content"  cols="30" rows="10" class="con-box" :placeholder=board.data.content v-model="inputContent"></textarea>
         </div>
-        <FooterButton @click="createPetSitter">게시글 작성하냥</FooterButton>
+        <FooterButton @click="changePetSitter">게시글 수정하냥</FooterButton>
     </div>
 </template>
 
@@ -42,14 +42,14 @@ export default {
                 this.imgprev = URL.createObjectURL(this.inputImage)
             }
         },
-        createPetSitter() {
+        changePetSitter() {
             console.log(this.board.data.lat, this.board.data.lon, '저장된위치!!')
             if (this.inputImage && this.inputContent && this.inputTitle){
                 const formData = new FormData();
                 formData.append('image', this.inputImage);
                 axios({
                     url: 'https://spetrum.io:8080/api/pboard/',
-                    method: 'POST',
+                    method: 'PUT',
                     data: formData,
                     headers:{
                         'Content-Type': 'multipart/form-data',

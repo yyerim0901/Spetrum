@@ -6,7 +6,7 @@
             <img class="detail-img-box" :src="fullURL(board.data.picture)" alt="이미지가 없습니다">
             <h3>{{ board.title }}</h3>
             <hr>
-            <button>수정</button> |
+            <button @click="moveChangePetSitter">수정</button> |
             <button @click="deletePetSitter">삭제</button>
             <p>작성일자 : {{ board.data.created }}</p>
             <p>내용 : {{ board.data.content }}</p>
@@ -108,7 +108,7 @@ export default {
                 }
             }).then(res => {
                 console.log(res.data)
-                this.$router.go();
+                this.$router.push({name:'PetSitter'})
             }).catch(err => {
                 console.log(err)
             })
