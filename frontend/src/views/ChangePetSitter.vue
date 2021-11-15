@@ -76,7 +76,7 @@ export default {
                 method: "GET",
                 url: `https://spetrum.io:8080/api/pboard/detail/${this.boardId}`,
                 headers:{
-                    'Content-Type': DEFAULT_ACCEPT_TYPE,
+                    'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin':'*',
                     'Authorization':localStorage.getItem("token"),
                 }
