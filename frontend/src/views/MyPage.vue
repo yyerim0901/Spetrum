@@ -42,6 +42,7 @@ export default {
   data(){
     return{
       isActive:5,
+      userid : null,
       BASE_URL : 'http://spetrum.io/resources/'
     }
   },
@@ -72,7 +73,10 @@ export default {
     }
   },
   created(){
-    this.$store.dispatch('requestUser',this.userInfo.userid);
+    console.log(this.userInfo.userid)
+    this.userid = this.userInfo.userid;
+    console.log(this.userid)
+    this.$store.dispatch('requestUser',this.userid);
   }
 }
 </script>
