@@ -258,10 +258,10 @@ export default new Vuex.Store({
     },
     requestUpdateUserInfo(state, payload) {
       console.log("store로 잘 넘어옴")
-      console.log(payload.userid)
+      console.log(payload.get('userid'))
       console.log(payload)
       axios({
-        url: `/users/${payload.userid}`,
+        url: `/users/${payload.get('userid')}`,
         method:'put',
         data:payload
       })
