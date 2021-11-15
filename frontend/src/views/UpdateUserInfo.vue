@@ -14,7 +14,7 @@
         <StyledInput  type="password" :value="pwconfirm" v-model="pwconfirm" @change="validPassConCheck"></StyledInput>
         <ErrorMessage :message="pdconerror" >{{this.pdconerror}}</ErrorMessage>
         <StyledLabel for="nickname">닉네임</StyledLabel>
-        <StyledInput :value="this.userInfo.nickname" v-model="this.userInfo.nickname" @change="validNickCheck"></StyledInput>
+        <StyledInput :value="nickname" v-model="this.userInfo.nickname" @change="validNickCheck"></StyledInput>
         <ErrorMessage :message="nickerror" >{{this.nickerror}}</ErrorMessage>
         <div class="msg-box">
           <ErrorMessage >{{this.nickerror}}</ErrorMessage>
@@ -128,11 +128,10 @@ export default {
       if (this.nickValid & this.pdValid & this.pdconValid && this.nickcheck ) {
         const formData = new FormData();
         formData.append("userid",this.userInfo.userid)
+        console.log(this.nickname)
         formData.append("nickname",this.nickname);
         formData.append("password",this.password);
         formData.append("files",this.profileImg);
-        console.log(formData);
-        console.log(this.profileImg,'프로필이미지');
         this.$store.dispatch('requestUpdateUserInfo',formData);
       }
       else {
