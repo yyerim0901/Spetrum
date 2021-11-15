@@ -1,6 +1,6 @@
 <template>
   <div class="updateUser-Wrapper">
-    <Header :isLogo="false" :isBack="false" title="회원 정보 수정"></Header>
+    <Header :isLogo="false" :isBack="true" title="회원 정보 수정"></Header>
     <hr>
     <div class="Signup-Wrap">
       <img :src="getthumbnail()" alt="dog" class="pimg-box">
@@ -26,19 +26,14 @@
           <img :src="this.imgprev" alt="" class="prev">
         </div>
       </div>
-      <div class="i-box">
-        <button class="follow-button" style="background-color:#EE9CA7;" @click="updateUserInfo()">수정</button>
-        <button class="unfollow-button" @click="goMyPage()">취소</button>
-      </div>
     </div>
-    <hr class="fott">
-    <Footer :isActive="isActive"></Footer>
+    <FooterButton @click="updateUserInfo">수정하기</FooterButton>
   </div>
 </template>
 
 <script>
-// import FooterButton from '../components/atoms/FooterButton'
-import Footer from '../components/molecules/Footer.vue'
+import FooterButton from '../components/atoms/FooterButton'
+// import Footer from '../components/molecules/Footer.vue'
 import Header from '../components/molecules/Header.vue'
 import StyledInput from '../components/atoms/StyledInput'
 import StyledLabel from '../components/atoms/StyledLabel'
@@ -46,11 +41,11 @@ import {mapState} from 'vuex';
 export default {
   name:'Dogging',
   components:{
-    Footer,
+    // Footer,
     Header,
     StyledInput,
     StyledLabel,
-    // FooterButton
+    FooterButton
   },
   data(){
     return{
@@ -128,7 +123,6 @@ export default {
       if (this.nickValid & this.pdValid & this.pdconValid && this.nickcheck ) {
         const formData = new FormData();
         formData.append("userid",this.userInfo.userid)
-        console.log(this.nickname)
         formData.append("nickname",this.nickname);
         formData.append("password",this.password);
         formData.append("files",this.profileImg);
