@@ -42,7 +42,7 @@ export default {
   data(){
     return{
       isActive:5,
-      userid : null,
+      userid : "",
       BASE_URL : 'http://spetrum.io/resources/'
     }
   },
@@ -73,6 +73,7 @@ export default {
     }
   },
   created(){
+    console.log("안녕 여기는 마이페이지")
     console.log(this.userInfo.userid)
     this.userid = this.userInfo.userid;
     console.log(this.userid)
