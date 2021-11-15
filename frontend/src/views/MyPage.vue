@@ -71,6 +71,9 @@ export default {
       this.$store.dispatch('deleteUser',this.userInfo.userid);
     }
   },
+  created(){
+    this.$store.dispatch('requestUser',this.userid);
+  }
 }
 </script>
 
