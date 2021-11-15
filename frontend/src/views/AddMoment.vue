@@ -33,6 +33,7 @@ export default {
   methods:{
     imageChange(){
       this.addimage = this.$refs.profileImage.files[0];
+      console.log(this.addimage);
       if (this.addimage) {
         this.imgprev = URL.createObjectURL(this.addimage);
         }

@@ -2,8 +2,8 @@
   <div class="Moment-Wrapper">
     <Header :isBack="true" title="MY MOMENT" :isLogo="false"></Header>
     <hr>
-    <div style="width:100%; padding:10px 10px; display:flex; flex-direction:column; overflow:scroll">
-      <div style="display:flex; margin:2px 0 2px 35px; align-items:center; justify-content:flex-start;">
+    <div style="width:100%; display:flex; flex-direction:column;  overflow-y:scroll">
+      <div style="display:flex; margin:2px 0 2px 20px; align-items:center; justify-content:flex-start">
         <img :src="getthumbnail()" alt="" class="pimg-box-small">
         <h3 style="padding:0 5px;">{{this.writernickname}}</h3>
         <i class="[isWriter ? fas fa-edit : '',edit-icon ]" style="margin:0 0 0 270px;" @click="updateSBoard" ></i>
@@ -42,10 +42,10 @@ export default {
   },
   data(){
     return{
-      files:undefined,
+      files:[],
       content:undefined,
       likes:undefined,
-      BASE_URL : 'https://spetrum.io/resources/',
+      BASE_URL : 'http://spetrum.io/resources/',
       created:undefined,
       comment:undefined,
       boardid:undefined,
@@ -59,14 +59,14 @@ export default {
     this.boardid = this.$route.params.boardid;
     this.$store.dispatch('detailSBoard',this.$route.params.boardid)
     .then(res=>{
-      this.files = res.data.data.filelist[0].save_file;
+      this.files = res.data.data.filelist;
       this.content = res.data.data.content;
       this.likes = res.data.data.likes;
       this.writerid = res.data.data.userid;
       if (localStorage.getItem('userid') === this.writerid ){
-        this.isWriter = true
-      }else{
         this.isWriter = false
+      }else{
+        this.isWriter = true
       }
       this.$store.dispatch('requestSBoardUser',this.writerid)
       .then(res=>{
@@ -78,7 +78,6 @@ export default {
     })
     this.$store.dispatch('bringSBoardComments',this.boardid)
     .then(res=>{
-      console.log(res);
       this.commentList = res.data.data;
     })
   },
@@ -87,8 +86,15 @@ export default {
   },
   methods:{
     fullURL(url){
-      const full = this.BASE_URL + url;
+      if (url.length !== 0){
+        var full = this.BASE_URL + url[0].save_file;
+      } else{
+        full = require('@/assets/noimage.png')
+      }
       return full;
+    },
+    moveEdit(){
+      this.$router.push({name:'EditMoment', params:{'boardid':this.boardid}})
     },
     getthumbnail(){
       if (this.userInfo.thumbnail) {
@@ -101,27 +107,24 @@ export default {
       const formdata = new FormData();
       formdata.append('sboardid',this.boardid);
       formdata.append('content',this.comment);
+      // const data =  {
+      //   'sbaordid':parseInt(this.boardid),
+      //   'content':this.comment
+      // }
       this.$store.dispatch('requestSComment',formdata)
-        // this.$store.dispatch('bringSBoardComments',this.boardid)
-        // .then(res=>{
-        //   console.log(res);
-        //   this.commentList = res.data.data;
-        // })
-    },
-    deleteSBoard() {
-      axios({
-        url:'https://spetrum.io:8080/api/sns/' + this.boardid,
-        method:'delete',
-        headers:{
-          'Content-Type': 'multipart/form-data',
-          'Access-Control-Allow-Origin':'*',
-          'Authorization':localStorage.getItem('token'),
-        }
-      })
+      .then(res=>{
+        console.log(res);
+        this.$store.dispatch('bringSBoardComments',this.boardid)
         .then(res=>{
           console.log(res);
-          this.$router.push({name:'Moment'})
+          this.commentList = res.data.data;
         })
+      })
+    },
+    handleDelete(){
+      if (confirm('삭제하시겠냥?')){
+        this.$store.dispatch('handleMomentDelete',this.boardid)
+      }
     },
     updateSBoard() {
       this.$router.push({name:'MUpdate'})
