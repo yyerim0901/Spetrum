@@ -1,13 +1,13 @@
 <template>
-    <div class="Moment-Wrapper">
+    <div class="PET-Wrapper">
         <Header :isLogo="false" :isBack="true" title="겟! 시터 글 작성"></Header>
         <hr>
-        <div>
+        <div style="width:400px;">
             <div class="addbox">
                 <img :src="this.imgprev" alt="" class="prev-img">
                 <input  type="file" @change="imageChange" ref="profileImage">
             </div>
-            <textarea name="content"  cols="30" rows="10" class="con-box" placeholder="제목을 입력해주세요" v-model="inputTitle"></textarea>
+            <input name="content"  cols="30" rows="10" class="title-box" placeholder="제목을 입력해주세요" v-model="inputTitle">
             <textarea name="content"  cols="30" rows="10" class="con-box" placeholder="내용을 입력해주세요" v-model="inputContent"></textarea>
         </div>
         <FooterButton @click="createPetSitter">게시글 작성하냥</FooterButton>
@@ -88,5 +88,29 @@ export default {
 </script>
 
 <style>
-
+.addbox{
+display:flex;
+flex-direction: column;
+}
+.prev-img{
+width: 400px;
+height:400px;
+margin: 20px 0;
+}
+.title-box{
+border: solid 1px;
+border-color: #E5EAEF;
+width:400px;
+height: 30px;
+margin:10px 0;
+text-align:start;
+}
+.con-box{
+border: solid 1px;
+border-color: #E5EAEF;
+width:400px;
+height: 100px;
+margin:10px 0;
+text-align:start;
+}
 </style>

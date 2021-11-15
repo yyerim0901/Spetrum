@@ -4,7 +4,7 @@
         <div class="board-box" @click="moveEachDetail">
             <p>{{ board.title }}</p>
             <p>{{ board.created }}</p>
-            <p>{{ board.user }}</p>
+            <p>{{ board }}</p>
         </div>
     </div>
 </template>
