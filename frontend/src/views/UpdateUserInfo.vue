@@ -16,10 +16,14 @@
         <StyledLabel for="nickname">닉네임</StyledLabel>
         <StyledInput v-model="this.userInfo.nickname" @change="validNickCheck"></StyledInput>
         <ErrorMessage :message="nickerror" >{{this.nickerror}}</ErrorMessage>
+        <div class="msg-box">
+          <ErrorMessage >{{this.nickerror}}</ErrorMessage>
+          <button class="double-check" @click="nickCheck"><p>닉네임 중복확인</p></button>
+        </div>
         <StyledLabel for="image">프로필 사진 수정</StyledLabel>
         <div class="img-box">
           <input  type="file" @change="imageChange" ref="profileImage">
-          <img :src="this.userInfo.thumbnail" alt="" class="prev">
+          <img :src="this.imgprev" alt="" class="prev">
         </div>
       </div>
       <div class="i-box">
@@ -60,7 +64,7 @@ export default {
       pdValid:false,
       pdconValid:false,
       nickValid:false,
-      nickcheck:false,
+      nickcheck:true,
       profileImg:null,
       imgprev:null,
     }
@@ -96,7 +100,7 @@ export default {
     },
     validNickCheck(e){
       if (e.target.value.length < 2) {
-        this.nickerror = '닉네임을 입력해주세요!';
+        this.nickerror = '2자 이상의 닉네임을 입력해주세요!';
       } else {
         this.nickValid = true;
         this.nickerror = null;
