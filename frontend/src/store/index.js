@@ -294,6 +294,9 @@ export default new Vuex.Store({
       axios({
         url: `/pboard/mylist/${payload}`,
         method: 'get',
+      }).then(res => {
+        console.log(res)
+        console.log(res.data)
       })
     },
     handleMomentEdit(state,payload){
