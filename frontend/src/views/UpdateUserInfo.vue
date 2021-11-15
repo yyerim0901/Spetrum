@@ -6,7 +6,8 @@
       <img :src="getthumbnail()" alt="dog" class="pimg-box">
       <div class="form-container">
         <StyledLabel for="userid">아이디</StyledLabel>
-        <StyleInput v-model="this.userInfo.userid"></StyleInput>
+        <StyleInput v-model="this.userInfo.userid" disabled>userid일까</StyleInput>
+        <StyleInput v-model="this.userInfo.userId" disabled>userId일까</StyleInput>
         <StyledLabel for="password">비밀번호</StyledLabel>
         <StyledInput  type="password" :value="password" v-model="password" @change="validPassCheck"></StyledInput>
         <ErrorMessage :message="pderror" >{{this.pderror}}</ErrorMessage>
