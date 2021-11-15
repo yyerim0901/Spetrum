@@ -86,7 +86,8 @@ export default {
         return;
       if (this.mywrites && this.mywrites.length % 10 === 0) {
         //게시물이 1페이지 전채 개수가 넘으면
-        this.page = parseInt(this.mywrites.length / 10) + 1;
+        console.log(this.mywrites.length,'길이');
+        this.page +=  1;
         console.log(this.page);
         this.$store.dispatch('bringSBoard',this.page)
         .then(res=>{
