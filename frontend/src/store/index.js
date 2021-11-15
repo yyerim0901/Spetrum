@@ -296,7 +296,7 @@ export default new Vuex.Store({
         router.push({name:'SignIn'})
       })
     },
-    bringPBoard(state, payload) {
+    bringMyPBoard(state, payload) {
       axios({
         url: `/pboard/mylist/${payload}`,
         method: 'get',

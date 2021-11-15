@@ -38,11 +38,12 @@ export default {
   },
   created() {
     this.userid = localStorage.getItem('userid')
-    this.$store.dispatch('bringPBoard',this.userid)
+    console.log(this.userid)
+    this.$store.dispatch('bringMyPBoard',this.userid)
     .then(res=>{
-      console.log(res)
+      console.log(res.data)
       // console.log(res.data.data)
-      this.mypetsitters = res;
+      this.mypetsitters = res.data;
     })
   },
 }
