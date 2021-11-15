@@ -1,19 +1,23 @@
 <template>
-  <div class="PET-Wrapper">
-      <Header :isLogo="false" :isBack="false" title="겟!시터"/>
-      <hr>
-      <div class="detail-box">
-          <img class="detail-img-box" :src="fullURL(board.data.picture)" alt="이미지가 없습니다">
-          <p>{{ board }}</p>
-          <p>{{ board.data.picture }}</p>
-          <hr>
-      </div>
-      <PetSitterCommentDetail v-for="(comment, idx) in comments" :key="idx" :comment="comment" />
-      <input placeholder="댓글을 입력해주세요" type="text" v-model="inputContent">
-      <button @click="createComment">댓글작성</button>
-      <Footer :isActive="isActive"/>
-      <hr class="fott">
-  </div>
+    <div class="PET-Wrapper">
+        <Header :isLogo="false" :isBack="false" title="겟!시터"/>
+        <hr>
+        <div class="detail-box">
+            <img class="detail-img-box" :src="fullURL(board.data.picture)" alt="이미지가 없습니다">
+            <h3>{{ board.title }}</h3>
+            <hr>
+            <button>수정</button> |
+            <button @click="deletePetSitter">삭제</button>
+            <p>작성일자 : {{ board.data.created }}</p>
+            <p>내용 : {{ board.data.content }}</p>
+        </div>
+        <hr>
+        <PetSitterCommentDetail v-for="(comment, idx) in comments" :key="idx" :comment="comment" />
+        <input placeholder="댓글을 입력해주세요" type="text" v-model="inputContent">
+        <button @click="createComment">댓글작성</button>
+        <Footer :isActive="isActive"/>
+        <hr class="fott">
+    </div>
 </template>
 
 <script>
@@ -95,6 +99,28 @@ export default {
             const full = this.BASE_URL + url;
             return full;
         },
+        deletePetSitter() {
+            axios({
+                method: "DELETE",
+                url: "/pboard/",
+                params: {
+                    petSitterId : this.boardId
+                }
+            }).then(res => {
+                console.log(res.data)
+                this.$router.go();
+            }).catch(err => {
+                console.log(err)
+            })
+        },
+        moveChangePetSitter() {
+            this.$router.push({
+                name: "ChangePetSitter",
+                params: {
+                    board_id: this.boardId,
+                }
+            })
+        }
     },
     created() {
         this.getPetSitterDetail()
