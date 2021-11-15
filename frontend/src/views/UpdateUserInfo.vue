@@ -14,7 +14,6 @@
         <StyledInput  type="password" :value="pwconfirm" v-model="pwconfirm" @change="validPassConCheck"></StyledInput>
         <ErrorMessage :message="pdconerror" >{{this.pdconerror}}</ErrorMessage>
         <StyledLabel for="nickname">닉네임</StyledLabel>
-        {{nickname}}
         <StyledInput v-model="nickname" @change="validNickCheck"></StyledInput>
         <ErrorMessage :message="nickerror" >{{this.nickerror}}</ErrorMessage>
         <div class="msg-box">
@@ -64,7 +63,7 @@ export default {
       nickerror:null,
       pdValid:false,
       pdconValid:false,
-      nickValid:false,
+      nickValid:true,
       nickcheck:true,
       profileImg:null,
       imgprev:null,
