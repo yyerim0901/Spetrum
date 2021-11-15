@@ -15,14 +15,11 @@ import YourMoment from '../views/YourMoment'
 import AddMoment from '../views/AddMoment'
 import MDetail from '../views/MDetail'
 import MUpdate from '../views/UpdateMoment'
-<<<<<<< HEAD
 import AddPetSitter from '../views/AddPetSitter'
 import ChangePetSitter from '../views/ChangePetSitter'
-=======
 import UpdateUserInfo from '../views/UpdateUserInfo'
 import MyDoggingList from '../views/MyDoggingList'
 import MyPetsitterList from '../views/MyPetsitterList'
->>>>>>> f0cddc4b0386b661865c6f17547c18ae6c5ff15a
 
 Vue.use(VueRouter)
 
