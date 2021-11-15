@@ -7,8 +7,8 @@
                 <img :src="this.imgprev" alt="" class="prev-img">
                 <input  type="file" @change="imageChange" ref="profileImage">
             </div>
-            <textarea name="content"  cols="30" rows="10" class="con-box" :placeholder=board.data.title v-model="inputTitle"></textarea>
-            <textarea name="content"  cols="30" rows="10" class="con-box" :placeholder=board.data.content v-model="inputContent"></textarea>
+            <textarea name="content"  cols="30" rows="10" class="con-box" placeholder="수정할 제목을 입력해주세요" v-model="inputTitle"></textarea>
+            <textarea name="content"  cols="30" rows="10" class="con-box" placeholder="수정할 내용을 입력해주세요" v-model="inputContent"></textarea>
         </div>
         <FooterButton @click="changePetSitter">게시글 수정하냥</FooterButton>
     </div>
