@@ -31,7 +31,6 @@ import {mapState} from 'vuex'
 import Header from '../components/molecules/Header.vue'
 import CommentInput from '../components/atoms/CommentInput'
 import StyledButton from '../components/atoms/StyledButton'
-import axios from 'axios';
 
 export default {
   name:'MDetail',
