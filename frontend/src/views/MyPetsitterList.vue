@@ -40,11 +40,9 @@ export default {
     this.userid = localStorage.getItem('userid')
     console.log(this.userid)
     this.$store.dispatch('bringMyPBoard',this.userid)
-    .then(res=>{
-      console.log(res.data)
-      //여기 지금 res.data가 안 받아와짐 ㅠ
-      // console.log(res.data.data)
-      this.mypetsitters = res.data;
+    .then(res => {
+      console.log(res.data.data)
+      this.mypetsitters = res.data.data
     })
   },
 }
