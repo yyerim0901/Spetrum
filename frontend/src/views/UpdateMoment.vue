@@ -1,15 +1,14 @@
 <template>
   <div class="Moment-Wrapper">
-    <Header :isLogo="false" :isBack="true" title="ADD MOMENT"></Header>
+    <Header :isLogo="false" :isBack="true" title="UPDATE MOMENT"></Header>
     <hr>
     <div>
       <div class="addbox">
         <img :src="this.imgprev" alt="" class="prev-img">
-        <input  type="file" @change="imageChange" ref="profileImage">
       </div>
       <textarea name="content"  cols="30" rows="10" class="con-box" placeholder="내용을 입력해주세요" v-model="contents"></textarea>
     </div>
-    <FooterButton @click="handleWrite">게시글 작성하냥</FooterButton>
+    <FooterButton @click="updateWrite">게시글 수정하냥</FooterButton>
   </div>
 </template>
 
@@ -18,34 +17,37 @@ import FooterButton from '../components/atoms/FooterButton'
 import Header from '../components/molecules/Header'
 import axios from 'axios';
 export default {
-  name:'AddMoment',
+  name:'MUpdate',
   components:{
     FooterButton,
     Header
   },
   data(){
     return{
-      addimage:null,
+      BASE_URL : 'https://spetrum.io/resources/',
       imgprev:null,
       contents:null,
+      boardid:null,
     }
   },
+  created(){
+    this.boardid = this.$route.params.boardid;
+    console.log(this.boardid + "보드id")
+    this.$store.dispatch('detailSBoard',this.$route.params.boardid)
+    .then(res=>{
+      this.imgprev = this.fullURL(res.data.data.filelist[0].save_file);
+      this.contents = res.data.data.content;
+      console.log(this.contents + "내용");
+    })
+  },
   methods:{
-    imageChange(){
-      this.addimage = this.$refs.profileImage.files[0];
-      console.log(this.addimage);
-      if (this.addimage) {
-        this.imgprev = URL.createObjectURL(this.addimage);
-        }
-    },
-    handleWrite(){
-      if (this.addimage && this.contents){
+    updateWrite(){
+      if (this.contents){
         const formData = new FormData();
         formData.append('content',this.contents);
-        formData.append('snsfiles',this.addimage);
         axios({
-          url:'https://spetrum.io:8080/api/sns/',
-          method:'post',
+          url:'https://spetrum.io:8080/api/sns/' + this.boardid,
+          method:'put',
           data:formData,
           headers:{
             'Content-Type': 'multipart/form-data',
@@ -60,11 +62,12 @@ export default {
       }else{
         alert('내용을 작성해주세요');
       }
-    }
+    },
+    fullURL(url){
+      const full = this.BASE_URL + url;
+      return full;
+    },
   },
-  created() {
-  
-  }
 }
 </script>
 

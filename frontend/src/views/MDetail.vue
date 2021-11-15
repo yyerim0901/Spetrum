@@ -6,10 +6,8 @@
       <div style="display:flex; margin:2px 0 2px 20px; align-items:center; justify-content:flex-start">
         <img :src="getthumbnail()" alt="" class="pimg-box-small">
         <h3 style="padding:0 5px;">{{this.writernickname}}</h3>
-        <div :class="[isWriter ? 'edit-icon' : '']">
-          <i class="fas fa-edit" style="margin:0 0 0 10px;" @click="moveEdit"></i>
-          <i class="fas fa-trash" style="margin:0 0 0 10px;" @click="handleDelete"></i>
-        </div>
+        <i class="[isWriter ? fas fa-edit : '',edit-icon ]" style="margin:0 0 0 270px;" @click="updateSBoard" ></i>
+        <i class="[!isWriter ? fas fa-trash : '',edit-icon ]" style="margin:0 0 0 10px;" @click="deleteSBoard"></i>
       </div>
       <img :src="fullURL(this.files)" alt="" class="pre-img">
       <div style="margin:5px 40px; display:flex; flex-direction:column;">
@@ -33,6 +31,8 @@ import {mapState} from 'vuex'
 import Header from '../components/molecules/Header.vue'
 import CommentInput from '../components/atoms/CommentInput'
 import StyledButton from '../components/atoms/StyledButton'
+import axios from 'axios';
+
 export default {
   name:'MDetail',
   components:{
@@ -125,7 +125,10 @@ export default {
       if (confirm('삭제하시겠냥?')){
         this.$store.dispatch('handleMomentDelete',this.boardid)
       }
-    }
+    },
+    updateSBoard() {
+      this.$router.push({name:'MUpdate'})
+    },
   }
 }
 </script>

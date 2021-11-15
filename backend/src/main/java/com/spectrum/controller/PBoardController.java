@@ -9,7 +9,10 @@ import com.spectrum.service.PBoardService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.json.HTTP;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.awt.print.Pageable;
 import java.io.IOException;
 import java.util.List;
 
@@ -27,7 +31,7 @@ import java.util.List;
 public class PBoardController {
 
     @Autowired
-    private PBoardService petSitterService;
+    private PBoardService pBoardService;
 
     @Autowired
     private JWTUtil jwtUtil;
@@ -38,7 +42,7 @@ public class PBoardController {
     )
     @GetMapping("/test")
     private ResponseEntity<?> testOfList() throws Exception{
-        List<PBoard> list = petSitterService.sortOfDistance();
+        List<PBoard> list = pBoardService.sortOfDistance();
         return new ResponseEntity<List<PBoard>>(list,HttpStatus.OK);
     }
 
@@ -48,13 +52,13 @@ public class PBoardController {
     )
     @PostMapping
     private ResponseEntity<String> postPetsitter(
-            @ApiParam(value = "게시글 작성", required = true) PBoardPostReq petSitterPostRequest,
+            @ApiParam(value = "게시글 작성", required = true) PBoardPostReq pBoardPostReq,
             @RequestPart(value = "image", required = false) MultipartFile petSitterImage,
             HttpServletRequest request) throws Exception {
 
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
 
-        petSitterService.postPetSitter(petSitterPostRequest,petSitterImage, token);
+        pBoardService.postPetSitter(pBoardPostReq,petSitterImage, token);
         return new ResponseEntity<>("post petsitter success", HttpStatus.OK);
     }
 
@@ -69,10 +73,10 @@ public class PBoardController {
             @RequestPart(value = "image", required = false) MultipartFile newPicture
             ) throws Exception {
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if(!petSitterService.checkWriterOfBoard(pBoardUpdateReq,token)) {
+        if(!pBoardService.checkWriterOfBoard(pBoardUpdateReq,token)) {
             return new ResponseEntity<>("글 수정 권한 없음", HttpStatus.UNAUTHORIZED);
         }
-        petSitterService.updatePetSitter(pBoardUpdateReq, newPicture, token);
+        pBoardService.updatePetSitter(pBoardUpdateReq, newPicture, token);
         return new ResponseEntity<>("펫 시터 글 수정 완료",HttpStatus.OK);
     }
 
@@ -84,7 +88,7 @@ public class PBoardController {
     private ResponseEntity<String> deletePetsitter(
             @ApiParam(value = "게시글 id", required = true) Long petSitterId
             ) throws IOException {
-        petSitterService.deletePetSitter(petSitterId);
+        pBoardService.deletePetSitter(petSitterId);
         return new ResponseEntity<>("delete success", HttpStatus.OK);
     }
 
@@ -95,11 +99,11 @@ public class PBoardController {
     @GetMapping("/mylist")
     private PBoardResponse myPetsitterList(HttpServletRequest request){
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
-        List<PBoard> list = petSitterService.myPetsitterList(token);
+        List<PBoard> list = pBoardService.myPetsitterList(token);
 
         if(list == null || list.isEmpty()){
-            return new PBoardResponse("나의 리스트가 존재하지 않습니다.",null);
-        }else return new PBoardResponse("리스트 출력 완료",list);
+            return new PBoardResponse("나의 리스트가 존재하지 않습니다.",null,HttpStatus.NO_CONTENT);
+        }else return new PBoardResponse("리스트 출력 완료",list,HttpStatus.OK);
     }
     
     //mongoDB의 mindistance, maxdistance 쓰면 일정 거리에 따라 글 sort 가능
@@ -110,28 +114,41 @@ public class PBoardController {
     //페이징=> pageable 사용
     @ApiOperation(
             value = "전제 petsitter 글 출력",
-            notes = "사용자의 위도 경도에 따라 다르게 정렬...하는거 나중에 추가할게욤..우선은 그냥 다 출력.."
+            notes = "**사용자의 위도, 경도, page**에 따라 글 정렬"
     )
     @GetMapping("/list")
-    private PBoardResponse allPetsitterList(@RequestParam float latitude, @RequestParam float longitude){
-        List<PBoard> allList = petSitterService.allPetsitterList(longitude, latitude);
-        if(allList == null || allList.isEmpty()){
-            return new PBoardResponse("등록된 글이 존재하지 않습니다.",null);
-        }else return new PBoardResponse("리스트 출력 완료",allList);
+    private PBoardResponse allPetsitterList(@RequestParam float latitude, @RequestParam float longitude,
+                                            @RequestParam int pagenum){
+        Object allList = pBoardService.allPetsitterList(longitude, latitude, pagenum);
+        if(allList == null){
+            return new PBoardResponse("등록된 글이 존재하지 않습니다.",null,HttpStatus.NO_CONTENT);
+        }else return new PBoardResponse("리스트 출력 완료",allList, HttpStatus.OK);
     }
 
     @ApiOperation(
             value = "펫시터 상세 페이지 출력",
             notes = "url에 **글 번호(id)**를 넣고 출력"
     )
-    @GetMapping("/detail/{petsitterId}")
+    @GetMapping("/detail/{pboardId}")
     private PBoardResponse detailPetsitterPage(
-            @PathVariable Long petsitterId
+            @PathVariable Long pboardId
     ){
-        PBoard petSitter = petSitterService.detailOfPetsitter(petsitterId);
+        PBoard pBoard = pBoardService.detailOfPetsitter(pboardId);
 
-        if(petSitter == null){
-            return new PBoardResponse("존재하지 않는 글입니다.",null);
-        }else return new PBoardResponse("petsitter 글 출력 완료",petSitter);
+        if(pBoard == null){
+            return new PBoardResponse("존재하지 않는 글입니다.",null,HttpStatus.NO_CONTENT);
+        }else return new PBoardResponse("petsitter 글 출력 완료",pBoard,HttpStatus.OK);
     }
+
+    @ApiOperation(
+            value = "펫시터 거래 상태 변경 API",
+            notes = "**pboardId**를 통해 상태변경, 1이면 완료, 0이면 찾는 중"
+    )
+    @PutMapping("/status")
+    private PBoardResponse changeStatus(@RequestParam Long pboardId){
+        int status = pBoardService.completedPetsitter(pboardId);
+        return new PBoardResponse("상태 변경 완료",status,HttpStatus.OK);
+    }
+
+
 }

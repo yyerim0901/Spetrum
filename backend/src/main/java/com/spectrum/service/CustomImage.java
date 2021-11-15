@@ -13,8 +13,8 @@ import java.text.SimpleDateFormat;
 
 public class CustomImage extends JPanel {
 
-    static String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/";
-    static String LOGO_PATH = "src/main/resources/logo_image/white_logo.png";
+    static String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/image";
+    static String LOGO_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/logo_image/white_logo.png";
 
     public static String customImage(MultipartFile multipartFile, Dogging dogging) throws IOException {
         //converting multipartfile to bufferedImage
@@ -62,22 +62,26 @@ public class CustomImage extends JPanel {
         //저장 위치 조절 & 저장되는 이름 사진 하나당 변경되게 바꿀 예정
         String userId = Long.toString(dogging.getUser().getId());
         String doggingId = Long.toString(dogging.getId());
-        String fileName = userId+"/"+doggingId;
-        String path = BASE_PATH + "image/dogging/"+fileName;
+        String fileName = userId+"_"+doggingId+".png";
+        String path = BASE_PATH + "/dogging";
 
-//        \var\lib\jenkins\workspace\PJT\backend\src\main\resources\image\dogging\9\29
-//        String path = "C:\\Users\\multicampus\\Desktop\\test1.png";
         //파일경로가 없으면 만드는 부분 만들어야 함!
-        File file = new File(path);
-        if(!file.exists()) file.mkdirs();
-        //권한 오류 발생
-        file.setReadable(true);
-        file.setWritable(true);
+//        System.out.println(path);
+//        File check = new File(path);
+//        System.out.println(check.exists());
+//        if(!check.exists()) check.mkdirs();
+//        //권한 오류 발생
+//        check.setReadable(true);
+//        check.setWritable(true);
 
 //        Runtime.getRuntime().exec("chmod -R 777 " + path);
 
-        System.out.println(file.exists());
-        ImageIO.write(image, "png", new FileOutputStream(path+".png"));
+//        System.out.println(check.exists());
+        path += "/"+ fileName;
+//        \var\lib\jenkins\workspace\PJT\backend\src\main\resources\image\dogging\9\29
+//        String path = "C:\\Users\\multicampus\\Desktop\\test1.png";
+
+        ImageIO.write(image, "png", new FileOutputStream(path));
         return path;
     }
 }

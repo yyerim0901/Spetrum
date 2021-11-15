@@ -1,18 +1,23 @@
 <template>
-  <div class="PET-Wrapper">
-      <Header :isLogo="false" :isBack="false" title="겟!시터"/>
-      <hr>
-      <div class="detail-box">
-          <img class="detail-img-box" src="@/assets/test.jpg" alt="이미지가 없습니다">
-          <p>{{ board }}</p>
-          <hr>
-      </div>
-      <PetSitterCommentDetail v-for="(comment, idx) in comments" :key="idx" :comment="comment" />
-      <input placeholder="댓글을 입력해주세요" type="text" v-model="inputContent">
-      <button @click="createComment">댓글작성</button>
-      <Footer :isActive="isActive"/>
-      <hr class="fott">
-  </div>
+    <div class="PET-Wrapper">
+        <Header :isLogo="false" :isBack="false" title="겟!시터"/>
+        <hr>
+        <div class="detail-box">
+            <img class="detail-img-box" :src="fullURL(board.data.picture)" alt="이미지가 없습니다">
+            <h3>{{ board.title }}</h3>
+            <hr>
+            <button @click="moveChangePetSitter">수정</button> |
+            <button @click="deletePetSitter">삭제</button>
+            <p>작성일자 : {{ board.data.created }}</p>
+            <p>내용 : {{ board.data.content }}</p>
+        </div>
+        <hr>
+        <PetSitterCommentDetail v-for="(comment, idx) in comments" :key="idx" :comment="comment" />
+        <input placeholder="댓글을 입력해주세요" type="text" v-model="inputContent">
+        <button @click="createComment">댓글작성</button>
+        <Footer :isActive="isActive"/>
+        <hr class="fott">
+    </div>
 </template>
 
 <script>
@@ -34,6 +39,7 @@ export default {
             comments: {},
             isActive: 3,
             inputContent: '',
+            BASE_URL : 'https://spetrum.io/resources/',
         }
     },
     methods: {
@@ -42,7 +48,7 @@ export default {
                 method: "GET",
                 url: `/pboard/detail/${this.boardId}`,
                 headers: {
-                    "Authorization": `Bearer ${localStorage.getItem("toekn")}`
+                    "Authorization": localStorage.getItem("token")
                 },
             }).then(res => {
                 this.board = res.data
@@ -55,7 +61,7 @@ export default {
                 method: "GET",
                 url: '/pcomment',
                 headers: {
-                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                    "Authorization": localStorage.getItem("token")
                 },
                 params: {
                     pboardId: this.boardId
@@ -68,21 +74,51 @@ export default {
             })
         },
         createComment() {
+            if (this.inputContent){
+                axios({
+                    method: "POST",
+                    url: '/pcomment/',
+                    headers: {
+                        "Authorization": localStorage.getItem("token")
+                    },
+                    params: {
+                        content : this.inputContent,
+                        pboardId : this.boardId
+                    }
+                }).then(res => {
+                    console.log(res.data)
+                    this.$router.go();
+                }).catch(err => {
+                    console.log(err)
+                })
+            } else{
+                alert('댓글을 입력해주세요')
+            }
+        },
+        fullURL(url){
+            const full = this.BASE_URL + url;
+            return full;
+        },
+        deletePetSitter() {
             axios({
-                method: "POST",
-                url: '/pcomment',
-                headers: {
-                    "Authorization": localStorage.getItem("token")
-                },
+                method: "DELETE",
+                url: "/pboard/",
                 params: {
-                    content : this.inputContent,
-                    pboardId : this.boardId
+                    petSitterId : this.boardId
                 }
             }).then(res => {
                 console.log(res.data)
-                this.$router.go();
+                this.$router.push({name:'PetSitter'})
             }).catch(err => {
                 console.log(err)
+            })
+        },
+        moveChangePetSitter() {
+            this.$router.push({
+                name: "ChangePetSitter",
+                params: {
+                    board_id: this.boardId,
+                }
             })
         }
     },

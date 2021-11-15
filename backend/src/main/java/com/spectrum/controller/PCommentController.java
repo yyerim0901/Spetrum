@@ -47,8 +47,8 @@ public class PCommentController {
     private PBoardResponse listOfPComment(@ApiParam(value = "댓글 리스트",required = true) @RequestParam Long pboardId){
         List<PComment> list = pCommentService.listPComment(pboardId);
         if(list.isEmpty() || list == null){
-            return new PBoardResponse("작성된 댓글이 없습니다.",null);
-        }else return new PBoardResponse("댓글 리스트 출력 완료",list);
+            return new PBoardResponse("작성된 댓글이 없습니다.",null,HttpStatus.NO_CONTENT);
+        }else return new PBoardResponse("댓글 리스트 출력 완료",list,HttpStatus.OK);
     }
     
     @ApiOperation(
@@ -56,13 +56,12 @@ public class PCommentController {
             notes = "**댓글 id,내용**으로 수정"
     )
     @PutMapping
-    private ResponseEntity<String> updateComment(
+    private ResponseEntity<String> updateComment(HttpServletRequest request,
                                                  @ApiParam(value = "댓글 수정", required = true)PCommentUpdateReq pCommentUpdateReq){
-//        String token = request.getHeader(HttpHeaders.AUTHORIZATION);
-//        if(!pCommentService.checkPCommentWriter(pCommentUpdateReq.getPCommentId(), token)){
-//            pCommentService.updatePComment(pCommentUpdateReq);
-//            return new ResponseEntity<>("댓글 수정 권한 없음",HttpStatus.UNAUTHORIZED);
-//        }else
+        String token = request.getHeader(HttpHeaders.AUTHORIZATION);
+        if(!pCommentService.checkPCommentWriter(pCommentUpdateReq.getPCommentId(), token)){
+            return new ResponseEntity<>("댓글 수정 권한 없음",HttpStatus.UNAUTHORIZED);
+        }else
             pCommentService.updatePComment(pCommentUpdateReq);
             return new ResponseEntity<>("댓글 수정 완료",HttpStatus.OK);
     }

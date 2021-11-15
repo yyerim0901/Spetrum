@@ -7,6 +7,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    petpage: 0,
     Boards: [],
     userInfo:{
       userid:'',
@@ -166,18 +167,34 @@ export default new Vuex.Store({
       })
     },
     getBoards(context) {
-      console.log('actions의 getboards실행!')
-      axios({
-        method: "GET",
-        url: '/pboard/list',
-        headers: {
-          "Authorization": `Bearer ${localStorage.getItem("token")}`
-        },
-      }).then(res => {
-        context.commit("GET_BOARDS", res.data)
-      }).catch(err => {
-        console.log(err)
-      })
+      var curlat = 0
+      var curlon = 0
+      var curpagenum = this.state.petpage
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(pos) {
+          curlat = pos.coords.latitude
+          curlon = pos.coords.longitude
+          console.log(curlat, curlon, 'get board !!axios들어가기 전 위치!')
+          axios({
+            method: "GET",
+            url: '/pboard/list',
+            headers: {
+              "Authorization": `Bearer ${localStorage.getItem("token")}`
+            },
+            params: {
+              latitude : curlat, 
+              longitude : curlon,
+              pagenum : curpagenum,
+            }
+          }).then(res => {
+            context.commit("GET_BOARDS", res.data)
+          }).catch(err => {
+            console.log(err)
+          })
+        })
+      } else {
+        alert('위치를 찾을 수 없어요')
+      }
     },
     requestUser(state,payload){
       axios({
@@ -280,6 +297,51 @@ export default new Vuex.Store({
       })
     },
 
+    requestUpdateUserInfo(state, payload) {
+      console.log("store로 잘 넘어옴")
+      console.log(payload.get('userid'))
+      console.log(payload)
+      axios({
+        url: `/users/${payload.get('userid')}`,
+        method:'put',
+        data:payload
+      })
+      .then(res=>{
+        console.log(res);
+        router.push({name:'MyPage'})
+      })
+      .catch(err=>{
+        console.log(err)
+      })
+    },
+    logout() {
+      axios({
+        url:'/users/logout',
+        method:'post',
+      })
+      .then(res=>{
+        console.log(res);
+        if (res.data.statusCode == '200') {
+          localStorage.removeItem('token');
+          localStorage.removeItem('userid');
+        }
+        router.push({name:'SignIn'})
+      })
+    },
+    deleteUser(state, payload) {
+      axios({
+        url:`/users/${payload}`,
+        method:'delete',
+      })
+      .then(res=>{
+        console.log(res);
+        if (res.data.statusCode == '200') {
+          localStorage.removeItem('token');
+          localStorage.removeItem('userid');
+        }
+        router.push({name:'SignIn'})
+      })
+    }
   },
   modules: {
   }

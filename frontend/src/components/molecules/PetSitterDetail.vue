@@ -1,10 +1,10 @@
 <template>
     <div class="sitter-detail-box">
-        <img class="img-box" src="@/assets/test.jpg" alt="이미지가 없습니다">
+        <img class="img-box" :src="fullURL(board.picture)" alt="이미지가 없습니다">
         <div class="board-box" @click="moveEachDetail">
             <p>{{ board.title }}</p>
             <p>{{ board.created }}</p>
-            <p>{{ board.user.nickname }}</p>
+            <p>{{ board.user }}</p>
         </div>
     </div>
 </template>
@@ -14,7 +14,7 @@ export default {
     name: "PetSitterDetail",
     data () {
         return{
-
+            BASE_URL : 'https://spetrum.io/resources/',
         }
     },
     props: {
@@ -27,10 +27,14 @@ export default {
             this.$router.push({
                 name: "PetSitterEachDetail",
                 params: {
-                    board_id: this.board.id
+                    board_id: this.board.id,
                 }
             })
-        }
+        },
+        fullURL(url){
+            const full = this.BASE_URL + url;
+            return full;
+        },
     }
 
 }

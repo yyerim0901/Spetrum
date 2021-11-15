@@ -5,6 +5,7 @@ import axios from "axios"
 const DEFAULT_ACCEPT_TYPE = 'application/json'
 export default axios.create({
   baseURL:"https://spetrum.io:8080/api",
+  // baseURL:"http://localhost:8080/api",
   headers:{'Content-Type': DEFAULT_ACCEPT_TYPE,
             'Access-Control-Allow-Origin':'*',
             'Authorization':localStorage.getItem("token"),

@@ -15,6 +15,13 @@ import YourMoment from '../views/YourMoment'
 import AddMoment from '../views/AddMoment'
 import MDetail from '../views/MDetail'
 import EditMoment from '../views/EditMoment'
+import MUpdate from '../views/UpdateMoment'
+import AddPetSitter from '../views/AddPetSitter'
+import ChangePetSitter from '../views/ChangePetSitter'
+import UpdateUserInfo from '../views/UpdateUserInfo'
+import MyDoggingList from '../views/MyDoggingList'
+import MyPetsitterList from '../views/MyPetsitterList'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -56,6 +63,11 @@ const routes = [
     component: MDetail,
   },
   {
+    path: '/moment/update/:boardid',
+    name:'MUpdate',
+    component: MUpdate,
+  },
+  {
     path: '/moment/:userid',
     name:'YourMoment',
     component: YourMoment,
@@ -95,6 +107,31 @@ const routes = [
     name:'TestResult',
     component: TestResult
   },
+  {
+    path: '/write/petsitter',
+    name:'AddPetSitter',
+    component: AddPetSitter
+  },
+  {
+    path: '/change/petsitter',
+    name:'ChangePetSitter',
+    component: ChangePetSitter
+  },
+  {
+    path: '/update/user',
+    name: 'UpdateUserInfo',
+    component : UpdateUserInfo
+  },
+  {
+    path: '/mydogging',
+    name: 'MyDoggingList',
+    component : MyDoggingList
+  },
+  {
+    path: '/mypetsitter',
+    name: 'MyPetsitterList',
+    component : MyPetsitterList
+  },
 ]
 
 const router = new VueRouter({
@@ -103,21 +140,22 @@ const router = new VueRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
-  if (to.name !== 'SignIn' && to.name !== 'SignUp' && !localStorage.getItem('token')) {
-    next({ name: 'SignIn' }); 
-  }
-  else if ( to.name == 'SignIn' && localStorage.getItem('token')){
-    next({ name: 'PetBTI'});
-  }
-  else if ( to.name == 'SignUp' && localStorage.getItem('token')){
-    next({ name: 'PetBTI'});
-  }
+// 최종 배포 전에 주석 풀기
+// router.beforeEach((to, from, next) => {
+//   if (to.name !== 'SignIn' && to.name !== 'SignUp' && !localStorage.getItem('token')) {
+//     next({ name: 'SignIn' }); 
+//   }
+//   else if ( to.name == 'SignIn' && localStorage.getItem('token')){
+//     next({ name: 'PetBTI'});
+//   }
+//   else if ( to.name == 'SignUp' && localStorage.getItem('token')){
+//     next({ name: 'PetBTI'});
+//   }
 
-  else if (to.name == 'SignUp' && from.name == 'SignIn') {
-    next();
-  }
+//   else if (to.name == 'SignUp' && from.name == 'SignIn') {
+//     next();
+//   }
   
-  else next()
-})
+//   else next()
+// })
 export default router

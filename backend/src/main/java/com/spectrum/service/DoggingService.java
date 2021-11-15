@@ -17,5 +17,4 @@ public interface DoggingService {
     public void customImage(MultipartFile multipartFile, Long doggingId)throws IOException;
     public void DeleteDogging(Long id);
     public void SaveDoggingPath(Long userId, Long doggingId, float[] lats, float[] lngs) throws IOException;
-
 }
