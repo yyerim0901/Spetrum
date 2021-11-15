@@ -15,7 +15,6 @@ import YourMoment from '../views/YourMoment'
 import AddMoment from '../views/AddMoment'
 import MDetail from '../views/MDetail'
 import EditMoment from '../views/EditMoment'
-import MUpdate from '../views/UpdateMoment'
 import AddPetSitter from '../views/AddPetSitter'
 import ChangePetSitter from '../views/ChangePetSitter'
 import UpdateUserInfo from '../views/UpdateUserInfo'
@@ -61,11 +60,6 @@ const routes = [
     path: '/moment/board/:boardid',
     name:'MDetail',
     component: MDetail,
-  },
-  {
-    path: '/moment/update/:boardid',
-    name:'MUpdate',
-    component: MUpdate,
   },
   {
     path: '/moment/:userid',
