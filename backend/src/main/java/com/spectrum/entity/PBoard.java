@@ -31,7 +31,7 @@ public class PBoard extends BaseEntity{
     @JsonIgnore
     private Point point; //위경도 저장 타입
 
-    @JsonIgnore
+//    @JsonIgnore
     @JoinColumn(name = "user_pk")
     @ManyToOne
     private User user;
