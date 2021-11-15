@@ -216,17 +216,17 @@ export default new Vuex.Store({
     },
     requestSComment(state,payload){
       return axios({
-        url:`/scomments/${payload}`,
+        url:`/scomments/${payload.get('sboardid')}`,
         method:'post',
-        data:payload,
+        data:payload
       })
     },
-    bringSBoard(){
+    bringSBoard(state,page){
       return axios({
         url:'/sns/',
         method:'get',
         params:{
-          page:1,
+          page:page,
         },
         headers:{
           Authorization:localStorage.getItem('token')
@@ -257,7 +257,29 @@ export default new Vuex.Store({
           page:payload.page
         }
       })
-    }
+    },
+    handleMomentEdit(state,payload){
+      axios({
+        url:`/sns/${payload.get('sboardid')}`,
+        method:'put',
+        data:payload,
+      })
+      .then(res=>{
+        console.log(res);
+        router.push({name:'Moment'})
+      })
+    },
+    handleMomentDelete(state,boardid){
+      axios({
+        url:`/sns/${boardid}`,
+        method:'delete',
+      })
+      .then(res=>{
+        console.log(res);
+        router.push({name:'Moment'})
+      })
+    },
+
   },
   modules: {
   }

@@ -21,7 +21,7 @@
       <div>
         <div class="write-box">
           <div v-for="write in writes" :key="write.id">
-            <img :src="fullURL(write.filelist[0].save_file)" alt="없다" class="w-img" @click="moveDetail(write.id)">
+            <img :src="fullURL(write)" alt="없다" class="w-img" @click="moveDetail(write.id)">
           </div>
         </div>
       </div>
@@ -52,7 +52,8 @@ export default {
       followerList:[],
       followList:[],
       writes:[],
-      page:1
+      page:1,
+      BASE_URL : 'https://spetrum.io/resources/'
     }
   },
   methods:{
@@ -66,6 +67,16 @@ export default {
     moveDetail(id){
       console.log(id);
       this.$router.push({name:'MDetail',params:{'boardid':id}});
+    },
+
+    fullURL(url){
+      if (url.filelist[0]){
+        var full = this.BASE_URL + url.filelist[0].save_file;
+      } else{
+        full = require('@/assets/noimage.png')
+      }
+      console.log(full);
+      return full;
     },
     requestFollow(){
       const data = {
@@ -95,6 +106,7 @@ export default {
       })
       this.$store.dispatch('bringOtherSBoard',{userid:nowUser, page:this.page})
       .then(res=>{
+        console.log(res.data.data);
         this.writes = res.data.data;
       })
     }

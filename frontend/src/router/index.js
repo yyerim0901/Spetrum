@@ -14,6 +14,7 @@ import TestResult from '../views/TestResult'
 import YourMoment from '../views/YourMoment'
 import AddMoment from '../views/AddMoment'
 import MDetail from '../views/MDetail'
+import EditMoment from '../views/EditMoment'
 Vue.use(VueRouter)
 
 const routes = [
@@ -58,6 +59,11 @@ const routes = [
     path: '/moment/:userid',
     name:'YourMoment',
     component: YourMoment,
+  },
+  {
+    path: '/moment/board/edit/:boardid/',
+    name:'EditMoment',
+    component: EditMoment,
   },
   {
     path: '/dogging',

@@ -33,6 +33,7 @@ export default {
   methods:{
     imageChange(){
       this.addimage = this.$refs.profileImage.files[0];
+      console.log(this.addimage);
       if (this.addimage) {
         this.imgprev = URL.createObjectURL(this.addimage);
         }
@@ -43,7 +44,7 @@ export default {
         formData.append('content',this.contents);
         formData.append('snsfiles',this.addimage);
         axios({
-          url:'http:/localhost:8080/api/sns/',
+          url:'https://spetrum.io:8080/api/sns/',
           method:'post',
           data:formData,
           headers:{
