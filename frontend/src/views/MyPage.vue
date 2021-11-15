@@ -68,7 +68,6 @@ export default {
       this.$router.push("/mypetsitter")
     },
     deleteUser(){
-      console.log(this.userInfo.userid)
       this.$store.dispatch('deleteUser',this.userInfo.userid);
     }
   },

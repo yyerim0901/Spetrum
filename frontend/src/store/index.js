@@ -276,7 +276,6 @@ export default new Vuex.Store({
         method:'post',
       })
       .then(res=>{
-        console.log(res);
         if (res.data.statusCode == '200') {
           localStorage.removeItem('token');
           localStorage.removeItem('userid');
@@ -290,12 +289,17 @@ export default new Vuex.Store({
         method:'delete',
       })
       .then(res=>{
-        console.log(res);
         if (res.data.statusCode == '200') {
           localStorage.removeItem('token');
           localStorage.removeItem('userid');
         }
         router.push({name:'SignIn'})
+      })
+    },
+    bringPBoard() {
+      axios({
+        url: '/pboard/mylist',
+        method : 'get',
       })
     }
   },

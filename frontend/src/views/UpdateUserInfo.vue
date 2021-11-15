@@ -1,4 +1,5 @@
 <template>
+<!--닉네임 중복체크랑 이미지 반영 안 되는 부분 나중에 다시 확인하기!!!!!-->
   <div class="updateUser-Wrapper">
     <Header :isLogo="false" :isBack="true" title="회원 정보 수정"></Header>
     <hr>
@@ -130,9 +131,6 @@ export default {
         alert('입력하신 정보를 다시 한 번 확인해주세요!');
       }
     },
-    goMyPage(){
-      this.$router.push("/mypage")
-    }
   },
   created(){
     this.userid = localStorage.getItem('userid');
