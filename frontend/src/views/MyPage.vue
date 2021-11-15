@@ -20,10 +20,16 @@
         <div class="mp-button2" @click="myPetsitterList">
           내 게시글
         </div>
-        <div class="mp-button2" @click="deleteUser">
+        <div class="mp-button2" @click="check">
           회원 탈퇴
         </div>
       </div>
+      <Modal v-if="showModal" @close="showModal=false" @ok="deleteUser">
+      <h3 slot="header">
+        정말 탈퇴하시겠습니까?
+      </h3>
+      <div slot="body"></div>
+    </Modal>
       <hr class="fott">
     <Footer :isActive="isActive"></Footer>
   </div>
@@ -32,18 +38,21 @@
 <script>
 import Footer from '../components/molecules/Footer.vue'
 import Header from '../components/molecules/Header.vue'
+import Modal from '../components/molecules/Modal.vue'
 import {mapState} from 'vuex';
 export default {
   name:'MyPage',
   components:{
     Footer,
-    Header
+    Header,
+    Modal
   },
   data(){
     return{
       isActive:5,
       userid : "",
-      BASE_URL : 'http://spetrum.io/resources/'
+      BASE_URL : 'http://spetrum.io/resources/',
+      showModal : false,
     }
   },
   computed:{
@@ -66,6 +75,9 @@ export default {
     },
     myPetsitterList(){
       this.$router.push("/mypetsitter")
+    },
+    check(){
+      this.showModal = true;
     },
     deleteUser(){
       this.$store.dispatch('deleteUser',this.userInfo.userid);
