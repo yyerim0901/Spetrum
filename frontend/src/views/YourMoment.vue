@@ -96,11 +96,20 @@ export default {
       const formData = new FormData();
       formData.append('to',this.userid);
       formData.append('from',localStorage.getItem('userid'));
-      // const data = {
-      //   from:localStorage.getItem('userid'),
-      //   to:this.userid
-      // }
       this.$store.dispatch('handleFollow',formData)
+      .then(res=>{
+        if (res.data.statusCode === 200){
+          this.$store.dispatch('requestSBoardUser',nowUser)
+          .then(res=>{
+            this.userid = res.data.user.userId;
+            this.nickname = res.data.user.nickname;
+            this.thumbnail = res.data.user.thumbnail;
+            this.introduce = res.data.user.introduce;
+            this.followerList = res.data.followerList;
+            this.followList = res.data.followList;
+          })
+        }
+      })
     }
 
   },
