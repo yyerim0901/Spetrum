@@ -93,12 +93,19 @@ export default {
       return full;
     },
     requestFollow(){
-      const data = {
-        from:localStorage.getItem('userid'),
-        to:this.userid
-      }
-      console.log(data);
-      this.$store.dispatch('handleFollow',data)
+      const formData = new FormData();
+      formData.append('to',this.userid);
+      formData.append('from',localStorage.getItem('userid'));
+      this.$store.dispatch('handleFollow',formData)
+      .then(res=>{
+        if (res.data.statusCode === 200){
+          this.$store.dispatch('requestSBoardUser',this.userid)
+          .then(res=>{
+            this.followerList = res.data.followerList;
+            this.followList = res.data.followList;
+          })
+        }
+      })
     }
 
   },
@@ -122,6 +129,10 @@ export default {
       .then(res=>{
         console.log(res.data.data);
         this.writes = res.data.data;
+      })
+      .catch(err=>{
+        console.log(err);
+        console.log('여기서에러');
       })
     }
   },

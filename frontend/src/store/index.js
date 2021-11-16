@@ -234,13 +234,10 @@ export default new Vuex.Store({
       })
     },
     handleFollow(state,payload){
-      axios({
+      return axios({
         url:'/users/follow',
         method:'post',
         data:payload,
-      })
-      .then(res=>{
-        console.log(res);
       })
     },
     bringOtherSBoard(state,payload){
@@ -292,11 +289,8 @@ export default new Vuex.Store({
     },
     bringMyPBoard(state, payload) {
       return axios({
-        url: `/pboard/mylist/${payload.userid}`,
-        method: 'get',
-        params:{
-          page:payload.page,
-        }
+        url: `/pboard/mylist/${payload}`,
+        method: 'get'
       })
     },
     handleMomentEdit(state,payload){

@@ -1,7 +1,7 @@
 <template>
   <div class="MyPetsitter-Wrapper">
     <Header :isLogo="false" :isBack="true" :isSearch="false" title="나의 게시글"></Header>
-    <div style="justify-content:left;" @scroll="handleInfiniteScroll">
+    <!-- <div style="width:100%; justify-content:left; overflow-y:scroll;" @scroll="handleInfiniteScroll">
       <div class="my-p-box">
         <img class="img-box" src="../assets/img_logo.jpg" alt="사진 안 뜸">
         <div class="in-my-p-box">
@@ -18,8 +18,8 @@
           </span>
         </div>
       </div>
-    </div>
-    <div style="align-items:center;">
+    </div> -->
+    <div class="p-box">
       <div class="my-p-box" v-for="mypetsitter in mypetsitters" :key="mypetsitter.id">
         <img class="img-box" :src="fullURL(mypetsitter.picture)" alt="사진 안 뜸">
         <div class="in-my-p-box">
@@ -91,12 +91,13 @@ export default {
     },
     deletemypetsitter(){
       this.$store.dispatch('deletePetsitter',this.deletepboardId)
+      this.$router.push("/mypetsitter")
     },
     handleInfiniteScroll(e) {
       const { scrollTop, clientHeight, scrollHeight } = e.target;
       if (parseInt(scrollTop) + parseInt(clientHeight) + 1 !== parseInt(scrollHeight))
         return;
-      if (this.mypetsitters && this.mypetsitters.length % 10 === 0) {
+      if (this.mypetsitters && this.mypetsitters.length % 5 === 0) {
         //게시물이 1페이지 전채 개수가 넘으면
         console.log(this.mypetsitters.length,'길이');
         this.page +=  1;
@@ -113,7 +114,7 @@ export default {
   created() {
     this.userid = localStorage.getItem('userid')
     console.log(this.userid)
-    this.$store.dispatch('bringMyPBoard',{userid:this.userid,page:this.page})
+    this.$store.dispatch('bringMyPBoard',this.userid)
     .then(res => {
       console.log(res.data.data)
       this.mypetsitters = res.data.data
