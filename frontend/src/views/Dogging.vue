@@ -5,11 +5,11 @@
     <div v-if="doggingflag">
       <div>
         <p>도깅 시간</p>
-        <h2>00.00.00</h2>
+        <h2>{{ curMin }} : {{ curSec }}</h2>
       </div>
       <div>
         <p>도깅 거리</p>
-        <h2>0.0 km</h2>
+        <h2>{{ curDistance }}km</h2>
       </div>
     </div>
     <div id="map" style="width:450px;height:400px;"></div>
@@ -48,6 +48,9 @@ export default {
       totalDistance : 0,
       totalTime : 0,
       curTime : 0,
+      curMin : 0,
+      curSec : 0,
+      curDistance : 0,
     }
   },
     mounted() { 
@@ -99,6 +102,7 @@ export default {
                   console.log(that.totalDistance, '추가 전 총 거리')
                   that.totalDistance += distance
                   console.log(that.totalDistance, '추가 후 총 거리')
+                  that.curDistance = parseFloat(Math.round(that.totalDistance * 100) / 100).toFixed(2)
                 }
                 // 시간 측정 부분
                 if (that.curTime !== 0) {
@@ -108,6 +112,8 @@ export default {
                   that.totalTime += parseInt((nextTime - that.curTime) / 1000)
                   console.log(that.totalTime, '추가 후 총 시간')
                   that.curTime = nextTime
+                  that.curSec = that.totalTime % 60
+                  that.curMin = parseInt((that.totalTime - that.curSec) / 60)
                 } else {
                   // 0 이면 시간 갱신
                   that.curTime = pos.timestamp
