@@ -62,7 +62,7 @@ export default {
         display: block;
         margin: 1rem;
         width: 90%;
-        justify-content: left;
+        justify-content: center;
     }
     .siiter-small-box{
         display: flex;
