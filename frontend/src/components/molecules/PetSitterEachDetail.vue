@@ -1,6 +1,6 @@
 <template>
     <div class="PET-Wrapper">
-        <Header :isLogo="false" :isBack="false" title="겟!시터"/>
+        <Header :isLogo="false" :isBack="true" title="겟!시터"/>
         <hr>
         <div class="detail-box">
             <img class="detail-img-box" :src="fullURL(board.data.picture)" alt="이미지가 없습니다">
