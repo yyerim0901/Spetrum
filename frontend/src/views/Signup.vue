@@ -1,8 +1,6 @@
 <template>
   <div class="bigbox">
     <Header :isLogo="isLogo" :isBack="isBack" :title="title"/>
-    <hr>
-
     <div class="Signup-Wrap">
       <img src="../assets/img_logo.jpg" alt="dog" class="dog-img">
       <div class="form-container">

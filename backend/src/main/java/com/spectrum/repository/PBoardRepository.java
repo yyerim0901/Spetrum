@@ -13,4 +13,5 @@ import java.util.List;
 public interface PBoardRepository extends JpaRepository<PBoard, Long> {
 
     public List<PBoard> findAllByUserId(Long userPK, Pageable pageable);
+    public List<PBoard> findAllByUserId(Long userPK);
 }

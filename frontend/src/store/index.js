@@ -291,7 +291,7 @@ export default new Vuex.Store({
     },
     bringMyPBoard(state, payload) {
       return axios({
-        url: `/pboard/mylist/${payload.userid}`,
+        url: `/pboard/mylist/${payload}`,
         method: 'get'
       })
     },
@@ -344,19 +344,25 @@ export default new Vuex.Store({
         this.$router.push({name:'MyPetsitterList'})
     })
     },
-    bringMyDogging(state, payload) {
+    bringMyDogging() {
       return axios({
         url: "/dogging",
-        method: "get",
-        params: {
-          page : payload
-        }
+        method: "get"
       })
     },
     requestUserSearch(state,payload){
       return axios({
         method:'get',
         url:`/users/searchUserId/${payload}`
+      })
+    },
+    bringDoggingDetail(state, payload) {
+      axios({
+        url: "/dogging/detail",
+        method: "get",
+        params: {
+          doggingId : payload
+        }
       })
     }
 
