@@ -117,18 +117,20 @@ export default {
     }
   },
   created(){
-    this.$store.dispatch('bringSBoard',1)
-    .then(res=>{
-      this.mywrites = res.data.data;
-      console.log(localStorage.getItem('userid') + "?????????????");
-      this.$store.dispatch('requestUser',localStorage.getItem('userid'));
-      console.log('여기서에러')
-      console.log(res)
-    })
-    .catch(err=>{
-      console.log('나는 게시판 받아오는 에러');
-      console.log(err)
-    })
+    console.log(localStorage.getItem('userid') + "?????????????");
+    this.$store.dispatch('requestUser',localStorage.getItem('userid'));
+    if (this.userInfo.userid) {
+      this.$store.dispatch('bringSBoard',1)
+      .then(res=>{
+        this.mywrites = res.data.data;
+        console.log('여기서에러')
+        console.log(res)
+      })
+      .catch(err=>{
+        console.log('나는 게시판 받아오는 에러');
+        console.log(err)
+      })
+    }
   },
 }
 </script>
