@@ -19,7 +19,7 @@
         </div>
       </div>
     </div> -->
-    <div style="p-box">
+    <div class="p-box">
       <div class="my-p-box" v-for="mypetsitter in mypetsitters" :key="mypetsitter.id">
         <img class="img-box" :src="fullURL(mypetsitter.picture)" alt="사진 안 뜸">
         <div class="in-my-p-box">
