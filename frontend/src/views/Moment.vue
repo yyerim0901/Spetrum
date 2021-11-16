@@ -117,8 +117,9 @@ export default {
     }
   },
   created(){
-    console.log(localStorage.getItem('userid') + "?????????????");
+    console.log(localStorage.getItem('token'));
     this.$store.dispatch('requestUser',localStorage.getItem('userid'));
+    console.log(localStorage.getItem('token'));
     if (this.userInfo.userid) {
       this.$store.dispatch('bringSBoard',1)
       .then(res=>{
