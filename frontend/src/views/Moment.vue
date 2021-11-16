@@ -121,6 +121,11 @@ export default {
     this.$store.dispatch('bringSBoard',1)
     .then(res=>{
       this.mywrites = res.data.data;
+      console.log('여기서에러')
+    })
+    .catch(err=>{
+      console.log('나는 게시판 받아오는 에러');
+      console.log(err)
     })
   },
 }
