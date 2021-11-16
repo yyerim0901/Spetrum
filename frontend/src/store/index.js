@@ -120,20 +120,20 @@ export default new Vuex.Store({
 
       })
     },
-    requestSignup(state,payload){
-      axios({
-        url: '/users/regist',
-        method:'post',
-        data:payload,
-      })
-      .then(res=>{
-        console.log(res);
-        router.push({name:'SignIn'})
-      })
-      .catch(err=>{
-        console.log(err)
-      })
-    },
+    // requestSignup(state,payload){
+    //   return axios({
+    //     url: '/users/regist',
+    //     method:'post',
+    //     data:payload,
+    //   })
+    //   .then(res=>{
+    //     console.log(res);
+    //     router.push({name:'SignIn'})
+    //   })
+    //   .catch(err=>{
+    //     console.log(err)
+    //   })
+    // },
     nickCheck(state,payload){
       return axios({
         url: '/users/checkNICK',
