@@ -96,7 +96,7 @@ export default {
       const { scrollTop, clientHeight, scrollHeight } = e.target;
       if (parseInt(scrollTop) + parseInt(clientHeight) + 1 !== parseInt(scrollHeight))
         return;
-      if (this.mypetsitters && this.mypetsitters.length % 10 === 0) {
+      if (this.mypetsitters && this.mypetsitters.length % 5 === 0) {
         //게시물이 1페이지 전채 개수가 넘으면
         console.log(this.mypetsitters.length,'길이');
         this.page +=  1;
