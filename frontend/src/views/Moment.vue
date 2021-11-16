@@ -142,6 +142,7 @@ export default {
     //   this.mywrites = res.data.data;
     // })
     this.$store.dispatch('requestUser',localStorage.getItem('userid'));
+    console.log(this.userInfo.thumbnail)
     this.$store.dispatch('bringSBoard',this.page)
     .then(res=>{
       this.mywrites = res.data.data;
