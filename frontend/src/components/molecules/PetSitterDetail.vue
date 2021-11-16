@@ -43,6 +43,7 @@ export default {
 <style>
     .sitter-detail-box{
         display: flex;
+        justify-content: flex-center;
     }
     .img-box{
         display: inline;
@@ -55,5 +56,6 @@ export default {
         margin-top: 1rem;
         margin-left: 1rem;
         font-size: 20px;
+        width: 150px;
     }
 </style>
