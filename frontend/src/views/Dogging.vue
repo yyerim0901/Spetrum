@@ -125,7 +125,8 @@ export default {
             // 도깅을 멈추고 완료할 때
             // components의 데이터 초기화해야함
             this.doggingflag = false
-            console.log(this.latlist, this.lnglist, '여기다가 axios해도 될까요?')
+            console.log(this.totalDistance, this.totalTime, 'axios보낼 총 거리와 시간@@')
+            console.log(this.latlist, this.lnglist, 'axios보낼 array@@@')
             axios({
               url: 'https://spetrum.io:8080/api/dogging/',
               method: 'POST',
