@@ -9,13 +9,19 @@
                 <i class="fas fa-edit" style="margin:0 0 0 10px;" @click="moveChangePetSitter"></i>
                 <i class="fas fa-trash" style="margin:0 0 0 10px;" @click="deletePetSitter"></i>
             </div>
-            <p>작성일자 : {{ board.data.created.substr(0,10) }}</p>
-            <p>내용 : {{ board.data.content }}</p>
+            <p style="width: 362px; text-align:right;">작성일자 : {{ board.data.created.substr(0,10) }}</p>
+            <span style="text-align:start; border:solid; border-width:1px 0; border-color:#E5EAEF;">{{board.data.content}}</span>
+            <p style="width: 362px; font-size:0.8rem;">{{ board.data.content }}</p>
+
+            <PetSitterCommentDetail v-for="(comment, idx) in comments" :key="idx" :comment="comment" />
+            <input placeholder="댓글을 입력해주세요" type="text" v-model="inputContent">
+            <button @click="createComment">댓글작성</button>
+            <div>
+                <i class="far fa-comment-dots" style="margin:0 5px 0 0; font-size:1rem"></i>
+                <CommentInput :value="comment" v-model="inputContent" />
+                <StyledButton btype="realsmall" bcolor="babypink" @click="createComment()">작성</StyledButton>
+            </div>
         </div>
-        <hr>
-        <PetSitterCommentDetail v-for="(comment, idx) in comments" :key="idx" :comment="comment" />
-        <input placeholder="댓글을 입력해주세요" type="text" v-model="inputContent">
-        <button @click="createComment">댓글작성</button>
         <Footer :isActive="isActive"/>
         <hr class="fott">
     </div>
