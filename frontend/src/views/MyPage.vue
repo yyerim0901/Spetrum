@@ -49,7 +49,7 @@ export default {
     return{
       isActive:5,
       userid : "",
-      BASE_URL : 'http://spetrum.io/resources/',
+      BASE_URL : 'https://spetrum.io/resources/',
       showModal : false,
     }
   },
@@ -59,6 +59,7 @@ export default {
   methods: {
     getthumbnail(){
       if(this.userInfo.thumbnail){
+        console.log(this.userInfo.thumbnail,'섬네일');
         var fullurl = this.BASE_URL + this.userInfo.thumbnail
         return fullurl
       }

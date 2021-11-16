@@ -33,8 +33,8 @@
 import Footer from '../components/molecules/Footer.vue'
 import Header from '../components/molecules/Header.vue'
 import StyledButton from '../components/atoms/StyledButton'
+// import axios from 'axios'
 import {mapState} from 'vuex';
-import axios from 'axios';
 
 export default {
   name:'Moment',
@@ -82,7 +82,8 @@ export default {
   methods:{
     getthumbnail(){
       if (this.userInfo.thumbnail) {
-        var fullurl = this.BASE_URL + this.thumbnail
+        var fullurl = this.BASE_URL + this.userInfo.thumbnail
+        console.log(fullurl,'fullurl');
         return fullurl
       }else{
         return require("@/assets/img_logo.jpg")
@@ -120,27 +121,41 @@ export default {
   },
   created(){
     this.userid = localStorage.getItem('userid');
-    console.log(localStorage.getItem)
-    console.log(this.userid)
-    axios({
-        url:'http://localhost:8080/api/sns/',
-        method:'get',
-        params:{
-          page:1,
-        },
-        headers: {
-          "Authorization": localStorage.getItem("token")
-        },
-      })
-      .then(res => {
-        console.log(res.data.data)
-        this.mywrites = res.data.data;
-      this.$store.dispatch ('requestUser',this.userid);
-      })
+    // console.log(localStorage.getItem)
+    // console.log(this.userid)
+    // axios({
+    //     url:'https://spetrum.io:8080/api/sns/',
+    //     method:'get',
+    //     params:{
+    //       page:1,
+    //     },
+    //     headers: {
+    //       "Authorization": localStorage.getItem("token")
+    //     },
+    //   })
+    //   .then(res => {
+    //     console.log(res.data.data)
+    //     this.mywrites = res.data.data;
+    //     this.$store.dispatch ('requestUser',this.userid);
+    //   })
     // this.$store.dispatch('bringSBoard',this.page)
     // .then(res=>{
     //   this.mywrites = res.data.data;
     // })
+    this.$store.dispatch('requestUser',this.userid);
+    console.log(this.userInfo.thumbnail,'요펑가니?')
+    if (this.userInfo.thumbnail){
+      this.$store.dispatch('bringSBoard',this.page)
+      .then(res=>{
+        this.mywrites = res.data.data;
+        console.log('여기서에러')
+        console.log(res)
+      })
+      .catch(err=>{
+        console.log('나는 게시판 받아오는 에러');
+        console.log(err)
+      })
+    }
   },
 }
 </script>

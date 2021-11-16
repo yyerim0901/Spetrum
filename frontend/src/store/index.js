@@ -90,7 +90,7 @@ export default new Vuex.Store({
     },
     SET_USER_INFO(state,payload){
       state.userInfo.nickname = payload.nickname;
-      state.userInfo.thumbnamil = payload.thumbnamil;
+      state.userInfo.thumbnail = payload.thumbnail;
       state.userInfo.introduce = payload.introduce;
       state.userInfo.userid = payload.userid;
       state.userInfo.followerList = payload.followerList;
@@ -108,10 +108,10 @@ export default new Vuex.Store({
         if (res.data.statusCode == '200'){
           const token = res.data.token
           localStorage.setItem("token",token);
-          router.push({name:'PetBTI'});
           const user = payload.get('userId');
           localStorage.setItem('userid',user);
           this.dispatch('requestUser',user);
+          router.push({name:'PetBTI'});
         }
         else {
 
@@ -120,24 +120,20 @@ export default new Vuex.Store({
 
       })
     },
-    requestSignup(state,payload){
-      axios({
-        url: '/users/regist',
-        method:'post',
-        data:payload,
-        headers:{
-          'Content-Type': 'multipart/form-data',
-          'Access-Control-Allow-Origin':'*',
-        }
-      })
-      .then(res=>{
-        console.log(res);
-        router.push({name:'SignIn'})
-      })
-      .catch(err=>{
-        console.log(err)
-      })
-    },
+    // requestSignup(state,payload){
+    //   axios({
+    //     url: '/users/regist',
+    //     method:'post',
+    //     data:payload,
+    //   })
+    //   .then(res=>{
+    //     console.log(res);
+    //     router.push({name:'SignIn'})
+    //   })
+    //   .catch(err=>{
+    //     console.log(err)
+    //   })
+    // },
     nickCheck(state,payload){
       return axios({
         url: '/users/checkNICK',
@@ -194,7 +190,7 @@ export default new Vuex.Store({
         .then(res=>{
           const data = {
             nickname: res.data.user.nickname,
-            thumbnamil: res.data.user.thumbnamil,
+            thumbnail: res.data.user.thumbnail,
             introduce: res.data.user.introduce,
             userid: res.data.user.userId,
             followList: res.data.followList,

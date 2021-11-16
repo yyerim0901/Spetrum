@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService{
                 file.mkdirs();
             }
             String final_name = path + File.separator + thumbnail.getOriginalFilename();
-            res.setThumbnail("image/profile/" + thumbnail.getOriginalFilename());
+            res.setThumbnail("image/profile/" + registerInfo.getUserId() + File.separator + thumbnail.getOriginalFilename());
 
             file = new File(final_name);
             thumbnail.transferTo(file);

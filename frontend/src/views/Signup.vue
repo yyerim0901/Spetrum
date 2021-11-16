@@ -40,6 +40,7 @@ import StyledInput from '../components/atoms/StyledInput'
 import StyledLabel from '../components/atoms/StyledLabel'
 import ErrorMessage from '../components/atoms/ErrorMessage'
 import FooterButton from '../components/atoms/FooterButton'
+import axios from 'axios'
 export default {
   name:'Signup',
   components:{
@@ -115,8 +116,21 @@ export default {
         formData.append("password",this.password);
         formData.append("userId",this.userId);
         formData.append("thumbnail",this.profileImg);
-        console.log(this.profileImg,'프로필이미지');
-        this.$store.dispatch('requestSignup',formData);
+        console.log(this.profileImg,'프로필이미지s');
+        // this.$store.dispatch('requestSignup',formData);
+        axios({
+          url:'https://spetrum.io:8080/api/users/regist',
+          method:'post',
+          data:formData,
+          headers:{
+            'Content-Type': 'multipart/form-data',
+            'Access-Control-Allow-Origin':'*',
+          }
+        })
+          .then(res=>{
+            console.log(res);
+            this.$router.push({name:'SignIn'})
+          })
       }
       else {
         alert('아이디, 닉네임 중복검사를 해주세요!');
@@ -147,9 +161,9 @@ export default {
       })
     },
     imageChange(){
-      this.profileImg = this.$refs.profileImage.files;
+      this.profileImg = this.$refs.profileImage.files[0];
       if (this.profileImg) {
-        this.imgprev = URL.createObjectURL(this.profileImg[0]);
+        this.imgprev = URL.createObjectURL(this.profileImg);
         }
     }
 
