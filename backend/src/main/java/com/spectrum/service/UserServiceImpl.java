@@ -217,16 +217,20 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<String> searchUserId(String userid) {
+    public List<User> searchUserId(String userid) {
         List<User> userlist = userRepository.findAll();
-        List<String> res = new ArrayList();
+
+        List<User> res = new ArrayList();
         for (User user : userlist)
         {
-//            System.out.println(user.getUserId());
+            User u = new User();
             if(user.getUserId().contains(userid))
             {
-//                System.out.println("★");
-                res.add(user.getUserId());
+                u.setUserId(user.getUserId());
+                u.setNickname(user.getNickname());
+                u.setThumbnail(user.getThumbnail());
+
+                res.add(u);
             }
         }
 
