@@ -4,19 +4,19 @@
     <div class="se-box">
       <input type="text" class="search-bar" placeholder="유저아이디를 입력해주세요" v-model="keyword" @input="handleSearch($event)">
       <div class="user-box" v-for="user in userlist" :key="user.id">
-        <img :src="getthumbnail(user.thumbnail)" alt="profilImg" class="psimg-box">
-        <div class="nametag">
+        <img :src="getthumbnail(user.thumbnail)" alt="profilImg" class="psimg-box" @click="goUserMoment(user.userId)">
+        <div class="nametag" @click="goUserMoment(user.userId)">
           <h4>{{user.nickname}}</h4>
           <h5 style="color:#B2BEC3">@{{user.userId}}</h5>
         </div>
       </div>
       <!-- <div class="user-box">
         <img src="../assets/img_logo.jpg" alt="profilImg" class="psimg-box">
-        <div class="nametag">
+        <div class="nametag" @click="goUserMoment(test12345)">
           <h4>테스토</h4>
-          <h5 style="color:#B2BEC3">@test1234</h5>
-        </div> -->
-      <!-- </div> -->
+          <h5 style="color:#B2BEC3" >@test1234</h5>
+        </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -53,6 +53,9 @@ export default {
         return require("@/assets/img_logo.jpg")
       }
     },
+    goUserMoment(userid){
+      this.$router.push({name:'YourMoment',params:{'userid':userid}});
+    }
   },
   
 }
