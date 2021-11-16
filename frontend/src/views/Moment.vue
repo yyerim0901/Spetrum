@@ -117,6 +117,7 @@ export default {
     }
   },
   created(){
+    console.log('쉬어가기~');
     this.$store.dispatch('bringSBoard',1)
     .then(res=>{
       this.mywrites = res.data.data;

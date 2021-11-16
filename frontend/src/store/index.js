@@ -121,7 +121,7 @@ export default new Vuex.Store({
       })
     },
     // requestSignup(state,payload){
-    //   return axios({
+    //   axios({
     //     url: '/users/regist',
     //     method:'post',
     //     data:payload,
