@@ -44,10 +44,8 @@ export default {
     },
     getthumbnail(url){
       if (url) {
-        var fullurl = 'https://spetrum.io/resources/' + url
+        var fullurl = this.BASE_URL + url
         return fullurl
-      }else if (url === "resources/image/profile/null/default.jpg"){
-        return require("@/assets/img_logo.jpg")
       }
       else{
         return require("@/assets/img_logo.jpg")

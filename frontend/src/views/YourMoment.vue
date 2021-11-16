@@ -58,7 +58,8 @@ export default {
   methods:{
     getthumbnail(){
       if (this.thumbnail) {
-        return this.thumbnail
+        var fullurl = this.BASE_URL + this.thumbnail
+        return fullurl
       }else{
         return require("@/assets/img_logo.jpg")
       }
@@ -89,7 +90,6 @@ export default {
       } else{
         full = require('@/assets/img_logo.jpg')
       }
-      console.log(full);
       return full;
     },
     requestFollow(){

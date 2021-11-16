@@ -58,7 +58,10 @@ export default {
   },
   methods: {
     getthumbnail(){
-      if(this.userInfo.thumbnail) return this.userInfo.thumbnail
+      if(this.userInfo.thumbnail){
+        var fullurl = this.BASE_URL + this.userInfo.thumbnail
+        return fullurl
+      }
       else return require("@/assets/img_logo.jpg")
     },
     logout(){
@@ -85,7 +88,7 @@ export default {
     }
   },
   created(){
-    this.userid = this.userInfo.userid;
+    this.userid = localStorage.getItem('userid');
     this.$store.dispatch('requestUser',this.userid);
   }
 }
