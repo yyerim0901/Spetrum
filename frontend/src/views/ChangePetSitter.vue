@@ -7,7 +7,7 @@
                 <img :src="this.imgprev" alt="" class="prev-img">
                 <input  type="file" @change="imageChange" ref="profileImage">
             </div>
-            <input name="content"  cols="30" rows="10" class="con-box" :placeholder="this.board.data.title" v-model="inputTitle"></input>
+            <input name="content"  cols="30" rows="10" class="con-box" :placeholder="this.board.data.title" v-model="inputTitle">
             <textarea name="content"  cols="30" rows="10" class="con-box" :placeholder="this.board.data.content" v-model="inputContent"></textarea>
         </div>
         <FooterButton @click="changePetSitter">게시글 수정하냥</FooterButton>
@@ -31,7 +31,7 @@ export default {
             imgprev:null,
             inputContent:'',
             inputTitle:'',
-            board: {},
+            board: {}, 
         }
     },
     methods: {
