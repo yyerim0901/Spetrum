@@ -291,8 +291,6 @@ export default new Vuex.Store({
       })
     },
     bringMyPBoard(state, payload) {
-      console.log(payload.userid)
-      console.log(payload.page)
       return axios({
         url: `/pboard/mylist/${payload.userid}`,
         method: 'get',
