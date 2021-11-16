@@ -49,7 +49,7 @@ export default {
     return{
       isActive:5,
       userid : "",
-      BASE_URL : 'http://spetrum.io/resources/',
+      BASE_URL : 'https://spetrum.io/resources/',
       showModal : false,
     }
   },
