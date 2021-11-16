@@ -125,22 +125,26 @@ export default {
       }
     },
     nickCheck(){
-      const response = this.$store.dispatch('nickCheck',this.nickname);
-      if (response.data.statusCode == '200'){
-        this.nickcheck = true;
-      }
-      else {
-        alert(response.data.message);
-      }
+      this.$store.dispatch('nickCheck',this.nickname)
+      .then(res=>{
+        console.log(res);
+        if (res.statusCode === 200) {
+          this.nickValid = true
+        }else{
+          alert('이미 사용중인 닉네임입니다')
+        }
+      })
     },
     idCheck(){
-      const response = this.$store.dispatch('idCheck',this.userId);
-      if (response.data.statusCode == '200'){
-        this.idcheck = true;
-      }
-      else {
-        alert(response.data.message);
-      }
+      this.$store.dispatch('idCheck',this.userId)
+      .then(res=>{
+        console.log(res);
+        if (res.statusCode === 200) {
+          this.idValid = true
+        }else{
+          alert('이미 사용중인 아이디입니다')
+        }
+      })
     },
     imageChange(){
       this.profileImg = this.$refs.profileImage.files;

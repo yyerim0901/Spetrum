@@ -12,8 +12,8 @@ export const Container = styled.div`
   justify-items:center;
   align-itmes: center;
   background-color: white;
-  margin:10px 10px;
-  padding-top:10px;
+  margin:10px 10px 0px 10px;
+  padding-top:1px;
   img{
     width:30px;
   }

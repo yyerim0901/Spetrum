@@ -358,6 +358,12 @@ export default new Vuex.Store({
           page : payload
         }
       })
+    },
+    requestUserSearch(state,payload){
+      return axios({
+        method:'get',
+        url:`/users/searchUserId/${payload}`
+      })
     }
 
 

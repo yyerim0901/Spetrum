@@ -15,7 +15,6 @@
       <img src="@/assets/help.jpg" alt="" class="help">
       <h3 style="text-align:center;">친구들 더 만나러가기!<br><p>동물보호시스템으로 이동</p></h3>
     </div>
-    <hr class="fott">
     <Footer :isActive="isActive"/>
   </div>
 </template>
