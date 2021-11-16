@@ -4,7 +4,7 @@
     <div class="p-box"  @scroll="handleInfiniteScroll">
       <div class="i-box">
         <img :src="getthumbnail()" alt="profilImg" class="pimg-box">
-        <button bcolor="babypink" btype="medium" class="f-button"><h3>게시글</h3><span>{{mywrites.length}}</span></button>
+        <button bcolor="babypink" btype="medium" class="f-button"><h3>게시글</h3><span>{{this.mywritesLength}}</span></button>
         <button bcolor="babypink" btype="medium" class="f-button"><h3>팔로워</h3><span>{{this.followerLength}}</span></button>
         <button bcolor="babypink" btype="medium" class="f-button"><h3>팔로우</h3><span>{{this.followLength}}</span></button>
       </div>
@@ -67,13 +67,20 @@ export default {
       }else{
         return 0
       }
+    },
+    mywritesLength(){
+      if (this.mywrites) {
+        return this.mywrites.length
+      }else{
+        return 0
+      }
     }
 
   },
   methods:{
     getthumbnail(){
       if (this.userInfo.thumbnail) {
-        var fullurl = 'https://spetrum.io/resources/' + this.userInfo.thumbnail
+        var fullurl = this.BASE_URL + this.thumbnail
         return fullurl
       }else{
         return require("@/assets/img_logo.jpg")
