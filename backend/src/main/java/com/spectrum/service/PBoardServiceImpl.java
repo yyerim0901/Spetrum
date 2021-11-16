@@ -15,13 +15,13 @@ import org.qlrm.mapper.JpaResultMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.data.geo.Point;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import java.awt.print.Pageable;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -188,11 +188,11 @@ public class PBoardServiceImpl implements PBoardService {
     }
 
     @Override
-    public List<PBoard> myPetsitterList(String userid){
+    public List<PBoard> myPetsitterList(String userid, Pageable pageable){
 //        String userId = jwtUtil.getUsername(token);
         Optional<User> userOptional = userRepository.findByUserId(userid);
         User user = userOptional.get();
-        return pBoardRepository.findAllByUserId(user.getId());
+        return pBoardRepository.findAllByUserId(user.getId(), pageable);
     }
 
     @Override

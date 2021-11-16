@@ -12,6 +12,7 @@ import io.jenetics.jpx.Track;
 import io.jenetics.jpx.TrackSegment;
 import io.jenetics.jpx.WayPoint;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -49,8 +50,8 @@ public class DoggingServiceImpl implements DoggingService{
     }
 
     @Override
-    public List<Dogging> MyDoggingList() throws IOException{
-        return doggingRepository.findByUserId(user.getId());
+    public List<Dogging> MyDoggingList(Pageable pageable) throws IOException{
+        return doggingRepository.findByUserId(user.getId(), pageable);
     }
     @Override
     public DoggingDetailResponse DetailOfDogging(Long doggingId) throws IOException{

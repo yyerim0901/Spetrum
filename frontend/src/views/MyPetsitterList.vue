@@ -1,7 +1,7 @@
 <template>
   <div class="MyPetsitter-Wrapper">
     <Header :isLogo="false" :isBack="true" :isSearch="false" title="나의 게시글"></Header>
-    <div style="justify-content:left;">
+    <div style="justify-content:left;" @scroll="handleInfiniteScroll">
       <div class="my-p-box">
         <img class="img-box" src="../assets/img_logo.jpg" alt="사진 안 뜸">
         <div class="in-my-p-box">
@@ -69,6 +69,7 @@ export default {
       userid:"",
       showModal:false,
       deletepboardId:"",
+      page:1,
     }
   },
   methods: {
@@ -90,17 +91,34 @@ export default {
     },
     deletemypetsitter(){
       this.$store.dispatch('deletePetsitter',this.deletepboardId)
+    },
+    handleInfiniteScroll(e) {
+      const { scrollTop, clientHeight, scrollHeight } = e.target;
+      if (parseInt(scrollTop) + parseInt(clientHeight) + 1 !== parseInt(scrollHeight))
+        return;
+      if (this.mypetsitters && this.mypetsitters.length % 10 === 0) {
+        //게시물이 1페이지 전채 개수가 넘으면
+        console.log(this.mypetsitters.length,'길이');
+        this.page +=  1;
+        console.log(this.page);
+        this.$store.dispatch('bringMyPBoard',{userid:this.userid,page:this.page})
+        .then(res=>{
+          console.log(res);
+          this.mypetsitters.push(...res.data.data);
+          console.log(this.mypetsitters,'게시물');
+        })
+      }
     }
   },
   created() {
     this.userid = localStorage.getItem('userid')
     console.log(this.userid)
-    this.$store.dispatch('bringMyPBoard',this.userid)
+    this.$store.dispatch('bringMyPBoard',[this.userid,this.page])
     .then(res => {
       console.log(res.data.data)
       this.mypetsitters = res.data.data
     })
-  },
+  }
 }
 </script>
 

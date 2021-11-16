@@ -13,14 +13,16 @@ import org.json.HTTP;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
-import java.awt.print.Pageable;
 import java.io.IOException;
 import java.util.List;
 
@@ -97,8 +99,11 @@ public class PBoardController {
             notes = "**userid**을 이용하여 리스트 출력"
     )
     @GetMapping("/mylist/{userid}")
-    private PBoardResponse myPetsitterList(@PathVariable String userid){
-        List<PBoard> list = pBoardService.myPetsitterList(userid);
+    private PBoardResponse myPetsitterList(@PathVariable String userid,
+                                           @ApiIgnore HttpServletRequest request){
+        int pagenum = Integer.parseInt(request.getParameter("page"));
+        Pageable pageable = PageRequest.of(pagenum-1, 10, Sort.by(Sort.Direction.DESC, "created"));
+        List<PBoard> list = pBoardService.myPetsitterList(userid,pageable);
 
         if(list == null || list.isEmpty()){
             return new PBoardResponse("나의 리스트가 존재하지 않습니다.",null,HttpStatus.NO_CONTENT);
@@ -117,7 +122,8 @@ public class PBoardController {
     )
     @GetMapping("/list")
     private PBoardResponse allPetsitterList(@RequestParam float latitude, @RequestParam float longitude,
-                                            @RequestParam int pagenum){
+                                            @ApiIgnore HttpServletRequest request){
+        int pagenum = Integer.parseInt(request.getParameter("page"));
         Object allList = pBoardService.allPetsitterList(longitude, latitude, pagenum);
         if(allList == null){
             return new PBoardResponse("등록된 글이 존재하지 않습니다.",null,HttpStatus.NO_CONTENT);
