@@ -1,7 +1,7 @@
 <template>
   <div class="MyPetsitter-Wrapper">
     <Header :isLogo="false" :isBack="true" :isSearch="false" title="나의 게시글"></Header>
-    <div style="justify-content:left;" @scroll="handleInfiniteScroll">
+    <div style="width:100%; justify-content:left; overflow-y:scroll;" @scroll="handleInfiniteScroll">
       <div class="my-p-box">
         <img class="img-box" src="../assets/img_logo.jpg" alt="사진 안 뜸">
         <div class="in-my-p-box">
