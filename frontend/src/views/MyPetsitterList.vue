@@ -6,25 +6,24 @@
         <img class="img-box" src="../assets/img_logo.jpg" alt="사진 안 뜸">
         <div class="in-my-p-box">
           <div class="my-p-text">
-            <h4>여기는 제모오오오ㅗㅇ옥</h4>
-            <p style="height:4px;"></p>
-            <p style="font-size:x-small;">작성 일자 : 2021-11-11</p>
+            <h3>여기는 제모오오오ㅗㅇ옥</h3>
+            <p style="height:6px;"></p>
+            <p style="font-size:small;">작성 일자 : 2021-11-11</p>
           </div>
-          <StyledButton btype="small" style="background-color:white; color:gray; margin:0px;" @click="detailof(1)">자세히보기</StyledButton>
+          <StyledButton btype="medium" style="width:90px;background-color:white; color:gray; margin:0px;" @click="detailof(1)">자세히보기</StyledButton>
         </div>
       </div> 
-
     </div> -->
-
     <div class="p-box-petsitter">
       <div class="my-p-box" v-for="mypetsitter in mypetsitters" :key="mypetsitter.id">
         <img class="img-box" :src="fullURL(mypetsitter.picture)" alt="사진 안 뜸">
         <div class="in-my-p-box">
           <div class="my-p-text">
-            <h4>{{mypetsitter.title}}</h4>
-            <p style="font-size:x-small;">작성 일자 : {{mypetsitter.created.substr(0,10)}}</p>
+            <h3>{{mypetsitter.title}}</h3>
+            <p style="height:6px;"></p>
+            <p style="font-size:small;">작성 일자 : {{mypetsitter.created.substr(0,10)}}</p>
           </div>
-          <StyledButton btype="xsmall" style="background-color:white; color:gray; margin:0px;" @click="detailof(mypetsitter.id)">자세히보기</StyledButton>
+          <StyledButton btype="medium" style="width:90px; background-color:white; color:gray; margin:0px;" @click="detailof(mypetsitter.id)">자세히보기</StyledButton>
         </div>
       </div>
     </div>
@@ -126,7 +125,7 @@ export default {
   }
   .p-box-petsitter{
     width:100%;
-    padding: 10px 50px;
+    padding: 10px 60px;
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
