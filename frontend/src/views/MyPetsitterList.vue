@@ -7,10 +7,10 @@
         <div class="in-my-p-box">
           <div class="my-p-text">
             <h3>여기는 제모오오오ㅗㅇ옥</h3>
-            <p style="height:6px;"></p>
+            <p style="height:4px;"></p>
             <p style="font-size:small;">작성 일자 : 2021-11-11</p>
           </div>
-          <StyledButton btype="medium" style="width:90px;background-color:white; color:gray; margin:0px;" @click="detailof(1)">자세히보기</StyledButton>
+          <StyledButton btype="small" style="background-color:white; color:gray; margin:0px;" @click="detailof(1)">자세히보기</StyledButton>
         </div>
       </div> 
     </div> -->
@@ -19,11 +19,11 @@
         <img class="img-box" :src="fullURL(mypetsitter.picture)" alt="사진 안 뜸">
         <div class="in-my-p-box">
           <div class="my-p-text">
-            <h2>{{mypetsitter.title}}</h2>
+            <h3>{{mypetsitter.title}}</h3>
             <p style="height:4px;"></p>
             <p style="font-size:small;">작성 일자 : {{mypetsitter.created.substr(0,10)}}</p>
           </div>
-          <StyledButton btype="medium" style="width:90px; background-color:white; color:gray; margin:0px;" @click="detailof(mypetsitter.id)">자세히보기</StyledButton>
+          <StyledButton btype="small" style="background-color:white; color:gray; margin:0px;" @click="detailof(mypetsitter.id)">자세히보기</StyledButton>
         </div>
       </div>
     </div>
@@ -129,7 +129,7 @@ export default {
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
-    margin-bottom:15px;
+    margin-bottom:25px;
   }
   .my-p-box{
     display: flex;

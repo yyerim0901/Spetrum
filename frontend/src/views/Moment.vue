@@ -34,6 +34,8 @@ import Footer from '../components/molecules/Footer.vue'
 import Header from '../components/molecules/Header.vue'
 import StyledButton from '../components/atoms/StyledButton'
 import {mapState} from 'vuex';
+import axios from 'axios';
+
 export default {
   name:'Moment',
   components:{
@@ -118,11 +120,27 @@ export default {
   },
   created(){
     this.userid = localStorage.getItem('userid');
-    this.$store.dispatch('requestUser',this.userid);
-    this.$store.dispatch('bringSBoard',this.page)
-    .then(res=>{
-      this.mywrites = res.data.data;
-    })
+    console.log(localStorage.getItem)
+    console.log(this.userid)
+    axios({
+        url:'http://localhost:8080/api/sns/',
+        method:'get',
+        params:{
+          page:1,
+        },
+        headers: {
+          "Authorization": localStorage.getItem("token")
+        },
+      })
+      .then(res => {
+        console.log(res.data.data)
+        this.mywrites = res.data.data;
+      this.$store.dispatch ('requestUser',this.userid);
+      })
+    // this.$store.dispatch('bringSBoard',this.page)
+    // .then(res=>{
+    //   this.mywrites = res.data.data;
+    // })
   },
 }
 </script>
