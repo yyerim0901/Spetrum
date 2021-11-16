@@ -2,7 +2,7 @@
     <div class="sitter-detail-box">
         <img class="img-box" :src="fullURL(board.picture)" alt="이미지가 없습니다">
         <div class="board-box" @click="moveEachDetail">
-            <textarea style="font-size:1rem; font-weight: bold; height: 120px;" :value="board.title" readonly></textarea>
+            <p style="font-size:1rem; font-weight: bold;">{{ board.title }}</p>
             <p style="font-size:0.8rem;">작성일 {{ board.created.substr(0,10) }}</p>
             <p style="font-size:0.8rem;">작성자 : {{ board.user.userId }}</p>
         </div>
