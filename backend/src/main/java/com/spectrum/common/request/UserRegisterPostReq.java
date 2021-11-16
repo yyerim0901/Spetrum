@@ -19,13 +19,4 @@ public class UserRegisterPostReq {
     @ApiModelProperty(name="thumbnail", example="")
     MultipartFile thumbnail;
 
-    @Override
-    public String toString() {
-        return "UserRegisterPostReq{" +
-                "userId='" + userId + '\'' +
-                ", password='" + password + '\'' +
-                ", nickname='" + nickname + '\'' +
-                ", thumbnail=" + thumbnail +
-                '}';
-    }
 }
