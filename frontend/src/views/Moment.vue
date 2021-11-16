@@ -5,8 +5,8 @@
       <div class="i-box">
         <img :src="getthumbnail()" alt="profilImg" class="pimg-box">
         <button bcolor="babypink" btype="medium" class="f-button"><h3>게시글</h3><span>{{mywrites.length}}</span></button>
-        <button bcolor="babypink" btype="medium" class="f-button"><h3>팔로워</h3><span>{{this.userInfo.followerList.length}}</span></button>
-        <button bcolor="babypink" btype="medium" class="f-button"><h3>팔로우</h3><span>{{this.userInfo.followList.length}}</span></button>
+        <button bcolor="babypink" btype="medium" class="f-button"><h3>팔로워</h3><span>{{this.followerLength}}</span></button>
+        <button bcolor="babypink" btype="medium" class="f-button"><h3>팔로우</h3><span>{{this.followLength}}</span></button>
       </div>
       <div class="l-box">
         <div class="m-box">
@@ -54,6 +54,20 @@ export default {
   },
   computed:{
     ...mapState(['userInfo']),
+    followerLength(){
+      if (this.userInfo.followerList){
+        return this.userInfo.followerList.length
+      }else{
+        return 0
+      }
+    },
+    followLength(){
+      if (this.userInfo.followList){
+        return this.userInfo.followList.length
+      }else{
+        return 0
+      }
+    }
 
   },
   methods:{
@@ -102,7 +116,7 @@ export default {
     .then(res=>{
       this.mywrites = res.data.data;
     })
-  }
+  },
 }
 </script>
 
@@ -191,6 +205,17 @@ export default {
     margin:0 0 0 10px;
     grid-gap:0px;
     grid-template-columns: 150px 150px 150px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    background-color: #f6f8fa;
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #E5EAEF;
+    height:30px;
+    border-radius: 10px;
   }
 
 </style>
