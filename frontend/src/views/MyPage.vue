@@ -79,6 +79,9 @@ export default {
     },
     deleteUser(){
       this.$store.dispatch('deleteUser',this.userInfo.userid);
+      localStorage.removeItem('userid')
+      localStorage.removeItem('token')
+      this.$router.push("/signin")
     }
   },
   created(){
