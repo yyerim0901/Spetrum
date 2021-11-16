@@ -59,7 +59,8 @@ export default {
   methods:{
     getthumbnail(){
       if (this.userInfo.thumbnail) {
-        return this.userInfo.thumbnail
+        var fullurl = 'https://spetrum.io/resources/' + this.userInfo.thumbnail
+        return fullurl
       }else{
         return require("@/assets/img_logo.jpg")
       }
