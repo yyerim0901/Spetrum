@@ -133,18 +133,18 @@ export default {
                 "Authorization": `Bearer ${localStorage.getItem("token")}`
               },
               params: {
-                distance : that.totalDistance,
-                lats : that.latlist,
-                lngs : that.lnglist,
+                distance : this.totalDistance,
+                lats : this.latlist,
+                lngs : this.lnglist,
                 location : '삼문동 코아루 아파트',
-                time : that.totalTime
+                time : this.totalTime
               }
             }).then(res => {
               console.log(res)
-              that.totalDistance = 0
-              that.totalTime = 0
-              that.latlist = []
-              that.lnglist = []
+              this.totalDistance = 0
+              this.totalTime = 0
+              this.latlist = []
+              this.lnglist = []
             }).catch(err => {
               console.log(err)
             })
