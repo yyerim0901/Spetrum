@@ -113,7 +113,7 @@ export default {
   created() {
     this.userid = localStorage.getItem('userid')
     console.log(this.userid)
-    this.$store.dispatch('bringMyPBoard',[this.userid,this.page])
+    this.$store.dispatch('bringMyPBoard',{userid:this.userid,page:this.page})
     .then(res => {
       console.log(res.data.data)
       this.mypetsitters = res.data.data
