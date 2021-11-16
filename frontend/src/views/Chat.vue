@@ -8,18 +8,23 @@
       v-for="(item, idx) in recvList"
       :key="idx"
     >
-      <h3> {{ item.userName }} : {{ item.content }}</h3>
+      <h3 v-if="item.userName == userName"> ★ {{ item.userName }} : {{ item.content }}</h3>
+      <h3 v-else> {{ item.userName }} : {{ item.content }}</h3>
     </div>
     <!-- 유저이름: 
     <input
       v-model="userName"
       type="text"
     > -->
-    {{this.userInfo.nickname}} <input
+    {{this.userName}} <input
       v-model="message"
       type="text"
       @keyup="sendMessage"
     >
+    <div style="text-align: center">
+        <StyledButton btype="realsmall" bcolor="babypink" @click="close()">채팅종료</StyledButton>
+    </div>
+
 
     <Footer :isActive="isActive"/>
   </div>
@@ -27,7 +32,7 @@
 </template>
 
 <script>
-
+import StyledButton from '../components/atoms/StyledButton'
 import Stomp from 'webstomp-client'
 import SockJS from 'sockjs-client'
 import Footer from '../components/molecules/Footer';
@@ -47,6 +52,8 @@ export default {
     components:{
     Header,
     Footer,
+    StyledButton
+  
   },
     computed:{
     ...mapState(['userInfo']),
@@ -64,7 +71,7 @@ export default {
       }
     },    
     send() {
-      console.log("Send message:" + this.message);
+      
       if (this.stompClient && this.stompClient.connected) {
         const msg = { 
           userName: this.userName,
@@ -73,6 +80,30 @@ export default {
         this.stompClient.send("/receive", JSON.stringify(msg), {});
       }
     },    
+    close()
+    {
+      const listdata = [];
+      console.log("close 실행")
+      this.recvList.forEach(element => {
+        listdata.push({'userName':element.userName,
+                      'content':element.content})
+      });
+      console.log(listdata);
+      const formdata = new FormData();
+      formdata.append('chatList',listdata);
+
+      axios({
+        method: "POST",
+        url: '/pboard/saveChat',
+        headers: {
+          "Authorization": localStorage.getItem("token")
+        },
+        data: formdata,
+      }).then(res => {
+        console.log(res);
+        this.$router.go(-1)
+      })
+    },
     getuserinfo()
     {
       axios({
@@ -87,7 +118,7 @@ export default {
             })
     },
     connect() {
-      const serverURL = "http://localhost:8080"
+      const serverURL = "http://localhost:8080/chat"
       let socket = new SockJS(serverURL);
       this.stompClient = Stomp.over(socket);
       console.log(`소켓 연결을 시도합니다. 서버 주소: ${serverURL}`)

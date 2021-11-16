@@ -1,6 +1,7 @@
 package com.spectrum.controller;
 
 import com.spectrum.common.jwt.JWTUtil;
+import com.spectrum.common.request.ChatReq;
 import com.spectrum.common.request.PBoardPostReq;
 import com.spectrum.common.request.PBoardUpdateReq;
 import com.spectrum.common.response.PBoardResponse;
@@ -149,4 +150,15 @@ public class PBoardController {
         return new PBoardResponse("상태 변경 완료",status,HttpStatus.OK);
     }
 
+    @PostMapping("/saveChat")
+    private ResponseEntity<String> saveChat(
+            @ApiParam(value = "채팅저장", required = true) List<ChatReq> chatList,
+            HttpServletRequest request) throws Exception {
+        for (ChatReq list : chatList)
+        {
+            System.out.println(list.toString());
+        }
+
+        return new ResponseEntity<>("post petsitter success", HttpStatus.OK);
+    }
 }
