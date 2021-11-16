@@ -30,26 +30,27 @@ public class UserServiceImpl implements UserService{
     @Autowired
     FollowRepository followRepository;
 
-    String BASE_PATH = "image/profile/";
+    String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/";
 
     @Override
     public void createUser(UserRegisterPostReq registerInfo) throws IOException {
         User res = new User();
         MultipartFile thumbnail = registerInfo.getThumbnail();
-        System.out.println(registerInfo.toString());
+
         if(thumbnail == null)
         {
-            res.setThumbnail(BASE_PATH+"default.png");
+            res.setThumbnail("image/profile/default.png");
         }
         else
         {
-            String path = BASE_PATH  + registerInfo.getUserId();
+            String path = BASE_PATH+"image/profile/"+ registerInfo.getUserId();
             File file = new File(path);
             if(!file.exists()) {
                 file.mkdirs();
             }
             String final_name = path + File.separator + thumbnail.getOriginalFilename();
-            res.setThumbnail(final_name);
+            res.setThumbnail("image/profile/" + File.separator + thumbnail.getOriginalFilename());
+
             file = new File(final_name);
             thumbnail.transferTo(file);
 
@@ -118,7 +119,6 @@ public class UserServiceImpl implements UserService{
         {
             MultipartFile multipartFile = updateInfo.getThumbnail();
 
-            String absolutePath = new File("").getAbsolutePath();
             String path = BASE_PATH  + userinfo.getUserId();
 
             File file = new File(path);
@@ -127,23 +127,6 @@ public class UserServiceImpl implements UserService{
                 file.mkdirs();
             }
 
-            // 파일의 확장자 추출
-            String originalFileExtension;
-            String contentType = multipartFile.getContentType();
-            // 확장자명이 존재하지 않을 경우 처리 x
-            if(ObjectUtils.isEmpty(contentType)) {
-                return;
-            }
-            else {  // 확장자가 jpeg, png인 파일들만 받아서 처리
-                if(contentType.contains("image/jpeg"))
-                    originalFileExtension = ".jpg";
-                else if(contentType.contains("image/png"))
-                    originalFileExtension = ".png";
-                else  // 다른 확장자일 경우 처리 x
-                {
-                    return;
-                }
-            }
             String final_name = path + File.separator + updateInfo.getThumbnail().getOriginalFilename();
             userinfo.setThumbnail(final_name);
             file = new File(final_name);
