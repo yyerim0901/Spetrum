@@ -143,18 +143,16 @@ export default {
     // })
     this.$store.dispatch('requestUser',this.userid);
     console.log(this.userInfo.thumbnail,'요펑가니?')
-    if (this.userInfo.thumbnail){
-      this.$store.dispatch('bringSBoard',this.page)
-      .then(res=>{
-        this.mywrites = res.data.data;
-        console.log('여기서에러')
-        console.log(res)
-      })
-      .catch(err=>{
-        console.log('나는 게시판 받아오는 에러');
-        console.log(err)
-      })
-    }
+    this.$store.dispatch('bringSBoard',this.page)
+    .then(res=>{
+      this.mywrites = res.data.data;
+      console.log('여기서에러')
+      console.log(res)
+    })
+    .catch(err=>{
+      console.log('나는 게시판 받아오는 에러');
+      console.log(err)
+    })
   },
 }
 </script>
