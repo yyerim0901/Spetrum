@@ -4,8 +4,7 @@
     <div class="se-box">
       <input type="text" class="search-bar" placeholder="유저아이디를 입력해주세요" v-model="keyword" @input="handleSearch($event)">
       <div class="user-box" v-for="user in userlist" :key="user.id">
-        {{user}}
-        <img :src="getthumbnail(user.thumbnail)" alt="profilImg" class="pimg-box">
+        <img :src="getthumbnail(user.thumbnail)" alt="profilImg" class="psimg-box">
         <div class="nametag">
           <h4>{{user.nickname}}</h4>
           <h5 style="color:#B2BEC3">@{{user.userId}}</h5>
@@ -40,7 +39,10 @@ export default {
       if (url) {
         var fullurl = 'https://spetrum.io/resources/' + url
         return fullurl
-      }else{
+      }else if (url === "resources/image/profile/null/default.jpg"){
+        return require("@/assets/img_logo.jpg")
+      }
+      else{
         return require("@/assets/img_logo.jpg")
       }
     },
@@ -99,7 +101,12 @@ export default {
     border-radius: 10px;
   }
 
-
+  .psimg-box{
+    width:80px;
+    height: 9-px;
+    border-radius: 70%;
+    border:solid #E5EAEF 1px;
+  }
 
 
 </style>
