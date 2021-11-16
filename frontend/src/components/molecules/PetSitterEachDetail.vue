@@ -4,17 +4,15 @@
         <hr>
         <div class="detail-box">
             <img class="detail-img-box" :src="fullURL(board.data.picture)" alt="이미지가 없습니다">
-            <div>
+            <div style="width: 420px;">
                 <span>{{ board.data.title }}</span>
                 <i class="fas fa-edit" style="margin:0 0 0 10px;" @click="moveChangePetSitter"></i>
                 <i class="fas fa-trash" style="margin:0 0 0 10px;" @click="deletePetSitter"></i>
             </div>
-            <p style="width: 362px; text-align:right;">작성일자 : {{ board.data.created.substr(0,10) }}</p>
-            <span style="text-align:start; border:solid; border-width:1px 0; border-color:#E5EAEF; width: 362px;">{{board.data.content}}</span>
+            <p style="width: 420px; text-align:right;">작성일자 : {{ board.data.created.substr(0,10) }}</p>
+            <span style="text-align:start; border:solid; border-width:1px 0; border-color:#E5EAEF; width: 420px;">{{board.data.content}}</span>
 
             <PetSitterCommentDetail v-for="(comment, idx) in comments" :key="idx" :comment="comment" />
-            <input placeholder="댓글을 입력해주세요" type="text" v-model="inputContent">
-            <button @click="createComment">댓글작성</button>
             <div>
                 <i class="far fa-comment-dots" style="margin:0 5px 0 0; font-size:1rem"></i>
                 <CommentInput :value="comment" v-model="inputContent" />
@@ -142,14 +140,14 @@ export default {
 
 <style>
     .detail-box{
-        width: 362px;
+        width: 420px;
         display: flex;
         flex-direction: column;
         align-items: center;
     }
     .detail-img-box{
-        width: 362px;
-        height: 362px;
+        width: 420px;
+        height: 420px;
         align-content: center;
     }
 </style>
