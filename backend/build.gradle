@@ -52,11 +52,7 @@ dependencies {
 	implementation group: 'com.querydsl', name: 'querydsl-jpa', version: '4.1.4'
 	implementation group: 'ch.simas.qlrm', name: 'qlrm', version: '1.7.1'
 
-
-
-
-
-
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 }
 
 test {

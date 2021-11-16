@@ -150,5 +150,4 @@ public class PBoardController {
         return new PBoardResponse("상태 변경 완료",status,HttpStatus.OK);
     }
 
-
 }

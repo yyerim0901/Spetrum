@@ -25,4 +25,10 @@ public class UesrInfoResponse {
         res.setFollowerList(followerList);
         return res;
     }
+
+    public static UesrInfoResponse of(User user) {
+        UesrInfoResponse res = new UesrInfoResponse();
+        res.setUser(user);
+        return res;
+    }
 }

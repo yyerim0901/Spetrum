@@ -20,6 +20,7 @@ import ChangePetSitter from '../views/ChangePetSitter'
 import UpdateUserInfo from '../views/UpdateUserInfo'
 import MyDoggingList from '../views/MyDoggingList'
 import MyPetsitterList from '../views/MyPetsitterList'
+import Chat from '../views/Chat'
 
 Vue.use(VueRouter)
 
@@ -125,6 +126,11 @@ const routes = [
     path: '/mypetsitter',
     name: 'MyPetsitterList',
     component : MyPetsitterList
+  },
+  {
+    path: '/chat',
+    name: 'Chat',
+    component : Chat
   },
 ]
 
