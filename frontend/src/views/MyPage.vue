@@ -1,7 +1,6 @@
 <template>
   <div class="Page-Wrapper">
     <Header :isLogo="false" :isBack="false" title="마이페이지"></Header>
-      <hr>
       <div class="mp-box">
         <div class="mp-box2" style="margin-left:15px;">
           <img :src="getthumbnail()" alt="profileImage" class="pimg-box">
@@ -30,7 +29,6 @@
       </h3>
       <div slot="body"></div>
     </Modal>
-      <hr class="fott">
     <Footer :isActive="isActive"></Footer>
   </div>
 </template>

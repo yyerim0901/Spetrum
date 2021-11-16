@@ -1,6 +1,5 @@
 <template>
-  <div class="foot" >
-    <Container >
+    <Container>
       <TabButton @click="moveDogging">
         <i class="fas fa-dog" :class="{active: isActive === 1}"></i>
         <!-- <img src="@/assets/corgi.png" alt="corgi"> -->
@@ -26,7 +25,6 @@
         <p :class="{active: isActive === 5}">마이페이지</p>
       </TabButton>
     </Container>
-  </div>
 </template>
 
 <script>
@@ -67,6 +65,7 @@ export default {
 .foot{
   width: 100%;
   height: 60px;
+  background-color : white;
 }
 
 

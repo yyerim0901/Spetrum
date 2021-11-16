@@ -20,6 +20,7 @@ import ChangePetSitter from '../views/ChangePetSitter'
 import UpdateUserInfo from '../views/UpdateUserInfo'
 import MyDoggingList from '../views/MyDoggingList'
 import MyPetsitterList from '../views/MyPetsitterList'
+import SearchUser from '../views/SearchUser'
 
 Vue.use(VueRouter)
 
@@ -126,6 +127,11 @@ const routes = [
     name: 'MyPetsitterList',
     component : MyPetsitterList
   },
+  {
+    path: '/user/search',
+    name: 'SearchUser',
+    component : SearchUser
+  }
 ]
 
 const router = new VueRouter({

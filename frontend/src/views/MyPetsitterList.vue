@@ -1,7 +1,6 @@
 <template>
   <div class="MyPetsitter-Wrapper">
-    <Header :isLogo="false" :isBack="true" title="나의 게시글"></Header>
-    <hr>
+    <Header :isLogo="false" :isBack="true" :isSearch="false" title="나의 게시글"></Header>
     <div style="justify-content:left;">
       <div class="my-p-box">
         <img class="img-box" src="../assets/img_logo.jpg" alt="사진 안 뜸">
@@ -36,13 +35,15 @@
         </div>
       </div>
     </div>
+    <!--취소를 눌렀을 때 실행 이벤트 = @close/확인 눌렀을 때 이벤트 = @ok-->
     <Modal v-if="showModal" @close="showModal=false" @ok="deletemypetsitter">
-      <h3 slot="header">
+      <h3 slot="header"><!--태그는 마음대로, slot="header"만 넣으면 modal의 header로 됨-->
         게시글을 정말 삭제하시겠습니까?
       </h3>
       <div slot="body"></div>
+      <!--modal의 body, 
+      안 적으면 default글자가 안 사라져서 임의로 둠, 현재 modal.vue에서 흰 글씨-->
     </Modal>
-    <hr class="fott">
     <Footer :isActive="isActive"></Footer>
   </div>
 </template>
