@@ -82,6 +82,7 @@ export default {
   display: flex;
   justify-content: flex-start;
   margin-left: 50px;
+  margin:5px 0 5px 50px ;
 }
 
 .nametag{
@@ -89,6 +90,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   margin-left:15px;
+  align-items: flex-start;
 }
 
 .se-box{
