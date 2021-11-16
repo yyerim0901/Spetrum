@@ -46,7 +46,7 @@ export default {
       files:[],
       content:undefined,
       likes:undefined,
-      BASE_URL : 'http://spetrum.io/resources/',
+      BASE_URL : 'https://spetrum.io/resources/',
       comment:undefined,
       boardid:undefined,
       commentList:null,
