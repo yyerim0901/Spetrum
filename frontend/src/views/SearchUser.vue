@@ -1,7 +1,7 @@
 <template>
   <div class="Page-Wrapper">
     <Header :isLogo="false" :isBack="true" :isSearch="false" title="유저 검색"></Header>
-    <div>
+    <div class="se-box">
       <input type="text" class="search-bar" placeholder="유저아이디를 입력해주세요" v-model="keyword" @input="handleSearch($event)">
       <div class="user-box" v-for="user in userlist" :key="user.id">
         {{user}}
@@ -79,4 +79,27 @@ export default {
   justify-content: center;
   margin-left:15px;
 }
+
+.se-box{
+  width: 100%;
+  height: 100vh;
+  overflow-y:scroll;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+  ::-webkit-scrollbar {
+    width: 10px;
+    background-color: #f6f8fa;
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #E5EAEF;
+    height:30px;
+    border-radius: 10px;
+  }
+
+
+
+
 </style>
