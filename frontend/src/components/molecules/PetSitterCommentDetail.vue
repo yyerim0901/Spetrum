@@ -1,6 +1,7 @@
 <template>
   <div style="display: flex; justify-content: flex-end; font-size: 0.6rem;">
       <p style="font-size: 0.6rem;">{{ comment.content }}</p>
+      <p>{{ comment }}</p>
       <input v-if="commentFlag" type="text" :placeholder=comment.content v-model="changedComment">
       <button v-if="!commentFlag" @click="deleteComment">삭제</button>
       <button v-if="!commentFlag" @click="changFlag">수정</button>
