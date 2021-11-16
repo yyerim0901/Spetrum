@@ -91,7 +91,7 @@ export default {
         console.log(this.page);
         this.$store.dispatch('bringSBoard',this.page)
         .then(res=>{
-          console.log(res);
+          console.log(res); 
           this.mywrites.push(...res.data.data);
           console.log(this.mywrites,'게시물');
         })
