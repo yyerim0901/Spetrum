@@ -117,6 +117,7 @@ export default {
     }
   },
   created(){
+<<<<<<< HEAD
     this.$store.dispatch('bringSBoard',1)
     .then(res=>{
       this.mywrites = res.data.data;
@@ -129,6 +130,21 @@ export default {
       console.log('나는 게시판 받아오는 에러');
       console.log(err)
     })
+=======
+    this.$store.dispatch('requestUser',localStorage.getItem('userid'));
+    if (this.userInfo.userid) {
+      this.$store.dispatch('bringSBoard',1)
+      .then(res=>{
+        this.mywrites = res.data.data;
+        console.log('여기서에러')
+        console.log(res)
+      })
+      .catch(err=>{
+        console.log('나는 게시판 받아오는 에러');
+        console.log(err)
+      })
+    }
+>>>>>>> 1c920884c84b95c6792c152208a9f0a375c0ba27
   },
 }
 </script>
