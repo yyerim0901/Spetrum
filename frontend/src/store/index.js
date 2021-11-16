@@ -125,10 +125,6 @@ export default new Vuex.Store({
         url: '/users/regist',
         method:'post',
         data:payload,
-        headers:{
-          'Content-Type': 'multipart/form-data',
-          'Access-Control-Allow-Origin':'*',
-        }
       })
       .then(res=>{
         console.log(res);
