@@ -116,7 +116,7 @@ export default {
         formData.append("nickname",this.nickname);
         formData.append("password",this.password);
         formData.append("userId",this.userId);
-        formData.append("image",this.profileImg);
+        formData.append("thumbnail",this.profileImg);
         console.log(this.profileImg,'프로필이미지');
         this.$store.dispatch('requestSignup',formData);
       }
