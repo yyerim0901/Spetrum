@@ -7,7 +7,15 @@
                 <img :src="this.imgprev" alt="" class="prev-img">
                 <input  type="file" @change="imageChange" ref="profileImage">
             </div>
-            <input name="content"  cols="30" rows="10" class="title-box" placeholder="제목을 입력해주세요" v-model="inputTitle">
+            <input name="content"  cols="30" rows="10" class="title-box" 
+            value="
+            ★★ 양식을 지켜주세요 ★★
+            일시 : yyyy-mm-dd
+            품종 : 
+            주의사항 : 반려동물에 대해서 알아야 할 사항이나, 주의해야할 사항을 적어주세요! 상세하게!!
+            급여 : (총 합산으로 작성해 주세요)
+            " 
+            v-model="inputTitle">
             <textarea name="content"  cols="30" rows="10" class="con-box" placeholder="내용을 입력해주세요" v-model="inputContent"></textarea>
         </div>
         <FooterButton @click="createPetSitter">게시글 작성하냥</FooterButton>
