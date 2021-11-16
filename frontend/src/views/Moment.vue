@@ -81,7 +81,7 @@ export default {
   methods:{
     getthumbnail(){
       if (this.userInfo.thumbnail) {
-        var fullurl = this.BASE_URL + this.thumbnail
+        var fullurl = this.BASE_URL + this.userInfo.thumbnail
         console.log(fullurl,'fullurl');
         return fullurl
       }else{
