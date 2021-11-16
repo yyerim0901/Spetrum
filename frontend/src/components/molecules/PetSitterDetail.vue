@@ -5,11 +5,14 @@
             <p style="font-size:1rem;">{{ board.title }}</p>
             <p style="text-align:right; font-size:0.8rem;">작성일 {{ board.created.substr(0,10) }}</p>
             <p style="text-align:right; font-size:0.8rem;">작성자 : {{ board.user.userId }}</p>
+
         </div>
     </div>
 </template>
 
 <script>
+
+
 export default {
     name: "PetSitterDetail",
     data () {
@@ -17,6 +20,7 @@ export default {
             BASE_URL : 'https://spetrum.io/resources/',
         }
     },
+
     props: {
         board: {
             type:Object,
@@ -35,6 +39,7 @@ export default {
             const full = this.BASE_URL + url;
             return full;
         },
+
     }
 
 }
