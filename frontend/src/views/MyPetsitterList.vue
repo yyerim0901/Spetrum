@@ -1,7 +1,7 @@
 <template>
   <div class="MyPetsitter-Wrapper">
     <Header :isLogo="false" :isBack="true" :isSearch="false" title="나의 게시글"></Header>
-    <!-- <div style="width:100%; justify-content:left; overflow-y:scroll;" @scroll="handleInfiniteScroll">
+    <div class="p-box-petsitter">
       <div class="my-p-box">
         <img class="img-box" src="../assets/img_logo.jpg" alt="사진 안 뜸">
         <div class="in-my-p-box">
@@ -11,14 +11,10 @@
             <p style="font-size:x-small;">작성 일자 : 2021-11-11</p>
           </div>
           <StyledButton btype="small" style="background-color:white; color:gray; margin:0px;" @click="detailof(1)">자세히보기</StyledButton>
-          <span style="float: right;">
-            <StyledButton btype="xsmall" style="background-color:white; color:gray; margin:0px;" @click="updatemypetsitter(1)">수정</StyledButton>
-            <span style="color:gray; font-size:small;">|</span>
-            <StyledButton btype="xsmall" style="color:#EE9CA7; margin:0px;" @click="checkdelete(1)">삭제</StyledButton>
-          </span>
         </div>
-      </div>
-    </div> -->
+      </div> 
+      
+    </div>
     <div class="p-box">
       <div class="my-p-box" v-for="mypetsitter in mypetsitters" :key="mypetsitter.id">
         <img class="img-box" :src="fullURL(mypetsitter.picture)" alt="사진 안 뜸">
@@ -28,10 +24,6 @@
             <p style="font-size:x-small;">작성 일자 : {{mypetsitter.created.substr(0,10)}}</p>
           </div>
           <StyledButton btype="xsmall" style="background-color:white; color:gray; margin:0px;" @click="detailof(mypetsitter.id)">자세히보기</StyledButton>
-          <span style="color:gray; font-size:small;">|</span>
-          <StyledButton btype="xsmall" style="background-color:white; color:gray; margin:0px;" @click="updatemypetsitter(mypetsitter.id)">수정</StyledButton>
-          <span style="color:gray; font-size:small;">|</span>
-          <StyledButton btype="xsmall" style="color:#EE9CA7; margin:0px;" @click="checkdelete(mypetsitter.id)">삭제</StyledButton>
         </div>
       </div>
     </div>
@@ -78,8 +70,7 @@ export default {
             return full;
         },
     detailof (pboardId){
-      //상세보기 해야하나 말아야하나..
-      console.log(pboardId)
+      this.$router.push({name:'PetSitterEachDetail',params:{'board_id':pboardId}});
     },
     updatemypetsitter(pboardId){
       //update페이지 즉 상세 입력 페이지로 이동한 후에 dispatch로 실행
@@ -132,6 +123,14 @@ export default {
     height: 100vh;
     width:100%;
   }
+  .p-box-petsitter{
+    width:100%;
+    padding: 10px 50px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    margin-bottom:15px;
+  }
   .my-p-box{
     display: flex;
     /* margin-left:12%; */
@@ -140,7 +139,10 @@ export default {
     margin: 20px;
   }
   .my-p-text{
-    margin-left: 7px;
+    margin-left: 13px;
     margin-top: 12px;
+  }
+  .dis {
+    float: right;
   }
 </style>
