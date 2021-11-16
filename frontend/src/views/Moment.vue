@@ -1,13 +1,12 @@
 <template>
   <div class="Moment-Wrapper">
-    <Header :isLogo="false" :isBack="false" title="냥댕모먼트"></Header>
-    <hr>
+    <Header :isLogo="false" :isBack="false" :isSearch="true" title="냥댕모먼트"></Header>
     <div class="p-box"  @scroll="handleInfiniteScroll">
       <div class="i-box">
         <img :src="getthumbnail()" alt="profilImg" class="pimg-box">
-        <button bcolor="babypink" btype="medium" class="f-button"><h3>게시글</h3><span>{{mywrites.length}}</span></button>
-        <button bcolor="babypink" btype="medium" class="f-button"><h3>팔로워</h3><span>{{this.userInfo.followerList.length}}</span></button>
-        <button bcolor="babypink" btype="medium" class="f-button"><h3>팔로우</h3><span>{{this.userInfo.followList.length}}</span></button>
+        <button bcolor="babypink" btype="medium" class="f-button"><h3>게시글</h3><span>{{this.mywritesLength}}</span></button>
+        <button bcolor="babypink" btype="medium" class="f-button"><h3>팔로워</h3><span>{{this.followerLength}}</span></button>
+        <button bcolor="babypink" btype="medium" class="f-button"><h3>팔로우</h3><span>{{this.followLength}}</span></button>
       </div>
       <div class="l-box">
         <div class="m-box">
@@ -25,7 +24,7 @@
         </div>
       </div>
     </div>
-    <hr class="fott">
+
     <Footer :isActive="isActive"></Footer>
   </div>
 </template>
@@ -34,7 +33,9 @@
 import Footer from '../components/molecules/Footer.vue'
 import Header from '../components/molecules/Header.vue'
 import StyledButton from '../components/atoms/StyledButton'
+// import axios from 'axios'
 import {mapState} from 'vuex';
+
 export default {
   name:'Moment',
   components:{
@@ -55,12 +56,35 @@ export default {
   },
   computed:{
     ...mapState(['userInfo']),
+    followerLength(){
+      if (this.userInfo.followerList){
+        return this.userInfo.followerList.length
+      }else{
+        return 0
+      }
+    },
+    followLength(){
+      if (this.userInfo.followList){
+        return this.userInfo.followList.length
+      }else{
+        return 0
+      }
+    },
+    mywritesLength(){
+      if (this.mywrites) {
+        return this.mywrites.length
+      }else{
+        return 0
+      }
+    }
 
   },
   methods:{
     getthumbnail(){
       if (this.userInfo.thumbnail) {
-        return this.userInfo.thumbnail
+        var fullurl = this.BASE_URL + this.userInfo.thumbnail
+        console.log(fullurl,'fullurl');
+        return fullurl
       }else{
         return require("@/assets/img_logo.jpg")
       }
@@ -86,12 +110,9 @@ export default {
         return;
       if (this.mywrites && this.mywrites.length % 10 === 0) {
         //게시물이 1페이지 전채 개수가 넘으면
-        console.log(this.mywrites.length,'길이');
         this.page +=  1;
-        console.log(this.page);
         this.$store.dispatch('bringSBoard',this.page)
         .then(res=>{
-          console.log(res);
           this.mywrites.push(...res.data.data);
           console.log(this.mywrites,'게시물');
         })
@@ -100,12 +121,40 @@ export default {
   },
   created(){
     this.userid = localStorage.getItem('userid');
+    // console.log(localStorage.getItem)
+    // console.log(this.userid)
+    // axios({
+    //     url:'https://spetrum.io:8080/api/sns/',
+    //     method:'get',
+    //     params:{
+    //       page:1,
+    //     },
+    //     headers: {
+    //       "Authorization": localStorage.getItem("token")
+    //     },
+    //   })
+    //   .then(res => {
+    //     console.log(res.data.data)
+    //     this.mywrites = res.data.data;
+    //     this.$store.dispatch ('requestUser',this.userid);
+    //   })
+    // this.$store.dispatch('bringSBoard',this.page)
+    // .then(res=>{
+    //   this.mywrites = res.data.data;
+    // })
     this.$store.dispatch('requestUser',this.userid);
+    console.log(this.userInfo.thumbnail,'요펑가니?')
     this.$store.dispatch('bringSBoard',this.page)
     .then(res=>{
       this.mywrites = res.data.data;
+      console.log('여기서에러')
+      console.log(res)
     })
-  }
+    .catch(err=>{
+      console.log('나는 게시판 받아오는 에러');
+      console.log(err)
+    })
+  },
 }
 </script>
 
@@ -143,6 +192,7 @@ export default {
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
+    margin-bottom:15px;
   }
 
   .i-box{
@@ -194,6 +244,17 @@ export default {
     margin:0 0 0 10px;
     grid-gap:0px;
     grid-template-columns: 150px 150px 150px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    background-color: #f6f8fa;
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #E5EAEF;
+    height:30px;
+    border-radius: 10px;
   }
 
 </style>

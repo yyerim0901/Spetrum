@@ -26,7 +26,7 @@ public interface UserService {
 
     void follow(FollowReq followReq);
 
-    List<String> searchUserId(String userid);
+    List<User> searchUserId(String userid);
 
     String followCheck(String userid, String myid);
 

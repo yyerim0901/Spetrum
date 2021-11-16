@@ -1,7 +1,6 @@
 <template>
     <div class="PET-Wrapper">
         <Header :isLogo="false" :isBack="false" title="겟!시터"/>
-        <hr>
         <div class="sitter-box">
             <div>
                 <div class="siiter-small-box">
@@ -16,7 +15,6 @@
             <PetSitterDetail v-for="(board, idx) in Boards" :key="idx" :board="board" />
         </div>
         <Footer :isActive="isActive"/>
-        <hr class="fott">
     </div>
 </template>
 
@@ -62,7 +60,7 @@ export default {
         display: block;
         margin: 1rem;
         width: 90%;
-        justify-content: left;
+        justify-content: center;
     }
     .siiter-small-box{
         display: flex;

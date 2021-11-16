@@ -1,22 +1,26 @@
 <template>
     <div class="PET-Wrapper">
-        <Header :isLogo="false" :isBack="false" title="겟!시터"/>
-        <hr>
+        <Header :isLogo="false" :isBack="true" title="겟!시터"/>
         <div class="detail-box">
             <img class="detail-img-box" :src="fullURL(board.data.picture)" alt="이미지가 없습니다">
-            <h3>{{ board.title }}</h3>
-            <hr>
-            <button @click="moveChangePetSitter">수정</button> |
-            <button @click="deletePetSitter">삭제</button>
-            <p>작성일자 : {{ board.data.created }}</p>
-            <p>내용 : {{ board.data.content }}</p>
+            <div style="width: 420px;">
+                <span>{{ board.data.title }}</span>
+                <span v-if="board.data.user.userId == this.userid">
+                    <i class="fas fa-edit" style="margin:0 0 0 10px;" @click="moveChangePetSitter"></i>
+                    <i class="fas fa-trash" style="margin:0 0 0 10px;" @click="deletePetSitter"></i>
+                </span>
+            </div>
+            <p style="width: 420px; text-align:right;">작성일자 : {{ board.data.created.substr(0,10) }}</p>
+            <textarea style="text-align:start; border:solid; border-width:1px 0; border-color:#E5EAEF; width: 420px; height: 120px;" :value="board.data.content" readonly></textarea>
+
+            <PetSitterCommentDetail v-for="(comment, idx) in comments" :key="idx" :comment="comment" />
+            <div>
+                <i class="far fa-comment-dots" style="margin:0 5px 0 0; font-size:1rem"></i>
+                <CommentInput :value="comment" v-model="inputContent" />
+                <StyledButton btype="realsmall" bcolor="babypink" @click="createComment()">작성</StyledButton>
+            </div>
         </div>
-        <hr>
-        <PetSitterCommentDetail v-for="(comment, idx) in comments" :key="idx" :comment="comment" />
-        <input placeholder="댓글을 입력해주세요" type="text" v-model="inputContent">
-        <button @click="createComment">댓글작성</button>
         <Footer :isActive="isActive"/>
-        <hr class="fott">
     </div>
 </template>
 
@@ -25,15 +29,21 @@ import Header from '../../components/molecules/Header';
 import Footer from '../../components/molecules/Footer';
 import axios from '../../axios/index';
 import PetSitterCommentDetail from '../../components/molecules/PetSitterCommentDetail';
+import CommentInput from '../atoms/CommentInput'
+import StyledButton from '../atoms/StyledButton'
+
 export default {
     name: "PetSitterEachDetail",
     components: {
         Header,
         Footer,
         PetSitterCommentDetail,
+        CommentInput,
+        StyledButton
     },
     data() {
         return {
+            userid: localStorage.getItem('userid'),
             boardId: this.$route.params.board_id,
             board: {},
             comments: {},
@@ -131,11 +141,14 @@ export default {
 
 <style>
     .detail-box{
+        width: 420px;
+        display: flex;
+        flex-direction: column;
         align-items: center;
     }
     .detail-img-box{
-        width: 362px;
-        height: 362px;
+        width: 420px;
+        height: 420px;
         align-content: center;
     }
 </style>

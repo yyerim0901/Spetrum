@@ -1,8 +1,8 @@
 <template>
   <div class="Moment-Wrapper">
-    <Header :isLogo="false" :isBack="false" title="냥댕모먼트"></Header>
+    <Header :isLogo="false" :isBack="false" title="냥댕모먼트" :isSearch="true"></Header>
     <hr>
-    <div class="p-box">
+    <div class="p-box" @scroll="handleInfiniteScroll">
       <div class="i-box">
         <img :src="getthumbnail()" alt="profilImg" class="pimg-box">
         <button bcolor="babypink" btype="medium" class="f-button"><h3>게시글</h3><span>{{writes.length}}</span></button>
@@ -26,7 +26,6 @@
         </div>
       </div>
     </div>
-    <hr class="fott">
     <Footer :isActive="isActive"></Footer>
   </div>
 </template>
@@ -59,10 +58,26 @@ export default {
   methods:{
     getthumbnail(){
       if (this.thumbnail) {
-        return this.thumbnail
+        var fullurl = this.BASE_URL + this.thumbnail
+        return fullurl
       }else{
         return require("@/assets/img_logo.jpg")
       }
+    },
+    handleInfiniteScroll(e) {
+      const { scrollTop, clientHeight, scrollHeight } = e.target;
+      if (parseInt(scrollTop) + parseInt(clientHeight) + 1 !== parseInt(scrollHeight))
+        return;
+      if (this.writes && this.writes.length % 10 === 0) {
+        //게시물이 1페이지 전채 개수가 넘으면
+        this.page +=  1;
+        this.$store.dispatch('bringOtherSBoard',{userid:this.userid, page:this.page})
+        .then(res=>{
+          console.log(res); 
+          this.writes.push(...res.data.data);
+          console.log(this.writes,'게시물');
+        })
+      } 
     },
     moveDetail(id){
       console.log(id);
@@ -73,18 +88,24 @@ export default {
       if (url.filelist[0]){
         var full = this.BASE_URL + url.filelist[0].save_file;
       } else{
-        full = require('@/assets/noimage.png')
+        full = require('@/assets/img_logo.jpg')
       }
-      console.log(full);
       return full;
     },
     requestFollow(){
-      const data = {
-        from:localStorage.getItem('userid'),
-        to:this.userid
-      }
-      console.log(data);
-      this.$store.dispatch('handleFollow',data)
+      const formData = new FormData();
+      formData.append('to',this.userid);
+      formData.append('from',localStorage.getItem('userid'));
+      this.$store.dispatch('handleFollow',formData)
+      .then(res=>{
+        if (res.data.statusCode === 200){
+          this.$store.dispatch('requestSBoardUser',this.userid)
+          .then(res=>{
+            this.followerList = res.data.followerList;
+            this.followList = res.data.followList;
+          })
+        }
+      })
     }
 
   },
@@ -108,6 +129,10 @@ export default {
       .then(res=>{
         console.log(res.data.data);
         this.writes = res.data.data;
+      })
+      .catch(err=>{
+        console.log(err);
+        console.log('여기서에러');
       })
     }
   },

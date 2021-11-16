@@ -30,6 +30,7 @@
 import Footer from '../components/molecules/Footer.vue'
 import Header from '../components/molecules/Header.vue'
 import StyledButton from '../components/atoms/StyledButton'
+import axios from 'axios'
 export default {
   name:'Dogging',
   components:{
@@ -125,6 +126,28 @@ export default {
             // components의 데이터 초기화해야함
             this.doggingflag = false
             console.log(this.latlist, this.lnglist, '여기다가 axios해도 될까요?')
+            axios({
+              url: 'https://spetrum.io:8080/api/dogging/',
+              method: 'POST',
+              headers: {
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
+              },
+              params: {
+                distance : that.totalDistance,
+                lats : that.latlist,
+                lngs : that.lnglist,
+                location : '삼문동 코아루 아파트',
+                time : that.totalTime
+              }
+            }).then(res => {
+              console.log(res)
+              that.totalDistance = 0
+              that.totalTime = 0
+              that.latlist = []
+              that.lnglist = []
+            }).catch(err => {
+              console.log(err)
+            })
           }
         } else {
           alert('위치를 찾을 수 없어요')

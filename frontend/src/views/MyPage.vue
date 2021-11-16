@@ -1,7 +1,6 @@
 <template>
   <div class="Page-Wrapper">
     <Header :isLogo="false" :isBack="false" title="마이페이지"></Header>
-      <hr>
       <div class="mp-box">
         <div class="mp-box2" style="margin-left:15px;">
           <img :src="getthumbnail()" alt="profileImage" class="pimg-box">
@@ -30,7 +29,6 @@
       </h3>
       <div slot="body"></div>
     </Modal>
-      <hr class="fott">
     <Footer :isActive="isActive"></Footer>
   </div>
 </template>
@@ -51,7 +49,7 @@ export default {
     return{
       isActive:5,
       userid : "",
-      BASE_URL : 'http://spetrum.io/resources/',
+      BASE_URL : 'https://spetrum.io/resources/',
       showModal : false,
     }
   },
@@ -60,7 +58,11 @@ export default {
   },
   methods: {
     getthumbnail(){
-      if(this.userInfo.thumbnail) return this.userInfo.thumbnail
+      if(this.userInfo.thumbnail){
+        console.log(this.userInfo.thumbnail,'섬네일');
+        var fullurl = this.BASE_URL + this.userInfo.thumbnail
+        return fullurl
+      }
       else return require("@/assets/img_logo.jpg")
     },
     logout(){
@@ -81,10 +83,13 @@ export default {
     },
     deleteUser(){
       this.$store.dispatch('deleteUser',this.userInfo.userid);
+      localStorage.removeItem('userid')
+      localStorage.removeItem('token')
+      this.$router.push("/signin")
     }
   },
   created(){
-    this.userid = this.userInfo.userid;
+    this.userid = localStorage.getItem('userid');
     this.$store.dispatch('requestUser',this.userid);
   }
 }

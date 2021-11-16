@@ -3,6 +3,7 @@ package com.spectrum.service;
 import com.spectrum.common.request.DoggingPostReq;
 import com.spectrum.common.response.DoggingDetailResponse;
 import com.spectrum.entity.Dogging;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;

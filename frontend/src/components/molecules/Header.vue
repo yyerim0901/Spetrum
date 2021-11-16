@@ -1,13 +1,16 @@
 <template>
-  <Head >
-    <Container :isBack="isBack">
+  <Head>
+    <Container :isBack="isBack" :isSearch="isSearch">
       <button @click="goBack">
-        <i class="fas fa-chevron-left"></i>
+        <i class="ii fas fa-chevron-left"></i>
       </button>
       <LogoTitle :isLogo="isLogo" :title="title">
         <img src="@/assets/logo.png" alt="spetrum">
         <p>{{title}}</p>
       </LogoTitle>
+      <button @click="goSearch">
+        <i class="iii fa fa-search"></i>
+      </button>
     </Container>
 
   </Head>
@@ -34,11 +37,18 @@ export default {
     title:{
       type:String,
       default:'',
+    },
+    isSearch:{
+      type:Boolean,
+      default:false,
     }
   },
   methods:{
     goBack(){
       this.$router.go(-1);
+    },
+    goSearch(){
+      this.$router.push("/user/search");
     }
   }
 }

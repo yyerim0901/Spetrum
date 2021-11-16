@@ -2,7 +2,6 @@
 <!--닉네임 중복체크랑 이미지 반영 안 되는 부분 나중에 다시 확인하기!!!!!-->
   <div class="updateUser-Wrapper">
     <Header :isLogo="false" :isBack="true" title="회원 정보 수정"></Header>
-    <hr>
     <div class="Signup-Wrap">
       <img :src="getthumbnail()" alt="dog" class="pimg-box">
       <div class="form-container">

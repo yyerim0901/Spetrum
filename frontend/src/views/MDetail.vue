@@ -14,7 +14,6 @@
       </div>
       <img :src="fullURL(this.files)" alt="" class="pre-img">
       <div style="margin:5px 40px; display:flex; flex-direction:column;">
-        <i class="fas fa-paw"> {{this.likes}}개</i>
         <span style="text-align:start; border:solid; border-width:1px 0; border-color:#E5EAEF;">{{this.content}}</span>
         <div v-for="c in commentList" :key="c.id">
           <p class="comment">{{c.content}} - 작성자: {{c.user.nickname }}</p>
@@ -47,7 +46,7 @@ export default {
       files:[],
       content:undefined,
       likes:undefined,
-      BASE_URL : 'http://spetrum.io/resources/',
+      BASE_URL : 'https://spetrum.io/resources/',
       comment:undefined,
       boardid:undefined,
       commentList:null,
@@ -102,7 +101,9 @@ export default {
     },
     getthumbnail(){
       if (this.userInfo.thumbnail) {
-        return this.userInfo.thumbnail
+        var fullurl = this.BASE_URL + this.userInfo.thumbnail
+        console.log(fullurl,'fullurl');
+        return fullurl
       }else{
         return require("@/assets/img_logo.jpg")
       }

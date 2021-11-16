@@ -28,7 +28,7 @@ export default {
         return{
             inputImage:null,
             imgprev:null,
-            inputContent:'',
+            inputContent: `★★ 양식을 지켜주세요 ★★\n일시 : yyyy-mm-dd\n품종 :\n주의사항 : 반려동물에 대해서 알아야 할 사항이나, 주의해야할 사항을 적어주세요! 상세하게!!\n급여 : (총 합산으로 작성해 주세요)`, 
             inputTitle:'',
         }
     },

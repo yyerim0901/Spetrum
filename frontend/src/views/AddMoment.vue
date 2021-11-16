@@ -86,6 +86,7 @@ export default {
     height: 100px;
     margin:10px 0;
     text-align:start;
+    white-space: pre-wrap;
 
   }
 </style>

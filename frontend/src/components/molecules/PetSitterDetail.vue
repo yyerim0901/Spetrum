@@ -2,9 +2,9 @@
     <div class="sitter-detail-box">
         <img class="img-box" :src="fullURL(board.picture)" alt="이미지가 없습니다">
         <div class="board-box" @click="moveEachDetail">
-            <p>{{ board.title }}</p>
-            <p>{{ board.created }}</p>
-            <p>{{ board.user.userId }}</p>
+            <p style="font-size:1rem; font-weight: bold;">{{ board.title }}</p>
+            <p style="font-size:0.8rem;">작성일 {{ board.created.substr(0,10) }}</p>
+            <p style="font-size:0.8rem;">작성자 : {{ board.user.userId }}</p>
         </div>
     </div>
 </template>
@@ -43,15 +43,21 @@ export default {
 <style>
     .sitter-detail-box{
         display: flex;
+        justify-content: center;
     }
     .img-box{
         display: inline;
         margin-top: 1rem;
-        width: 90px;
-        height: 90px;
+        width: 100px;
+        height: 100px;
     }
     .board-box{
         display: inline;
         margin-top: 1rem;
+        margin-left: 1rem;
+        width: 150px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 </style>

@@ -1,7 +1,6 @@
 <template>
   <div class="PET-Wrapper">
     <Header :isLogo="false" :isBack="false" title="펫피티아이"/>
-    <hr>
     <div class="if-box">
       <div class="t-box">
         <h1 style="color:#F7797D">PetBTI</h1><h1>란?</h1>
@@ -15,7 +14,6 @@
       <img src="@/assets/help.jpg" alt="" class="help">
       <h3 style="text-align:center;">친구들 더 만나러가기!<br><p>동물보호시스템으로 이동</p></h3>
     </div>
-    <hr class="fott">
     <Footer :isActive="isActive"/>
   </div>
 </template>
