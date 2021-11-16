@@ -1,7 +1,6 @@
 <template>
   <div class="Moment-Wrapper">
-    <Header :isLogo="false" :isBack="false" title="냥댕모먼트"></Header>
-    <hr>
+    <Header :isLogo="false" :isBack="false" :isSearch="true" title="냥댕모먼트"></Header>
     <div class="p-box"  @scroll="handleInfiniteScroll">
       <div class="i-box">
         <img :src="getthumbnail()" alt="profilImg" class="pimg-box">
