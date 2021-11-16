@@ -1,7 +1,7 @@
 <template>
+<!--닉네임 중복체크랑 이미지 반영 안 되는 부분 나중에 다시 확인하기!!!!!-->
   <div class="updateUser-Wrapper">
-    <Header :isLogo="false" :isBack="false" title="회원 정보 수정"></Header>
-    <hr>
+    <Header :isLogo="false" :isBack="true" title="회원 정보 수정"></Header>
     <div class="Signup-Wrap">
       <img :src="getthumbnail()" alt="dog" class="pimg-box">
       <div class="form-container">
@@ -14,7 +14,7 @@
         <StyledInput  type="password" :value="pwconfirm" v-model="pwconfirm" @change="validPassConCheck"></StyledInput>
         <ErrorMessage :message="pdconerror" >{{this.pdconerror}}</ErrorMessage>
         <StyledLabel for="nickname">닉네임</StyledLabel>
-        <StyledInput :value="nickname" v-model="this.userInfo.nickname" @change="validNickCheck"></StyledInput>
+        <StyledInput v-model="nickname" @change="validNickCheck"></StyledInput>
         <ErrorMessage :message="nickerror" >{{this.nickerror}}</ErrorMessage>
         <div class="msg-box">
           <ErrorMessage >{{this.nickerror}}</ErrorMessage>
@@ -26,19 +26,13 @@
           <img :src="this.imgprev" alt="" class="prev">
         </div>
       </div>
-      <div class="i-box">
-        <button class="follow-button" style="background-color:#EE9CA7;" @click="updateUserInfo()">수정</button>
-        <button class="unfollow-button" @click="goMyPage()">취소</button>
-      </div>
     </div>
-    <hr class="fott">
-    <Footer :isActive="isActive"></Footer>
+    <FooterButton @click="updateUserInfo">수정하기</FooterButton>
   </div>
 </template>
 
 <script>
-// import FooterButton from '../components/atoms/FooterButton'
-import Footer from '../components/molecules/Footer.vue'
+import FooterButton from '../components/atoms/FooterButton'
 import Header from '../components/molecules/Header.vue'
 import StyledInput from '../components/atoms/StyledInput'
 import StyledLabel from '../components/atoms/StyledLabel'
@@ -46,15 +40,15 @@ import {mapState} from 'vuex';
 export default {
   name:'Dogging',
   components:{
-    Footer,
     Header,
     StyledInput,
     StyledLabel,
-    // FooterButton
+    FooterButton
   },
   data(){
     return{
       isActive:5,
+      userid:null,
       password:null,
       pwconfirm:null,
       nickname:null,
@@ -63,7 +57,7 @@ export default {
       nickerror:null,
       pdValid:false,
       pdconValid:false,
-      nickValid:false,
+      nickValid:true,
       nickcheck:true,
       profileImg:null,
       imgprev:null,
@@ -99,7 +93,6 @@ export default {
       }
     },
     validNickCheck(e){
-      if(this.nickname == null) this.nickname = this.userInfo.nickname;
       if (e.target.value.length < 2) {
         this.nickerror = '2자 이상의 닉네임을 입력해주세요!';
       } else {
@@ -130,22 +123,18 @@ export default {
         formData.append("userid",this.userInfo.userid)
         formData.append("nickname",this.nickname);
         formData.append("password",this.password);
-        formData.append("image",this.profileImg);
-        console.log(formData);
-        console.log(this.profileImg,'프로필이미지');
+        formData.append("files",this.profileImg);
         this.$store.dispatch('requestUpdateUserInfo',formData);
       }
       else {
         alert('입력하신 정보를 다시 한 번 확인해주세요!');
       }
     },
-    goMyPage(){
-      this.$router.push("/mypage")
-    }
   },
   created(){
     this.userid = localStorage.getItem('userid');
     this.$store.dispatch('requestUser',this.userid);
+    this.nickname = this.userInfo.nickname;
   }
 }
 </script>

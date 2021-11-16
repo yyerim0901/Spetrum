@@ -94,12 +94,11 @@ public class PBoardController {
 
     @ApiOperation(
             value = "내 펫시터 리스트",
-            notes = "**토큰**을 이용하여 리스트 출력"
+            notes = "**userid**을 이용하여 리스트 출력"
     )
-    @GetMapping("/mylist")
-    private PBoardResponse myPetsitterList(HttpServletRequest request){
-        String token = request.getHeader(HttpHeaders.AUTHORIZATION);
-        List<PBoard> list = pBoardService.myPetsitterList(token);
+    @GetMapping("/mylist/{userid}")
+    private PBoardResponse myPetsitterList(@PathVariable String userid){
+        List<PBoard> list = pBoardService.myPetsitterList(userid);
 
         if(list == null || list.isEmpty()){
             return new PBoardResponse("나의 리스트가 존재하지 않습니다.",null,HttpStatus.NO_CONTENT);

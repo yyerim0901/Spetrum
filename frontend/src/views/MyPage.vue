@@ -1,7 +1,6 @@
 <template>
   <div class="Page-Wrapper">
     <Header :isLogo="false" :isBack="false" title="마이페이지"></Header>
-      <hr>
       <div class="mp-box">
         <div class="mp-box2" style="margin-left:15px;">
           <img :src="getthumbnail()" alt="profileImage" class="pimg-box">
@@ -20,11 +19,16 @@
         <div class="mp-button2" @click="myPetsitterList">
           내 게시글
         </div>
-        <div class="mp-button2" @click="deleteUser">
+        <div class="mp-button2" @click="check">
           회원 탈퇴
         </div>
       </div>
-      <hr class="fott">
+      <Modal v-if="showModal" @close="showModal=false" @ok="deleteUser">
+      <h3 slot="header">
+        정말 탈퇴하시겠습니까?
+      </h3>
+      <div slot="body"></div>
+    </Modal>
     <Footer :isActive="isActive"></Footer>
   </div>
 </template>
@@ -32,17 +36,21 @@
 <script>
 import Footer from '../components/molecules/Footer.vue'
 import Header from '../components/molecules/Header.vue'
+import Modal from '../components/molecules/Modal.vue'
 import {mapState} from 'vuex';
 export default {
   name:'MyPage',
   components:{
     Footer,
-    Header
+    Header,
+    Modal
   },
   data(){
     return{
       isActive:5,
-      BASE_URL : 'http://spetrum.io/resources/'
+      userid : "",
+      BASE_URL : 'http://spetrum.io/resources/',
+      showModal : false,
     }
   },
   computed:{
@@ -55,6 +63,7 @@ export default {
     },
     logout(){
       //로그아웃 -> 모달창 띄우기 어떻게 하는지 알아 보기
+      this.$store.dispatch('logout');
     },
     updateUserInfo(){
       this.$router.push("/update/user")
@@ -65,10 +74,17 @@ export default {
     myPetsitterList(){
       this.$router.push("/mypetsitter")
     },
+    check(){
+      this.showModal = true;
+    },
     deleteUser(){
-      //탈퇴
+      this.$store.dispatch('deleteUser',this.userInfo.userid);
     }
   },
+  created(){
+    this.userid = this.userInfo.userid;
+    this.$store.dispatch('requestUser',this.userid);
+  }
 }
 </script>
 
@@ -106,3 +122,4 @@ export default {
     padding: 10px;
   }
 </style>
+

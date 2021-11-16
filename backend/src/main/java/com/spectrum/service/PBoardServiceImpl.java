@@ -188,11 +188,10 @@ public class PBoardServiceImpl implements PBoardService {
     }
 
     @Override
-    public List<PBoard> myPetsitterList(String token){
-        String userId = jwtUtil.getUsername(token.split(" ")[1]);
-        Optional<User> userOptional = userRepository.findByUserId(userId);
+    public List<PBoard> myPetsitterList(String userid){
+//        String userId = jwtUtil.getUsername(token);
+        Optional<User> userOptional = userRepository.findByUserId(userid);
         User user = userOptional.get();
-        System.out.println(user.getId());
         return pBoardRepository.findAllByUserId(user.getId());
     }
 

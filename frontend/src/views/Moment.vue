@@ -1,8 +1,7 @@
 <template>
   <div class="Moment-Wrapper">
-    <Header :isLogo="false" :isBack="false" title="냥댕모먼트"></Header>
-    <hr>
-    <div class="p-box">
+    <Header :isLogo="false" :isBack="false" :isSearch="true" title="냥댕모먼트"></Header>
+    <div class="p-box"  @scroll="handleInfiniteScroll">
       <div class="i-box">
         <img :src="getthumbnail()" alt="profilImg" class="pimg-box">
         <button bcolor="babypink" btype="medium" class="f-button"><h3>게시글</h3><span>{{mywrites.length}}</span></button>
@@ -20,7 +19,7 @@
       <div>
         <div class="write-box">
           <div v-for="mywrite in mywrites" :key="mywrite.id">
-            <img :src="fullURL(mywrite.filelist[0].save_file)" alt="없다" class="w-img" @click="moveDetail(mywrite.id)">
+            <img :src="fullURL(mywrite)" alt="없다" class="w-img" @click="moveDetail(mywrite.id)">
           </div>
         </div>
       </div>
@@ -49,7 +48,8 @@ export default {
       userid: '',
       isfollowed:true,
       mywrites:[],
-      BASE_URL : 'https://spetrum.io/resources/'
+      BASE_URL : 'https://spetrum.io/resources/',
+      page:1
     }
   },
   computed:{
@@ -65,7 +65,11 @@ export default {
       }
     },
     fullURL(url){
-      const full = this.BASE_URL + url;
+      if (url.filelist[0]){
+        var full = this.BASE_URL + url.filelist[0].save_file;
+      } else{
+        full = require('@/assets/noimage.png')
+      }
       return full;
     },
     AddWrite(){
@@ -74,12 +78,29 @@ export default {
     moveDetail(id){
       console.log(id);
       this.$router.push({name:'MDetail',params:{'boardid':id}});
+    },
+    handleInfiniteScroll(e) {
+      const { scrollTop, clientHeight, scrollHeight } = e.target;
+      if (parseInt(scrollTop) + parseInt(clientHeight) + 1 !== parseInt(scrollHeight))
+        return;
+      if (this.mywrites && this.mywrites.length % 10 === 0) {
+        //게시물이 1페이지 전채 개수가 넘으면
+        console.log(this.mywrites.length,'길이');
+        this.page +=  1;
+        console.log(this.page);
+        this.$store.dispatch('bringSBoard',this.page)
+        .then(res=>{
+          console.log(res);
+          this.mywrites.push(...res.data.data);
+          console.log(this.mywrites,'게시물');
+        })
+      } 
     }
   },
   created(){
     this.userid = localStorage.getItem('userid');
     this.$store.dispatch('requestUser',this.userid);
-    this.$store.dispatch('bringSBoard')
+    this.$store.dispatch('bringSBoard',this.page)
     .then(res=>{
       this.mywrites = res.data.data;
     })

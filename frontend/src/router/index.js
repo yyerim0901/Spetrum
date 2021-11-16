@@ -14,13 +14,14 @@ import TestResult from '../views/TestResult'
 import YourMoment from '../views/YourMoment'
 import AddMoment from '../views/AddMoment'
 import MDetail from '../views/MDetail'
-import MUpdate from '../views/UpdateMoment'
+import EditMoment from '../views/EditMoment'
 import AddPetSitter from '../views/AddPetSitter'
 import ChangePetSitter from '../views/ChangePetSitter'
 import UpdateUserInfo from '../views/UpdateUserInfo'
 import MyDoggingList from '../views/MyDoggingList'
 import MyPetsitterList from '../views/MyPetsitterList'
 import Chat from '../views/Chat'
+import SearchUser from '../views/SearchUser'
 
 Vue.use(VueRouter)
 
@@ -63,9 +64,9 @@ const routes = [
     component: MDetail,
   },
   {
-    path: '/moment/update/:boardid',
-    name:'MUpdate',
-    component: MUpdate,
+    path: '/moment/board/edit/:boardid/',
+    name:'EditMoment',
+    component: EditMoment,
   },
   {
     path: '/moment/:userid',
@@ -128,10 +129,14 @@ const routes = [
     component : MyPetsitterList
   },
   {
-    path: '/chat',
+    path: '/chat/:roomname',
     name: 'Chat',
     component : Chat
-  },
+  },{
+    path: '/user/search',
+    name: 'SearchUser',
+    component : SearchUser
+  }
 ]
 
 const router = new VueRouter({
