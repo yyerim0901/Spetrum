@@ -141,8 +141,8 @@ export default {
     // .then(res=>{
     //   this.mywrites = res.data.data;
     // })
-    this.$store.dispatch('requestUser',localStorage.getItem('userid'));
-    console.log(this.userInfo.thumbnail)
+    this.$store.dispatch('requestUser',this.userid);
+    console.log(this.userInfo.thumbnail,'요펑가니?')
     this.$store.dispatch('bringSBoard',this.page)
     .then(res=>{
       this.mywrites = res.data.data;
