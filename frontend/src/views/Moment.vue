@@ -117,9 +117,8 @@ export default {
     }
   },
   created(){
-    this.userid = localStorage.getItem('userid');
-    this.$store.dispatch('requestUser',this.userid);
-    this.$store.dispatch('bringSBoard',this.page)
+    this.$store.dispatch('requestUser',localStorage.getItem('userid'));
+    this.$store.dispatch('bringSBoard',1)
     .then(res=>{
       this.mywrites = res.data.data;
     })
