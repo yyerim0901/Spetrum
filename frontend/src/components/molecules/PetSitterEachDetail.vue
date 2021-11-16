@@ -10,8 +10,7 @@
                 <i class="fas fa-trash" style="margin:0 0 0 10px;" @click="deletePetSitter"></i>
             </div>
             <p style="width: 362px; text-align:right;">작성일자 : {{ board.data.created.substr(0,10) }}</p>
-            <span style="text-align:start; border:solid; border-width:1px 0; border-color:#E5EAEF;">{{board.data.content}}</span>
-            <p style="width: 362px; font-size:0.8rem;">{{ board.data.content }}</p>
+            <span style="text-align:start; border:solid; border-width:1px 0; border-color:#E5EAEF; width: 362px;">{{board.data.content}}</span>
 
             <PetSitterCommentDetail v-for="(comment, idx) in comments" :key="idx" :comment="comment" />
             <input placeholder="댓글을 입력해주세요" type="text" v-model="inputContent">
@@ -32,12 +31,17 @@ import Header from '../../components/molecules/Header';
 import Footer from '../../components/molecules/Footer';
 import axios from '../../axios/index';
 import PetSitterCommentDetail from '../../components/molecules/PetSitterCommentDetail';
+import CommentInput from '../components/atoms/CommentInput'
+import StyledButton from '../components/atoms/StyledButton'
+
 export default {
     name: "PetSitterEachDetail",
     components: {
         Header,
         Footer,
         PetSitterCommentDetail,
+        CommentInput,
+        StyledButton
     },
     data() {
         return {
