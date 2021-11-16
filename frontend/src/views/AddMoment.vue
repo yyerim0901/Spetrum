@@ -7,7 +7,7 @@
         <img :src="this.imgprev" alt="" class="prev-img">
         <input  type="file" @change="imageChange" ref="profileImage">
       </div>
-      <textarea name="content"  cols="30" rows="10" class="con-box" placeholder="내용을 입력해주세요" v-model="contents"></textarea>
+      <textarea name="content"  cols="30" rows="10" class="con-box" wrap="hard" placeholder="내용을 입력해주세요" v-model="contents"></textarea>
     </div>
     <FooterButton @click="handleWrite">게시글 작성하냥</FooterButton>
   </div>

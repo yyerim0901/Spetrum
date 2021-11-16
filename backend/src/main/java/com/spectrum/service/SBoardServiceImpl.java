@@ -59,7 +59,7 @@ public class SBoardServiceImpl implements SBoardService {
     public SBoard createSBoard(User user, SBoardRegisterReq sboardinfo, List<MultipartFile> sboardfiles) throws IOException {
         SBoard sBoard = new SBoard();
         sBoard.setUser(user);
-        String content = sboardinfo.getContent().replace("\n","<br>");
+        String content = sboardinfo.getContent().replace("\r\n","<br>");
         sBoard.setContent(content);
         sBoard.setCreated(new Date());
         sBoard.setUpdated(new Date());
