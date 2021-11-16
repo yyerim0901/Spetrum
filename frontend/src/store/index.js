@@ -291,7 +291,7 @@ export default new Vuex.Store({
       })
     },
     bringMyPBoard(state, payload) {
-      axios({
+      return axios({
         url: `/pboard/mylist/${payload}`,
         method: 'get',
       })
@@ -323,6 +323,28 @@ export default new Vuex.Store({
         method:'get'
       })
     },
+    updatePetsitter(state, payload) {
+      axios({
+        url: '/pboard',
+        method: "put",
+        data : payload,
+      }).then(res => {
+        console.log(res)
+        this.$router.push({name:'MyPetsitterList'})
+      })
+    },
+    deletePetsitter(state, payload) {
+      axios({
+        method: "DELETE",
+        url: "/pboard/",
+        params: {
+            petSitterId : payload
+        }
+    }).then(res => {
+        console.log(res.data)
+        this.$router.push({name:'MyPetsitterList'})
+    })
+    }
 
 
   },
