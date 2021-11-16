@@ -35,6 +35,7 @@ import Header from '../components/molecules/Header.vue'
 import StyledButton from '../components/atoms/StyledButton'
 // import axios from 'axios'
 import {mapState} from 'vuex';
+
 export default {
   name:'Moment',
   components:{
