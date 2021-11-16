@@ -90,7 +90,7 @@ export default new Vuex.Store({
     },
     SET_USER_INFO(state,payload){
       state.userInfo.nickname = payload.nickname;
-      state.userInfo.thumbnamil = payload.thumbnamil;
+      state.userInfo.thumbnail = payload.thumbnail;
       state.userInfo.introduce = payload.introduce;
       state.userInfo.userid = payload.userid;
       state.userInfo.followerList = payload.followerList;
@@ -190,7 +190,7 @@ export default new Vuex.Store({
         .then(res=>{
           const data = {
             nickname: res.data.user.nickname,
-            thumbnamil: res.data.user.thumbnamil,
+            thumbnail: res.data.user.thumbnail,
             introduce: res.data.user.introduce,
             userid: res.data.user.userId,
             followList: res.data.followList,
