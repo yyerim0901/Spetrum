@@ -6,8 +6,10 @@
             <img class="detail-img-box" :src="fullURL(board.data.picture)" alt="이미지가 없습니다">
             <div style="width: 420px;">
                 <span>{{ board.data.title }}</span>
-                <i class="fas fa-edit" style="margin:0 0 0 10px;" @click="moveChangePetSitter"></i>
-                <i class="fas fa-trash" style="margin:0 0 0 10px;" @click="deletePetSitter"></i>
+                <div v-if="board.data.user.userId == this.userid">
+                    <i class="fas fa-edit" style="margin:0 0 0 10px;" @click="moveChangePetSitter"></i>
+                    <i class="fas fa-trash" style="margin:0 0 0 10px;" @click="deletePetSitter"></i>
+                </div>
             </div>
             <p style="width: 420px; text-align:right;">작성일자 : {{ board.data.created.substr(0,10) }}</p>
             <span style="text-align:start; border:solid; border-width:1px 0; border-color:#E5EAEF; width: 420px;">{{board.data.content}}</span>
@@ -43,6 +45,7 @@ export default {
     },
     data() {
         return {
+            userid: localStorage.getItem('userid'),
             boardId: this.$route.params.board_id,
             board: {},
             comments: {},
