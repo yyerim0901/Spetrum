@@ -6,8 +6,10 @@
             <img class="detail-img-box" :src="fullURL(board.data.picture)" alt="이미지가 없습니다">
             <h3>{{ board.title }}</h3>
             <hr>
-            <button @click="moveChangePetSitter">수정</button> |
-            <button @click="deletePetSitter">삭제</button>
+            <div>
+                <button @click="moveChangePetSitter">수정</button> |
+                <button @click="deletePetSitter">삭제</button>
+            </div>
             <p>작성일자 : {{ board.data.created }}</p>
             <p>내용 : {{ board.data.content }}</p>
         </div>
@@ -51,6 +53,7 @@ export default {
                     "Authorization": localStorage.getItem("token")
                 },
             }).then(res => {
+                console.log(res.data);
                 this.board = res.data
             }).catch(err => {
                 console.log(err)
@@ -131,6 +134,8 @@ export default {
 
 <style>
     .detail-box{
+        display: flex;
+        flex-direction: column;
         align-items: center;
     }
     .detail-img-box{
