@@ -161,6 +161,7 @@ export default {
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
+    margin-bottom:15px;
   }
 
   .i-box{

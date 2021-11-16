@@ -29,11 +29,12 @@
 
 <script>
 import {Container, TabButton} from './Footer/index'
+
 export default {
   name:'Footer',
   components:{
     Container,
-    TabButton
+    TabButton,
   },
   methods:{
     movePetBTI(){
@@ -64,7 +65,7 @@ export default {
 <style>
 .foot{
   width: 100%;
-  height: 60px;
+  height: 70px;
   background-color : white;
 }
 

@@ -1,7 +1,6 @@
 <template>
   <div class="PET-Wrapper">
     <Header :isLogo="false" :isBack="false" title="펫피티아이"/>
-    <hr>
     <div class="if-box">
       <div class="t-box">
         <h1 style="color:#F7797D">PetBTI</h1><h1>란?</h1>
