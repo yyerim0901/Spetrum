@@ -108,10 +108,10 @@ export default new Vuex.Store({
         if (res.data.statusCode == '200'){
           const token = res.data.token
           localStorage.setItem("token",token);
-          router.push({name:'PetBTI'});
           const user = payload.get('userId');
           localStorage.setItem('userid',user);
           this.dispatch('requestUser',user);
+          router.push({name:'PetBTI'});
         }
         else {
 
