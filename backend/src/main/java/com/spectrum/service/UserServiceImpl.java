@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService{
     @Autowired
     FollowRepository followRepository;
 
-    String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/image/profile/";
+    String BASE_PATH = "image/profile/";
 
     @Override
     public void createUser(UserRegisterPostReq registerInfo) throws IOException {
@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService{
         MultipartFile thumbnail = registerInfo.getThumbnail();
         if(thumbnail == null)
         {
-            res.setThumbnail(BASE_PATH+res.getUserId()+File.separator+"default.png");
+            res.setThumbnail(BASE_PATH+"default.png");
         }
         else
         {
