@@ -46,7 +46,7 @@ export default {
       files:[],
       content:undefined,
       likes:undefined,
-      BASE_URL : 'http://spetrum.io/resources/',
+      BASE_URL : 'https://spetrum.io/resources/',
       comment:undefined,
       boardid:undefined,
       commentList:null,
@@ -101,7 +101,9 @@ export default {
     },
     getthumbnail(){
       if (this.userInfo.thumbnail) {
-        return this.userInfo.thumbnail
+        var fullurl = this.BASE_URL + this.userInfo.thumbnail
+        console.log(fullurl,'fullurl');
+        return fullurl
       }else{
         return require("@/assets/img_logo.jpg")
       }
