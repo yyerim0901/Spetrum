@@ -3,7 +3,7 @@
       <p style="font-size: 13.3px;">{{ comment.content }} - {{ comment.user.userId }}</p>
       <input v-if="commentFlag" type="text" :placeholder=comment.content v-model="changedComment">
       <div v-if="comment.user.userId == this.userid">
-        <button v-if="!commentFlag" @click="deleteComment">삭제&nbsp;</button>|
+        <button v-if="!commentFlag" @click="deleteComment">&nbsp;삭제&nbsp;</button>|
         <button v-if="!commentFlag" @click="changFlag">&nbsp;수정</button>
         <button v-if="commentFlag" @click="changeComment">수정완료</button>
       </div>
