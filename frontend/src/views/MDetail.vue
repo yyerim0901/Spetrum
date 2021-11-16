@@ -89,19 +89,20 @@ export default {
   },
   methods:{
     fullURL(url){
-      if (url.length !== 0){
-        var full = this.BASE_URL + url[0].save_file;
-      } else{
-        full = require('@/assets/noimage.png')
+      if (this.userInfo.thumbnail) {
+        var fullurl = this.BASE_URL + this.userInfo.thumbnail
+        console.log(fullurl,'fullurl');
+        return fullurl
+      }else{
+        return require("@/assets/img_logo.jpg")
       }
-      return full;
     },
     moveEdit(){
       this.$router.push({name:'EditMoment', params:{'boardid':this.boardid}})
     },
     getthumbnail(){
       if (this.userInfo.thumbnail) {
-        return this.userInfo.thumbnail
+        return this.this.userInfo.thumbnail
       }else{
         return require("@/assets/img_logo.jpg")
       }
