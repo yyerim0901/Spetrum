@@ -344,6 +344,12 @@ export default new Vuex.Store({
         console.log(res.data)
         this.$router.push({name:'MyPetsitterList'})
     })
+    },
+    requestUserSearch(state,payload){
+      return axios({
+        method:'get',
+        url:`/users/searchUserId/${payload}`
+      })
     }
 
 

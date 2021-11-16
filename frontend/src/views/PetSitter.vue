@@ -16,7 +16,6 @@
             <PetSitterDetail v-for="(board, idx) in Boards" :key="idx" :board="board" />
         </div>
         <Footer :isActive="isActive"/>
-        <hr class="fott">
     </div>
 </template>
 

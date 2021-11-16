@@ -3,7 +3,6 @@
     <Header :isLogo="false" :isBack="false" title="도깅"></Header>
     <hr>
     <div id="map" style="width:450px;height:400px;"></div>
-    <hr class="fott">
     <Footer :isActive="isActive"></Footer>
   </div>
 </template>

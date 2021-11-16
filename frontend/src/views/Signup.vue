@@ -125,22 +125,20 @@ export default {
       }
     },
     nickCheck(){
-      const response = this.$store.dispatch('nickCheck',this.nickname);
-      if (response.data.statusCode == '200'){
-        this.nickcheck = true;
-      }
-      else {
-        alert(response.data.message);
-      }
+      this.$store.dispatch('nickCheck',this.nickname)
+      .then(res=>{
+        if (res.statusCode === 200) {
+          this.nickValid = true
+        }
+      })
     },
     idCheck(){
-      const response = this.$store.dispatch('idCheck',this.userId);
-      if (response.data.statusCode == '200'){
-        this.idcheck = true;
-      }
-      else {
-        alert(response.data.message);
-      }
+      this.$store.dispatch('idCheck',this.userId)
+      .then(res=>{
+        if (res.statusCode === 200) {
+          this.idValid = true
+        }
+      })
     },
     imageChange(){
       this.profileImg = this.$refs.profileImage.files;

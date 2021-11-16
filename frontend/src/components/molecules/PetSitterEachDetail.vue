@@ -20,7 +20,7 @@
             </div>
         </div>
         <Footer :isActive="isActive"/>
-        <hr class="fott">
+
     </div>
 </template>
 

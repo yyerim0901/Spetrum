@@ -2,7 +2,7 @@
   <div class="MyDogging-Wrapper">
     <Header :isLogo="false" :isBack="false" title="나의 도깅"></Header>
     <hr>
-    <hr class="fott">
+
     <Footer :isActive="isActive"></Footer>
   </div>
 </template>
