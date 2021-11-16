@@ -120,6 +120,7 @@ export default {
     this.$store.dispatch('bringSBoard',1)
     .then(res=>{
       this.mywrites = res.data.data;
+      console.log(localStorage.getItem('userid') + "?????????????");
       this.$store.dispatch('requestUser',localStorage.getItem('userid'));
       console.log('여기서에러')
       console.log(res)
