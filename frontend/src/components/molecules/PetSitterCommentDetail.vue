@@ -1,7 +1,6 @@
 <template>
-  <div style="display: flex; justify-content: flex-end; font-size: 0.6rem;">
-      <p style="font-size: 0.6rem;">{{ comment.content }}</p>
-      <p>{{ comment.user.userId }}</p>
+  <div style="display: flex; justify-content: flex-end; font-size: 13.3px;">
+      <p style="font-size: 13.3px;">{{ comment.content }} - {{ comment.user.userId }}</p>
       <input v-if="commentFlag" type="text" :placeholder=comment.content v-model="changedComment">
       <button v-if="!commentFlag" @click="deleteComment">삭제</button>
       <button v-if="!commentFlag" @click="changFlag">수정</button>
