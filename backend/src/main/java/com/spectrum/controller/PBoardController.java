@@ -122,8 +122,7 @@ public class PBoardController {
     )
     @GetMapping("/list")
     private PBoardResponse allPetsitterList(@RequestParam float latitude, @RequestParam float longitude,
-                                            @ApiIgnore HttpServletRequest request){
-        int pagenum = Integer.parseInt(request.getParameter("page"));
+                                            @RequestParam int pagenum){
         Object allList = pBoardService.allPetsitterList(longitude, latitude, pagenum);
         if(allList == null){
             return new PBoardResponse("등록된 글이 존재하지 않습니다.",null,HttpStatus.NO_CONTENT);
