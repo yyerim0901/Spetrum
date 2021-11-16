@@ -18,6 +18,7 @@ public interface PBoardService {
     public void updatePetSitter(PBoardUpdateReq pBoardUpdateReq, MultipartFile newPicture, String token) throws Exception;
     public void deletePetSitter(Long pboardId) throws IOException;
     public List<PBoard> myPetsitterList(String userid, Pageable pageable);
+    public List<PBoard> myPetsitterList(String userid);
     public Object allPetsitterList(float longitude, float latitude, int pagenum);
     public PBoard detailOfPetsitter(Long pboardId);
     public int completedPetsitter(Long pboardId);

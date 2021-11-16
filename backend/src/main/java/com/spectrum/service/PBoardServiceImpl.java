@@ -194,6 +194,13 @@ public class PBoardServiceImpl implements PBoardService {
         User user = userOptional.get();
         return pBoardRepository.findAllByUserId(user.getId(), pageable);
     }
+    @Override
+    public List<PBoard> myPetsitterList(String userid){
+//        String userId = jwtUtil.getUsername(token);
+        Optional<User> userOptional = userRepository.findByUserId(userid);
+        User user = userOptional.get();
+        return pBoardRepository.findAllByUserId(user.getId());
+    }
 
     @Override
     public Object allPetsitterList(float longitude, float latitude, int pagenum){
