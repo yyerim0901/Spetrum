@@ -291,9 +291,14 @@ export default new Vuex.Store({
       })
     },
     bringMyPBoard(state, payload) {
+      console.log(payload.userid)
+      console.log(payload.page)
       return axios({
-        url: `/pboard/mylist/${payload}`,
+        url: `/pboard/mylist/${payload.userid}`,
         method: 'get',
+        params:{
+          page:payload.page,
+        }
       })
     },
     handleMomentEdit(state,payload){
@@ -344,6 +349,15 @@ export default new Vuex.Store({
         console.log(res.data)
         this.$router.push({name:'MyPetsitterList'})
     })
+    },
+    bringMyDogging(state, payload) {
+      return axios({
+        url: "/dogging",
+        method: "get",
+        params: {
+          page : payload
+        }
+      })
     },
     requestUserSearch(state,payload){
       return axios({
