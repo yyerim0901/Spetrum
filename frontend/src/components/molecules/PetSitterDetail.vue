@@ -56,5 +56,8 @@ export default {
         margin-top: 1rem;
         margin-left: 1rem;
         width: 150px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 </style>
