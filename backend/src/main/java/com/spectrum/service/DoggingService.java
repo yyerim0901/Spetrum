@@ -12,7 +12,7 @@ import java.util.List;
 public interface DoggingService {
 
     public void saveUserInfo(String token);
-    public List<Dogging> MyDoggingList(Pageable pageable) throws IOException;
+    public List<Dogging> MyDoggingList() throws IOException;
     public DoggingDetailResponse DetailOfDogging(Long doggingId) throws IOException;
     public void PostDogging(DoggingPostReq doggingPostReq);
     public void customImage(MultipartFile multipartFile, Long doggingId)throws IOException;

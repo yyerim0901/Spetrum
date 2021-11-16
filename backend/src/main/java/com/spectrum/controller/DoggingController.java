@@ -56,10 +56,8 @@ public class DoggingController {
     public ResponseEntity<List<Dogging>> MyDoggingList(HttpServletRequest request) throws IOException{
 
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
-        int pagenum = Integer.parseInt(request.getParameter("page"));
-        Pageable pageable = PageRequest.of(pagenum-1, 5, Sort.by(Sort.Direction.DESC, "created"));
         doggingService.saveUserInfo(token);
-        List<Dogging> list = doggingService.MyDoggingList(pageable);
+        List<Dogging> list = doggingService.MyDoggingList();
         if(list == null || list.isEmpty())
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         else return new ResponseEntity<>(list,HttpStatus.OK);

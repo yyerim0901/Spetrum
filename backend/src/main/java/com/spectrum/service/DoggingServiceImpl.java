@@ -50,8 +50,8 @@ public class DoggingServiceImpl implements DoggingService{
     }
 
     @Override
-    public List<Dogging> MyDoggingList(Pageable pageable) throws IOException{
-        return doggingRepository.findByUserId(user.getId(), pageable);
+    public List<Dogging> MyDoggingList() throws IOException{
+        return doggingRepository.findByUserId(user.getId());
     }
     @Override
     public DoggingDetailResponse DetailOfDogging(Long doggingId) throws IOException{
