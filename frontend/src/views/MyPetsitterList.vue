@@ -19,8 +19,8 @@
         <img class="img-box" :src="fullURL(mypetsitter.picture)" alt="사진 안 뜸">
         <div class="in-my-p-box">
           <div class="my-p-text">
-            <h3>{{mypetsitter.title}}</h3>
-            <p style="height:6px;"></p>
+            <h2>{{mypetsitter.title}}</h2>
+            <p style="height:4px;"></p>
             <p style="font-size:small;">작성 일자 : {{mypetsitter.created.substr(0,10)}}</p>
           </div>
           <StyledButton btype="medium" style="width:90px; background-color:white; color:gray; margin:0px;" @click="detailof(mypetsitter.id)">자세히보기</StyledButton>
@@ -136,7 +136,7 @@ export default {
     /* margin-left:12%; */
   }
   .in-my-p-box{
-    margin: 20px;
+    margin: 15px;
   }
   .my-p-text{
     margin-left: 13px;
