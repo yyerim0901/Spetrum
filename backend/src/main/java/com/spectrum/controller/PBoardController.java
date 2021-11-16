@@ -102,7 +102,7 @@ public class PBoardController {
     private PBoardResponse myPetsitterList(@PathVariable String userid,
                                            @ApiIgnore HttpServletRequest request){
         int pagenum = Integer.parseInt(request.getParameter("page"));
-        Pageable pageable = PageRequest.of(pagenum-1, 10, Sort.by(Sort.Direction.DESC, "created"));
+        Pageable pageable = PageRequest.of(pagenum-1, 5, Sort.by(Sort.Direction.DESC, "created"));
         List<PBoard> list = pBoardService.myPetsitterList(userid,pageable);
 
         if(list == null || list.isEmpty()){

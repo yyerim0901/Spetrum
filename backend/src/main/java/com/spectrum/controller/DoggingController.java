@@ -57,7 +57,7 @@ public class DoggingController {
 
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
         int pagenum = Integer.parseInt(request.getParameter("page"));
-        Pageable pageable = PageRequest.of(pagenum-1, 10, Sort.by(Sort.Direction.DESC, "created"));
+        Pageable pageable = PageRequest.of(pagenum-1, 5, Sort.by(Sort.Direction.DESC, "created"));
         doggingService.saveUserInfo(token);
         List<Dogging> list = doggingService.MyDoggingList(pageable);
         if(list == null || list.isEmpty())
