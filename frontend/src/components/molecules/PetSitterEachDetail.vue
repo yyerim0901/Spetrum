@@ -4,13 +4,12 @@
         <hr>
         <div class="detail-box">
             <img class="detail-img-box" :src="fullURL(board.data.picture)" alt="이미지가 없습니다">
-            <h3>{{ board.title }}</h3>
-            <hr>
             <div>
-                <button @click="moveChangePetSitter">수정</button> |
-                <button @click="deletePetSitter">삭제</button>
+                <span>{{ board.data.title }}</span>
+                <i class="fas fa-edit" style="margin:0 0 0 10px;" @click="moveChangePetSitter"></i>
+                <i class="fas fa-trash" style="margin:0 0 0 10px;" @click="deletePetSitter"></i>
             </div>
-            <p>작성일자 : {{ board.data.created }}</p>
+            <p>작성일자 : {{ board.data.created.substr(0,10) }}</p>
             <p>내용 : {{ board.data.content }}</p>
         </div>
         <hr>
@@ -53,7 +52,6 @@ export default {
                     "Authorization": localStorage.getItem("token")
                 },
             }).then(res => {
-                console.log(res.data);
                 this.board = res.data
             }).catch(err => {
                 console.log(err)
@@ -134,6 +132,7 @@ export default {
 
 <style>
     .detail-box{
+        width: 362px;
         display: flex;
         flex-direction: column;
         align-items: center;
