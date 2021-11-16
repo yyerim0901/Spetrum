@@ -31,8 +31,8 @@ import Header from '../../components/molecules/Header';
 import Footer from '../../components/molecules/Footer';
 import axios from '../../axios/index';
 import PetSitterCommentDetail from '../../components/molecules/PetSitterCommentDetail';
-import CommentInput from '../components/atoms/CommentInput'
-import StyledButton from '../components/atoms/StyledButton'
+import CommentInput from '../atoms/CommentInput'
+import StyledButton from '../atoms/StyledButton'
 
 export default {
     name: "PetSitterEachDetail",
