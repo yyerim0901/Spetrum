@@ -127,6 +127,7 @@ export default {
     nickCheck(){
       this.$store.dispatch('nickCheck',this.nickname)
       .then(res=>{
+        console.log(res);
         if (res.statusCode === 200) {
           this.nickValid = true
         }else{
@@ -137,6 +138,7 @@ export default {
     idCheck(){
       this.$store.dispatch('idCheck',this.userId)
       .then(res=>{
+        console.log(res);
         if (res.statusCode === 200) {
           this.idValid = true
         }else{
