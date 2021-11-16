@@ -130,6 +130,10 @@ export default {
         console.log(res.data.data);
         this.writes = res.data.data;
       })
+      .catch(err=>{
+        console.log(err);
+        console.log('여기서에러');
+      })
     }
   },
   computed:{
