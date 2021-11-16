@@ -50,7 +50,7 @@ export const Container = styled('div',HeadProps)`
   img{
     width:110px;
     display: ${(props) => (props.isLogo ? "block" : "none")};
-    margin:0 170px ;
+    margin:0 80px ;
 
   }
   p {

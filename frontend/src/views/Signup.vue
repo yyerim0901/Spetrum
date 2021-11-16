@@ -129,6 +129,8 @@ export default {
       .then(res=>{
         if (res.statusCode === 200) {
           this.nickValid = true
+        }else{
+          alert('이미 사용중인 닉네임입니다')
         }
       })
     },
@@ -137,6 +139,8 @@ export default {
       .then(res=>{
         if (res.statusCode === 200) {
           this.idValid = true
+        }else{
+          alert('이미 사용중인 아이디입니다')
         }
       })
     },
