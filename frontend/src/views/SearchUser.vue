@@ -10,6 +10,13 @@
           <h5 style="color:#B2BEC3">@{{user.userId}}</h5>
         </div>
       </div>
+      <!-- <div class="user-box">
+        <img src="../assets/img_logo.jpg" alt="profilImg" class="psimg-box">
+        <div class="nametag">
+          <h4>테스토</h4>
+          <h5 style="color:#B2BEC3">@test1234</h5>
+        </div> -->
+      <!-- </div> -->
     </div>
   </div>
 </template>
@@ -73,6 +80,8 @@ export default {
 
 .user-box{
   display: flex;
+  justify-content: flex-start;
+  margin-left: 50px;
 }
 
 .nametag{
@@ -85,10 +94,8 @@ export default {
 .se-box{
   width: 100%;
   height: 100vh;
+  text-align: center;
   overflow-y:scroll;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
   ::-webkit-scrollbar {
     width: 10px;
