@@ -116,7 +116,7 @@ export default {
         formData.append("password",this.password);
         formData.append("userId",this.userId);
         formData.append("thumbnail",this.profileImg);
-        console.log(this.profileImg,'프로필이미지');
+        console.log(this.profileImg,'프로필이미지s');
         // this.$store.dispatch('requestSignup',formData);
         axios({
           url:'https://spetrum.io:8080/api/users/regist',
@@ -161,7 +161,7 @@ export default {
       })
     },
     imageChange(){
-      this.profileImg = this.$refs.profileImage.files;
+      this.profileImg = this.$refs.profileImage.files[0];
       if (this.profileImg) {
         this.imgprev = URL.createObjectURL(this.profileImg[0]);
         }
