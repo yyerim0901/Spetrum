@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService{
         MultipartFile thumbnail = registerInfo.getThumbnail();
         if(thumbnail == null)
         {
-            res.setThumbnail(BASE_PATH+res.getUserId()+File.separator+"default.jpg");
+            res.setThumbnail(BASE_PATH+res.getUserId()+File.separator+"default.png");
         }
         else
         {
