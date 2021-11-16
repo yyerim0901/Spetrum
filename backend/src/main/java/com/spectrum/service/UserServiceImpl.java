@@ -36,6 +36,7 @@ public class UserServiceImpl implements UserService{
     public void createUser(UserRegisterPostReq registerInfo) throws IOException {
         User res = new User();
         MultipartFile thumbnail = registerInfo.getThumbnail();
+        System.out.println(registerInfo.toString());
         if(thumbnail == null)
         {
             res.setThumbnail(BASE_PATH+"default.png");
