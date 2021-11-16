@@ -4,6 +4,7 @@
     <div>
       <input type="text" class="search-bar" placeholder="유저아이디를 입력해주세요" v-model="keyword" @input="handleSearch($event)">
       <div class="user-box" v-for="user in userlist" :key="user.id">
+        {{user}}
         <img :src="getthumbnail(user.thumbnail)" alt="profilImg" class="pimg-box">
         <div class="nametag">
           <h4>{{user.nickname}}</h4>
@@ -37,7 +38,7 @@ export default {
     },
     getthumbnail(url){
       if (url) {
-        var fullurl = 'https://spetrum.io/resources/' + this.userInfo.thumbnail
+        var fullurl = 'https://spetrum.io/resources/' + url
         return fullurl
       }else{
         return require("@/assets/img_logo.jpg")
