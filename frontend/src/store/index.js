@@ -242,9 +242,11 @@ export default new Vuex.Store({
     },
     bringOtherSBoard(state,payload){
       return axios({
-        url:`/sns/users/${payload}`,
+        url:`/sns/users/${payload.userid}`,
         method:'get',
-        
+        params:{
+          page:payload.page
+        }
       })
     },
     requestUpdateUserInfo(state, payload) {

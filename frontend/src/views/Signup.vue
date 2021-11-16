@@ -129,7 +129,8 @@ export default {
       .then(res=>{
         console.log(res);
         if (res.data.statusCode === 200) {
-          this.nickValid = true
+          this.nickcheck = true
+          alert('사용가능한 닉네임입니다')
         }else{
           alert('이미 사용중인 닉네임입니다')
         }
@@ -140,7 +141,8 @@ export default {
       .then(res=>{
         console.log(res);
         if (res.data.statusCode === 200) {
-          this.idValid = true
+          this.idcheck = true
+          alert('사용가능한 아이디입니다')
         }else{
           alert('이미 사용중인 아이디입니다')
         }
