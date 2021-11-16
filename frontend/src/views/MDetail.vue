@@ -14,7 +14,6 @@
       </div>
       <img :src="fullURL(this.files)" alt="" class="pre-img">
       <div style="margin:5px 40px; display:flex; flex-direction:column;">
-        <i class="fas fa-paw"> {{this.likes}}개</i>
         <span style="text-align:start; border:solid; border-width:1px 0; border-color:#E5EAEF;">{{this.content}}</span>
         <div v-for="c in commentList" :key="c.id">
           <p class="comment">{{c.content}} - 작성자: {{c.user.nickname }}</p>

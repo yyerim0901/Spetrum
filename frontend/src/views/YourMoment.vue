@@ -93,12 +93,14 @@ export default {
       return full;
     },
     requestFollow(){
-      const data = {
-        from:localStorage.getItem('userid'),
-        to:this.userid
-      }
-      console.log(data);
-      this.$store.dispatch('handleFollow',data)
+      const formData = new FormData();
+      formData.append('to',this.userid);
+      formData.append('from',localStorage.getItem('userid'));
+      // const data = {
+      //   from:localStorage.getItem('userid'),
+      //   to:this.userid
+      // }
+      this.$store.dispatch('handleFollow',formData)
     }
 
   },
