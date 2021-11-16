@@ -15,7 +15,6 @@
 
       </div>
     </div>
-    <hr class="fott">
     <Footer :isActive="2"/>
   </div>
 </template>

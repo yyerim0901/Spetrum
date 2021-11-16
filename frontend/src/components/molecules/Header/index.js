@@ -4,6 +4,7 @@ import theme from '../../../styles/common'
 const HeadProps = {
   isBack: Boolean,
   isLogo: Boolean,
+  isSearch:Boolean,
   title: String,
 }
 
@@ -23,27 +24,33 @@ export const Container = styled('div',HeadProps)`
   display:flex;
   width: 500px;
   align-items:center;
-  justify-content: start;
+  justify-content: space-between;
   background-color: white;
+  border-bottom : 1px solid rgb(172,172,172);
 
-  i {
+  .ii {
     display: ${(props) => (props.isBack ? "block" : "none")};
     font-size: ${theme.fontSizes.xxl};
     font-weight: bold;
     margin:0 10px;
   };
+  .iii{
+    display: ${(props) => (props.isSearch ? "block" : "none")};
+    font-size: ${theme.fontSizes.xxl};
+    font-weight: bold;
+    margin:0 10px;
+  }
 
   `
   
   export const LogoTitle = styled('div',HeadProps)`
-  width : 150px;
   text-align: center;
   width: 300px;
 
   img{
     width:110px;
     display: ${(props) => (props.isLogo ? "block" : "none")};
-    margin:0 170px ;
+    margin:0 80px ;
 
   }
   p {
@@ -51,7 +58,5 @@ export const Container = styled('div',HeadProps)`
     font-size: ${theme.fontSizes.xl};
     color: ${theme.colors.black};
     font-weight: bold;
-    margin:0 0px 0 170px ;
-
   }
 `;

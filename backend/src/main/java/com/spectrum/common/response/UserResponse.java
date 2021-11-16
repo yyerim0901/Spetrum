@@ -1,5 +1,6 @@
 package com.spectrum.common.response;
 
+import com.spectrum.entity.User;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -18,7 +19,7 @@ public class UserResponse {
     @ApiModelProperty(name="응답 메시지", example = "정상")
     String token = null;
     @ApiModelProperty(name="유저 아이디 검색", example = "")
-    List<String> userlist = null;
+    List<User> userlist = null;
 
     public static UserResponse of(Integer statusCode, String message) {
         UserResponse res = new UserResponse();
@@ -34,7 +35,7 @@ public class UserResponse {
         res.setToken(accesstoken);
         return res;
     }
-    public static UserResponse of(List<String> userlist) {
+    public static UserResponse of(List<User> userlist) {
         UserResponse res = new UserResponse();
         res.setUserlist(userlist);
         return res;

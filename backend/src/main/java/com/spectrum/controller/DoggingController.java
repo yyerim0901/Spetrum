@@ -21,6 +21,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -53,8 +56,10 @@ public class DoggingController {
     public ResponseEntity<List<Dogging>> MyDoggingList(HttpServletRequest request) throws IOException{
 
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
+        int pagenum = Integer.parseInt(request.getParameter("page"));
+        Pageable pageable = PageRequest.of(pagenum-1, 10, Sort.by(Sort.Direction.DESC, "created"));
         doggingService.saveUserInfo(token);
-        List<Dogging> list = doggingService.MyDoggingList();
+        List<Dogging> list = doggingService.MyDoggingList(pageable);
         if(list == null || list.isEmpty())
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         else return new ResponseEntity<>(list,HttpStatus.OK);

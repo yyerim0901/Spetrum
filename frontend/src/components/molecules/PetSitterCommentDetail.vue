@@ -1,11 +1,12 @@
 <template>
-  <div>
-      <h4>댓글!!</h4>
-      <p>{{ comment.content }}</p>
+  <div style="display: flex; justify-content: flex-end; font-size: 13.3px;">
+      <p style="font-size: 13.3px;">{{ comment.content }} - {{ comment.user.userId }}</p>
       <input v-if="commentFlag" type="text" :placeholder=comment.content v-model="changedComment">
-      <button v-if="!commentFlag" @click="deleteComment">삭제</button>
-      <button v-if="!commentFlag" @click="changFlag">수정</button>
-      <button v-if="commentFlag" @click="changeComment">수정완료</button>
+      <div v-if="comment.user.userId == this.userid">
+        <button v-if="!commentFlag" @click="deleteComment">&nbsp;삭제&nbsp;</button>|
+        <button v-if="!commentFlag" @click="changFlag">&nbsp;수정</button>
+        <button v-if="commentFlag" @click="changeComment">수정완료</button>
+      </div>
   </div>
 </template>
 
@@ -14,6 +15,7 @@ import axios from '../../axios/index';
 export default {
     data() {
         return {
+            userid: localStorage.getItem('userid'),
             commentFlag: false,
             changedComment: '',
         }
@@ -29,7 +31,7 @@ export default {
                 method: "DELETE",
                 url: '/pcomment',
                 headers: {
-                    "Authorization": `Bearer ${localStorage.getItem("toekn")}`
+                    "Authorization": localStorage.getItem("toekn")
                 },
                 params: {
                     commentId: this.comment.id
@@ -49,7 +51,7 @@ export default {
                 method: "PUT",
                 url: '/pcomment',
                 headers: {
-                    "Authorization": `Bearer ${localStorage.getItem("toekn")}`
+                    "Authorization": localStorage.getItem("token")
                 },
                 params: {
                     PCommentId: this.comment.id,

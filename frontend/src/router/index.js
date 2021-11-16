@@ -14,8 +14,13 @@ import TestResult from '../views/TestResult'
 import YourMoment from '../views/YourMoment'
 import AddMoment from '../views/AddMoment'
 import MDetail from '../views/MDetail'
+import EditMoment from '../views/EditMoment'
 import AddPetSitter from '../views/AddPetSitter'
-import MUpdate from '../views/UpdateMoment'
+import ChangePetSitter from '../views/ChangePetSitter'
+import UpdateUserInfo from '../views/UpdateUserInfo'
+import MyDoggingList from '../views/MyDoggingList'
+import MyPetsitterList from '../views/MyPetsitterList'
+import SearchUser from '../views/SearchUser'
 
 Vue.use(VueRouter)
 
@@ -58,14 +63,14 @@ const routes = [
     component: MDetail,
   },
   {
-    path: '/moment/update/:boardid',
-    name:'MUpdate',
-    component: MUpdate,
-  },
-  {
     path: '/moment/:userid',
     name:'YourMoment',
     component: YourMoment,
+  },
+  {
+    path: '/moment/board/edit/:boardid/',
+    name:'EditMoment',
+    component: EditMoment,
   },
   {
     path: '/dogging',
@@ -98,10 +103,35 @@ const routes = [
     component: TestResult
   },
   {
-    path: '/wirte/petsitter',
+    path: '/write/petsitter',
     name:'AddPetSitter',
     component: AddPetSitter
   },
+  {
+    path: '/change/petsitter',
+    name:'ChangePetSitter',
+    component: ChangePetSitter
+  },
+  {
+    path: '/update/user',
+    name: 'UpdateUserInfo',
+    component : UpdateUserInfo
+  },
+  {
+    path: '/mydogging',
+    name: 'MyDoggingList',
+    component : MyDoggingList
+  },
+  {
+    path: '/mypetsitter',
+    name: 'MyPetsitterList',
+    component : MyPetsitterList
+  },
+  {
+    path: '/user/search',
+    name: 'SearchUser',
+    component : SearchUser
+  }
 ]
 
 const router = new VueRouter({
@@ -110,21 +140,22 @@ const router = new VueRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
-  if (to.name !== 'SignIn' && to.name !== 'SignUp' && !localStorage.getItem('token')) {
-    next({ name: 'SignIn' }); 
-  }
-  else if ( to.name == 'SignIn' && localStorage.getItem('token')){
-    next({ name: 'PetBTI'});
-  }
-  else if ( to.name == 'SignUp' && localStorage.getItem('token')){
-    next({ name: 'PetBTI'});
-  }
+// 최종 배포 전에 주석 풀기
+// router.beforeEach((to, from, next) => {
+//   if (to.name !== 'SignIn' && to.name !== 'SignUp' && !localStorage.getItem('token')) {
+//     next({ name: 'SignIn' }); 
+//   }
+//   else if ( to.name == 'SignIn' && localStorage.getItem('token')){
+//     next({ name: 'PetBTI'});
+//   }
+//   else if ( to.name == 'SignUp' && localStorage.getItem('token')){
+//     next({ name: 'PetBTI'});
+//   }
 
-  else if (to.name == 'SignUp' && from.name == 'SignIn') {
-    next();
-  }
+//   else if (to.name == 'SignUp' && from.name == 'SignIn') {
+//     next();
+//   }
   
-  else next()
-})
+//   else next()
+// })
 export default router

@@ -155,31 +155,32 @@ export default new Vuex.Store({
     getBoards(context) {
       var curlat = 0
       var curlon = 0
+      var curpagenum = this.state.petpage
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(pos) {
           curlat = pos.coords.latitude
           curlon = pos.coords.longitude
+          console.log(curlat, curlon, 'get board !!axios들어가기 전 위치!')
+          axios({
+            method: "GET",
+            url: '/pboard/list',
+            headers: {
+              "Authorization": `Bearer ${localStorage.getItem("token")}`
+            },
+            params: {
+              latitude : curlat, 
+              longitude : curlon,
+              pagenum : curpagenum,
+            }
+          }).then(res => {
+            context.commit("GET_BOARDS", res.data)
+          }).catch(err => {
+            console.log(err)
+          })
         })
       } else {
-        console.log('위치를 찾을 수 없어요')
+        alert('위치를 찾을 수 없어요')
       }
-      console.log(curlat, curlon, 'axios들어가기 전 위치!')
-      axios({
-        method: "GET",
-        url: '/pboard/list',
-        headers: {
-          "Authorization": `Bearer ${localStorage.getItem("token")}`
-        },
-        params: {
-          latitude : curlat, 
-          longitude : curlon,
-          pagenum : this.state.petpage, 
-        }
-      }).then(res => {
-        context.commit("GET_BOARDS", res.data)
-      }).catch(err => {
-        console.log(err)
-      })
     },
     requestUser(state,payload){
       axios({
@@ -204,12 +205,6 @@ export default new Vuex.Store({
     decideAns({commit},payload){
       commit('SET_USER_TYPE',payload)
     },
-    detailSBoard(state,payload){
-      return axios({
-        url:`/sns/${payload}`,
-        method:'get'
-      })
-    },
     bringSBoardComments(state,payload){
       return axios({
         url:`/scomments/${payload}`,
@@ -218,17 +213,17 @@ export default new Vuex.Store({
     },
     requestSComment(state,payload){
       return axios({
-        url:`/scomments/${payload}`,
+        url:`/scomments/${payload.get('sboardid')}`,
         method:'post',
         data:payload,
       })
     },
-    bringSBoard(){
+    bringSBoard(state,page){
       return axios({
         url:'/sns/',
         method:'get',
         params:{
-          page:1,
+          page:page,
         }
       })
     },
@@ -254,7 +249,122 @@ export default new Vuex.Store({
         method:'get',
         
       })
+    },
+    requestUpdateUserInfo(state, payload) {
+      axios({
+        url: `/users/${payload.get('userid')}`,
+        method:'put',
+        data:payload
+      })
+      .then(res=>{
+        console.log(res);
+        router.push({name:'MyPage'})
+      })
+      .catch(err=>{
+        console.log(err)
+      })
+    },
+    logout() {
+      axios({
+        url:'/users/logout',
+        method:'post',
+      })
+      .then(res=>{
+        if (res.data.statusCode == '200') {
+          localStorage.removeItem('token');
+          localStorage.removeItem('userid');
+        }
+        router.push({name:'SignIn'})
+      })
+    },
+    deleteUser(state, payload) {
+      axios({
+        url:`/users/${payload}`,
+        method:'delete',
+      })
+      .then(res=>{
+        if (res.data.statusCode == '200') {
+          localStorage.removeItem('token');
+          localStorage.removeItem('userid');
+        }
+        router.push({name:'SignIn'})
+      })
+    },
+    bringMyPBoard(state, payload) {
+      return axios({
+        url: `/pboard/mylist/${payload.userid}`,
+        method: 'get',
+        params:{
+          page:payload.page,
+        }
+      })
+    },
+    handleMomentEdit(state,payload){
+      axios({
+        url:`/sns/${payload.get('sboardid')}`,
+        method:'put',
+        data:payload,
+      })
+      .then(res=>{
+        console.log(res);
+        router.push({name:'Moment'})
+      })
+    },
+    handleMomentDelete(state,boardid){
+      axios({
+        url:`/sns/${boardid}`,
+        method:'delete',
+      })
+      .then(res=>{
+        console.log(res);
+        router.push({name:'Moment'})
+      })
+    },
+    detailSBoard(state,payload){
+      return axios({
+        url:`/sns/${payload}`,
+        method:'get'
+      })
+    },
+    updatePetsitter(state, payload) {
+      axios({
+        url: '/pboard',
+        method: "put",
+        data : payload,
+      }).then(res => {
+        console.log(res)
+        this.$router.push({name:'MyPetsitterList'})
+      })
+    },
+    deletePetsitter(state, payload) {
+      axios({
+        method: "DELETE",
+        url: "/pboard/",
+        params: {
+            petSitterId : payload
+        }
+    }).then(res => {
+        console.log(res.data)
+        this.$router.push({name:'MyPetsitterList'})
+    })
+    },
+    bringMyDogging(state, payload) {
+      return axios({
+        url: "/dogging",
+        method: "get",
+        params: {
+          page : payload
+        }
+      })
+    },
+    requestUserSearch(state,payload){
+      return axios({
+        method:'get',
+        url:`/users/searchUserId/${payload}`
+      })
     }
+
+
   },
   modules: {
   }

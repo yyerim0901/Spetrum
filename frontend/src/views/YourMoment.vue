@@ -1,8 +1,8 @@
 <template>
   <div class="Moment-Wrapper">
-    <Header :isLogo="false" :isBack="false" title="냥댕모먼트"></Header>
+    <Header :isLogo="false" :isBack="false" title="냥댕모먼트" :isSearch="true"></Header>
     <hr>
-    <div class="p-box">
+    <div class="p-box" @scroll="handleInfiniteScroll">
       <div class="i-box">
         <img :src="getthumbnail()" alt="profilImg" class="pimg-box">
         <button bcolor="babypink" btype="medium" class="f-button"><h3>게시글</h3><span>{{writes.length}}</span></button>
@@ -15,18 +15,17 @@
           <h5 style="color:#B2BEC3">@{{this.userid}}</h5>
           <span class="intro">{{this.introduce}}</span>
         </div>
-        <button v-if="followStatus" class="unfollow-button">언팔로우</button>
+        <button v-if="followStatus" class="unfollow-button" @click="requestFollow">언팔로우</button>
         <button v-else class="follow-button" @click="requestFollow">팔로우</button>
       </div>
       <div>
         <div class="write-box">
           <div v-for="write in writes" :key="write.id">
-            <img :src="fullURL(write.filelist[0].save_file)" alt="없다" class="w-img" @click="moveDetail(write.id)">
+            <img :src="fullURL(write)" alt="없다" class="w-img" @click="moveDetail(write.id)">
           </div>
         </div>
       </div>
     </div>
-    <hr class="fott">
     <Footer :isActive="isActive"></Footer>
   </div>
 </template>
@@ -51,7 +50,9 @@ export default {
       introduce:'',
       followerList:[],
       followList:[],
-      writes:[]
+      writes:[],
+      page:1,
+      BASE_URL : 'https://spetrum.io/resources/'
     }
   },
   methods:{
@@ -62,15 +63,41 @@ export default {
         return require("@/assets/img_logo.jpg")
       }
     },
+    handleInfiniteScroll(e) {
+      const { scrollTop, clientHeight, scrollHeight } = e.target;
+      if (parseInt(scrollTop) + parseInt(clientHeight) + 1 !== parseInt(scrollHeight))
+        return;
+      if (this.writes && this.writes.length % 10 === 0) {
+        //게시물이 1페이지 전채 개수가 넘으면
+        this.page +=  1;
+        this.$store.dispatch('bringOtherSBoard',{userid:this.userid, page:this.page})
+        .then(res=>{
+          console.log(res); 
+          this.writes.push(...res.data.data);
+          console.log(this.writes,'게시물');
+        })
+      } 
+    },
     moveDetail(id){
       console.log(id);
       this.$router.push({name:'MDetail',params:{'boardid':id}});
+    },
+
+    fullURL(url){
+      if (url.filelist[0]){
+        var full = this.BASE_URL + url.filelist[0].save_file;
+      } else{
+        full = require('@/assets/img_logo.jpg')
+      }
+      console.log(full);
+      return full;
     },
     requestFollow(){
       const data = {
         from:localStorage.getItem('userid'),
         to:this.userid
       }
+      console.log(data);
       this.$store.dispatch('handleFollow',data)
     }
 
@@ -85,25 +112,24 @@ export default {
       this.$store.dispatch('requestSBoardUser',nowUser)
       .then(res=>{
         this.userid = res.data.user.userId;
-        this.nickname = res.data.user.nickname,
+        this.nickname = res.data.user.nickname;
         this.thumbnail = res.data.user.thumbnail;
         this.introduce = res.data.user.introduce;
         this.followerList = res.data.followerList;
         this.followList = res.data.followList;
       })
-      this.$store.dispatch('bringOtherSBoard',nowUser)
+      this.$store.dispatch('bringOtherSBoard',{userid:nowUser, page:this.page})
       .then(res=>{
-        console.log(res);
+        console.log(res.data.data);
+        this.writes = res.data.data;
       })
     }
   },
   computed:{
     followStatus(){
-      if (localStorage.getItem('userid') in this.followerList){
-          console.log("하이");
+      if (this.followerList.includes(localStorage.getItem('userid'))){
           return true
         } else{
-          console.log("롱");
           return false
         }
     }
