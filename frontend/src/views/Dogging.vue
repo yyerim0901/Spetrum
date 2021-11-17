@@ -1,7 +1,6 @@
 <template>
   <div class="Dogging-Wrapper">
     <Header :isLogo="false" :isBack="false" title="도깅"></Header>
-    <hr>
     <div v-if="doggingflag">
       <div>
         <p>도깅 시간</p>
@@ -13,13 +12,13 @@
       </div>
     </div>
     <div id="map" style="width:450px;height:400px;"></div>
-    <hr class="fott">
     <div v-if="!doggingflag">
       <h2>--.-- km</h2>
       <StyledButton btype="medium" bcolor="babypink" @click="doggingAdjust" >도깅시작</StyledButton>
     </div>
     <div v-if="doggingflag">
-      <StyledButton btype="medium" bcolor="babypink" >정지하개</StyledButton> |
+      <!-- <StyledButton v-if="!liveDoggingflag" btype="medium" bcolor="babypink" @click="liveDogging" >정지하개</StyledButton>
+      <StyledButton v-if="liveDoggingflag" btype="medium" bcolor="babypink" @click="liveDogging" >다시하개</StyledButton> -->
       <StyledButton btype="medium" bcolor="babypink" @click="doggingAdjust" >완료하개</StyledButton>
     </div>
     <Footer :isActive="isActive"></Footer>
@@ -42,6 +41,7 @@ export default {
     return{
       isActive:1,
       doggingflag: false,
+      liveDoggingflag: false,
       watchId:'',
       latlist : [],
       lnglist : [],
@@ -51,6 +51,8 @@ export default {
       curMin : 0,
       curSec : 0,
       curDistance : 0,
+      liveWatchId : '',
+      location : '',
     }
   },
     mounted() { 
@@ -60,7 +62,7 @@ export default {
         const script = document.createElement('script'); 
         /* global kakao */ 
         script.onload = () => kakao.maps.load(this.initMap); 
-        script.src = '//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=8b07795e21cc36039de160da0cd01ffd';
+        script.src = '//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=8b07795e21cc36039de160da0cd01ffd&libraries=services';
         document.head.appendChild(script); 
       }
     }, 
@@ -69,7 +71,8 @@ export default {
         if (navigator.geolocation) {
           var lat = 0,
               lng = 0,
-              that = this;
+              that = this,
+              locationFlag = false;
           if (this.doggingflag === false) {
             // 도깅을 시작할 때
             this.doggingflag = true
@@ -103,7 +106,7 @@ export default {
                   that.totalDistance += distance
                   console.log(that.totalDistance, '추가 후 총 거리')
                   that.curDistance = parseFloat(Math.round(that.totalDistance * 100) / 100).toFixed(2)
-                }
+                } 
                 // 시간 측정 부분
                 if (that.curTime !== 0) {
                   var nextTime = pos.timestamp
@@ -124,6 +127,20 @@ export default {
                 lng = pos.coords.longitude
                 that.latlist.push(lat)
                 that.lnglist.push(lng)
+
+                //주소반환하기
+                if (locationFlag === false) {
+                  var geocoder = new kakao.maps.services.Geocoder();
+
+                  var cord = new kakao.maps.LatLng(lat, lng);
+                  var callback = function(result, status) {
+                      if (status === kakao.maps.services.Status.OK) {
+                        that.location = result[0].address.address_name;
+                      }
+                  };
+                  geocoder.coord2Address(cord.getLng(), cord.getLat(), callback);
+                  locationFlag = true
+                }
               }
             })
           } else {
@@ -131,27 +148,34 @@ export default {
             // 도깅을 멈추고 완료할 때
             // components의 데이터 초기화해야함
             this.doggingflag = false
-            console.log(this.totalDistance, this.totalTime, 'axios보낼 총 거리와 시간@@')
+            console.log(this.totalDistance, this.totalTime, this.location, 'axios보낼 총 거리와 시간 주소@@')
             console.log(this.latlist, this.lnglist, 'axios보낼 array@@@')
+
+            const formData = new FormData();
+            formData.append('distance', this.totalDistance);
+            formData.append('lats', this.latlist);
+            formData.append('lngs', this.lnglist);
+            formData.append('time', this.totalTime);
+            formData.append('location', this.location);
+            
             axios({
-              url: 'https://spetrum.io:8080/api/dogging/',
+              url: 'http://spetrum.io:8080/api/dogging/',
               method: 'POST',
               headers: {
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
+                "Authorization": localStorage.getItem("token")
               },
-              params: {
-                distance : this.totalDistance,
-                lats : this.latlist,
-                lngs : this.lnglist,
-                location : '삼문동 코아루 아파트',
-                time : this.totalTime
-              }
+              data: formData,
             }).then(res => {
               console.log(res)
               this.totalDistance = 0
               this.totalTime = 0
               this.latlist = []
               this.lnglist = []
+              this.curTime = 0
+              this.curDistance = 0
+              this.curMin = 0
+              this.curSec = 0
+              this.location = ''
             }).catch(err => {
               console.log(err)
             })
@@ -162,7 +186,7 @@ export default {
       },
       initMap() {
         if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function(pos) {
+          navigator.geolocation.watchPosition(function(pos) {
             var lat = pos.coords.latitude,
                 lon = pos.coords.longitude;
             var container = document.getElementById('map');
@@ -183,8 +207,9 @@ export default {
         }
         // var marker = new kakao.maps.Marker({ position: map.getCenter() }); marker.setMap(map); 
       },
+      // 중단하고 재시작 하는 방법
     },
-  
+
 }
 </script>
 
