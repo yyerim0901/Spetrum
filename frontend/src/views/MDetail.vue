@@ -1,8 +1,7 @@
 <template>
   <div class="Moment-Wrapper">
     <Header :isBack="true" title="MY MOMENT" :isLogo="false"></Header>
-    <hr>
-    <div style="width:100%; display:flex; flex-direction:column;  overflow-y:scroll">
+    <div style="width:100%; display:flex; flex-direction:column; overflow-y:scroll;">
       <div style="display:flex; margin:2px 0 2px 20px; align-items:center; justify-content:flex-start">
         <img :src="getthumbnail()" alt="" class="pimg-box-small">
         <h3 style="padding:0 5px;">{{this.writernickname}}</h3>
@@ -10,7 +9,6 @@
           <i class="fas fa-edit" style="margin:0 0 0 10px;" @click="moveEdit"></i>
           <i class="fas fa-trash" style="margin:0 0 0 10px;" @click="handleDelete"></i>
         </div>
-
       </div>
       <img :src="fullURL(this.files)" alt="" class="pre-img">
       <div style="margin:5px 40px; display:flex; flex-direction:column;">

@@ -18,7 +18,12 @@ export default new Vuex.Store({
       type:'',
       introduce:'',
       followerList:[],
-      followList:[],
+      followList: [],
+    },
+    mypetsitterList: [],
+    MyLocation: {
+      lat: '',
+      lng:'',
     },
     page:0,
     questions:[
@@ -75,6 +80,14 @@ export default new Vuex.Store({
     result:{'cat':0,'dog':0,'a':0,'c':0,'i':0,'e':0}
   },
   mutations: {
+    SET_MY_LOCATION(state, payload) {
+      state.MyLocation.lat = payload.lat;
+      state.MyLocation.lng = payload.lng;
+    },
+    SET_MY_PETSITTER(state, payload) {
+      //클리어 하고 다시 받고 싶당
+      state.mypetsitterList = payload;
+    },
     GET_BOARDS(state, boards) {
       console.log('mutation GET_BOARDS실행!!')
       state.Boards = boards.data
@@ -163,6 +176,11 @@ export default new Vuex.Store({
           curlat = pos.coords.latitude
           curlon = pos.coords.longitude
           console.log(curlat, curlon, 'get board !!axios들어가기 전 위치!')
+          const data = {
+            lat : curlat,
+            lng : curlon,
+          }
+          context.commit("SET_MY_LOCATION", data)
           axios({
             method: "GET",
             url: '/pboard/list',
@@ -292,11 +310,12 @@ export default new Vuex.Store({
       })
     },
     bringMyPBoard(state, payload) {
-      return axios({
+      axios({
         url: `/pboard/mylist/${payload}`,
         method: 'get'
       }).then(res => {
-        console.log(res)
+        console.log(res.data.data)
+        this.commit('SET_MY_PETSITTER', res.data.data);
       })
     },
     handleMomentEdit(state,payload){

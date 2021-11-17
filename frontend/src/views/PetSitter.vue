@@ -2,17 +2,20 @@
     <div class="PET-Wrapper">
         <Header :isLogo="false" :isBack="false" title="겟!시터"/>
         <div class="sitter-box">
-            <div>
-                <div class="siiter-small-box">
-                    <h3>우리동네 </h3> <h3 style="color:#F7797D"> 겟! </h3> <h3> 시터</h3>
+            <div class="sitter-box-in">
+                <div class="siiter-small-box" style="flex-direction: column;">
+                    <h3><span>우리동네&nbsp;<span style="color:#F7797D;">겟!</span>&nbsp;시터</span></h3>
+                    <span style="height:1px;"></span>
+                    <h4><i class="fas fa-map-marker-alt"></i><span style="color:#636E72;">&nbsp;&nbsp;{{this.location}}</span></h4>
                 </div>
                 <div>
-                    <h3>대충 주소가 들어간다는 뜻</h3>
+                <StyledButton style="float:right;" bcolor="pink" btype="small" @click="moveAddSitter">글작성하기</StyledButton>          
                 </div>
-                <StyledButton bcolor="pink" btype="small" @click="moveAddSitter">글작성하기</StyledButton>
-                <hr class="hr-box" style="text-align:start; border:solid; border-width:1px 0; border-color:#E5EAEF;">
             </div>
-            <PetSitterDetail v-for="(board, idx) in Boards" :key="idx" :board="board" />
+            <hr class="hr-box" style="text-align:start; border:solid; border-width:1px 0; border-color:#E5EAEF;">
+            <div class="sitter-box-in-second" style="margin-bottom:20px;">
+                <PetSitterDetail v-for="(board, idx) in Boards" :key="idx" :board="board" />
+            </div>
         </div>
         <Footer :isActive="isActive"/>
     </div>
@@ -25,6 +28,7 @@ import Footer from '../components/molecules/Footer';
 import PetSitterDetail from '../components/molecules/PetSitterDetail';
 import { mapState } from 'vuex'
 import StyledButton from '../components/atoms/StyledButton'
+import axios from 'axios';
 
 export default {
     name: 'PetSitter',
@@ -37,20 +41,44 @@ export default {
     data() {
         return{
             isActive: 3,
+            location:'',
         }
     },
     computed: {
         ...mapState([
             'Boards',
+            'MyLocation'
         ])
     },
     methods: {
         moveAddSitter() {
             this.$router.push({name:'AddPetSitter'})
+        },
+        BringMyLocation(){
+            if(navigator.geolocation){
+                navigator.geolocation.getCurrentPosition((pos)=>{
+                    axios({
+                        url:`//dapi.kakao.com/v2/local/geo/coord2address.json`,
+                        method:'get',
+                        params:{
+                            x : pos.coords.longitude,
+                            y : pos.coords.latitude,
+                        },
+                        headers: {
+                        "Authorization": `KakaoAK 129bac39970b463ea7ef94eff7029109`
+                        },
+                    }).then(res => {
+                        console.log(res.data.documents[0].road_address.address_name)
+                        var loc = res.data.documents[0].road_address.address_name.split(" ");
+                        this.location = loc[0] + " " + loc[1]
+                    })
+                })
+            }
         }
     },
     created() {
         this.$store.dispatch('getBoards')
+        this.BringMyLocation()
     }
 }
 </script>
@@ -59,16 +87,29 @@ export default {
     .sitter-box{
         display: block;
         margin: 1rem;
-        width: 90%;
+        width: 100%;
         justify-content: center;
+    }
+    .sitter-box-in{
+        width: 100%;
+        padding:0px 20px;
+        display: flex;
     }
     .siiter-small-box{
         display: flex;
         margin-bottom: 4px;
+        width:100%;
     }
     .hr-box{
         width: 100%;
         margin-top: 8px;
+        
+    }
+    .sitter-box-in-second{
+        width: 100%;
+        padding:0px 60px;
+        display: flex;
+        overflow-y: scroll;
     }
   
-</style>
+</style=>

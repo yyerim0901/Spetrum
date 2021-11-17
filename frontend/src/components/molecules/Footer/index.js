@@ -12,7 +12,7 @@ export const Foot = styled.div`
 `;
 
 export const Container = styled.div`
-  position:absolute;
+  position:fixed;
   bottom:0;
   width:500px;
   display:flex;
