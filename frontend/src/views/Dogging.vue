@@ -46,10 +46,6 @@ export default {
       latlist : [],
       lnglist : [],
       totalDistance : 0,
-      totalTime : 0,
-      curTime : 0,
-      curMin : 0,
-      curSec : 0,
       curDistance : 0,
       liveWatchId : '',
       location : '',
@@ -117,20 +113,6 @@ export default {
                   console.log(that.totalDistance, '추가 후 총 거리')
                   that.curDistance = parseFloat(Math.round(that.totalDistance * 100) / 100).toFixed(2)
                 } 
-                // 시간 측정 부분
-                if (that.curTime !== 0) {
-                  var nextTime = pos.timestamp
-                  console.log(that.totalTime, '추가 전 총 시간')
-                  // unix시간 나누기 1000하면 초단위로 끊을 수 있음
-                  that.totalTime += parseInt((nextTime - that.curTime) / 1000)
-                  console.log(that.totalTime, '추가 후 총 시간')
-                  that.curTime = nextTime
-                  that.curSec = that.totalTime % 60
-                  that.curMin = parseInt((that.totalTime - that.curSec) / 60)
-                } else {
-                  // 0 이면 시간 갱신
-                  that.curTime = pos.timestamp
-                }
                 console.log(pos.coords)
                 console.log(pos,'여긴가?')
                 lat = pos.coords.latitude
@@ -166,7 +148,7 @@ export default {
             navigator.geolocation.clearWatch(this.liveWatchId)
             // components의 데이터 초기화해야함
             this.doggingflag = false
-            console.log(this.totalDistance, this.totalTime, utc.substr(utc.indexOf(":") - 2, 8), 'axios보낼 총 거리와 시간 주소@@', typeof(utc.substr(utc.indexOf(":") - 2, 8)), '시간의 타입!!!')
+            console.log(this.totalDistance, utc.substr(utc.indexOf(":") - 2, 8), 'axios보낼 총 거리와 시간 주소@@', typeof(utc.substr(utc.indexOf(":") - 2, 8)), '시간의 타입!!!')
             console.log(this.latlist, this.lnglist, 'axios보낼 array@@@')
             const formData = new FormData();
             formData.append('distance', this.totalDistance);
@@ -176,7 +158,7 @@ export default {
             formData.append('location', this.location);
             
             axios({
-              url: 'https://spetrum.io:8080/api/dogging/',
+              url: 'https://spetrum.io:8080/api/dogging',
               method: 'POST',
               headers: {
                 "Authorization": localStorage.getItem("token")
@@ -187,7 +169,6 @@ export default {
               let finishedLat = this.latlist;
               let finishedLng = this.lnglist
               this.totalDistance = 0
-              this.totalTime = 0
               this.latlist = []
               this.lnglist = []
               this.curDistance = 0
