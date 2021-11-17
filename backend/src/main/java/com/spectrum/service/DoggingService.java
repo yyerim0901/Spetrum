@@ -15,7 +15,7 @@ public interface DoggingService {
     public List<Dogging> MyDoggingList() throws IOException;
     public DoggingDetailResponse DetailOfDogging(Long doggingId) throws IOException;
     public void PostDogging(DoggingPostReq doggingPostReq);
-    public void customImage(MultipartFile multipartFile, Long doggingId)throws IOException;
+    public void customImage(MultipartFile multipartFile, String userid)throws IOException;
     public void DeleteDogging(Long id);
     public void SaveDoggingPath(Long userId, Long doggingId, float[] lats, float[] lngs) throws IOException;
 }

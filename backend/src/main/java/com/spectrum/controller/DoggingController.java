@@ -128,9 +128,9 @@ public class DoggingController {
     )
     @PostMapping("/image")
     public ResponseEntity<?> customImageTest(@ApiParam(value = "imageTest", required = true) MultipartFile multipartFile,
-                                             @RequestParam Long doggingId) throws IOException{
-
-        doggingService.customImage(multipartFile,doggingId);
+                                             @RequestParam String userid) throws IOException{
+        System.out.println(userid);
+        doggingService.customImage(multipartFile,userid);
         return new ResponseEntity<String>("success to make Image",HttpStatus.OK);
     }
 
