@@ -1,37 +1,29 @@
 <template>
   <div class="MyPetsitter-Wrapper">
     <Header :isLogo="false" :isBack="true" :isSearch="false" title="나의 게시글"></Header>
-    <div style="justify-content:left;">
+    <!-- <div class="p-box-petsitter">
       <div class="my-p-box">
         <img class="img-box" src="../assets/img_logo.jpg" alt="사진 안 뜸">
         <div class="in-my-p-box">
           <div class="my-p-text">
-            <h4>여기는 제모오오오ㅗㅇ옥</h4>
+            <h3>여기는 제모오오오ㅗㅇ옥</h3>
             <p style="height:4px;"></p>
-            <p style="font-size:x-small;">작성 일자 : 2021-11-11</p>
+            <p style="font-size:small;">작성 일자 : 2021-11-11</p>
           </div>
           <StyledButton btype="small" style="background-color:white; color:gray; margin:0px;" @click="detailof(1)">자세히보기</StyledButton>
-          <span style="float: right;">
-            <StyledButton btype="xsmall" style="background-color:white; color:gray; margin:0px;" @click="updatemypetsitter(1)">수정</StyledButton>
-            <span style="color:gray; font-size:small;">|</span>
-            <StyledButton btype="xsmall" style="color:#EE9CA7; margin:0px;" @click="checkdelete(1)">삭제</StyledButton>
-          </span>
         </div>
-      </div>
-    </div>
-    <div style="align-items:center;">
-      <div class="my-p-box" v-for="mypetsitter in mypetsitters" :key="mypetsitter.id">
+      </div> 
+    </div> -->
+    <div class="p-box-petsitter">
+      <div class="my-p-box" v-for="mypetsitter in mypetsitterList" :key="mypetsitter.id">
         <img class="img-box" :src="fullURL(mypetsitter.picture)" alt="사진 안 뜸">
         <div class="in-my-p-box">
           <div class="my-p-text">
-            <h4>{{mypetsitter.title}}</h4>
-            <p style="font-size:x-small;">작성 일자 : {{mypetsitter.created.substr(0,10)}}</p>
+            <h3>{{mypetsitter.title}}</h3>
+            <p style="height:4px;"></p>
+            <p style="font-size:small;">작성 일자 : {{mypetsitter.created.substr(0,10)}}</p>
           </div>
-          <StyledButton btype="xsmall" style="background-color:white; color:gray; margin:0px;" @click="detailof(mypetsitter.id)">자세히보기</StyledButton>
-          <span style="color:gray; font-size:small;">|</span>
-          <StyledButton btype="xsmall" style="background-color:white; color:gray; margin:0px;" @click="updatemypetsitter(mypetsitter.id)">수정</StyledButton>
-          <span style="color:gray; font-size:small;">|</span>
-          <StyledButton btype="xsmall" style="color:#EE9CA7; margin:0px;" @click="checkdelete(mypetsitter.id)">삭제</StyledButton>
+          <StyledButton btype="small" style="background-color:white; color:gray; margin:0px;" @click="detailof(mypetsitter.id)">자세히보기</StyledButton>
         </div>
       </div>
     </div>
@@ -53,6 +45,7 @@ import Footer from '../components/molecules/Footer.vue'
 import Header from '../components/molecules/Header.vue'
 import StyledButton from '../components/atoms/StyledButton'
 import Modal from '../components/molecules/Modal.vue'
+import {mapState} from 'vuex';
 export default {
   name:'MyPetsitter',
   components:{
@@ -69,16 +62,23 @@ export default {
       userid:"",
       showModal:false,
       deletepboardId:"",
+      page:1,
     }
   },
+  computed: {
+    ...mapState(['mypetsitterList']),
+  },
   methods: {
+    refreshAll() {
+            // 새로고침
+            this.$router.go();
+        },
     fullURL(url){
             const full = this.BASE_URL + url;
             return full;
         },
     detailof (pboardId){
-      //상세보기 해야하나 말아야하나..
-      console.log(pboardId)
+      this.$router.push({name:'PetSitterEachDetail',params:{'board_id':pboardId}});
     },
     updatemypetsitter(pboardId){
       //update페이지 즉 상세 입력 페이지로 이동한 후에 dispatch로 실행
@@ -90,17 +90,32 @@ export default {
     },
     deletemypetsitter(){
       this.$store.dispatch('deletePetsitter',this.deletepboardId)
+      this.$router.push("/mypetsitter")
+    },
+    handleInfiniteScroll(e) {
+      const { scrollTop, clientHeight, scrollHeight } = e.target;
+      if (parseInt(scrollTop) + parseInt(clientHeight) + 1 !== parseInt(scrollHeight))
+        return;
+      if (this.mypetsitters && this.mypetsitters.length % 5 === 0) {
+        //게시물이 1페이지 전채 개수가 넘으면
+        console.log(this.mypetsitters.length,'길이');
+        this.page +=  1;
+        console.log(this.page);
+        this.$store.dispatch('bringMyPBoard',{userid:this.userid,page:this.page})
+        .then(res=>{
+          console.log(res);
+          this.mypetsitters.push(...res.data.data);
+          console.log(this.mypetsitters,'게시물');
+        })
+      }
     }
   },
   created() {
     this.userid = localStorage.getItem('userid')
     console.log(this.userid)
     this.$store.dispatch('bringMyPBoard',this.userid)
-    .then(res => {
-      console.log(res.data.data)
-      this.mypetsitters = res.data.data
-    })
-  },
+    console.log(this.mypetsitterList)
+  }
 }
 </script>
 
@@ -113,15 +128,26 @@ export default {
     height: 100vh;
     width:100%;
   }
+  .p-box-petsitter{
+    width:100%;
+    padding: 10px 60px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    margin-bottom:25px;
+  }
   .my-p-box{
     display: flex;
     /* margin-left:12%; */
   }
   .in-my-p-box{
-    margin: 20px;
+    margin: 10px;
   }
   .my-p-text{
-    margin-left: 7px;
+    margin-left: 13px;
     margin-top: 12px;
+  }
+  .dis {
+    float: right;
   }
 </style>

@@ -1,8 +1,6 @@
 <template>
   <div class="bigbox">
     <Header :isLogo="isLogo" :isBack="isBack" :title="title"/>
-    <hr>
-
     <div class="Signup-Wrap">
       <img src="../assets/img_logo.jpg" alt="dog" class="dog-img">
       <div class="form-container">
@@ -42,6 +40,7 @@ import StyledInput from '../components/atoms/StyledInput'
 import StyledLabel from '../components/atoms/StyledLabel'
 import ErrorMessage from '../components/atoms/ErrorMessage'
 import FooterButton from '../components/atoms/FooterButton'
+import axios from 'axios'
 export default {
   name:'Signup',
   components:{
@@ -116,36 +115,55 @@ export default {
         formData.append("nickname",this.nickname);
         formData.append("password",this.password);
         formData.append("userId",this.userId);
-        formData.append("image",this.profileImg);
-        console.log(this.profileImg,'프로필이미지');
-        this.$store.dispatch('requestSignup',formData);
+        formData.append("thumbnail",this.profileImg);
+        console.log(this.profileImg,'프로필이미지s');
+        // this.$store.dispatch('requestSignup',formData);
+        axios({
+          url:'https://spetrum.io:8080/api/users/regist',
+          method:'post',
+          data:formData,
+          headers:{
+            'Content-Type': 'multipart/form-data',
+            'Access-Control-Allow-Origin':'*',
+          }
+        })
+          .then(res=>{
+            console.log(res);
+            this.$router.push({name:'SignIn'})
+          })
       }
       else {
         alert('아이디, 닉네임 중복검사를 해주세요!');
       }
     },
     nickCheck(){
-      const response = this.$store.dispatch('nickCheck',this.nickname);
-      if (response.data.statusCode == '200'){
-        this.nickcheck = true;
-      }
-      else {
-        alert(response.data.message);
-      }
+      this.$store.dispatch('nickCheck',this.nickname)
+      .then(res=>{
+        console.log(res);
+        if (res.data.statusCode === 200) {
+          this.nickcheck = true
+          alert('사용가능한 닉네임입니다')
+        }else{
+          alert('이미 사용중인 닉네임입니다')
+        }
+      })
     },
     idCheck(){
-      const response = this.$store.dispatch('idCheck',this.userId);
-      if (response.data.statusCode == '200'){
-        this.idcheck = true;
-      }
-      else {
-        alert(response.data.message);
-      }
+      this.$store.dispatch('idCheck',this.userId)
+      .then(res=>{
+        console.log(res);
+        if (res.data.statusCode === 200) {
+          this.idcheck = true
+          alert('사용가능한 아이디입니다')
+        }else{
+          alert('이미 사용중인 아이디입니다')
+        }
+      })
     },
     imageChange(){
-      this.profileImg = this.$refs.profileImage.files;
+      this.profileImg = this.$refs.profileImage.files[0];
       if (this.profileImg) {
-        this.imgprev = URL.createObjectURL(this.profileImg[0]);
+        this.imgprev = URL.createObjectURL(this.profileImg);
         }
     }
 

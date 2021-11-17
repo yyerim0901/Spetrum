@@ -13,16 +13,17 @@ import com.spectrum.service.PBoardService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -110,6 +111,17 @@ public class PBoardController {
             value = "내 펫시터 리스트",
             notes = "**userid**을 이용하여 리스트 출력"
     )
+    @GetMapping("/mylist/page/{userid}")
+    private PBoardResponse myPetsitterList_page(@PathVariable String userid,
+                                           @ApiIgnore HttpServletRequest request){
+        int pagenum = Integer.parseInt(request.getParameter("page"));
+        Pageable pageable = PageRequest.of(pagenum-1, 5, Sort.by(Sort.Direction.DESC, "created"));
+        List<PBoard> list = pBoardService.myPetsitterList(userid,pageable);
+
+        if(list == null || list.isEmpty()){
+            return new PBoardResponse("나의 리스트가 존재하지 않습니다.",null,HttpStatus.NO_CONTENT);
+        }else return new PBoardResponse("리스트 출력 완료",list,HttpStatus.OK);
+    }
     @GetMapping("/mylist/{userid}")
     private PBoardResponse myPetsitterList(@PathVariable String userid){
         List<PBoard> list = pBoardService.myPetsitterList(userid);

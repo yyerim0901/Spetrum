@@ -10,7 +10,7 @@ import java.util.Date;
 public class DoggingDetailResponse {
 
     private float distance;
-    private int time;
+    private String time;
     private Date date;
     private String location;
     private String picture;

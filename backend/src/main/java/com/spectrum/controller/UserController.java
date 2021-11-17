@@ -139,7 +139,7 @@ public class UserController {
     })
     public ResponseEntity<UserResponse> searchUserId(@PathVariable("userid") String userid){
 
-        List<String> user =  userService.searchUserId(userid);
+        List<User> user =  userService.searchUserId(userid);
 
         return ResponseEntity.ok(UserResponse.of(user));
     }

@@ -7,6 +7,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    finishLat : [],
+    finishLng : [],
     petpage: 0,
     Boards: [],
     userInfo:{
@@ -16,7 +18,12 @@ export default new Vuex.Store({
       type:'',
       introduce:'',
       followerList:[],
-      followList:[],
+      followList: [],
+    },
+    mypetsitterList: [],
+    MyLocation: {
+      lat: '',
+      lng:'',
     },
     page:0,
     questions:[
@@ -73,6 +80,14 @@ export default new Vuex.Store({
     result:{'cat':0,'dog':0,'a':0,'c':0,'i':0,'e':0}
   },
   mutations: {
+    SET_MY_LOCATION(state, payload) {
+      state.MyLocation.lat = payload.lat;
+      state.MyLocation.lng = payload.lng;
+    },
+    SET_MY_PETSITTER(state, payload) {
+      //클리어 하고 다시 받고 싶당
+      state.mypetsitterList = payload;
+    },
     GET_BOARDS(state, boards) {
       console.log('mutation GET_BOARDS실행!!')
       state.Boards = boards.data
@@ -90,7 +105,7 @@ export default new Vuex.Store({
     },
     SET_USER_INFO(state,payload){
       state.userInfo.nickname = payload.nickname;
-      state.userInfo.thumbnamil = payload.thumbnamil;
+      state.userInfo.thumbnail = payload.thumbnail;
       state.userInfo.introduce = payload.introduce;
       state.userInfo.userid = payload.userid;
       state.userInfo.followerList = payload.followerList;
@@ -108,10 +123,10 @@ export default new Vuex.Store({
         if (res.data.statusCode == '200'){
           const token = res.data.token
           localStorage.setItem("token",token);
-          router.push({name:'PetBTI'});
           const user = payload.get('userId');
           localStorage.setItem('userid',user);
           this.dispatch('requestUser',user);
+          router.push({name:'PetBTI'});
         }
         else {
 
@@ -120,20 +135,20 @@ export default new Vuex.Store({
 
       })
     },
-    requestSignup(state,payload){
-      axios({
-        url: '/users/regist',
-        method:'post',
-        data:payload
-      })
-      .then(res=>{
-        console.log(res);
-        router.push({name:'SignIn'})
-      })
-      .catch(err=>{
-        console.log(err)
-      })
-    },
+    // requestSignup(state,payload){
+    //   axios({
+    //     url: '/users/regist',
+    //     method:'post',
+    //     data:payload,
+    //   })
+    //   .then(res=>{
+    //     console.log(res);
+    //     router.push({name:'SignIn'})
+    //   })
+    //   .catch(err=>{
+    //     console.log(err)
+    //   })
+    // },
     nickCheck(state,payload){
       return axios({
         url: '/users/checkNICK',
@@ -161,6 +176,11 @@ export default new Vuex.Store({
           curlat = pos.coords.latitude
           curlon = pos.coords.longitude
           console.log(curlat, curlon, 'get board !!axios들어가기 전 위치!')
+          const data = {
+            lat : curlat,
+            lng : curlon,
+          }
+          context.commit("SET_MY_LOCATION", data)
           axios({
             method: "GET",
             url: '/pboard/list',
@@ -190,7 +210,7 @@ export default new Vuex.Store({
         .then(res=>{
           const data = {
             nickname: res.data.user.nickname,
-            thumbnamil: res.data.user.thumbnamil,
+            thumbnail: res.data.user.thumbnail,
             introduce: res.data.user.introduce,
             userid: res.data.user.userId,
             followList: res.data.followList,
@@ -234,20 +254,19 @@ export default new Vuex.Store({
       })
     },
     handleFollow(state,payload){
-      axios({
+      return axios({
         url:'/users/follow',
         method:'post',
         data:payload,
       })
-      .then(res=>{
-        console.log(res);
-      })
     },
     bringOtherSBoard(state,payload){
       return axios({
-        url:`/sns/users/${payload}`,
+        url:`/sns/users/${payload.userid}`,
         method:'get',
-        
+        params:{
+          page:payload.page
+        }
       })
     },
     requestUpdateUserInfo(state, payload) {
@@ -299,9 +318,12 @@ export default new Vuex.Store({
       })
     },
     bringMyPBoard(state, payload) {
-      return axios({
+      axios({
         url: `/pboard/mylist/${payload}`,
-        method: 'get',
+        method: 'get'
+      }).then(res => {
+        console.log(res.data.data)
+        this.commit('SET_MY_PETSITTER', res.data.data);
       })
     },
     handleMomentEdit(state,payload){
@@ -352,6 +374,27 @@ export default new Vuex.Store({
         console.log(res.data)
         this.$router.push({name:'MyPetsitterList'})
     })
+    },
+    bringMyDogging() {
+      return axios({
+        url: "/dogging",
+        method: "get"
+      })
+    },
+    requestUserSearch(state,payload){
+      return axios({
+        method:'get',
+        url:`/users/searchUserId/${payload}`
+      })
+    },
+    bringDoggingDetail(state, payload) {
+      axios({
+        url: "/dogging/detail",
+        method: "get",
+        params: {
+          doggingId : payload
+        }
+      })
     }
 
 

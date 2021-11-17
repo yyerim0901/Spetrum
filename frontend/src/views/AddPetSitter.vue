@@ -1,7 +1,6 @@
 <template>
     <div class="PET-Wrapper">
         <Header :isLogo="false" :isBack="true" title="겟! 시터 글 작성"></Header>
-        <hr>
         <div style="width:400px;">
             <div class="addbox">
                 <img :src="this.imgprev" alt="" class="prev-img">

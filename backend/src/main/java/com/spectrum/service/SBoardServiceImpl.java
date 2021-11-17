@@ -59,7 +59,8 @@ public class SBoardServiceImpl implements SBoardService {
     public SBoard createSBoard(User user, SBoardRegisterReq sboardinfo, List<MultipartFile> sboardfiles) throws IOException {
         SBoard sBoard = new SBoard();
         sBoard.setUser(user);
-        sBoard.setContent(sboardinfo.getContent());
+        String content = sboardinfo.getContent().replace("\r\n","<br>");
+        sBoard.setContent(content);
         sBoard.setCreated(new Date());
         sBoard.setUpdated(new Date());
         sBoard.setLikes(0);
@@ -99,7 +100,8 @@ public class SBoardServiceImpl implements SBoardService {
     public SBoard putSBoard(User user, SBoardPutReq sboardinfo, Long sboardid) {
         SBoard sBoard = sBoardRepository.getById(sboardid);
         sBoard.setUser(user);
-        sBoard.setContent(sboardinfo.getContent());
+        String content = sboardinfo.getContent().replace("\n","<br>");
+        sBoard.setContent(content);
         sBoard.setUpdated(new Date());
         SBoard tmpsboard =  sBoardRepository.save(sBoard);
         // 사진은 수정 못하게 하자.

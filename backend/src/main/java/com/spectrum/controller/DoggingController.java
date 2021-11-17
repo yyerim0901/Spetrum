@@ -21,6 +21,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -125,9 +128,9 @@ public class DoggingController {
     )
     @PostMapping("/image")
     public ResponseEntity<?> customImageTest(@ApiParam(value = "imageTest", required = true) MultipartFile multipartFile,
-                                             @RequestParam Long doggingId) throws IOException{
-
-        doggingService.customImage(multipartFile,doggingId);
+                                             @RequestParam String userid) throws IOException{
+        System.out.println(userid);
+        doggingService.customImage(multipartFile,userid);
         return new ResponseEntity<String>("success to make Image",HttpStatus.OK);
     }
 

@@ -18,7 +18,7 @@ import java.util.List;
 public class Dogging extends BaseEntity {
 
     private float distance;
-    private int time;
+    private String time;
     private Date date;
     private String location;
     private String customPicturePath;

@@ -1,19 +1,26 @@
 import styled from 'vue-styled-components'
 import theme from '../../../styles/common'
 
-export const Container = styled.div`
-  position: fixed;
-  z-index:9999;
+export const Foot = styled.div`
+  height: 50px;
+  width:100%;
+  text-align:center;
+  display:flex;
+  flex-direction: column-reverse;
+  position:absolute;
   bottom:0;
-  height: 60px;
+`;
+
+export const Container = styled.div`
+  position:fixed;
+  bottom:0;
   width:500px;
   display:flex;
   justify-content: center;
   justify-items:center;
   align-itmes: center;
   background-color: white;
-  margin:10px 10px;
-  padding-top:10px;
+  padding-top:7px;
   img{
     width:30px;
   }
