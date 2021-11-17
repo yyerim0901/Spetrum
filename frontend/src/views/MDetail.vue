@@ -1,7 +1,6 @@
 <template>
   <div class="Moment-Wrapper">
     <Header :isBack="true" title="MY MOMENT" :isLogo="false"></Header>
-    <hr>
     <div style="width:100%; display:flex; flex-direction:column;  overflow-y:scroll">
       <div style="display:flex; margin:2px 0 2px 20px; align-items:center; justify-content:flex-start">
         <img :src="getthumbnail()" alt="" class="pimg-box-small">

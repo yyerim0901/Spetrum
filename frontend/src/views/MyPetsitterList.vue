@@ -15,7 +15,7 @@
       </div> 
     </div> -->
     <div class="p-box-petsitter">
-      <div class="my-p-box" v-for="mypetsitter in mypetsitters" :key="mypetsitter.id">
+      <div class="my-p-box" v-for="mypetsitter in mypetsitterList" :key="mypetsitter.id">
         <img class="img-box" :src="fullURL(mypetsitter.picture)" alt="사진 안 뜸">
         <div class="in-my-p-box">
           <div class="my-p-text">
@@ -45,6 +45,7 @@ import Footer from '../components/molecules/Footer.vue'
 import Header from '../components/molecules/Header.vue'
 import StyledButton from '../components/atoms/StyledButton'
 import Modal from '../components/molecules/Modal.vue'
+import {mapState} from 'vuex';
 export default {
   name:'MyPetsitter',
   components:{
@@ -64,7 +65,14 @@ export default {
       page:1,
     }
   },
+  computed: {
+    ...mapState(['mypetsitterList']),
+  },
   methods: {
+    refreshAll() {
+            // 새로고침
+            this.$router.go();
+        },
     fullURL(url){
             const full = this.BASE_URL + url;
             return full;
@@ -106,10 +114,7 @@ export default {
     this.userid = localStorage.getItem('userid')
     console.log(this.userid)
     this.$store.dispatch('bringMyPBoard',this.userid)
-    .then(res => {
-      console.log(res.data.data)
-      this.mypetsitters = res.data.data
-    })
+    console.log(this.mypetsitterList)
   }
 }
 </script>
@@ -136,7 +141,7 @@ export default {
     /* margin-left:12%; */
   }
   .in-my-p-box{
-    margin: 15px;
+    margin: 10px;
   }
   .my-p-text{
     margin-left: 13px;

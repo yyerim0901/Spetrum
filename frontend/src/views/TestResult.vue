@@ -1,7 +1,6 @@
 <template>
   <div class="PET-Wrapper">
     <Header :isback="false" :isLogo="false" title="결과보기"/>
-    <hr>
     <div class="result-box">
       <img :src="myanimal.url" alt="" class="animal-img">
       <h3 style="margin:5px 0 0 0; color:#EE9CA7;">{{ recommend}}</h3>
