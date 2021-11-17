@@ -22,6 +22,7 @@ import MyDoggingList from '../views/MyDoggingList'
 import MyPetsitterList from '../views/MyPetsitterList'
 import SearchUser from '../views/SearchUser'
 import MyDoggingDetail from '../views/MyDoggingDetail'
+import FinishDogging from '../views/FinishDogging'
 
 Vue.use(VueRouter)
 
@@ -137,7 +138,12 @@ const routes = [
     path: '/mydogging/detail',
     name: 'MyDoggingDetail',
     component:MyDoggingDetail
-  }
+  },
+  {
+    path: '/finishdogging',
+    name: 'FinishDogging',
+    component:FinishDogging
+  },
 ]
 
 const router = new VueRouter({

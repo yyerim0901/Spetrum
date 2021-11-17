@@ -153,7 +153,6 @@ export default {
             this.doggingflag = false
             console.log(this.totalDistance, this.totalTime, this.location, 'axios보낼 총 거리와 시간 주소@@')
             console.log(this.latlist, this.lnglist, 'axios보낼 array@@@')
-
             const formData = new FormData();
             formData.append('distance', this.totalDistance);
             formData.append('lats', this.latlist);
@@ -170,6 +169,8 @@ export default {
               data: formData,
             }).then(res => {
               console.log(res)
+              let finishedLat = this.latlist;
+              let finishedLng = this.lnglist
               this.totalDistance = 0
               this.totalTime = 0
               this.latlist = []
@@ -179,6 +180,7 @@ export default {
               this.curMin = 0
               this.curSec = 0
               this.location = ''
+              this.$router.push({name:'FinishDogging', params: {finishLat: finishedLat, finishLng : finishedLng}})
             }).catch(err => {
               console.log(err)
             })
