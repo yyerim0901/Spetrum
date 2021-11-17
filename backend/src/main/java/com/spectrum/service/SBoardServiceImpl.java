@@ -111,10 +111,9 @@ public class SBoardServiceImpl implements SBoardService {
     @Override
     public Boolean deleteSBoard(User user, Long sboardid) {
         Optional<SBoard> sb = sBoardRepository.findById(sboardid);
-        if (sb == null){
+        if (sb == null) {
             return false;
         }
-        sBoardRepository.delete(sb.get());
         Optional<List<SBoardFile>> photoList = sBoardFileRepository.findBysBoard(sb.get());
         fileHandler.deleteFile(user, sboardid, photoList);
         if(!photoList.get().isEmpty()){
@@ -122,6 +121,7 @@ public class SBoardServiceImpl implements SBoardService {
                 // 파일을 DB에 저장
                 sBoardFileRepository.delete(photo);
         }
+        sBoardRepository.delete(sb.get());
         return true;
     }
 
