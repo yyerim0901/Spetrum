@@ -101,7 +101,7 @@ public class DoggingServiceImpl implements DoggingService{
 
 
     @Override
-    public void customImage(MultipartFile multipartFile, String userid) throws IOException{
+    public Dogging customImage(MultipartFile multipartFile, String userid) throws IOException{
 
         User user = userService.findUserByUserId(userid);
         Long userId = user.getId();
@@ -112,6 +112,8 @@ public class DoggingServiceImpl implements DoggingService{
         String path = customImage.customImage(multipartFile, dogging);
         dogging.setCustomPicturePath(path);
         doggingRepository.save(dogging);
+
+        return dogging;
     }
 
 
