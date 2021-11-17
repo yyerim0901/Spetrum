@@ -24,6 +24,7 @@ import Chat from '../views/Chat'
 import SearchUser from '../views/SearchUser'
 import MyDoggingDetail from '../views/MyDoggingDetail'
 import FinishDogging from '../views/FinishDogging'
+import TodayDogging from '../views/TodayDogging'
 
 Vue.use(VueRouter)
 
@@ -148,6 +149,11 @@ const routes = [
     path: '/finishdogging',
     name: 'FinishDogging',
     component:FinishDogging
+  },
+  {
+    path: '/TodayDogging',
+    name: 'TodayDogging',
+    component:TodayDogging
   },
 ]
 
