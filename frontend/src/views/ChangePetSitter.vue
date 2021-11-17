@@ -1,7 +1,6 @@
 <template>
     <div class="Moment-Wrapper">
         <Header :isLogo="false" :isBack="true" title="겟! 시터 글 수정"></Header>
-        <hr>
         <div style="width:400px;">
             <div class="addbox">
                 <img :src="this.imgprev" alt="" class="prev-img">

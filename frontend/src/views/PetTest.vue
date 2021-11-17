@@ -1,7 +1,6 @@
 <template>
   <div class="Q-Wrapper">
     <Header :isBack="isBack" :isLogo="false" title="펫피티아이"/>
-    <hr>
     <div class="q-box">
       <h3 v-for="q in question" :key="q.index">{{ q }}</h3>
       <div class="btn-box">

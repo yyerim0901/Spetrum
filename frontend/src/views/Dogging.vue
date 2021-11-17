@@ -7,6 +7,7 @@
   </div>
 </template>
 
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script>
 import Footer from '../components/molecules/Footer.vue'
 import Header from '../components/molecules/Header.vue'

@@ -1,7 +1,6 @@
 <template>
   <div class="Moment-Wrapper">
     <Header :isLogo="false" :isBack="true" title="ADD MOMENT"></Header>
-    <hr>
     <div>
       <div class="addbox">
         <img :src="this.imgprev" alt="" class="prev-img">
