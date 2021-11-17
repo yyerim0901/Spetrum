@@ -144,8 +144,10 @@ export default {
               }
             })
           } else {
-            navigator.geolocation.clearWatch(this.watchId)
             // 도깅을 멈추고 완료할 때
+            navigator.geolocation.clearWatch(this.watchId)
+            //kakaomap의 watchposition도 종료
+            navigator.geolocation.clearWatch(this.liveWatchId)
             // components의 데이터 초기화해야함
             this.doggingflag = false
             console.log(this.totalDistance, this.totalTime, this.location, 'axios보낼 총 거리와 시간 주소@@')
@@ -159,7 +161,7 @@ export default {
             formData.append('location', this.location);
             
             axios({
-              url: 'http://spetrum.io:8080/api/dogging/',
+              url: 'https://spetrum.io:8080/api/dogging/',
               method: 'POST',
               headers: {
                 "Authorization": localStorage.getItem("token")
@@ -186,7 +188,7 @@ export default {
       },
       initMap() {
         if (navigator.geolocation) {
-          navigator.geolocation.watchPosition(function(pos) {
+          this.liveWatchId = navigator.geolocation.watchPosition(function(pos) {
             var lat = pos.coords.latitude,
                 lon = pos.coords.longitude;
             var container = document.getElementById('map');
