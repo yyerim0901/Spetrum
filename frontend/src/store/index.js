@@ -7,6 +7,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    finishLat : [],
+    finishLng : [],
     petpage: 0,
     Boards: [],
     userInfo:{
