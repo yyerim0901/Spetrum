@@ -43,8 +43,8 @@ public class CustomImage extends JPanel {
         String location = dogging.getLocation();
         g.drawString(location,width/10,height-(height/5)+200);
         //소요 시간
-        String time = Integer.toString(dogging.getTime());
-        g.drawString(time+"시간", width/10,height-(height/5)+100);
+        String time = dogging.getTime();
+        g.drawString(time, width/10,height-(height/5)+100);
         //거리
         String distance = Float.toString(dogging.getDistance());
         g.drawString(distance+"km",width/10,height-(height/5));

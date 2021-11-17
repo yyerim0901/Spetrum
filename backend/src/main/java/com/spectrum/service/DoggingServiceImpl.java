@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,11 +37,19 @@ public class DoggingServiceImpl implements DoggingService{
     private UserRepository userRepository;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private JWTUtil jwtUtil;
+
+    private EntityManager em;
 
     private static User user;
     private static String filePath = "src/main/resources/";
     String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/";
+
+    public DoggingServiceImpl() {
+    }
 
     @Override
     public void saveUserInfo(String token){
@@ -88,11 +98,15 @@ public class DoggingServiceImpl implements DoggingService{
         doggingRepository.save(dogging);
     }
 
-    @Override
-    public void customImage(MultipartFile multipartFile, Long doggingId) throws IOException{
 
-        Optional<Dogging> doggingOptional = doggingRepository.findById(doggingId);
-        Dogging dogging = doggingOptional.get();
+
+    @Override
+    public void customImage(MultipartFile multipartFile, String userid) throws IOException{
+
+        User user = userService.findUserByUserId(userid);
+        Long userId = user.getId();
+
+        Dogging dogging = doggingRepository.findFirstByUserIdOrderByDateDesc(userId);
 
         CustomImage customImage = new CustomImage();
         String path = customImage.customImage(multipartFile, dogging);
