@@ -49,7 +49,7 @@ export default {
             for (var i = 0; i < latlen; i ++) {
                 var forline = new kakao.maps.LatLng(forlats[i], forlngs[i])
                 centerlat += forlats[i]
-                centerlng += forlngs
+                centerlng += forlngs[i]
                 console.log(i, '번째에서', forlats[i], forlngs[i], '가 추가됩니다.')
                 linePath.push(forline)
             }
@@ -58,7 +58,7 @@ export default {
             console.log(centerlat, centerlng, '나눈 값', typeof(centerlat))
             console.log(linePath, '라인에 추가후!')
             var mapOption = {
-                center: new kakao.maps.LatLng(35.4722662, 128.7412803), //지도에 찍힐 위치
+                center: new kakao.maps.LatLng(centerlat, centerlng), //지도에 찍힐 위치
                 // 33.450701, 126.570667
                 level: 5 //지도 확대 수준(기본이 3)
             }; 
