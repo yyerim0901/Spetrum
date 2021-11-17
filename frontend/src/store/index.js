@@ -283,6 +283,14 @@ export default new Vuex.Store({
         console.log(err)
       })
     },
+    userme(state){
+      console.log("★★★")
+      console.log(state)
+      axios({
+        url: '/users/me',
+        method:'GET',
+      })
+    },
     logout() {
       axios({
         url:'/users/logout',

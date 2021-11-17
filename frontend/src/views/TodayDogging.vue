@@ -2,6 +2,10 @@
   <div class="Dogging-Wrapper">
       <Header :isLogo="false" :isBack="false" title="도깅"></Header>
       <h3>오늘의 도깅</h3>
+      <div class="addbox">
+        <img :src="this.imgprev" alt="" class="prev-img">
+        <input  type="file" @change="imageChange" ref="profileImage">
+      </div>
       <StyledButton btype="medium" bcolor="babypink">공유하개</StyledButton>
       <StyledButton btype="medium" bcolor="babypink">저장하개</StyledButton>
   </div>
@@ -10,11 +14,28 @@
 <script>
 import Header from '../components/molecules/Header.vue'
 import StyledButton from '../components/atoms/StyledButton'
+import axios from 'axios'
 export default {
     name: "TodayDogging",
     components: {
         Header,
         StyledButton,
+    },
+    data(){
+        return{
+            addimage:null,
+            imgprev:null,
+            contents:null,
+        }
+    },
+    methods: {
+        imageChange(){
+            this.addimage = this.$refs.profileImage.files[0];
+            console.log(this.addimage);
+            if (this.addimage) {
+                this.imgprev = URL.createObjectURL(this.addimage);
+            }
+        },        
     }
 }
 </script>

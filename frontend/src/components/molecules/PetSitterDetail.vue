@@ -10,6 +10,8 @@
 </template>
 
 <script>
+
+
 export default {
     name: "PetSitterDetail",
     data () {
@@ -17,6 +19,7 @@ export default {
             BASE_URL : 'https://spetrum.io/resources/',
         }
     },
+
     props: {
         board: {
             type:Object,
@@ -35,6 +38,7 @@ export default {
             const full = this.BASE_URL + url;
             return full;
         },
+
     }
 
 }

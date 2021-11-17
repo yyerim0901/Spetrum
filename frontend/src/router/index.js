@@ -20,6 +20,7 @@ import ChangePetSitter from '../views/ChangePetSitter'
 import UpdateUserInfo from '../views/UpdateUserInfo'
 import MyDoggingList from '../views/MyDoggingList'
 import MyPetsitterList from '../views/MyPetsitterList'
+import Chat from '../views/Chat'
 import SearchUser from '../views/SearchUser'
 import MyDoggingDetail from '../views/MyDoggingDetail'
 import FinishDogging from '../views/FinishDogging'
@@ -66,14 +67,14 @@ const routes = [
     component: MDetail,
   },
   {
-    path: '/moment/:userid',
-    name:'YourMoment',
-    component: YourMoment,
-  },
-  {
     path: '/moment/board/edit/:boardid/',
     name:'EditMoment',
     component: EditMoment,
+  },
+  {
+    path: '/moment/:userid',
+    name:'YourMoment',
+    component: YourMoment,
   },
   {
     path: '/dogging',
@@ -131,6 +132,10 @@ const routes = [
     component : MyPetsitterList
   },
   {
+    path: '/chat/:roomname',
+    name: 'Chat',
+    component : Chat
+  },{
     path: '/user/search',
     name: 'SearchUser',
     component : SearchUser
