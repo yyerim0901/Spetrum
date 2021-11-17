@@ -33,7 +33,8 @@ export default {
         imageChange(){
             this.addimage = this.$refs.profileImage.files[0];
             if (this.addimage) {
-                this.imgprev = URL.createObjectURL(this.addimage);
+                // this.imgprev = URL.createObjectURL(this.addimage);
+                console.log(this.imgprev)
                 const formData = new FormData();
                 formData.append('multipartFile', this.addimage);
                 axios({
@@ -50,8 +51,9 @@ export default {
                     }
                 }).then(res => {
                     console.log(res.data)
-                    console.log(typeof(res.data.customPicturePath), 'path의 타입')
-                    console.log(res.data.customPicturePath.slice(58), '슬라이싱 하면 뭐가나옴?')
+                    let imageUrl = res.data.customPicturePath.slice(58)
+                    this.imgprev = 'https://spetrum.io/resources/' + imageUrl
+                    console.log(this.imgprev, '들어가는 이미지 경로')
                 })
             }
         },        
