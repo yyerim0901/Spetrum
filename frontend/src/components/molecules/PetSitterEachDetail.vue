@@ -10,6 +10,7 @@
                     <i class="fas fa-trash" style="margin:0 0 0 10px;" @click="deletePetSitter"></i>
                 </span>
             </div>
+            <p @click="chatting()" style="width: 420px; text-align:right;">작성자 : {{ board.data.user.userId }}</p>
             <p style="width: 420px; text-align:right;">작성일자 : {{ board.data.created.substr(0,10) }}</p>
             <textarea style="text-align:start; border:solid; border-width:1px 0; border-color:#E5EAEF; width: 420px; height: 120px;" :value="board.data.content" readonly></textarea>
 
@@ -50,6 +51,7 @@ export default {
             isActive: 3,
             inputContent: '',
             BASE_URL : 'https://spetrum.io/resources/',
+            myid:"",
         }
     },
     methods: {
@@ -62,6 +64,7 @@ export default {
                 },
             }).then(res => {
                 this.board = res.data
+                console.log(res);
             }).catch(err => {
                 console.log(err)
             })
@@ -129,6 +132,25 @@ export default {
                 params: {
                     board_id: this.boardId,
                 }
+            })
+        },
+        chatting()
+        {
+            axios({
+                method: "GET",
+                url: '/users/me',
+                headers: {
+                    "Authorization": localStorage.getItem("token")
+                },
+            }).then(res => {
+                this.myid = res.data.user.userId;
+
+                this.$router.push({
+                name: "Chat",
+                params: {
+                    roomname: this.board.data.user.userId+"_"+this.myid,
+                }
+            })
             })
         }
     },

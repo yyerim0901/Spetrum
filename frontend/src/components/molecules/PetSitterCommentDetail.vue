@@ -1,6 +1,7 @@
 <template>
   <div style="display: flex; justify-content: flex-start; font-size: 13.3px; width:420px;">
       <p style="font-size: 13.3px;">{{ comment.content }} - {{ comment.user.userId }}</p>
+        <StyledButton btype="realsmall" bcolor="babypink" @click="chatstart(comment.user.userId)">채팅</StyledButton>
       <input v-if="commentFlag" type="text" :placeholder=comment.content v-model="changedComment">
       <div v-if="comment.user.userId == this.userid">
         <button v-if="!commentFlag" @click="deleteComment">&nbsp;삭제&nbsp;</button>|
@@ -12,6 +13,7 @@
 
 <script>
 import axios from '../../axios/index';
+import StyledButton from '../atoms/StyledButton'
 export default {
     data() {
         return {
@@ -19,6 +21,9 @@ export default {
             commentFlag: false,
             changedComment: '',
         }
+    },
+    components: {
+        StyledButton
     },
     props: {
         comment: {
@@ -62,6 +67,16 @@ export default {
                 this.$router.go();
             }).catch(err => {
                 console.log(err)
+            })
+        },
+        chatstart(userid)
+        {
+            console.log(userid);
+            this.$router.push({
+                name: "Chat",
+                params: {
+                    roomname: this.userid+"_"+userid,
+                }
             })
         }
     }

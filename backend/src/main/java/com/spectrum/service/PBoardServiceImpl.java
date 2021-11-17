@@ -44,8 +44,8 @@ public class PBoardServiceImpl implements PBoardService {
     @Autowired
     private JWTUtil jwtUtil;
 
-   String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/";
-    // String BASE_PATH = new File("").getAbsolutePath() + "/src/main/resources/";
+//   String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/";
+     String BASE_PATH = new File("").getAbsolutePath() + "/src/main/resources/";
 
     private final EntityManager em;
 

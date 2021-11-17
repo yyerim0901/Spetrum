@@ -10,6 +10,7 @@ import com.spectrum.common.request.UserUpdateReq;
 import com.spectrum.common.response.UesrInfoResponse;
 import com.spectrum.common.response.UserResponse;
 import com.spectrum.entity.User;
+import com.spectrum.repository.UserRepository;
 import com.spectrum.service.UserService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -42,7 +44,7 @@ public class UserController {
     private JWTUtil jwtUtil;
 
     @Autowired
-    private CookieUtil cookieUtil;
+    private UserRepository userRepository;
 
     @Autowired
     RedisUtil redisUtil;
@@ -115,6 +117,20 @@ public class UserController {
         }
         return ResponseEntity.ok(UesrInfoResponse.of(user,followList,followerList));
     }
+
+    @GetMapping("/me")
+    @ApiOperation(value = "회원정보 검색", notes = "회원정보를 조회한다")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+    })
+    public ResponseEntity<UesrInfoResponse> me(@ApiIgnore HttpServletRequest request){
+        String token = request.getHeader(HttpHeaders.AUTHORIZATION);
+        String userid = jwtUtil.getUsername(token);
+        Optional<User> user = userRepository.findByUserId(userid);
+        System.out.println("토큰으로 회원정보");
+        return ResponseEntity.ok(UesrInfoResponse.of(user.get()));
+    }
+
 
     @GetMapping("/searchUserId/{userid}")
     @ApiOperation(value = "회원정보 검색", notes = "userid가 포함되어있는 회원 id를 조회한다")

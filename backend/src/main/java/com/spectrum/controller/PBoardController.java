@@ -1,6 +1,10 @@
 package com.spectrum.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spectrum.common.jwt.JWTUtil;
+import com.spectrum.common.jwt.RedisUtil;
+import com.spectrum.common.request.ChatReq;
+import com.spectrum.common.request.ChatSaveReq;
 import com.spectrum.common.request.PBoardPostReq;
 import com.spectrum.common.request.PBoardUpdateReq;
 import com.spectrum.common.response.PBoardResponse;
@@ -9,9 +13,8 @@ import com.spectrum.service.PBoardService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.json.HTTP;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -24,6 +27,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.io.Reader;
 import java.util.List;
 
 
@@ -37,6 +41,15 @@ public class PBoardController {
 
     @Autowired
     private JWTUtil jwtUtil;
+
+    @Autowired
+    private RedisUtil redisUtil;
+
+    private final RedisTemplate<String, Object> redisTemplate;
+
+    public PBoardController(RedisTemplate<String, Object> redisTemplate) {
+        this.redisTemplate = redisTemplate;
+    }
 
     @ApiOperation(
             value = "거리순 글 정렬 TEST API",
@@ -162,5 +175,38 @@ public class PBoardController {
         return new PBoardResponse("상태 변경 완료",status,HttpStatus.OK);
     }
 
+    @PostMapping("/saveChat")
+    private ResponseEntity<String> saveChat(
+            @RequestBody ChatSaveReq chatRecode,
+            HttpServletRequest request) throws Exception {
+        System.out.println("???");
 
+//        for (ChatReq list : chatRecode.getChatList())
+//        {
+//            System.out.println(list.getUserName());
+//            System.out.println(list.getContent());
+//        }
+//        System.out.println(chatRecode.getRoomname());
+        String roomname = chatRecode.getRoomname();
+        List<ChatReq> chatlist= chatRecode.getChatList();
+        redisUtil.deleteData(roomname);
+        String s = "";
+        for(int i=0; i<chatlist.size();i++)
+        {
+            s = s + chatlist.get(i).toString();
+        }
+        System.out.println(s);
+        redisUtil.setData(roomname,s);
+//        redisTemplate.opsForList().rightPush(roomname, chatRecode.getChatList());
+
+
+        return new ResponseEntity<>("post petsitter success", HttpStatus.OK);
+    }
+    @GetMapping("/loadChat/{roomname}")
+    private ResponseEntity<String> loadChat(@PathVariable String roomname) throws Exception {
+        String s = redisUtil.getData(roomname);
+        System.out.println(s);
+
+        return new ResponseEntity<>(s, HttpStatus.OK);
+    }
 }
