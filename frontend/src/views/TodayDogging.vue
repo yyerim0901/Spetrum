@@ -7,7 +7,7 @@
         <input  type="file" @change="imageChange" ref="profileImage">
       </div>
       <StyledButton btype="medium" bcolor="babypink">공유하개</StyledButton>
-      <StyledButton btype="medium" bcolor="babypink">저장하개</StyledButton>
+      <StyledButton btype="medium" bcolor="babypink" @click="downDogging">저장하개</StyledButton>
   </div>
 </template>
 
@@ -27,6 +27,7 @@ export default {
             addimage:null,
             imgprev:null,
             contents:null,
+            doggingInfo : {},
         }
     },
     methods: {
@@ -50,13 +51,27 @@ export default {
                         userid: 'ktest'
                     }
                 }).then(res => {
-                    console.log(res.data)
+                    this.doggingInfo = res.data
                     let imageUrl = res.data.customPicturePath.slice(58)
                     this.imgprev = 'https://spetrum.io/resources/' + imageUrl
                     console.log(this.imgprev, '들어가는 이미지 경로')
                 })
             }
-        },        
+        },
+        downDogging() {
+            axios({
+                url: 'https://spetrum.io:8080/api/dogging/download',
+                method: 'GET',
+                headers: {
+                    'Authorization':localStorage.getItem('token'),
+                },
+                params: {
+                    doggingId : this.doggingInfo.id
+                }
+            }).then(res => {
+                console.log(res)
+            })
+        }        
     },
     computed: {
         ...mapState([
