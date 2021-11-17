@@ -15,6 +15,7 @@
 import Header from '../components/molecules/Header.vue'
 import StyledButton from '../components/atoms/StyledButton'
 import axios from 'axios'
+import { mapState } from 'vuex'
 export default {
     name: "TodayDogging",
     components: {
@@ -31,12 +32,33 @@ export default {
     methods: {
         imageChange(){
             this.addimage = this.$refs.profileImage.files[0];
-            console.log(this.addimage);
             if (this.addimage) {
                 this.imgprev = URL.createObjectURL(this.addimage);
+                const formData = new FormData();
+                formData.append('multipartFile', this.addimage);
+                axios({
+                    url: 'https://spetrum.io:8080/api/dogging/image',
+                    method: 'POST',
+                    headers:{
+                        'Content-Type': 'multipart/form-data',
+                        'Access-Control-Allow-Origin':'*',
+                        'Authorization':localStorage.getItem('token'),
+                    },
+                    data: formData,
+                    params: {
+                        userid: 'ktest'
+                    }
+                }).then(res => {
+                    console.log(res)
+                })
             }
         },        
-    }
+    },
+    computed: {
+        ...mapState([
+            'userInfo',
+        ])
+    },
 }
 </script>
 

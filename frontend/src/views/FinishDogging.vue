@@ -3,8 +3,8 @@
       <Header :isLogo="false" :isBack="false" title="도깅"></Header>
       <h3>도깅완료!!</h3>
       <div id="map" style="width:500px;height:400px;"></div>
-      <StyledButton btype="medium" bcolor="babypink">뒤로가개</StyledButton>
-      <StyledButton btype="medium" bcolor="babypink">기록하개</StyledButton>
+      <StyledButton btype="medium" bcolor="babypink" @click="moveToDogging">뒤로가개</StyledButton>
+      <StyledButton btype="medium" bcolor="babypink" @click="moveToTodayDogging">기록하개</StyledButton>
   </div>
 </template>
 
@@ -74,7 +74,10 @@ export default {
             
         },
         moveToTodayDogging() {
-            this.$router.push({name:"moveToTodayDogging"})
+            this.$router.push({name:"TodayDogging"})
+        },
+        moveToDogging() {
+            this.$router.push({name:"Dogging"})
         }
         
 
