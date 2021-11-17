@@ -49,7 +49,9 @@ export default {
                         userid: 'ktest'
                     }
                 }).then(res => {
-                    console.log(res)
+                    console.log(res.data)
+                    console.log(typeof(res.data.customPicturePath), 'path의 타입')
+                    console.log(res.data.customPicturePath.slice(58), '슬라이싱 하면 뭐가나옴?')
                 })
             }
         },        
