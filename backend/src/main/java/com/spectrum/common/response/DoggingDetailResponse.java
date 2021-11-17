@@ -16,5 +16,4 @@ public class DoggingDetailResponse {
     private String picture;
     private Object[] objects;
 
-
 }
