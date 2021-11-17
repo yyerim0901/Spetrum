@@ -1,14 +1,13 @@
 <template>
   <div>
     <Header :isLogo="false" :isBack="false" title="채팅"/>
-    <div>
-    <hr>
+    <div style="height: 100vh;">
     <br>
-    <div
+    <div style="margin-left: 20px; margin-right: 20px;"
       v-for="(item, idx) in recvList"
       :key="idx"
     >
-      <h3 v-if="item.userName == userName"> ★ {{ item.userName }} : {{ item.content }}</h3>
+      <h3 style="text-align:right;" v-if="item.userName == userName"> {{ item.content }}</h3>
       <h3 v-else> {{ item.userName }} : {{ item.content }}</h3>
     </div>
     <!-- 유저이름: 
@@ -16,18 +15,21 @@
       v-model="userName"
       type="text"
     > -->
+    <div style="text-align: center">
     {{this.userName}} <input
       v-model="message"
       type="text"
       @keyup="sendMessage"
     >
+    </div>
     <div style="text-align: center">
         <StyledButton btype="realsmall" bcolor="babypink" @click="close()">채팅종료</StyledButton>
     </div>
 
 
-    <Footer :isActive="isActive"/>
+    
   </div>
+  <Footer :isActive="isActive" style="margin:0"/>
   </div>
 </template>
 
@@ -62,6 +64,7 @@ export default {
     // App.vue가 생성되면 소켓 연결을 시도합니다.
     this.connect()
     this.getuserinfo()
+    this.loadChat()
   },
   methods: {
     sendMessage (e) {
@@ -82,43 +85,55 @@ export default {
     },    
     close()
     {
-      const listdata = [];
+      const url = document.location.href.split("chat/")[1];
+      console.log(url);
+
+      const listdata = {"chatList":[],"roomname":''};
       console.log("close 실행")
       this.recvList.forEach(element => {
-        listdata.push({'userName':element.userName,
+        listdata.chatList.push({'userName':element.userName,
                       'content':element.content})
       });
-      console.log(listdata);
-      const formdata = new FormData();
-      formdata.append('chatList',listdata);
 
-      axios({
-        method: "POST",
-        url: '/pboard/saveChat',
-        headers: {
-          "Authorization": localStorage.getItem("token")
-        },
-        data: formdata,
-      }).then(res => {
+      listdata.roomname = url;
+      console.log(listdata);
+      console.log(typeof(listdata));
+
+      axios.post("/pboard/saveChat",listdata)
+      .then(res => {
         console.log(res);
         this.$router.go(-1)
+      })
+
+    },
+    loadChat()
+    {
+      const url = document.location.href.split("chat/")[1];
+      axios.get(`/pboard/loadChat/${url}`)
+      .then(res=>{
+        const list = res.data.split("┐");
+        for (let i = 0; i < list.length; i++) {
+          const objData = JSON.parse(list[i]);
+          console.log(objData);
+          this.recvList.push(objData);
+        }
+
       })
     },
     getuserinfo()
     {
       axios({
-                method: "GET",
-                url: '/users/me',
-                headers: {
-                    "Authorization": localStorage.getItem("token")
-                },
-            }).then(res => {
-                this.userName = res.data.user.nickname;
-                console.log(res);
-            })
+        method: "GET",
+        url: '/users/me',
+        headers: {
+            "Authorization": localStorage.getItem("token")
+        },
+      }).then(res => {
+        this.userName = res.data.user.nickname;
+      })
     },
     connect() {
-      const serverURL = "http://localhost:8080/chat"
+      const serverURL = "https://spetrum.io:8080/chat"
       let socket = new SockJS(serverURL);
       this.stompClient = Stomp.over(socket);
       console.log(`소켓 연결을 시도합니다. 서버 주소: ${serverURL}`)

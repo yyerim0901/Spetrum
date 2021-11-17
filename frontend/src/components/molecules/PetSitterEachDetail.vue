@@ -142,7 +142,7 @@ export default {
                     "Authorization": localStorage.getItem("token")
                 },
             }).then(res => {
-                this.myid = res.data.user.nickname;
+                this.myid = res.data.user.userId;
 
                 this.$router.push({
                 name: "Chat",

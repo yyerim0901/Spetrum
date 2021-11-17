@@ -1,11 +1,13 @@
 package com.spectrum.common.jwt;
 
+import com.spectrum.common.request.ChatReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.util.List;
 
 @Service
 public class RedisUtil {
