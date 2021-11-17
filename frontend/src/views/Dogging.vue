@@ -4,7 +4,7 @@
     <div v-if="doggingflag">
       <div>
         <p>도깅 시간</p>
-        <h2>{{ curMin }} : {{ curSec }}</h2>
+        <h2>{{ formattedElapsedTime }}</h2>
       </div>
       <div>
         <p>도깅 거리</p>
@@ -53,6 +53,10 @@ export default {
       curDistance : 0,
       liveWatchId : '',
       location : '',
+      elapsedTime: 0,
+      timer: undefined,
+      timecheck: '',
+      initMapflag: false,
     }
   },
     mounted() { 
@@ -61,7 +65,10 @@ export default {
       } else {
         const script = document.createElement('script'); 
         /* global kakao */ 
-        script.onload = () => kakao.maps.load(this.initMap); 
+        script.onload = () =>{
+          kakao.maps.load(this.initMap); 
+          console.log('이거 계속 로드됨???')
+        } 
         script.src = '//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=8b07795e21cc36039de160da0cd01ffd&libraries=services';
         document.head.appendChild(script); 
       }
@@ -75,6 +82,9 @@ export default {
               locationFlag = false;
           if (this.doggingflag === false) {
             // 도깅을 시작할 때
+            this.timer = setInterval(() => {
+              this.elapsedTime += 1000;
+            }, 1000);
             this.doggingflag = true
             this.watchId = navigator.geolocation.watchPosition(function(pos) {
               if (lat !== pos.coords.latitude || lng !== pos.coords.longitude) {
@@ -145,18 +155,25 @@ export default {
             })
           } else {
             // 도깅을 멈추고 완료할 때
+
+            // 타이머종료
+            clearInterval(this.timer);
+            this.elapsedTime = 0;
+            const date = new Date(null);
+            date.setSeconds(this.elapsedTime / 1000);
+            const utc = date.toUTCString();
             navigator.geolocation.clearWatch(this.watchId)
             //kakaomap의 watchposition도 종료
             navigator.geolocation.clearWatch(this.liveWatchId)
             // components의 데이터 초기화해야함
             this.doggingflag = false
-            console.log(this.totalDistance, this.totalTime, this.location, 'axios보낼 총 거리와 시간 주소@@')
+            console.log(this.totalDistance, this.totalTime, utc.substr(utc.indexOf(":") - 2, 8), 'axios보낼 총 거리와 시간 주소@@')
             console.log(this.latlist, this.lnglist, 'axios보낼 array@@@')
             const formData = new FormData();
             formData.append('distance', this.totalDistance);
             formData.append('lats', this.latlist);
             formData.append('lngs', this.lnglist);
-            formData.append('time', this.totalTime);
+            formData.append('time', utc.substr(utc.indexOf(":") - 2, 8));
             formData.append('location', this.location);
             
             axios({
@@ -174,10 +191,8 @@ export default {
               this.totalTime = 0
               this.latlist = []
               this.lnglist = []
-              this.curTime = 0
               this.curDistance = 0
-              this.curMin = 0
-              this.curSec = 0
+              this.elapsedTime = 0
               this.location = ''
               this.$router.push({name:'FinishDogging', params: {finishLat: finishedLat, finishLng : finishedLng}})
             }).catch(err => {
@@ -190,21 +205,26 @@ export default {
       },
       initMap() {
         if (navigator.geolocation) {
+          let container = document.getElementById('map');
+          let map = new kakao.maps.Map(container, { 
+            center : new kakao.maps.LatLng(36.355064085731115, 127.29836175557786),
+            level: 3
+            });
+          var imageSrc = require('@/assets/corgi.png'), // 마커이미지의 주소입니다    
+              imageSize = new kakao.maps.Size(30, 30), // 마커이미지의 크기입니다
+              imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+          var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+          var marker = new kakao.maps.Marker({ position: map.getCenter(), image: markerImage }); 
+          marker.setMap(map); 
+          
           this.liveWatchId = navigator.geolocation.watchPosition(function(pos) {
+            console.log('실행이 되고 있어 watchposition??')
             var lat = pos.coords.latitude,
                 lon = pos.coords.longitude;
-            var container = document.getElementById('map');
-            var options = {
-              center: new kakao.maps.LatLng(lat, lon),
-              level: 3
-            };
-            var map = new kakao.maps.Map(container, options);
-            var imageSrc = require('@/assets/corgi.png'), // 마커이미지의 주소입니다    
-                imageSize = new kakao.maps.Size(30, 30), // 마커이미지의 크기입니다
-                imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
-            var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
-            var marker = new kakao.maps.Marker({ position: map.getCenter(), image: markerImage }); 
-            marker.setMap(map); 
+            
+            const currentPosition = new kakao.maps.LatLng(lat, lon);
+            map.setCenter(currentPosition)
+            marker.setPosition(currentPosition);
           })
         } else {
           alert('위치를 받을 수 없습니다')
@@ -213,7 +233,14 @@ export default {
       },
       // 중단하고 재시작 하는 방법
     },
-
+  computed: {
+    formattedElapsedTime() {
+      const date = new Date(null);
+      date.setSeconds(this.elapsedTime / 1000);
+      const utc = date.toUTCString();
+      return utc.substr(utc.indexOf(":") - 2, 8);
+    }
+  }
 }
 </script>
 
