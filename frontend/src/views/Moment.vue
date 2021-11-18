@@ -29,7 +29,7 @@
         {{flist}}
       </div>
     </Modal>
-    <Modal v-if="showModal2" @close="showModal=false">
+    <Modal v-if="showModal2" @close="showModal2=false">
       <div v-for="flist in followerList" :key="flist.id">
         {{flist}}
       </div>
@@ -64,6 +64,7 @@ export default {
       BASE_URL : 'https://spetrum.io/resources/',
       page:1,
       showModal:false,
+      showModal2:false,
 
       followList:[],
       followerList:[],
@@ -135,11 +136,13 @@ export default {
     },
     showFollow()
     {
+      console.log(this.followList)
       this.showModal = true;
     },
     showFollower()
     {
-      this.showModal = true;
+      console.log(this.followerList)
+      this.showModal2 = true;
     }
   },
   // mounted() {
