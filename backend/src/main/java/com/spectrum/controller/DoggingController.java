@@ -35,7 +35,6 @@ import java.util.*;
 @Api(value = "도깅 API", tags = {"Dogging"})
 @RestController
 @RequestMapping("/api/dogging")
-@CrossOrigin(value = {"*"}, exposedHeaders = {"Content-Disposition"})
 public class DoggingController {
 
     @Autowired
