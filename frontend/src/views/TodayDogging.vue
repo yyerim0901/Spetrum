@@ -6,7 +6,7 @@
         <img :src="this.imgprev" alt="" class="prev-img">
         <input  type="file" @change="imageChange" ref="profileImage">
       </div>
-      <FooterButton btype="medium" bcolor="babypink">공유하개</FooterButton>
+      <FooterButton btype="medium" bcolor="babypink" @click="moveToMoment">공유하개</FooterButton>
       <!-- <StyledButton btype="medium" bcolor="babypink" @click="downDogging">저장하개</StyledButton> -->
   </div>
 </template>
@@ -58,6 +58,9 @@ export default {
                 })
             }
         },
+        moveToMoment() {
+            this.$router.push({name:'AddMoment'})
+        }
         // downDogging() {
         //     axios({
         //         url: 'https://spetrum.io:8080/api/dogging/download',
