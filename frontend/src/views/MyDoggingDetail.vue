@@ -14,7 +14,7 @@ import Footer from '../components/molecules/Footer.vue'
 import Header from '../components/molecules/Header.vue'
 import axios from 'axios'
 export default {
-  name:'Dogging',
+  name:'MyDoggingDetail',
   components:{
     Footer,
     Header
