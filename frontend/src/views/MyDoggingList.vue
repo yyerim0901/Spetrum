@@ -47,6 +47,7 @@ export default {
       page : 1,
       mydoggings:[],
       userid:"",
+      BASE_URL : 'https://spetrum.io/resources/',
     }
   },
   created(){
@@ -69,6 +70,14 @@ export default {
       }).then(res => {
         this.mydoggings = res.data
       })
+    },
+    fullURL(url){
+      if (url.length !== 0){
+        var full = this.BASE_URL + url[0].save_file;
+      } else{
+        full = require('@/assets/noimage.png')
+      }
+      return full;
     },
   },
   
