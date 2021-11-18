@@ -83,7 +83,10 @@ export default {
     created() {
         this.$store.dispatch('getBoards')
         this.BringMyLocation()
-    }
+    },
+    mounted() {
+        this.$store.dispatch('getBoards')
+    },
 }
 </script>
 
