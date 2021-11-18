@@ -22,7 +22,6 @@ import MyDoggingList from '../views/MyDoggingList'
 import MyPetsitterList from '../views/MyPetsitterList'
 import Chat from '../views/Chat'
 import SearchUser from '../views/SearchUser'
-import MyDoggingDetail from '../views/MyDoggingDetail'
 import FinishDogging from '../views/FinishDogging'
 import TodayDogging from '../views/TodayDogging'
 
@@ -139,11 +138,6 @@ const routes = [
     path: '/user/search',
     name: 'SearchUser',
     component : SearchUser
-  },
-  {
-    path: '/mydogging/detail/:doggingid',
-    name: 'MyDoggingDetail',
-    component:MyDoggingDetail
   },
   {
     path: '/finishdogging',
