@@ -13,6 +13,9 @@
                 </div>
             </div>
             <hr class="hr-box" style="text-align:start; border:solid; border-width:1px 0; border-color:#E5EAEF;">
+            <div class="null-text" style="margin-bottom:20px;" v-if="PetsitterNull">
+                <h2>주변에 겟!시터가 없다냥. <br>처음으로 글을 작성해보시개</h2>
+            </div>
             <div class="sitter-box-in-second" style="margin-bottom:20px;">
                 <PetSitterDetail v-for="(board, idx) in Boards" :key="idx" :board="board" />
             </div>
@@ -47,7 +50,8 @@ export default {
     computed: {
         ...mapState([
             'Boards',
-            'MyLocation'
+            'MyLocation',
+            'PetsitterNull'
         ])
     },
     methods: {
@@ -107,6 +111,16 @@ export default {
     }
     .sitter-box-in-second{
         width: 100%;
+        padding:0px 60px;
+        display: flex;
+        overflow-y: scroll;
+    }
+    .null-text{
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 500px;
         padding:0px 60px;
         display: flex;
         overflow-y: scroll;

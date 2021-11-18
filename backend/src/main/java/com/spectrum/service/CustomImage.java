@@ -40,13 +40,14 @@ public class CustomImage extends JPanel {
         //(넣을 글자 string, x좌표, y좌표)
         //위치 수동 조절해야 됨
         //지역
-        String location = dogging.getLocation();
+        String[] loc = dogging.getLocation().split(" ");
+        String location = loc[0]+" "+loc[1];
         g.drawString(location,width/10,height-(height/5)+200);
         //소요 시간
         String time = dogging.getTime();
         g.drawString(time, width/10,height-(height/5)+100);
         //거리
-        String distance = Float.toString(dogging.getDistance());
+        String distance = String.format("%.2f",dogging.getDistance());
         g.drawString(distance+"km",width/10,height-(height/5));
 
         //로고 이미지 붙이기
@@ -59,7 +60,7 @@ public class CustomImage extends JPanel {
 
         g.dispose();
 
-        //저장 위치 조절 & 저장되는 이름 사진 하나당 변경되게 바꿀 예정
+        //저장 위치 조절 & 저장되는 이름 사진 하나당 변경
         String userId = Long.toString(dogging.getUser().getId());
         String doggingId = Long.toString(dogging.getId());
         String fileName = userId+"_"+doggingId+".png";
