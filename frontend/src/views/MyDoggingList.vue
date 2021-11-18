@@ -1,6 +1,6 @@
 <template>
   <div class="MyDogging-Wrapper">
-    <Header :isLogo="false" :isBack="false" title="나의 도깅"></Header>
+    <Header :isLogo="false" :isBack="true" title="나의 도깅"></Header>
     <div class="p-box-petsitter">
       <div class="my-p-box" v-for="mydogging in mydoggings" :key="mydogging.id">
         <img class="img-box" :src="fullURL(mydogging.customPicturePath)" alt="사진 안 뜸">

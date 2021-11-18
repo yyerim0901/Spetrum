@@ -132,7 +132,7 @@ export default {
   //     console.log(err)
   //   })
   // },
-  created(){
+  mounted(){
     // this.$store.dispatch('Store/fetchData');
     this.userid = localStorage.getItem('userid');
     // console.log(localStorage.getItem)
