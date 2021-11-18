@@ -132,7 +132,7 @@ export default {
   //     console.log(err)
   //   })
   // },
-  created(){
+  mounted(){
     // this.$store.dispatch('Store/fetchData');
     this.userid = localStorage.getItem('userid');
     // console.log(localStorage.getItem)
@@ -156,29 +156,29 @@ export default {
     // .then(res=>{
     //   this.mywrites = res.data.data;
     // })
-    this.$store.dispatch('requestUser2',this.userid)
-    .then(res=>{
-      const data = {
-            nickname: res.data.user.nickname,
-            thumbnail: res.data.user.thumbnail,
-            introduce: res.data.user.introduce,
-            userid: res.data.user.userId,
-            followList: res.data.followList,
-            followerList: res.data.followerList,
-          }
-        this.$store.commit('SET_USER_INFO',data);
+    // this.$store.dispatch('requestUser2',this.userid)
+    // .then(res=>{
+    //   const data = {
+    //         nickname: res.data.user.nickname,
+    //         thumbnail: res.data.user.thumbnail,
+    //         introduce: res.data.user.introduce,
+    //         userid: res.data.user.userId,
+    //         followList: res.data.followList,
+    //         followerList: res.data.followerList,
+    //       }
+    //     this.$store.commit('SET_USER_INFO',data);
+    //   })
 
-        this.$store.dispatch('bringSBoard',this.page)
-          .then(res=>{
-            this.mywrites = res.data.data;
-            console.log('여기서에러')
-            console.log(res)
-          })
-          .catch(err=>{
-            console.log('나는 게시판 받아오는 에러');
-            console.log(err)
-          })
-      })
+      this.$store.dispatch('bringSBoard',this.page)
+        .then(res=>{
+          this.mywrites = res.data.data;
+          console.log('여기서에러')
+          console.log(res)
+        })
+        .catch(err=>{
+          console.log('나는 게시판 받아오는 에러');
+          console.log(err)
+        })
   },
 }
 </script>
