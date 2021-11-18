@@ -143,11 +143,15 @@ export default {
     showFollow()
     {
       console.log(this.followList)
+      console.log(typeof(this.followList));
+      console.log(typeof(this.userInfo.followList));
       this.showModal = true;
     },
     showFollower()
     {
       console.log(this.followerList)
+      console.log(typeof(this.followerList));
+      console.log(typeof(this.userInfo.followerList));
       this.showModal2 = true;
     }
   },
