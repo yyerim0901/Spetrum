@@ -84,6 +84,7 @@ export default {
   justify-content: flex-start;
   margin-left: 50px;
   margin:5px 0 5px 50px ;
+  height: 80px;
 }
 
 .nametag{
@@ -113,7 +114,7 @@ export default {
 
   .psimg-box{
     width:80px;
-    height: 9-px;
+    height: 80px;
     border-radius: 70%;
     border:solid #E5EAEF 1px;
   }

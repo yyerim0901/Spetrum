@@ -75,11 +75,13 @@ public class SBoardServiceImpl implements SBoardService {
         File file = new File(path);
         // 디렉터리가 존재하지 않을 경우
         if(!file.exists()) {
-            boolean wasSuccessful = file.mkdirs();
-            // 디렉터리 생성에 실패했을 경우
-            if(!wasSuccessful)
-                System.out.println("file: was not successful");
+            file.mkdirs();
+//            boolean wasSuccessful = file.mkdirs();
+//            // 디렉터리 생성에 실패했을 경우
+//            if(!wasSuccessful)
+//                System.out.println("file: was not successful");
         }
+        
         file.setWritable(true);
         file.setReadable(true);
 

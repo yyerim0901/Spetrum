@@ -59,8 +59,12 @@ public class SBoardController {
         Pageable pageable = PageRequest.of(pagenum-1, 10, Sort.by(Sort.Direction.DESC, "created"));
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
         String userid = jwtUtil.getUsername(token);
+        System.out.println(userid);
         User user = userService.findUserByUserId(userid);
         List<SBoardRes> sboardList = sBoardService.getSBoardsByUser(user, pageable);
+        System.out.println("★★★★★");
+        System.out.println(sboardList.get(0).getContent());
+
         return ResponseEntity.status(200).body(SBoardListRes.of(200, "성공", sboardList));
     }
 

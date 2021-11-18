@@ -139,7 +139,7 @@ export default new Vuex.Store({
         }
         else {
 
-          alert(res.data.message);
+          alert('로그인에 실패했습다');
         }
 
       })
@@ -237,6 +237,12 @@ export default new Vuex.Store({
           console.log(err);
         })
     },
+    requestUser2(state,payload){
+      return axios({
+        url:`/users/search/${payload}`,
+        method:'get',
+      })
+    },
     decideAns({commit},payload){
       commit('SET_USER_TYPE',payload)
     },
@@ -259,7 +265,10 @@ export default new Vuex.Store({
         method:'get',
         params:{
           page:page,
-        }
+        },
+        headers:{
+            'Authorization':localStorage.getItem("token"),
+          }
       })
     },
     requestSBoardUser(state,payload){

@@ -22,7 +22,6 @@ import MyDoggingList from '../views/MyDoggingList'
 import MyPetsitterList from '../views/MyPetsitterList'
 import Chat from '../views/Chat'
 import SearchUser from '../views/SearchUser'
-import MyDoggingDetail from '../views/MyDoggingDetail'
 import FinishDogging from '../views/FinishDogging'
 import TodayDogging from '../views/TodayDogging'
 
@@ -141,11 +140,6 @@ const routes = [
     component : SearchUser
   },
   {
-    path: '/mydogging/detail/:doggingid',
-    name: 'MyDoggingDetail',
-    component:MyDoggingDetail
-  },
-  {
     path: '/finishdogging',
     name: 'FinishDogging',
     component:FinishDogging
@@ -164,21 +158,21 @@ const router = new VueRouter({
 })
 
 // 최종 배포 전에 주석 풀기
-// router.beforeEach((to, from, next) => {
-//   if (to.name !== 'SignIn' && to.name !== 'SignUp' && !localStorage.getItem('token')) {
-//     next({ name: 'SignIn' }); 
-//   }
-//   else if ( to.name == 'SignIn' && localStorage.getItem('token')){
-//     next({ name: 'PetBTI'});
-//   }
-//   else if ( to.name == 'SignUp' && localStorage.getItem('token')){
-//     next({ name: 'PetBTI'});
-//   }
+router.beforeEach((to, from, next) => {
+  if (to.name !== 'SignIn' && to.name !== 'SignUp' && !localStorage.getItem('token')) {
+    next({ name: 'SignIn' }); 
+  }
+  else if ( to.name == 'SignIn' && localStorage.getItem('token')){
+    next({ name: 'PetBTI'});
+  }
+  else if ( to.name == 'SignUp' && localStorage.getItem('token')){
+    next({ name: 'PetBTI'});
+  }
 
-//   else if (to.name == 'SignUp' && from.name == 'SignIn') {
-//     next();
-//   }
+  else if (to.name == 'SignUp' && from.name == 'SignIn') {
+    next();
+  }
   
-//   else next()
-// })
+  else next()
+})
 export default router
