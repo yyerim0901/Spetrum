@@ -119,19 +119,19 @@ export default {
       } 
     }
   },
-  mounted() {
-    this.$store.dispatch('requestUser',this.userid);
-    this.$store.dispatch('bringSBoard',this.page)
-    .then(res=>{
-      this.mywrites = res.data.data;
-      console.log('여기서에러')
-      console.log(res)
-    })
-    .catch(err=>{
-      console.log('나는 게시판 받아오는 에러');
-      console.log(err)
-    })
-  },
+  // mounted() {
+  //   this.$store.dispatch('requestUser',this.userid);
+  //   this.$store.dispatch('bringSBoard',this.page)
+  //   .then(res=>{
+  //     this.mywrites = res.data.data;
+  //     console.log('여기서에러')
+  //     console.log(res)
+  //   })
+  //   .catch(err=>{
+  //     console.log('나는 게시판 받아오는 에러');
+  //     console.log(err)
+  //   })
+  // },
   created(){
     // this.$store.dispatch('Store/fetchData');
     this.userid = localStorage.getItem('userid');
