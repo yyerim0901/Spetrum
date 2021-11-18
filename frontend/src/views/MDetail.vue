@@ -60,6 +60,7 @@ export default {
       writernickname:null,
       isWriter:false,
       showModal:false,
+      profile:null,
     }
   },
   created(){
@@ -81,6 +82,7 @@ export default {
         console.log(res);
         console.log('유저인포');
         this.writernickname = res.data.user.nickname;
+        this.profile = res.data.user.picture;
       })
       .catch(err=>{
         console.log(err);
@@ -107,7 +109,7 @@ export default {
       this.$router.push({name:'EditMoment', params:{'boardid':this.boardid}})
     },
     getthumbnail(){
-      if (this.userInfo.thumbnail) {
+      if (this.profile !== null) {
         var fullurl = this.BASE_URL + this.userInfo.thumbnail
         console.log(fullurl,'fullurl');
         return fullurl
