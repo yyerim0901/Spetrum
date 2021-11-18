@@ -118,8 +118,13 @@ export default {
             }
         },
         fullURL(url){
-            const full = this.BASE_URL + url;
+            if (url !== null){
+                var full = this.BASE_URL + url;
+            } else{
+                full = require('@/assets/noimage.png')
+            }
             return full;
+            
         },
         checkdelete(){
             this.showModal = true;

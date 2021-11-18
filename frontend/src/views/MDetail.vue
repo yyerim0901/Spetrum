@@ -97,7 +97,7 @@ export default {
   },
   methods:{
     fullURL(url){
-      if (url.length !== 0){
+      if (url.filelist[0]){
         var full = this.BASE_URL + url[0].save_file;
       } else{
         full = require('@/assets/noimage.png')
