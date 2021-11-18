@@ -60,7 +60,7 @@ export default {
       writernickname:null,
       isWriter:false,
       showModal:false,
-      profile:undefined,
+      profile:"",
     }
   },
   created(){
@@ -110,13 +110,9 @@ export default {
       this.$router.push({name:'EditMoment', params:{'boardid':this.boardid}})
     },
     getthumbnail(){
-      if (this.profile) {
-        var fullurl = this.BASE_URL + this.profile
-        console.log(fullurl,'fullurl');
-        return fullurl
-      }else{
-        return require("@/assets/img_logo.jpg")
-      }
+      var fullurl = this.BASE_URL + this.profile
+      console.log(fullurl,'fullurl');
+      return fullurl
     },
     sendComment(){
       const formdata = new FormData();
