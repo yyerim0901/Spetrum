@@ -142,4 +142,13 @@ public class DoggingServiceImpl implements DoggingService{
     public void DeleteDogging(Long id){
         doggingRepository.deleteById(id);
     }
+
+    @Override
+    public String findDoggingPicturePath(Long doggingId){
+
+        Optional<Dogging> doggingOptional = doggingRepository.findById(doggingId);
+        Dogging dogging = doggingOptional.get();
+        return dogging.getCustomPicturePath();
+
+    }
 }
