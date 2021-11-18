@@ -110,7 +110,7 @@ export default {
     },
     getthumbnail(){
       if (this.profile !== null) {
-        var fullurl = this.BASE_URL + this.userInfo.thumbnail
+        var fullurl = this.BASE_URL + this.profile;
         console.log(fullurl,'fullurl');
         return fullurl
       }else{
