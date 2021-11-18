@@ -71,6 +71,7 @@ export default {
       this.content = res.data.data.content;
       this.likes = res.data.data.likes;
       this.writerid = res.data.data.userid;
+      console.log(this.content)
       if (localStorage.getItem('userid') === this.writerid ){
         this.isWriter = false
       }else{
@@ -130,7 +131,7 @@ export default {
         })
       })
     },
-    deletecheck(){
+    checkdelete(){
       this.showModal = true;
     },
     handleDelete(){
