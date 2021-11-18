@@ -28,7 +28,7 @@
       <h3 slot="header">
             팔로우
       </h3>
-      <div slot="body" v-for="flist in userInfo.followList" :key="flist.id">
+      <div slot="body" v-for="flist in followList" :key="flist.id">
         팔로우 {{flist}}
       </div>
     </Modal>
@@ -36,7 +36,7 @@
       <h3 slot="header">
             팔로워
       </h3>
-      <div slot="body" v-for="flist in userInfo.followerList" :key="flist.id">
+      <div slot="body" v-for="flist in followerList" :key="flist.id">
         팔로워 {{flist}}
       </div>
     </Modal>
@@ -142,12 +142,12 @@ export default {
     },
     showFollow()
     {
-      console.log(this.userInfo.followList)
+      console.log(this.followList)
       this.showModal = true;
     },
     showFollower()
     {
-      console.log(this.userInfo.followerList)
+      console.log(this.followerList)
       this.showModal2 = true;
     }
   },
@@ -201,8 +201,8 @@ export default {
             followerList: res.data.followerList,
           }
 
-        this.followList = res.data.followList;
-        this.followerList = res.data.followerList;
+        this.followList = JSON.parse(JSON.stringify(res.data.followList)) ;
+        this.followerList = JSON.parse(JSON.stringify(res.data.followerList)) ;
 
         this.$store.commit('SET_USER_INFO',data);
 
