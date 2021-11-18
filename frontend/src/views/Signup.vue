@@ -162,6 +162,7 @@ export default {
     },
     imageChange(){
       this.profileImg = this.$refs.profileImage.files[0];
+      console.log(this.profileImg);
       if (this.profileImg) {
         this.imgprev = URL.createObjectURL(this.profileImg);
         }
