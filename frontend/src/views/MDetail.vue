@@ -7,7 +7,7 @@
         <h3 style="padding:0 5px;">{{this.writernickname}}</h3>
         <div :class="[isWriter ? 'edit-icon' : '']">
           <i class="fas fa-edit" style="margin:0 0 0 10px;" @click="moveEdit"></i>
-          <i class="fas fa-trash" style="margin:0 0 0 10px;" @click="handleDelete"></i>
+          <i class="fas fa-trash" style="margin:0 0 0 10px;" @click="checkdelete"></i>
         </div>
       </div>
       <img :src="fullURL(this.files)" alt="" class="pre-img">
@@ -21,6 +21,12 @@
           <CommentInput :value="comment" v-model="comment" />
           <StyledButton btype="realsmall" bcolor="babypink" @click="sendComment()">작성</StyledButton>
         </div>
+        <Modal v-if="showModal" @close="showModal=false" @ok="handleDelete">
+          <h3 slot="header">
+            게시글을 정말 삭제하시겠냥?
+          </h3>
+          <div slot="body"></div>
+        </Modal>
       </div>
     </div>
   </div>
@@ -31,13 +37,15 @@ import {mapState} from 'vuex'
 import Header from '../components/molecules/Header.vue'
 import CommentInput from '../components/atoms/CommentInput'
 import StyledButton from '../components/atoms/StyledButton'
+import Modal from '../components/molecules/Modal.vue'
 
 export default {
   name:'MDetail',
   components:{
     Header,
     CommentInput,
-    StyledButton
+    StyledButton,
+    Modal
   },
   data(){
     return{
@@ -51,6 +59,7 @@ export default {
       writerid:null,
       writernickname:null,
       isWriter:false,
+      showModal:false,
     }
   },
   created(){
@@ -121,10 +130,13 @@ export default {
         })
       })
     },
+    deletecheck(){
+      this.showModal = true;
+    },
     handleDelete(){
-      if (confirm('삭제하시겠냥?')){
+        console.log(this.boardid)
         this.$store.dispatch('handleMomentDelete',this.boardid)
-      }
+        this.$router.push("/mymoment")
     },
     updateSBoard() {
       this.$router.push({name:'EditMoment'})

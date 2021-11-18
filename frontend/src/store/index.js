@@ -19,12 +19,15 @@ export default new Vuex.Store({
       introduce:'',
       followerList:[],
       followList: [],
+      thumbnail:'',
     },
     mypetsitterList: [],
     MyLocation: {
       lat: '',
       lng:'',
     },
+    MyPetsitterNull: false,
+    PetsitterNull:false,
     page:0,
     questions:[
       {
@@ -80,6 +83,12 @@ export default new Vuex.Store({
     result:{'cat':0,'dog':0,'a':0,'c':0,'i':0,'e':0}
   },
   mutations: {
+    MY_PETSITTER_NULL(state, payload) {
+      state.MyPetsitterNull = payload;
+    },
+    PETSITTER_NULL(state, payload) {
+      state.PetsitterNull = payload;
+    },
     SET_MY_LOCATION(state, payload) {
       state.MyLocation.lat = payload.lat;
       state.MyLocation.lng = payload.lng;
@@ -194,6 +203,12 @@ export default new Vuex.Store({
             }
           }).then(res => {
             context.commit("GET_BOARDS", res.data)
+
+            var flag = new Boolean(false)
+            if (res.data == null) flag = true;
+            else flag = false;
+          
+            this.commit('PETSITTER_NULL', flag);
           }).catch(err => {
             console.log(err)
           })
@@ -324,6 +339,12 @@ export default new Vuex.Store({
       }).then(res => {
         console.log(res.data.data)
         this.commit('SET_MY_PETSITTER', res.data.data);
+
+        var flag = new Boolean(false)
+        if (res.data.data == null) flag = true;
+        else flag = false;
+          
+        this.commit('MY_PETSITTER_NULL', flag);
       })
     },
     handleMomentEdit(state,payload){

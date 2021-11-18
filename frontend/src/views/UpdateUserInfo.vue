@@ -61,6 +61,7 @@ export default {
       nickcheck:true,
       profileImg:null,
       imgprev:null,
+      BASE_URL : 'https://spetrum.io/resources/',
     }
   },
   computed:{
@@ -69,7 +70,9 @@ export default {
   methods: {
     getthumbnail(){
       if (this.userInfo.thumbnail) {
-        return this.userInfo.thumbnail
+        var fullurl = this.BASE_URL + this.userInfo.thumbnail
+        console.log(fullurl,'fullurl');
+        return fullurl
       }else{
         return require("@/assets/img_logo.jpg")
       }
@@ -110,7 +113,7 @@ export default {
       }
     },
     imageChange(){
-      this.profileImg = this.$refs.profileImage.files;
+      this.profileImg = this.$refs.profileImage.files[0];
       if (this.profileImg) {
         this.imgprev = URL.createObjectURL(this.profileImg[0]);
         }
@@ -124,6 +127,7 @@ export default {
         formData.append("nickname",this.nickname);
         formData.append("password",this.password);
         formData.append("files",this.profileImg);
+        console.log(this.profileImg) //얘는 잘 나옴
         this.$store.dispatch('requestUpdateUserInfo',formData);
       }
       else {

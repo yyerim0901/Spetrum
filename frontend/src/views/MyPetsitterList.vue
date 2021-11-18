@@ -14,6 +14,9 @@
         </div>
       </div> 
     </div> -->
+    <div class="null-text" v-if="MyPetsitterNull">
+        <h2>내가 쓴 겟!시터가 없다냥</h2>
+    </div>
     <div class="p-box-petsitter">
       <div class="my-p-box" v-for="mypetsitter in mypetsitterList" :key="mypetsitter.id">
         <img class="img-box" :src="fullURL(mypetsitter.picture)" alt="사진 안 뜸">
@@ -66,7 +69,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['mypetsitterList']),
+    ...mapState(['mypetsitterList', 'MyPetsitterNull']),
   },
   methods: {
     refreshAll() {
