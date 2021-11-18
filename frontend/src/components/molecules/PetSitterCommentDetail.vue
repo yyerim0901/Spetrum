@@ -1,7 +1,14 @@
 <template>
-  <div style="justify-content:space-between; font-size: 13.3px; padding:6px;margin-right:7px;">
-      <span style="font-size: 13.3px;"><span style="background-color:#EE9CA7; border-radius:5px; padding:2px; color:white; font-weight:bold;">{{ comment.user.userId }}</span>&nbsp;&nbsp;<span>{{ comment.content }}</span></span>
-        <StyledButton v-if="comment.user.userId != this.userid" btype="realsmall" bcolor="babypink" @click="chatstart(comment.user.userId)">채팅</StyledButton>
+  <div style="justify-content:space-between; font-size: 13.3px; padding:4px;margin-right:7px;">
+      <span style="font-size: 14.3px;">
+          <span style=" border-radius:5px; padding:2px; font-weight:700;">{{ comment.user.userId }}</span>
+          &nbsp;&nbsp;&nbsp;
+          <span>{{ comment.content }}</span>
+          </span>
+        <StyledButton v-if="comment.user.userId != this.userid" 
+                style="float:right; width:40px; height:22px; margin:0px;"
+                btype="realsmall" bcolor="babypink"
+                 @click="chatstart(comment.user.userId)">채팅</StyledButton>
       <input v-if="commentFlag" type="text" :placeholder=comment.content v-model="changedComment">
       <span style="float:right;" v-if="comment.user.userId == this.userid">
         <StyleButton style="" v-if="!commentFlag" @click="deleteComment">&nbsp;삭제&nbsp;</StyleButton>
