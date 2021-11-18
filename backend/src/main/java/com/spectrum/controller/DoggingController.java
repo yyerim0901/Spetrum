@@ -167,11 +167,12 @@ public class DoggingController {
     public ResponseEntity<Object> downloadCustomImage(@RequestParam Long doggingId)throws Exception{
 
         Optional<Dogging> doggingOptional = doggingRepository.findById(doggingId);
-        Long userId = doggingOptional.get().getId();
         
         //이거 여기서 안 받아오고 db에 저장된 경로 그대로 받아오면 됨
-        String path = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/image/dogging/"+userId+"_"+doggingId+".png";
+//        String path = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/image/dogging/"+userId+"_"+doggingId+".png";
 //        String path = "src/main/resources/image/dogging/black_logo.png";
+
+        String path = doggingService.findDoggingPicturePath(doggingId);
 
         Path filePath = Paths.get(path);
         Resource resource = new InputStreamResource(Files.newInputStream(filePath)); // 파일 resource 얻기
@@ -182,8 +183,5 @@ public class DoggingController {
         headers.setContentDisposition(ContentDisposition.builder("attachment").filename(file.getName()).build());
         // 다운로드 되거나 로컬에 저장되는 용도로 쓰이는지를 알려주는 헤더
         return new ResponseEntity<Object>(resource, headers, HttpStatus.OK);
-
     }
-
-
 }
