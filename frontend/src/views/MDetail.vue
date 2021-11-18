@@ -7,7 +7,7 @@
         <h3 style="padding:0 5px;">{{this.writernickname}}</h3>
         <div :class="[isWriter ? 'edit-icon' : '']">
           <i class="fas fa-edit" style="margin:0 0 0 10px;" @click="moveEdit"></i>
-          <i class="fas fa-trash" style="margin:0 0 0 10px;" @click="checkdelete"></i>
+          <i class="fas fa-trash" style="margin:0 0 0 10px;" @click="deletecheck"></i>
         </div>
       </div>
       <img :src="fullURL(this.files)" alt="" class="pre-img">
