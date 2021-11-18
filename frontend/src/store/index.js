@@ -237,6 +237,12 @@ export default new Vuex.Store({
           console.log(err);
         })
     },
+    requestUser2(state,payload){
+      return axios({
+        url:`/users/search/${payload}`,
+        method:'get',
+      })
+    },
     decideAns({commit},payload){
       commit('SET_USER_TYPE',payload)
     },
