@@ -34,6 +34,7 @@
 <script>
 import Footer from '../components/molecules/Footer.vue'
 import Header from '../components/molecules/Header.vue'
+import axios from 'axios'
 export default {
   name:'Dogging',
   components:{
@@ -62,7 +63,19 @@ export default {
       console.log("go detail of my dogging")
       this.$router.push({name:'MyDoggingDetail',params:{'doggingid':id}});
     },
+    getDogging() {
+      axios({
+        url: 'https://spetrum.io:8080/api/dogging/',
+        method: "GET",
+        headers: {
+          'Authorization':localStorage.getItem('token'),
+        },
+      }).then(res => {
+        this.mydoggings = res.data
+      })
+    }
   },
+  
 }
 </script>
 
