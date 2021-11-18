@@ -73,7 +73,7 @@ export default {
     },
     fullURL(url){
       if (url !== null){
-        var full = this.BASE_URL + url[0].save_file;
+        var full = this.BASE_URL + url.slice(58);
       } else{
         full = require('@/assets/noimage.png')
       }
