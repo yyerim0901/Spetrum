@@ -1,5 +1,5 @@
 <template>
-    <div class="PETSITTER-Wrapper">
+    <div class="PET-Wrapper">
         <Header :isLogo="false" :isBack="false" title="겟!시터"/>
         <div class="sitter-box">
             <div class="sitter-box-in">
@@ -95,14 +95,6 @@ export default {
 </script>
 
 <style>
-.PETSITTER-Wrapper{
-    justify-content: flex-start;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100vh;
-    width:100%;
-}
     .sitter-box{
         display: block;
         margin: 1rem;

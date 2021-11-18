@@ -1,5 +1,5 @@
 <template>
-    <div class="PET-Wrapper">
+    <div class="PET-Each-Wrapper">
         <Header :isLogo="false" :isBack="true" title="겟!시터"/>
         <div class="detail-box">
             <img class="detail-img-box" :src="fullURL(board.data.picture)" alt="이미지가 없습니다">
@@ -14,12 +14,12 @@
                     <!-- <p style="width: 420px; text-align:right;">작성일자 : {{ board.data.created.substr(0,10) }}</p> -->
                 </div>
             </div>
-            <p @click="chatting()" style="width: 420px; text-align:right;">작성자 : {{ board.data.user.userId }}</p>
-            <p style="width: 420px; text-align:right;">작성일자 : {{ board.data.created.substr(0,10) }}</p>
-            <p style="text-align:start; border:solid; border-width:1px 0; border-color:#E5EAEF; width: 420px; height: 120px;">{{ board.data.content }}</p>
+            <!-- <p @click="chatting()" style="width: 420px; text-align:right;">작성자 : {{ board.data.user.userId }}</p> -->
+            <!-- <p style="width: 420px; text-align:right;">작성일자 : {{ board.data.created.substr(0,10) }}</p> -->
+            <div style="text-align:start; border:solid; border-width:1px 0; border-color:#E5EAEF; width: 420px; height: 120px;">{{ board.data.content }}</div>
 
-            <PetSitterCommentDetail v-for="(comment, idx) in comments" :key="idx" :comment="comment" />
-            <div>
+            <PetSitterCommentDetail style="width:90%" v-for="(comment, idx) in comments" :key="idx" :comment="comment" />
+            <div style="margin-bottom:50px;">
                 <i class="far fa-comment-dots" style="margin:0 5px 0 0; font-size:1rem"></i>
                 <CommentInput :value="comment" v-model="inputContent" />
                 <StyledButton btype="realsmall" bcolor="babypink" @click="createComment()">작성</StyledButton>
@@ -186,6 +186,14 @@ export default {
 </script>
 
 <style>
+    .PET-Each-Wrapper{
+        justify-content: flex-start;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        width:100%;
+        height: 100vh;
+    }
     .detail-box{
         width: 100%;
         margin-top : 20px;
@@ -193,6 +201,7 @@ export default {
         display: flex;
         flex-direction: column;
         align-items: center;
+        overflow-y:scroll;
     }
     .detail-img-box{
         width: 420px;
