@@ -141,7 +141,7 @@ const routes = [
     component : SearchUser
   },
   {
-    path: '/mydogging/detail',
+    path: '/mydogging/detail/:doggingid',
     name: 'MyDoggingDetail',
     component:MyDoggingDetail
   },

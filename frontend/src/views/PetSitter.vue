@@ -73,8 +73,12 @@ export default {
                         },
                     }).then(res => {
                         console.log(res.data.documents[0].road_address.address_name)
-                        var loc = res.data.documents[0].road_address.address_name.split(" ");
-                        this.location = loc[0] + " " + loc[1]
+                        if (res.data.meta.total_count === 0) {
+                            this.location = "주소를 찾을 수 없어요."
+                        } else {
+                            var loc = res.data.documents[0].road_address.address_name.split(" ");
+                            this.location = loc[0] + " " + loc[1]
+                        }
                     })
                 })
             }

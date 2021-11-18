@@ -6,21 +6,21 @@
         <img :src="this.imgprev" alt="" class="prev-img">
         <input  type="file" @change="imageChange" ref="profileImage">
       </div>
-      <StyledButton btype="medium" bcolor="babypink">공유하개</StyledButton>
-      <StyledButton btype="medium" bcolor="babypink" @click="downDogging">저장하개</StyledButton>
+      <FooterButton btype="medium" bcolor="babypink" @click="moveToMoment">공유하개</FooterButton>
+      <!-- <StyledButton btype="medium" bcolor="babypink" @click="downDogging">저장하개</StyledButton> -->
   </div>
 </template>
 
 <script>
 import Header from '../components/molecules/Header.vue'
-import StyledButton from '../components/atoms/StyledButton'
+import FooterButton from '../components/atoms/FooterButton'
 import axios from 'axios'
 import { mapState } from 'vuex'
 export default {
     name: "TodayDogging",
     components: {
         Header,
-        StyledButton,
+        FooterButton,
     },
     data(){
         return{
@@ -48,7 +48,7 @@ export default {
                     },
                     data: formData,
                     params: {
-                        userid: 'ktest'
+                        userid: localStorage.getItem('userid')
                     }
                 }).then(res => {
                     this.doggingInfo = res.data
@@ -58,21 +58,24 @@ export default {
                 })
             }
         },
-        downDogging() {
-            axios({
-                url: 'https://spetrum.io:8080/api/dogging/download',
-                method: 'GET',
-                headers: {
-                    'Authorization':localStorage.getItem('token'),
-                },
-                params: {
-                    doggingId : this.doggingInfo.id
-                }
-            }).then(res => {
-                console.log(res)
-                console.log(res.headers, 'res의 헤더스')
-            })
-        }        
+        moveToMoment() {
+            this.$router.push({name:'AddMoment'})
+        }
+        // downDogging() {
+        //     axios({
+        //         url: 'https://spetrum.io:8080/api/dogging/download',
+        //         method: 'GET',
+        //         headers: {
+        //             'Authorization':localStorage.getItem('token'),
+        //         },
+        //         params: {
+        //             doggingId : this.doggingInfo.id
+        //         }
+        //     }).then(res => {
+        //         console.log(res)
+        //         console.log(res.headers, 'res의 헤더스')
+        //     })
+        // }        
     },
     computed: {
         ...mapState([
