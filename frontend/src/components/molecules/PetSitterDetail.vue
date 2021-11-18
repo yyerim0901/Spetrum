@@ -1,4 +1,5 @@
 <template>
+<div class="PET-Detail-Wrapper">
     <div class="sitter-detail-box">
         <img class="img-box" :src="fullURL(board.picture)" alt="이미지가 없습니다">
         <div class="board-box" @click="moveEachDetail">
@@ -7,6 +8,7 @@
             <p style="font-size:0.8rem;">작성자 : {{ board.user.userId }}</p>
         </div>
     </div>
+</div>
 </template>
 
 <script>
@@ -50,6 +52,14 @@ export default {
 </script>
 
 <style>
+.PET-Detail-Wrapper{
+    justify-content: flex-start;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width:100%;
+    margin-bottom: 50px;
+}
     .sitter-detail-box{
         display: flex;
         justify-content: center;

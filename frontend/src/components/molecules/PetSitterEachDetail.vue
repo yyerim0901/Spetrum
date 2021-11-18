@@ -3,15 +3,17 @@
         <Header :isLogo="false" :isBack="true" title="겟!시터"/>
         <div class="detail-box">
             <img class="detail-img-box" :src="fullURL(board.data.picture)" alt="이미지가 없습니다">
-            <div style="width: 420px;">
-                <span>{{ board.data.title }}</span>
+            <div style="width: 420px; padding:5px;">
+                <span style="font-weight: bolder; font-size:20px;">{{ board.data.title }}</span>
                 <span v-if="board.data.user.userId == this.userid">
-                    <i class="fas fa-edit" style="margin:0 0 0 10px;" @click="moveChangePetSitter"></i>
-                    <i class="fas fa-trash" style="margin:0 0 0 10px;" @click="checkdelete"></i>
+                    <i class="fas fa-edit" style="margin:5px 0 0 10px; float:right;" @click="moveChangePetSitter"></i>
+                    <i class="fas fa-trash" style="margin:5px 0 0 10px; float:right;" @click="checkdelete"></i>
                 </span>
+                <div>
+                    <p @click="chatting()" style="width: 420px; text-align:right;">작성일자 : {{ board.data.created.substr(0,10) }}<span style="color:#FFDDE1;"> | </span>작성자 : {{ board.data.user.userId }} </p>
+                    <!-- <p style="width: 420px; text-align:right;">작성일자 : {{ board.data.created.substr(0,10) }}</p> -->
+                </div>
             </div>
-            <p @click="chatting()" style="width: 420px; text-align:right;">작성자 : {{ board.data.user.userId }}</p>
-            <p style="width: 420px; text-align:right;">작성일자 : {{ board.data.created.substr(0,10) }}</p>
             <textarea style="text-align:start; border:solid; border-width:1px 0; border-color:#E5EAEF; width: 420px; height: 120px;" :value="board.data.content" readonly></textarea>
 
             <PetSitterCommentDetail v-for="(comment, idx) in comments" :key="idx" :comment="comment" />
@@ -183,7 +185,9 @@ export default {
 
 <style>
     .detail-box{
-        width: 420px;
+        width: 100%;
+        margin-top : 20px;
+        margin-bottom: 50px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -192,5 +196,6 @@ export default {
         width: 420px;
         height: 420px;
         align-content: center;
+        /* font-size: ; */
     }
 </style>
