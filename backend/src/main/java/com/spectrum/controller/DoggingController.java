@@ -164,7 +164,7 @@ public class DoggingController {
             notes = "도깅 사진 커스텀 후 다운로드"
     )
     @GetMapping("/download")
-    public ResponseEntity<Object> downloadCustomImage(@RequestParam Long doggingId){
+    public ResponseEntity<Object> downloadCustomImage(@RequestParam Long doggingId)throws Exception{
 
         Optional<Dogging> doggingOptional = doggingRepository.findById(doggingId);
         Long userId = doggingOptional.get().getId();
@@ -173,20 +173,16 @@ public class DoggingController {
         String path = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/image/dogging/"+userId+"_"+doggingId+".png";
 //        String path = "src/main/resources/image/dogging/black_logo.png";
 
-        try {
-            Path filePath = Paths.get(path);
-            Resource resource = new InputStreamResource(Files.newInputStream(filePath)); // 파일 resource 얻기
+        Path filePath = Paths.get(path);
+        Resource resource = new InputStreamResource(Files.newInputStream(filePath)); // 파일 resource 얻기
 
-            File file = new File(path);
+        File file = new File(path);
 
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentDisposition(ContentDisposition.builder("attachment").filename(file.getName()).build());
-            // 다운로드 되거나 로컬에 저장되는 용도로 쓰이는지를 알려주는 헤더
-            return new ResponseEntity<Object>(resource, headers, HttpStatus.OK);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentDisposition(ContentDisposition.builder("attachment").filename(file.getName()).build());
+        // 다운로드 되거나 로컬에 저장되는 용도로 쓰이는지를 알려주는 헤더
+        return new ResponseEntity<Object>(resource, headers, HttpStatus.OK);
 
-        } catch(Exception e) {
-            return new ResponseEntity<Object>(null, HttpStatus.CONFLICT);
-        }
     }
 
 

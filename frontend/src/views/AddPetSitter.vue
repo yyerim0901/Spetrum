@@ -3,15 +3,12 @@
         <Header :isLogo="false" :isBack="true" title="겟! 시터 글 작성"></Header>
         <div style="add-pet-box">
             <div style="width:400px;">
-                <!-- text-align: center;
-        align-items: center;
-        justify-content: center; -->
                 <div class="addbox">
                     <img :src="this.imgprev" alt="" class="prev-img">
                     <input  type="file" @change="imageChange" ref="profileImage">
                 </div>
                     <input name="content"  cols="30" rows="10" class="title-box" placeholder="제목을 입력해주세요" v-model="inputTitle">
-                    <textarea name="content"  cols="30" rows="40" class="con-box" placeholder="내용을 입력해주세요" v-model="inputContent"></textarea>
+                    <textarea name="content"  cols="30" rows="20" class="con-box" placeholder="내용을 입력해주세요" v-model="inputContent"></textarea>
                 </div>
             </div>
             <FooterButton @click="createPetSitter">게시글 작성하냥</FooterButton>
