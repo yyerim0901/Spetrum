@@ -2,7 +2,7 @@
   <div class="Moment-Wrapper">
     <Header :isBack="true" title="MY MOMENT" :isLogo="false"></Header>
     <div style="width:100%; display:flex; flex-direction:column; overflow-y:scroll;">
-      <div style="display:flex; margin:2px 0 2px 20px; align-items:center; justify-content:flex-start">
+      <div style="display:flex; margin:10px 0 2px 25px; align-items:center; justify-content:flex-start">
         <img :src="getthumbnail()" alt="" class="pimg-box-small">
         <h3 style="padding:0 5px;">{{this.writernickname}}</h3>
         <div :class="[isWriter ? 'edit-icon' : '']">
