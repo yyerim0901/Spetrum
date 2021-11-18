@@ -75,9 +75,6 @@ export default {
       })
     }
   },
-  created() {
-    this.getDogging()
-  }
   
 }
 </script>
