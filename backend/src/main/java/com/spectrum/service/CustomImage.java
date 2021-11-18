@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
@@ -42,16 +43,9 @@ public class CustomImage extends JPanel {
         //(넣을 글자 string, x좌표, y좌표)
         //위치 수동 조절해야 됨
         //지역
-        String[] loc = dogging.getLocation().split(" ");
-        String location = loc[0]+" "+loc[1];
-        byte[] euckrStringBuffer = location.getBytes(Charset.forName("euc-kr"));
-        String decodedFromEucKr = new String(euckrStringBuffer, "euc-kr");
-        System.out.println(decodedFromEucKr);
-        byte[] utf8StringBuffer = decodedFromEucKr.getBytes("utf-8");
-        String decodedFromUtf8 = new String(utf8StringBuffer, "utf-8");
-        System.out.println(decodedFromUtf8);
-        g.drawString(decodedFromUtf8,width/10,height-(height/5)+200);
-        g.drawString("euckr"+decodedFromEucKr,width/10,height-(height/5)+250);
+//        String[] loc = dogging.getLocation().split(" ");
+//        String location = loc[0]+" "+loc[1];
+//        g.drawString(location,width/10,height-(height/5)+200);
         //소요 시간
         String time = dogging.getTime();
         g.drawString(time, width/10,height-(height/5)+100);
@@ -87,7 +81,7 @@ public class CustomImage extends JPanel {
         String path = BASE_PATH + "/dogging";
         path += "/"+ fileName;
 //        \var\lib\jenkins\workspace\PJT\backend\src\main\resources\image\dogging\9\29
-//        String path = "C:\\Users\\multicampus\\Desktop\\test1.png";
+//        String path = "C:\\Users\\multicampus\\Desktop\\hangeultest.png";
 
         ImageIO.write(image, "png", new FileOutputStream(path));
         return path;

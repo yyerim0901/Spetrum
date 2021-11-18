@@ -12,4 +12,5 @@ import java.util.Optional;
 public interface SBoardFileRepository extends JpaRepository<SBoardFile, Long> {
 
     Optional<List<SBoardFile>> findBysBoard(SBoard sb);
+//    List<SBoardFile> findBysBoard(SBoard sboard);
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="Moment-Wrapper">
+  <div class="Moment-Add-Wrapper">
     <Header :isLogo="false" :isBack="true" title="ADD MOMENT"></Header>
     <div>
       <div class="addbox">
@@ -68,6 +68,14 @@ export default {
 </script>
 
 <style>
+  .Moment-Add-Wrapper {
+    justify-content: flex-start;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width:100%;
+    margin-bottom: 50px;
+  }
   .addbox{
     display:flex;
     flex-direction: column;

@@ -7,7 +7,7 @@
         <h3 style="padding:0 5px;">{{this.writernickname}}</h3>
         <div :class="[isWriter ? 'edit-icon' : '']">
           <i class="fas fa-edit" style="margin:0 0 0 10px;" @click="moveEdit"></i>
-          <i class="fas fa-trash" style="margin:0 0 0 10px;" @click="checkdelete"></i>
+          <i class="fas fa-trash" style="margin:0 0 0 10px;" @click="deletecheck"></i>
         </div>
       </div>
       <img :src="fullURL(this.files)" alt="" class="pre-img">
@@ -60,7 +60,7 @@ export default {
       writernickname:null,
       isWriter:false,
       showModal:false,
-      profile:"",
+      profile:null,
     }
   },
   created(){
@@ -68,11 +68,10 @@ export default {
     this.$store.dispatch('detailSBoard',this.$route.params.boardid)
     .then(res=>{
       console.log(res);
-      this.files = res.data.data.filelist[0].save_file;
+      this.files = res.data.data.filelist;
       this.content = res.data.data.content;
       this.likes = res.data.data.likes;
       this.writerid = res.data.data.userid;
-      console.log(this.content)
       if (localStorage.getItem('userid') === this.writerid ){
         this.isWriter = false
       }else{
@@ -82,8 +81,8 @@ export default {
       .then(res=>{
         console.log(res);
         console.log('유저인포');
-        this.profile = res.data.user.thumbnail;
         this.writernickname = res.data.user.nickname;
+        this.profile = res.data.user.thumbnail;
       })
       .catch(err=>{
         console.log(err);
@@ -99,7 +98,7 @@ export default {
   },
   methods:{
     fullURL(url){
-      if (url.filelist[0]){
+      if (url.length !== 0){
         var full = this.BASE_URL + url[0].save_file;
       } else{
         full = require('@/assets/noimage.png')
@@ -110,9 +109,13 @@ export default {
       this.$router.push({name:'EditMoment', params:{'boardid':this.boardid}})
     },
     getthumbnail(){
-      var fullurl = this.BASE_URL + this.profile
-      console.log(fullurl,'fullurl');
-      return fullurl
+      if (this.profile !== null) {
+        var fullurl = this.BASE_URL + this.profile;
+        console.log(fullurl,'fullurl');
+        return fullurl
+      }else{
+        return require("@/assets/img_logo.jpg")
+      }
     },
     sendComment(){
       const formdata = new FormData();
@@ -129,7 +132,7 @@ export default {
         })
       })
     },
-    checkdelete(){
+    deletecheck(){
       this.showModal = true;
     },
     handleDelete(){
