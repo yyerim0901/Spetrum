@@ -6,7 +6,7 @@
         <img :src="getthumbnail()" alt="profilImg" class="pimg-box">
         <button bcolor="babypink" btype="medium" class="f-button"><h3>게시글</h3><span>{{this.mywritesLength}}</span></button>
         <button bcolor="babypink" btype="medium" class="f-button"><h3>팔로워</h3><span>{{this.followerLength}}</span></button>
-        <button bcolor="babypink" btype="medium" class="f-button"><h3>팔로우</h3><span>{{this.followLength}}</span></button>
+        <button bcolor="babypink" btype="medium" class="f-button" @click="showFollow()"><h3>팔로우</h3><span>{{this.followLength}}</span></button>
       </div>
       <div class="l-box">
         <div class="m-box">
@@ -24,7 +24,11 @@
         </div>
       </div>
     </div>
+    <Modal v-if="showModal" @close="showModal=false">
+      <div v-for="flist in followList" :key="flist.id">
 
+      </div>
+    </Modal>
     <Footer :isActive="isActive"></Footer>
   </div>
 </template>
@@ -33,6 +37,7 @@
 import Footer from '../components/molecules/Footer.vue'
 import Header from '../components/molecules/Header.vue'
 import StyledButton from '../components/atoms/StyledButton'
+import Modal from '../components/molecules/Modal.vue'
 // import axios from 'axios'
 import {mapState} from 'vuex';
 
@@ -41,7 +46,8 @@ export default {
   components:{
     Footer,
     Header,
-    StyledButton
+    StyledButton,
+    Modal
 
   },
   data(){
@@ -51,7 +57,11 @@ export default {
       isfollowed:true,
       mywrites:[],
       BASE_URL : 'https://spetrum.io/resources/',
-      page:1
+      page:1,
+      showModal:false,
+
+      followList:[],
+      followerList:[],
     }
   },
   computed:{
@@ -117,6 +127,10 @@ export default {
           console.log(this.mywrites,'게시물');
         })
       } 
+    },
+    showFollow()
+    {
+      this.showModal = true;
     }
   },
   // mounted() {
@@ -158,6 +172,9 @@ export default {
     // })
     this.$store.dispatch('requestUser2',this.userid)
     .then(res=>{
+      console.log(res);
+      this.followList = res.data.user.followList;
+      this.followerList = res.data.user.followerList;
       const data = {
             nickname: res.data.user.nickname,
             thumbnail: res.data.user.thumbnail,
