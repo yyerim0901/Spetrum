@@ -82,7 +82,7 @@ export default {
         console.log(res);
         console.log('유저인포');
         this.writernickname = res.data.user.nickname;
-        this.profile = res.data.user.picture;
+        this.profile = res.data.user.thumbnail;
       })
       .catch(err=>{
         console.log(err);
