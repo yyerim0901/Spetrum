@@ -5,7 +5,7 @@
       <div class="i-box">
         <img :src="getthumbnail()" alt="profilImg" class="pimg-box">
         <button bcolor="babypink" btype="medium" class="f-button"><h3>게시글</h3><span>{{this.mywritesLength}}</span></button>
-        <button bcolor="babypink" btype="medium" class="f-button"><h3>팔로워</h3><span>{{this.followerLength}}</span></button>
+        <button bcolor="babypink" btype="medium" class="f-button" @click="showFollow2()"><h3>팔로워</h3><span>{{this.followerLength}}</span></button>
         <button bcolor="babypink" btype="medium" class="f-button" @click="showFollow()"><h3>팔로우</h3><span>{{this.followLength}}</span></button>
       </div>
       <div class="l-box">
@@ -26,7 +26,12 @@
     </div>
     <Modal v-if="showModal" @close="showModal=false">
       <div v-for="flist in followList" :key="flist.id">
-
+        {{flist}}
+      </div>
+    </Modal>
+    <Modal v-if="showModal2" @close="showModal=false">
+      <div v-for="flist in followerList" :key="flist.id">
+        {{flist}}
       </div>
     </Modal>
     <Footer :isActive="isActive"></Footer>
@@ -131,6 +136,10 @@ export default {
     showFollow()
     {
       this.showModal = true;
+    },
+    showFollower()
+    {
+      this.showModal = true;
     }
   },
   // mounted() {
@@ -173,8 +182,8 @@ export default {
     this.$store.dispatch('requestUser2',this.userid)
     .then(res=>{
       console.log(res);
-      this.followList = res.data.user.followList;
-      this.followerList = res.data.user.followerList;
+      this.followList = res.data.followList;
+      this.followerList = res.data.followerList;
       const data = {
             nickname: res.data.user.nickname,
             thumbnail: res.data.user.thumbnail,
