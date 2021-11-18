@@ -7,10 +7,7 @@ import com.spectrum.entity.Dogging;
 import com.spectrum.entity.User;
 import com.spectrum.repository.DoggingRepository;
 import com.spectrum.repository.UserRepository;
-import io.jenetics.jpx.GPX;
-import io.jenetics.jpx.Track;
-import io.jenetics.jpx.TrackSegment;
-import io.jenetics.jpx.WayPoint;
+import io.jenetics.jpx.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -25,6 +22,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.lang.Object;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -67,10 +65,11 @@ public class DoggingServiceImpl implements DoggingService{
     public DoggingDetailResponse DetailOfDogging(Long doggingId) throws IOException{
 //        String fileName = "";
         //파일 이름 : userid+"_"+doggingId
-        Object[] objects = GPX.read(filePath+user.getId()+"_"+doggingId+".gpx")
+        List<WayPoint> list = GPX.read(BASE_PATH+"dogging/"+user.getId()+"_"+doggingId+".gpx")
                 .tracks()
                 .flatMap(Track::segments)
-                .flatMap(TrackSegment::points).toArray();
+                .flatMap(TrackSegment::points).collect(Collectors.toList());
+
 
         Dogging dogging = doggingRepository.getById(doggingId);
         DoggingDetailResponse res = new DoggingDetailResponse();
@@ -79,7 +78,16 @@ public class DoggingServiceImpl implements DoggingService{
         res.setDate(dogging.getDate());
         res.setLocation(dogging.getLocation());
         res.setPicture(dogging.getCustomPicturePath()); //얘를 줄일 수 있을 것 같은뎅
-        res.setObjects(objects);
+
+        List<Latitude> lats = new ArrayList<>();
+        List<Longitude> lngs = new ArrayList<>();
+        for(int i=0; i<list.size(); i++){
+            lats.add(list.get(i).getLatitude());
+            lngs.add(list.get(i).getLongitude());
+        }
+
+        res.setLats(lats);
+        res.setLngs(lngs);
 
         return res;
     }
@@ -133,7 +141,7 @@ public class DoggingServiceImpl implements DoggingService{
                                 .points(wayPoints)))
                 .build();
 
-        GPX.write(gpx, filePath+"dogging/"+fileName+".gpx");
+        GPX.write(gpx, BASE_PATH+"dogging/"+fileName+".gpx");
         return;
     }
 

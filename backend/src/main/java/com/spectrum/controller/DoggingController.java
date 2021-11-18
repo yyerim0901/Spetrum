@@ -32,6 +32,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Api(value = "도깅 API", tags = {"Dogging"})
 @RestController
@@ -115,12 +116,18 @@ public class DoggingController {
         GPX.write(gpx1, filePath+fileName+".gpx");
         //GPX작성
 
-        Object[] objects = GPX.read(filePath+fileName+".gpx")
+        List<WayPoint> list = GPX.read(filePath+fileName+".gpx")
                 .tracks()
                 .flatMap(Track::segments)
-                .flatMap(TrackSegment::points).toArray();
+                .flatMap(TrackSegment::points).collect(Collectors.toList());
+        List<Latitude> lats = new ArrayList<>();
+        List<Longitude> lngs = new ArrayList<>();
+        for(int i=0; i<list.size(); i++){
+            lats.add(list.get(i).getLatitude());
+            lngs.add(list.get(i).getLongitude());
+        }
 
-        return new ResponseEntity<Object[]>(objects,HttpStatus.OK);
+        return new ResponseEntity<List<Latitude>>(lats,HttpStatus.OK);
     }
 
     @ApiOperation(

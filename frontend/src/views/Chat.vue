@@ -3,12 +3,14 @@
     <Header :isLogo="false" :isBack="false" title="채팅"/>
     <div style="height: 100vh;">
     <br>
-    <div style="margin-left: 20px; margin-right: 20px;"
-      v-for="(item, idx) in recvList"
-      :key="idx"
-    >
-      <h3 style="text-align:right;" v-if="item.userName == userName"> {{ item.content }}</h3>
-      <h3 v-else> {{ item.userName }} : {{ item.content }}</h3>
+    <div style="height: 70vh">
+      <div style="margin-left: 20px; margin-right: 20px;"
+        v-for="(item, idx) in recvList"
+        :key="idx"
+      >
+        <h3 style="text-align:right;" v-if="item.userName == userName"> {{ item.content }}</h3>
+        <h3 v-else> {{ item.userName }} : {{ item.content }}</h3>
+      </div>
     </div>
     <!-- 유저이름: 
     <input
@@ -20,7 +22,8 @@
       v-model="message"
       type="text"
       @keyup="sendMessage"
-    >
+      style="width: 70%;"
+    > <StyledButton btype="realsmall" bcolor="babypink" @click="sendMessage2()">전송</StyledButton>
     </div>
     <div style="text-align: center">
         <StyledButton btype="realsmall" bcolor="babypink" @click="close()">채팅종료</StyledButton>
@@ -73,6 +76,10 @@ export default {
         this.message = ''
       }
     },    
+    sendMessage2 () {
+        this.send()
+        this.message = ''
+    }, 
     send() {
       
       if (this.stompClient && this.stompClient.connected) {
@@ -86,18 +93,14 @@ export default {
     close()
     {
       const url = document.location.href.split("chat/")[1];
-      console.log(url);
 
       const listdata = {"chatList":[],"roomname":''};
-      console.log("close 실행")
       this.recvList.forEach(element => {
         listdata.chatList.push({'userName':element.userName,
                       'content':element.content})
       });
 
       listdata.roomname = url;
-      console.log(listdata);
-      console.log(typeof(listdata));
 
       axios.post("/pboard/saveChat",listdata)
       .then(res => {
@@ -114,7 +117,6 @@ export default {
         const list = res.data.split("┐");
         for (let i = 0; i < list.length; i++) {
           const objData = JSON.parse(list[i]);
-          console.log(objData);
           this.recvList.push(objData);
         }
 
@@ -134,9 +136,9 @@ export default {
     },
     connect() {
       const serverURL = "https://spetrum.io:8080/chat"
+      // const serverURL = "http://localhost:8080/chat"
       let socket = new SockJS(serverURL);
       this.stompClient = Stomp.over(socket);
-      console.log(`소켓 연결을 시도합니다. 서버 주소: ${serverURL}`)
 
       this.stompClient.connect(
         {},
@@ -147,7 +149,6 @@ export default {
           // 서버의 메시지 전송 endpoint를 구독합니다.
           // 이런형태를 pub sub 구조라고 합니다.
           this.stompClient.subscribe("/send", res => {
-            console.log('구독으로 받은 메시지 입니다.', res.body);
 
             // 받은 데이터를 json으로 파싱하고 리스트에 넣어줍니다.
             this.recvList.push(JSON.parse(res.body))

@@ -1,7 +1,7 @@
 <template>
   <div class="Moment-Wrapper">
     <Header :isLogo="false" :isBack="false" :isSearch="true" title="냥댕모먼트"></Header>
-    <div class="p-box"  @scroll="handleInfiniteScroll">
+    <div v-if="userInfo !== undefined" class="p-box"  @scroll="handleInfiniteScroll">
       <div class="i-box">
         <img :src="getthumbnail()" alt="profilImg" class="pimg-box">
         <button bcolor="babypink" btype="medium" class="f-button"><h3>게시글</h3><span>{{this.mywritesLength}}</span></button>
@@ -120,6 +120,7 @@ export default {
     }
   },
   created(){
+    // this.$store.dispatch('Store/fetchData');
     this.userid = localStorage.getItem('userid');
     // console.log(localStorage.getItem)
     // console.log(this.userid)
