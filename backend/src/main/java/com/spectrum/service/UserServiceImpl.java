@@ -136,7 +136,7 @@ public class UserServiceImpl implements UserService{
         {
             MultipartFile multipartFile = updateInfo.getThumbnail();
 
-            String path = BASE_PATH  + userinfo.getUserId();
+            String path = BASE_PATH  + "/image/profile/" + userinfo.getUserId();
 
             File file = new File(path);
 
@@ -145,7 +145,7 @@ public class UserServiceImpl implements UserService{
             }
 
             String final_name = path + File.separator + updateInfo.getThumbnail().getOriginalFilename();
-            userinfo.setThumbnail(final_name);
+            userinfo.setThumbnail(getShortFilePath(final_name));
             file = new File(final_name);
             multipartFile.transferTo(file);
             System.out.println("2");
@@ -321,5 +321,10 @@ public class UserServiceImpl implements UserService{
     public void unfollow(Follow follow) {
 
         followRepository.delete(follow);
+    }
+
+    private String getShortFilePath(String path) {
+        int idx = path.indexOf("image");
+        return path.substring(idx, path.length());
     }
 }
