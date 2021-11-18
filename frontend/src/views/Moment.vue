@@ -25,12 +25,18 @@
       </div>
     </div>
     <Modal v-if="showModal" @close="showModal=false" @ok="showModal=false">
-      <div v-for="flist in userInfo.followList" :key="flist.id">
+      <h3 slot="header">
+            팔로우
+      </h3>
+      <div slot="body" v-for="flist in userInfo.followList" :key="flist.id">
         팔로우 {{flist}}
       </div>
     </Modal>
     <Modal v-if="showModal2" @close="showModal2=false" @ok="showModal=false">
-      <div v-for="flist in userInfo.followerList" :key="flist.id">
+      <h3 slot="header">
+            팔로워
+      </h3>
+      <div slot="body" v-for="flist in userInfo.followerList" :key="flist.id">
         팔로워 {{flist}}
       </div>
     </Modal>
