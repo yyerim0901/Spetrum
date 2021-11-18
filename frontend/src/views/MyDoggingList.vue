@@ -52,11 +52,7 @@ export default {
   created(){
     this.userid = localStorage.getItem('userid')
     console.log(this.userid) 
-    this.$store.dispatch('bringMyDogging')
-    .then(res => {
-      console.log(res.data.data)
-      this.mydoggings = res.data.data
-    })
+    this.getDogging()
   },
   methods: {
     detailOfDogging(id){
@@ -73,7 +69,7 @@ export default {
       }).then(res => {
         this.mydoggings = res.data
       })
-    }
+    },
   },
   
 }

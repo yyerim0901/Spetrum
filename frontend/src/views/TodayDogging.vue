@@ -70,6 +70,7 @@ export default {
                 }
             }).then(res => {
                 console.log(res)
+                console.log(res.headers, 'res의 헤더스')
             })
         }        
     },
