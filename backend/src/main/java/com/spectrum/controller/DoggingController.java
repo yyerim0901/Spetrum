@@ -165,7 +165,7 @@ public class DoggingController {
             notes = "도깅 사진 커스텀 후 다운로드"
     )
     @GetMapping("/download")
-    public ResponseEntity<Object> downloadCustomImage(@RequestParam Long doggingId, HttpServletResponse response)throws IOException{
+    public ResponseEntity<Object> downloadCustomImage(@RequestParam Long doggingId)throws IOException{
 
         Optional<Dogging> doggingOptional = doggingRepository.findById(doggingId);
         
@@ -183,7 +183,7 @@ public class DoggingController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         headers.setContentDisposition(ContentDisposition.builder("attachment").filename(customImage.getName()).build());
-        response.setHeader("Content-Disposition", "attachment; filename=" + customImage.getName());
+        // response.setHeader("Content-Disposition", "attachment; filename=" + customImage.getName());
         // 다운로드 되거나 로컬에 저장되는 용도로 쓰이는지를 알려주는 헤더
         return new ResponseEntity<Object>(resource, headers, HttpStatus.OK);
     }
