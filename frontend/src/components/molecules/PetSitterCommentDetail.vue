@@ -12,6 +12,7 @@
 </template>
 
 <script>
+// import { use } from 'vue/types/umd';
 import axios from '../../axios/index';
 import StyledButton from '../atoms/StyledButton'
 export default {
@@ -71,13 +72,16 @@ export default {
         },
         chatstart(userid)
         {
-            console.log(userid);
-            this.$router.push({
-                name: "Chat",
-                params: {
-                    roomname: this.userid+"_"+userid,
-                }
-            })
+            if(this.userid != userid)
+            {
+                console.log(userid);
+                this.$router.push({
+                    name: "Chat",
+                    params: {
+                        roomname: this.userid+"_"+userid,
+                    }
+                })
+            }
         }
     }
 
