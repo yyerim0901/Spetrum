@@ -95,8 +95,8 @@ export default {
     display: flex;
     align-items: center;
     flex-direction: column;
-    height: 100vh;
     width:100%;
+    margin-bottom: 50px;
 }
 .addbox{
 display:flex;
