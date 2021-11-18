@@ -189,34 +189,19 @@ public class PBoardServiceImpl implements PBoardService {
 
     @Override
     public List<PBoard> myPetsitterList(String userid, Pageable pageable){
-//        String userId = jwtUtil.getUsername(token);
         Optional<User> userOptional = userRepository.findByUserId(userid);
         User user = userOptional.get();
         return pBoardRepository.findAllByUserId(user.getId(), pageable);
     }
+
+
     @Override
     public List<PBoard> myPetsitterList(String userid){
-//        String userId = jwtUtil.getUsername(token);
         Optional<User> userOptional = userRepository.findByUserId(userid);
-        System.out.println("***************************************");
-        System.out.println(userid);
         User user = userOptional.get();
-        System.out.println(user.getId());
+
         List<PBoard> list = pBoardRepository.findAllByUserId(user.getId());
         List<PBoard> test1 = pBoardRepository.findAllByUser(user);
-//        List<PBoard> test2 = pBoardRepository.findAllByUser_pkId(user.getId());
-        System.out.println(list.size());
-        System.out.println(test1.size());
-//        System.out.println(test2.size());
-//        for(int i =0; i<list.size(); i++){
-//            System.out.println(list.get(i).getTitle());
-//            System.out.println(test1.get(i).getTitle());
-//            System.out.println(test2.get(i).getTitle());
-//        }
-        System.out.println("***************************************");
-
-//        eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InRlc3QwOTAxIiwiaWF0IjoxNjM3MTE0NDAzLCJleHAiOjE2MzcxMjUyMDN9.z5jcry8ne9Bv6wVpPu2YH0DxnTtmPLp2GnVwzIgdkIA
-//        eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InRlc3QwOTAxIiwiaWF0IjoxNjM3MTE1MTAyLCJleHAiOjE2MzcxMjU5MDJ9.GCA7zKyzVhdc1Tt_0hj2SB3cCmpNhohjrs8zw7kQvb4
 
         return list;
     }
