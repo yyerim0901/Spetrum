@@ -15,4 +15,6 @@ public interface SBoardRepository extends JpaRepository<SBoard, Long>{
     Optional<SBoard> findById(Long id);
 
     List<SBoard> findAllByUser(User user, Pageable pageable);
+
+    List<SBoard> findAllByUser(User user);
 }

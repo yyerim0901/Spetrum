@@ -3,10 +3,8 @@ package com.spectrum.service;
 import com.spectrum.common.request.FollowReq;
 import com.spectrum.common.request.UserRegisterPostReq;
 import com.spectrum.common.request.UserUpdateReq;
-import com.spectrum.entity.Follow;
-import com.spectrum.entity.User;
-import com.spectrum.repository.FollowRepository;
-import com.spectrum.repository.UserRepository;
+import com.spectrum.entity.*;
+import com.spectrum.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,6 +19,7 @@ import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService{
+
     @Autowired
     PasswordEncoder passwordEncoder;
 
@@ -29,6 +28,24 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     FollowRepository followRepository;
+
+    @Autowired
+    DoggingRepository doggingRepository;
+
+    @Autowired
+    PCommentRepository pCommentRepository;
+
+    @Autowired
+    PBoardRepository pBoardRepository;
+
+    @Autowired
+    SCommentRepository sCommentRepository;
+
+    @Autowired
+    SBoardRepository sBoardRepository;
+
+    @Autowired
+    SBoardFileRepository sBoardFileRepository;
 
     String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/";
 
@@ -154,8 +171,46 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void deleteUser(String userid) {
-        Optional<User> user = userRepository.findByUserId(userid);
-        userRepository.delete(user.get());
+        Optional<User> userOp = userRepository.findByUserId(userid);
+        User user = userOp.get();
+
+        List<Dogging> doggingList = doggingRepository.findAllByUser(user);
+        List<Follow> followerlist = followRepository.findAllByFollower(user);
+        List<Follow> followlist = followRepository.findAllByFollow(user);
+        List<PComment> pCommentList = pCommentRepository.findAllByUser(user);
+        List<PBoard> pBoardList = pBoardRepository.findAllByUser(user);
+        List<SComment> sCommentList = sCommentRepository.findAllByUser(user);
+        List<SBoard> sBoardList = sBoardRepository.findAllByUser(user);
+
+        for(int i=0;i<doggingList.size();i++)
+            doggingRepository.delete(doggingList.get(i));
+
+        for(int i=0;i<followerlist.size();i++)
+            followRepository.delete(followerlist.get(i));
+
+        for(int i=0;i<followlist.size();i++)
+            followRepository.delete(followlist.get(i));
+
+        for(int i=0;i<pCommentList.size();i++)
+            pCommentRepository.delete(pCommentList.get(i));
+
+        for(int i=0;i<pBoardList.size();i++)
+            pBoardRepository.delete(pBoardList.get(i));
+
+        for(int i=0;i<sCommentList.size();i++)
+            sCommentRepository.delete(sCommentList.get(i));
+
+        for(int i=0;i<sBoardList.size();i++)
+        {
+            Optional<List<SBoardFile>> sBoardFileList = sBoardFileRepository.findBysBoard(sBoardList.get(i));
+            for(int j=0;j<sBoardFileList.get().size();j++)
+            {
+                sBoardFileRepository.delete(sBoardFileList.get().get(j));
+            }
+            sBoardRepository.delete(sBoardList.get(i));
+        }
+
+        userRepository.delete(user);
 
         String path = BASE_PATH  + userid;
         File file = new File(path);
