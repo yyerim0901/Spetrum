@@ -25,13 +25,13 @@
       </div>
     </div>
     <Modal v-if="showModal" @close="showModal=false" @ok="showModal=false">
-      <div v-for="flist in followList" :key="flist.id">
-        {{flist}}
+      <div v-for="flist in userInfo.followList" :key="flist.id">
+        팔로우 {{flist}}
       </div>
     </Modal>
     <Modal v-if="showModal2" @close="showModal2=false" @ok="showModal=false">
-      <div v-for="flist in followerList" :key="flist.id">
-        {{flist}}
+      <div v-for="flist in userInfo.followerList" :key="flist.id">
+        팔로워 {{flist}}
       </div>
     </Modal>
     <Footer :isActive="isActive"></Footer>
@@ -136,12 +136,12 @@ export default {
     },
     showFollow()
     {
-      console.log(this.followList)
+      console.log(this.userInfo.followList)
       this.showModal = true;
     },
     showFollower()
     {
-      console.log(this.followerList)
+      console.log(this.userInfo.followerList)
       this.showModal2 = true;
     }
   },
