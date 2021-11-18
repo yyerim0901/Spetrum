@@ -68,7 +68,7 @@ export default {
     this.$store.dispatch('detailSBoard',this.$route.params.boardid)
     .then(res=>{
       console.log(res);
-      this.files = res.data.data.filelist;
+      this.files = res.data.data.filelist[0].save_file;
       this.content = res.data.data.content;
       this.likes = res.data.data.likes;
       this.writerid = res.data.data.userid;
