@@ -126,7 +126,7 @@ export default {
         formData.append("userid",this.userInfo.userid)
         formData.append("nickname",this.nickname);
         formData.append("password",this.password);
-        formData.append("files",this.profileImg);
+        formData.append("thumbnail",this.profileImg);
         console.log(this.profileImg) //얘는 잘 나옴
         this.$store.dispatch('requestUpdateUserInfo',formData);
       }

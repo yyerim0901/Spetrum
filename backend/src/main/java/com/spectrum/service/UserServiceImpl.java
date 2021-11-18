@@ -131,7 +131,7 @@ public class UserServiceImpl implements UserService{
     public void updateUser(UserUpdateReq updateInfo, String userid) throws IOException {
         Optional<User> user = userRepository.findByUserId(userid);
         User userinfo = user.get();
-
+        System.out.println("1");
         if(updateInfo.getThumbnail() != null) //이미지 변경이 있으면
         {
             MultipartFile multipartFile = updateInfo.getThumbnail();
@@ -148,7 +148,7 @@ public class UserServiceImpl implements UserService{
             userinfo.setThumbnail(final_name);
             file = new File(final_name);
             multipartFile.transferTo(file);
-
+            System.out.println("2");
             // 파일 권한 설정(쓰기, 읽기)
             file.setWritable(true);
             file.setReadable(true);
@@ -165,7 +165,7 @@ public class UserServiceImpl implements UserService{
         userinfo.setTemperature(updateInfo.getTemperature());
         userinfo.setPetpit(updateInfo.getPETPTI());
         userinfo.setKeyword(updateInfo.getKeyword());
-
+        System.out.println("3");
         userRepository.save(userinfo);
     }
 
