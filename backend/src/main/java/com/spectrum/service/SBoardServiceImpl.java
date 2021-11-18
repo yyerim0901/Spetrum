@@ -5,9 +5,11 @@ import com.spectrum.common.request.SBoardRegisterReq;
 import com.spectrum.common.response.SBoardRes;
 import com.spectrum.entity.SBoard;
 import com.spectrum.entity.SBoardFile;
+import com.spectrum.entity.SComment;
 import com.spectrum.entity.User;
 import com.spectrum.repository.SBoardFileRepository;
 import com.spectrum.repository.SBoardRepository;
+import com.spectrum.repository.SCommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,8 @@ public class SBoardServiceImpl implements SBoardService {
     SBoardRepository sBoardRepository;
     @Autowired
     SBoardFileRepository sBoardFileRepository;
+    @Autowired
+    SCommentRepository sCommentRepository;
     @Autowired
     FileHandler fileHandler;
 
@@ -120,6 +124,13 @@ public class SBoardServiceImpl implements SBoardService {
             for(SBoardFile photo : photoList.get())
                 // 파일을 DB에 저장
                 sBoardFileRepository.delete(photo);
+        }
+        // 댓글 먼저 다 삭제
+        Optional<List<SComment>> comments = sCommentRepository.findBysBoard(sb.get());
+        if(!comments.get().isEmpty()){
+            for(SComment scomment : comments.get()){
+                sCommentRepository.delete(scomment);
+            }
         }
         sBoardRepository.delete(sb.get());
         return true;
