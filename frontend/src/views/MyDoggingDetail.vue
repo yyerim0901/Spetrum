@@ -12,7 +12,7 @@
 <script>
 import Footer from '../components/molecules/Footer.vue'
 import Header from '../components/molecules/Header.vue'
-
+import axios from 'axios'
 export default {
   name:'Dogging',
   components:{
@@ -23,13 +23,27 @@ export default {
     return{
       isActive:5,
       doggingId:"",
+      dogging: {},
     }
   },
   created(){
-    this.doggingId = this.$route.params.doggingId;
+    this.doggingId = this.$route.params.doggingid;
   },
   methods: {
-    
+    getDoggingDetail() {
+      axios({
+        url: 'https://spetrum.io:8080/api/dogging/detail',
+        method: "GET",
+        headers: {
+          'Authorization':localStorage.getItem('token'),
+        },
+        params: {
+          doggingId : this.doggingId
+        }
+      }).then(res => {
+        this.dogging = res.data
+      })
+    }
   },
 }
 </script>
