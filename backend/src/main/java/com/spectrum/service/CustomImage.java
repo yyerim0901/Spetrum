@@ -68,9 +68,6 @@ public class CustomImage extends JPanel {
         g.drawString(sdf.format(today),width/10,height/12);
 
         g.dispose();
-
-
-
         //파일경로가 없으면 만드는 부분 만들어야 함!
 //        System.out.println(path);
 //        File check = new File(path);
