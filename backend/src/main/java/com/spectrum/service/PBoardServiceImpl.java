@@ -4,8 +4,10 @@ import com.spectrum.common.jwt.JWTUtil;
 import com.spectrum.common.request.PBoardPostReq;
 import com.spectrum.common.request.PBoardUpdateReq;
 import com.spectrum.entity.PBoard;
+import com.spectrum.entity.PComment;
 import com.spectrum.entity.User;
 import com.spectrum.repository.PBoardRepository;
+import com.spectrum.repository.PCommentRepository;
 import com.spectrum.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.locationtech.jts.geom.Point;
@@ -43,6 +45,9 @@ public class PBoardServiceImpl implements PBoardService {
 
     @Autowired
     private JWTUtil jwtUtil;
+
+    @Autowired
+    private PCommentRepository pCommentRepository;
 
    String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/";
 //     String BASE_PATH = new File("").getAbsolutePath() + "/src/main/resources/";
@@ -184,6 +189,12 @@ public class PBoardServiceImpl implements PBoardService {
             Path deleteFilePath = Paths.get(absolutepath);
             Files.deleteIfExists(deleteFilePath);
         }
+        List<PComment> pCommentList = pCommentRepository.findAllByPboard(petSitter);
+        for(int i=0;i<pCommentList.size();i++)
+        {
+            pCommentRepository.delete(pCommentList.get(i));
+        }
+
         pBoardRepository.deleteById(petSitterId);
     }
 

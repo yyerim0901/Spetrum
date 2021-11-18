@@ -1,5 +1,6 @@
 package com.spectrum.repository;
 
+import com.spectrum.entity.PBoard;
 import com.spectrum.entity.PComment;
 import com.spectrum.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,4 +13,5 @@ public interface PCommentRepository extends JpaRepository<PComment, Long> {
 
     List<PComment> findByPboardId(Long pboardId);
     List<PComment> findAllByUser(User user);
+    List<PComment> findAllByPboard(PBoard pBoard);
 }
