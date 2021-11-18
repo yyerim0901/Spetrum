@@ -1,12 +1,12 @@
 <template>
   <div style="display: flex; justify-content: flex-start; font-size: 13.3px; width:420px;">
       <p style="font-size: 13.3px;">{{ comment.content }} - {{ comment.user.userId }}</p>
-        <StyledButton btype="realsmall" bcolor="babypink" @click="chatstart(comment.user.userId)">채팅</StyledButton>
+        <StyledButton v-if="comment.user.userId != this.userid" btype="realsmall" bcolor="babypink" @click="chatstart(comment.user.userId)">채팅</StyledButton>
       <input v-if="commentFlag" type="text" :placeholder=comment.content v-model="changedComment">
       <div v-if="comment.user.userId == this.userid">
-        <button v-if="!commentFlag" @click="deleteComment">&nbsp;삭제&nbsp;</button>|
-        <button v-if="!commentFlag" @click="changFlag">&nbsp;수정</button>
-        <button v-if="commentFlag" @click="changeComment">&nbsp;수정완료</button>
+        <StyleButton v-if="!commentFlag" @click="deleteComment">&nbsp;삭제&nbsp;</StyleButton>|
+        <StyleButton v-if="!commentFlag" @click="changFlag">&nbsp;수정</StyleButton>
+        <StyleButton v-if="commentFlag" @click="changeComment">&nbsp;수정완료</StyleButton>
       </div>
   </div>
 </template>
