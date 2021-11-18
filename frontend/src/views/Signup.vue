@@ -115,7 +115,7 @@ export default {
         formData.append("nickname",this.nickname);
         formData.append("password",this.password);
         formData.append("userId",this.userId);
-        formData.append("thumbnail",this.profileImg);
+        if(this.profileImg) {formData.append("thumbnail",this.profileImg);}
         console.log(this.profileImg,'프로필이미지s');
         // this.$store.dispatch('requestSignup',formData);
         axios({
