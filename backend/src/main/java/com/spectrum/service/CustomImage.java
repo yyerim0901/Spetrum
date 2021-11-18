@@ -16,6 +16,7 @@ public class CustomImage extends JPanel {
 
     static String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/image";
     static String LOGO_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/logo_image/white_logo.png";
+    static String local_logo_path = "src/main/resources/logo_image/white_logo.png";
 
     public static String customImage(MultipartFile multipartFile, Dogging dogging) throws IOException {
         //converting multipartfile to bufferedImage
@@ -45,9 +46,12 @@ public class CustomImage extends JPanel {
         String location = loc[0]+" "+loc[1];
         byte[] euckrStringBuffer = location.getBytes(Charset.forName("euc-kr"));
         String decodedFromEucKr = new String(euckrStringBuffer, "euc-kr");
+        System.out.println(decodedFromEucKr);
         byte[] utf8StringBuffer = decodedFromEucKr.getBytes("utf-8");
         String decodedFromUtf8 = new String(utf8StringBuffer, "utf-8");
+        System.out.println(decodedFromUtf8);
         g.drawString(decodedFromUtf8,width/10,height-(height/5)+200);
+        g.drawString("euckr"+decodedFromEucKr,width/10,height-(height/5)+250);
         //소요 시간
         String time = dogging.getTime();
         g.drawString(time, width/10,height-(height/5)+100);
@@ -65,11 +69,7 @@ public class CustomImage extends JPanel {
 
         g.dispose();
 
-        //저장 위치 조절 & 저장되는 이름 사진 하나당 변경
-        String userId = Long.toString(dogging.getUser().getId());
-        String doggingId = Long.toString(dogging.getId());
-        String fileName = userId+"_"+doggingId+".png";
-        String path = BASE_PATH + "/dogging";
+
 
         //파일경로가 없으면 만드는 부분 만들어야 함!
 //        System.out.println(path);
@@ -83,6 +83,11 @@ public class CustomImage extends JPanel {
 //        Runtime.getRuntime().exec("chmod -R 777 " + path);
 
 //        System.out.println(check.exists());
+        //저장 위치 조절 & 저장되는 이름 사진 하나당 변경
+        String userId = Long.toString(dogging.getUser().getId());
+        String doggingId = Long.toString(dogging.getId());
+        String fileName = userId+"_"+doggingId+".png";
+        String path = BASE_PATH + "/dogging";
         path += "/"+ fileName;
 //        \var\lib\jenkins\workspace\PJT\backend\src\main\resources\image\dogging\9\29
 //        String path = "C:\\Users\\multicampus\\Desktop\\test1.png";
