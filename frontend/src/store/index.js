@@ -265,7 +265,10 @@ export default new Vuex.Store({
         method:'get',
         params:{
           page:page,
-        }
+        },
+        headers:{
+            'Authorization':localStorage.getItem("token"),
+          }
       })
     },
     requestSBoardUser(state,payload){
