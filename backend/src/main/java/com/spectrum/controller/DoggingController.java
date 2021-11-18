@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 
@@ -164,7 +165,7 @@ public class DoggingController {
             notes = "도깅 사진 커스텀 후 다운로드"
     )
     @GetMapping("/download")
-    public ResponseEntity<Object> downloadCustomImage(@RequestParam Long doggingId)throws Exception{
+    public ResponseEntity<Object> downloadCustomImage(@RequestParam Long doggingId, HttpServletResponse response)throws IOException{
 
         Optional<Dogging> doggingOptional = doggingRepository.findById(doggingId);
         
@@ -177,10 +178,12 @@ public class DoggingController {
         Path filePath = Paths.get(path);
         Resource resource = new InputStreamResource(Files.newInputStream(filePath)); // 파일 resource 얻기
 
-        File file = new File(path);
+        File customImage = new File(path);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentDisposition(ContentDisposition.builder("attachment").filename(file.getName()).build());
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDisposition(ContentDisposition.builder("attachment").filename(customImage.getName()).build());
+        response.setHeader("Content-Disposition", "attachment; filename=" + customImage.getName());
         // 다운로드 되거나 로컬에 저장되는 용도로 쓰이는지를 알려주는 헤더
         return new ResponseEntity<Object>(resource, headers, HttpStatus.OK);
     }
