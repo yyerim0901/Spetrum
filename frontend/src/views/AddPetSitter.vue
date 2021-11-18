@@ -1,16 +1,21 @@
 <template>
-    <div class="PET-Wrapper">
+    <div class="PET-ADD-Wrapper">
         <Header :isLogo="false" :isBack="true" title="겟! 시터 글 작성"></Header>
-        <div style="width:400px;">
-            <div class="addbox">
-                <img :src="this.imgprev" alt="" class="prev-img">
-                <input  type="file" @change="imageChange" ref="profileImage">
+        <div style="add-pet-box">
+            <div style="width:400px;">
+                <!-- text-align: center;
+        align-items: center;
+        justify-content: center; -->
+                <div class="addbox">
+                    <img :src="this.imgprev" alt="" class="prev-img">
+                    <input  type="file" @change="imageChange" ref="profileImage">
+                </div>
+                    <input name="content"  cols="30" rows="10" class="title-box" placeholder="제목을 입력해주세요" v-model="inputTitle">
+                    <textarea name="content"  cols="30" rows="40" class="con-box" placeholder="내용을 입력해주세요" v-model="inputContent"></textarea>
+                </div>
             </div>
-            <input name="content"  cols="30" rows="10" class="title-box" placeholder="제목을 입력해주세요" v-model="inputTitle">
-            <textarea name="content"  cols="30" rows="10" class="con-box" placeholder="내용을 입력해주세요" v-model="inputContent"></textarea>
+            <FooterButton @click="createPetSitter">게시글 작성하냥</FooterButton>
         </div>
-        <FooterButton @click="createPetSitter">게시글 작성하냥</FooterButton>
-    </div>
 </template>
 
 <script>
@@ -88,6 +93,14 @@ export default {
 </script>
 
 <style>
+.PET-ADD-Wrapper{
+    justify-content: flex-start;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    width:100%;
+}
 .addbox{
 display:flex;
 flex-direction: column;
@@ -109,8 +122,12 @@ text-align:start;
 border: solid 1px;
 border-color: #E5EAEF;
 width:400px;
-height: 100px;
+height: 200px;
 margin:10px 0;
 text-align:start;
+}
+.add-pet-box{
+    width: 100%;
+    overflow-y : scroll;
 }
 </style>

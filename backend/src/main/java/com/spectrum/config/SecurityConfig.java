@@ -52,14 +52,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(filter, CsrfFilter.class);
     }
 
-    @Order(Ordered.HIGHEST_PRECEDENCE)
-    @Bean
-    public Filter characterEncodingFilter() {
-        CharacterEncodingFilter filter = new CharacterEncodingFilter();
-        filter.setEncoding("UTF-8");
-        filter.setForceEncoding(true);
-        return filter;
-    }
-
-
 }
