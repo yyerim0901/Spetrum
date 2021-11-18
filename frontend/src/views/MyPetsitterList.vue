@@ -73,13 +73,17 @@ export default {
   },
   methods: {
     refreshAll() {
-            // 새로고침
-            this.$router.go();
-        },
+      // 새로고침
+      this.$router.go();
+    },
     fullURL(url){
-            const full = this.BASE_URL + url;
-            return full;
-        },
+      if (url !== null){
+        var full = this.BASE_URL + url;
+      } else{
+        full = require('@/assets/noimage.png')
+      }
+      return full;
+    },
     detailof (pboardId){
       this.$router.push({name:'PetSitterEachDetail',params:{'board_id':pboardId}});
     },

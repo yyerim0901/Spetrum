@@ -60,6 +60,7 @@ export default {
       writernickname:null,
       isWriter:false,
       showModal:false,
+      profile:undefined,
     }
   },
   created(){
@@ -81,6 +82,7 @@ export default {
       .then(res=>{
         console.log(res);
         console.log('유저인포');
+        this.profile = res.data.user.thumbnail;
         this.writernickname = res.data.user.nickname;
       })
       .catch(err=>{
@@ -97,7 +99,7 @@ export default {
   },
   methods:{
     fullURL(url){
-      if (url.length !== 0){
+      if (url.filelist[0]){
         var full = this.BASE_URL + url[0].save_file;
       } else{
         full = require('@/assets/noimage.png')
@@ -108,8 +110,8 @@ export default {
       this.$router.push({name:'EditMoment', params:{'boardid':this.boardid}})
     },
     getthumbnail(){
-      if (this.userInfo.thumbnail) {
-        var fullurl = this.BASE_URL + this.userInfo.thumbnail
+      if (this.profile) {
+        var fullurl = this.BASE_URL + this.profile
         console.log(fullurl,'fullurl');
         return fullurl
       }else{
