@@ -75,6 +75,7 @@ export default {
     align-items: center;
     width:100%;
     margin-bottom: 50px;
+    /* font: 1em sans-serif; */
   }
   .addbox{
     display:flex;
