@@ -7,7 +7,7 @@
                 <span>{{ board.data.title }}</span>
                 <span v-if="board.data.user.userId == this.userid">
                     <i class="fas fa-edit" style="margin:0 0 0 10px;" @click="moveChangePetSitter"></i>
-                    <i class="fas fa-trash" style="margin:0 0 0 10px;" @click="deletePetSitter"></i>
+                    <i class="fas fa-trash" style="margin:0 0 0 10px;" @click="checkdelete"></i>
                 </span>
             </div>
             <p @click="chatting()" style="width: 420px; text-align:right;">작성자 : {{ board.data.user.userId }}</p>
@@ -21,6 +21,12 @@
                 <StyledButton btype="realsmall" bcolor="babypink" @click="createComment()">작성</StyledButton>
             </div>
         </div>
+        <Modal v-if="showModal" @close="showModal=false" @ok="deletePetSitter">
+          <h3 slot="header">
+            게시글을 정말 삭제하시겠냥?
+          </h3>
+          <div slot="body"></div>
+        </Modal>
         <Footer :isActive="isActive"/>
     </div>
 </template>
@@ -32,6 +38,7 @@ import axios from '../../axios/index';
 import PetSitterCommentDetail from '../../components/molecules/PetSitterCommentDetail';
 import CommentInput from '../atoms/CommentInput'
 import StyledButton from '../atoms/StyledButton'
+import Modal from './Modal.vue'
 
 export default {
     name: "PetSitterEachDetail",
@@ -40,7 +47,8 @@ export default {
         Footer,
         PetSitterCommentDetail,
         CommentInput,
-        StyledButton
+        StyledButton,
+        Modal
     },
     data() {
         return {
@@ -52,6 +60,7 @@ export default {
             inputContent: '',
             BASE_URL : 'https://spetrum.io/resources/',
             myid:"",
+            showModal:false,
         }
     },
     methods: {
@@ -111,6 +120,9 @@ export default {
         fullURL(url){
             const full = this.BASE_URL + url;
             return full;
+        },
+        checkdelete(){
+            this.showModal = true;
         },
         deletePetSitter() {
             axios({
