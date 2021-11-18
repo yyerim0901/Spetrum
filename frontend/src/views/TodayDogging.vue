@@ -4,7 +4,7 @@
       <h3>오늘의 도깅</h3>
       <div class="addbox">
         <img :src="this.imgprev" alt="" class="prev-img">
-        <input  type="file" @change="imageChange" ref="profileImage">
+        <input type="file" @change="imageChange" ref="profileImage">
       </div>
       <FooterButton btype="medium" bcolor="babypink" @click="moveToMoment">공유하개</FooterButton>
       <!-- <StyledButton btype="medium" bcolor="babypink" @click="downDogging">저장하개</StyledButton> -->

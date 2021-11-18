@@ -72,6 +72,7 @@ export default {
                             }
                         }).then(res=> {
                             console.log(res);
+                            this.$store.dispatch('getBoards')
                             push;
                         }).catch(err =>{
                             console.log(err)
