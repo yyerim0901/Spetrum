@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.nio.charset.Charset;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
@@ -42,7 +43,11 @@ public class CustomImage extends JPanel {
         //지역
         String[] loc = dogging.getLocation().split(" ");
         String location = loc[0]+" "+loc[1];
-        g.drawString(location,width/10,height-(height/5)+200);
+        byte[] euckrStringBuffer = location.getBytes(Charset.forName("euc-kr"));
+        String decodedFromEucKr = new String(euckrStringBuffer, "euc-kr");
+        byte[] utf8StringBuffer = decodedFromEucKr.getBytes("utf-8");
+        String decodedFromUtf8 = new String(utf8StringBuffer, "utf-8");
+        g.drawString(decodedFromUtf8,width/10,height-(height/5)+200);
         //소요 시간
         String time = dogging.getTime();
         g.drawString(time, width/10,height-(height/5)+100);
