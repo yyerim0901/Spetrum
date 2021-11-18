@@ -119,7 +119,7 @@ export default new Vuex.Store({
       state.userInfo.userid = payload.userid;
       state.userInfo.followerList = payload.followerList;
       state.userInfo.followList = payload.followList;
-    }
+    },
   },
   actions: {
     requestSignIn(state,payload){
@@ -391,15 +391,9 @@ export default new Vuex.Store({
         params: {
             petSitterId : payload
         }
-    }).then(res => {
-        console.log(res.data)
-        this.$router.push({name:'MyPetsitterList'})
-    })
-    },
-    bringMyDogging() {
-      return axios({
-        url: "/dogging",
-        method: "get"
+      }).then(res => {
+          console.log(res.data)
+          this.$router.push({name:'MyPetsitterList'})
       })
     },
     requestUserSearch(state,payload){
