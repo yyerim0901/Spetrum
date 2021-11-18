@@ -16,7 +16,9 @@
             </div>
             <!-- <p @click="chatting()" style="width: 420px; text-align:right;">작성자 : {{ board.data.user.userId }}</p> -->
             <!-- <p style="width: 420px; text-align:right;">작성일자 : {{ board.data.created.substr(0,10) }}</p> -->
-            <div style="text-align:start; border:solid; border-width:1px 0; border-color:#E5EAEF; width: 420px; height: 120px;">{{ board.data.content }}</div>
+            <div style="text-align:start; border:solid; border-width:1px 0; border-color:#E5EAEF; width: 420px; height: 120px;">
+                {{ this.content}}
+                </div>
 
             <PetSitterCommentDetail style="width:90%" v-for="(comment, idx) in comments" :key="idx" :comment="comment" />
             <div style="margin-bottom:50px;">
@@ -65,6 +67,7 @@ export default {
             BASE_URL : 'https://spetrum.io/resources/',
             myid:"",
             showModal:false,
+            content:'',
         }
     },
     methods: {
@@ -77,6 +80,7 @@ export default {
                 },
             }).then(res => {
                 this.board = res.data
+                this.content = res.data.data.content.replaceAll(/\n/g,'&nbsp;')
                 console.log(res);
             }).catch(err => {
                 console.log(err)

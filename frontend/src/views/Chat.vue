@@ -1,46 +1,49 @@
 <template>
-  <div>
+  <div style="height: 100vh; width:100%;">
     <Header :isLogo="false" :isBack="false" title="채팅"/>
-    <div style="height: 100vh;">
-    <br>
-    <div style="height: 70vh">
-      <div style="margin-left: 20px; margin-right: 20px;"
-        v-for="(item, idx) in recvList"
-        :key="idx"
-      >
-        <h3 style="text-align:right;" v-if="item.userName == userName"> {{ item.content }}</h3>
-        <h3 v-else> {{ item.userName }} : {{ item.content }}</h3>
+    <div>
+      <br>
+      <div style=" overflow-y:scroll; height:75vh;">
+        <div style="margin-left: 20px; margin-right: 20px;"
+          v-for="(item, idx) in recvList"
+          :key="idx"
+        >
+          <p style=" text-align:right;margin:8px 0px;font-size:18px; font-weight:600;" 
+          v-if="item.userName == userName"> <span  style="border-radius:7px; padding:1px; background-color:#f6f8fa;">{{ item.content }}</span></p>
+          <p style="margin:8px 0px;font-size:18px;" v-else> <span style="font-size:14px;">{{ item.userName }}</span>&nbsp;
+            <span style="background-color:pink; border-radius:7px; padding:1px; font-weight:600;">
+              {{ item.content }}
+              </span>
+              </p>
+        </div>
       </div>
-    </div>
     <!-- 유저이름: 
     <input
       v-model="userName"
       type="text"
     > -->
-    <div style="text-align: center">
-    {{this.userName}} <input
-      v-model="message"
-      type="text"
-      @keyup="sendMessage"
-      style="width: 70%;"
-    > <StyledButton btype="realsmall" bcolor="babypink" @click="sendMessage2()">전송</StyledButton>
+    <!-- display: block;
+  position: fixed;
+  bottom: 0; -->
+    <div style="text-align: center; width:100%;">
+      <span style="font-size:17px; font-weight:600;">{{this.userName}}</span> <input
+        v-model="message"
+        type="text"
+        @keyup="sendMessage"
+        style="width:60%;"
+      > <StyledButton style="width:60px;" btype="small" bcolor="babypink" @click="sendMessage2()">전송</StyledButton>
+      </div>
     </div>
-    <div style="text-align: center">
-        <StyledButton btype="realsmall" bcolor="babypink" @click="close()">채팅종료</StyledButton>
-    </div>
-
-
-    
-  </div>
-  <Footer :isActive="isActive" style="margin:0"/>
+    <FooterButton @click="close()">채팅종료</FooterButton>
   </div>
 </template>
 
 <script>
 import StyledButton from '../components/atoms/StyledButton'
+import FooterButton from '../components/atoms/FooterButton'
 import Stomp from 'webstomp-client'
 import SockJS from 'sockjs-client'
-import Footer from '../components/molecules/Footer';
+// import Footer from '../components/molecules/Footer';
 import Header from '../components/molecules/Header';
 import {mapState} from 'vuex';
 import axios from '../axios/index';
@@ -56,8 +59,9 @@ export default {
   },
     components:{
     Header,
-    Footer,
-    StyledButton
+    // Footer,
+    StyledButton,
+    FooterButton
   
   },
     computed:{

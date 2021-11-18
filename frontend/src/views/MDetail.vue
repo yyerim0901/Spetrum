@@ -2,21 +2,24 @@
   <div class="Moment-Wrapper">
     <Header :isBack="true" title="MY MOMENT" :isLogo="false"></Header>
     <div style="width:100%; display:flex; flex-direction:column; overflow-y:scroll;">
-      <div style="display:flex; margin:10px 0 2px 25px; align-items:center; justify-content:flex-start">
-        <img :src="getthumbnail()" alt="" class="pimg-box-small">
-        <h3 style="padding:0 5px;">{{this.writernickname}}</h3>
-        <div :class="[isWriter ? 'edit-icon' : '']">
+      <div style="display:flex; margin:10px 0 2px 25px; align-items:center;">
+        <img style="margin-left:10px;" :src="getthumbnail()" alt="" class="pimg-box-small">
+        <p style="padding:0 5px; font-size:16px; font-weight:600;">{{this.writernickname}}</p>
+        <div style="justify-content:right;" :class="[isWriter ? 'edit-icon' : '']">
           <i class="fas fa-edit" style="margin:0 0 0 10px;" @click="moveEdit"></i>
           <i class="fas fa-trash" style="margin:0 0 0 10px;" @click="deletecheck"></i>
         </div>
       </div>
       <img :src="fullURL(this.files)" alt="" class="pre-img">
       <div style="margin:5px 40px; display:flex; flex-direction:column;">
-        <span style="text-align:start; border:solid; border-width:1px 0; border-color:#E5EAEF;">{{this.content}}</span>
-        <div v-for="c in commentList" :key="c.id">
-          <p class="comment">{{c.content}} - 작성자: {{c.user.nickname }}</p>
+        <div style="height:60px; text-align:start; border:solid; border-width:1px 0; border-color:#E5EAEF; padding:8px; font-size:15px; font-weight:400;">{{this.content}}</div>
+        <div style="margin : 3px 1px" v-for="c in commentList" :key="c.id">
+          <p class="comment">
+            <span style=" border-radius:5px; padding:2px; font-weight:700;">{{ c.user.nickname }}</span>
+            &nbsp;&nbsp;&nbsp;<span>{{ c.content }}</span>
+            </p>
         </div>
-        <div>
+        <div style="margin-bottom:50px; text-align:center;">
           <i class="far fa-comment-dots" style="margin:0 5px 0 0; font-size:1rem"></i>
           <CommentInput :value="comment" v-model="comment" />
           <StyledButton btype="realsmall" bcolor="babypink" @click="sendComment()">작성</StyledButton>
@@ -27,6 +30,7 @@
           </h3>
           <div slot="body"></div>
         </Modal>
+        <!--원래 footer가 없나?-->
       </div>
     </div>
   </div>
