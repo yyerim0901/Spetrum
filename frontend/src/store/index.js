@@ -139,7 +139,7 @@ export default new Vuex.Store({
         }
         else {
 
-          alert(res.data.message);
+          alert('로그인에 실패했습다');
         }
 
       })

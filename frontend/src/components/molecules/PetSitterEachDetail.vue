@@ -12,7 +12,7 @@
             </div>
             <p @click="chatting()" style="width: 420px; text-align:right;">작성자 : {{ board.data.user.userId }}</p>
             <p style="width: 420px; text-align:right;">작성일자 : {{ board.data.created.substr(0,10) }}</p>
-            <textarea style="text-align:start; border:solid; border-width:1px 0; border-color:#E5EAEF; width: 420px; height: 120px;" :value="board.data.content" readonly></textarea>
+            <p style="text-align:start; border:solid; border-width:1px 0; border-color:#E5EAEF; width: 420px; height: 120px;">{{ board.data.content }}</p>
 
             <PetSitterCommentDetail v-for="(comment, idx) in comments" :key="idx" :comment="comment" />
             <div>
