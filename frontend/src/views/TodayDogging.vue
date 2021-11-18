@@ -48,7 +48,7 @@ export default {
                     },
                     data: formData,
                     params: {
-                        userid: 'ktest'
+                        userid: localStorage.getItem('userid')
                     }
                 }).then(res => {
                     this.doggingInfo = res.data
