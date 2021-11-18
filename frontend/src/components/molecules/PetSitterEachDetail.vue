@@ -14,13 +14,9 @@
                     <!-- <p style="width: 420px; text-align:right;">작성일자 : {{ board.data.created.substr(0,10) }}</p> -->
                 </div>
             </div>
-<<<<<<< HEAD
-            <textarea style="text-align:start; border:solid; border-width:1px 0; border-color:#E5EAEF; width: 420px; height: 120px;" :value="board.data.content" readonly></textarea>
-=======
             <p @click="chatting()" style="width: 420px; text-align:right;">작성자 : {{ board.data.user.userId }}</p>
             <p style="width: 420px; text-align:right;">작성일자 : {{ board.data.created.substr(0,10) }}</p>
             <p style="text-align:start; border:solid; border-width:1px 0; border-color:#E5EAEF; width: 420px; height: 120px;">{{ board.data.content }}</p>
->>>>>>> 9e05906b2dbfb0157803d2a13738922cc4c3de0a
 
             <PetSitterCommentDetail v-for="(comment, idx) in comments" :key="idx" :comment="comment" />
             <div>
