@@ -136,22 +136,26 @@ export default {
         },
         chatting()
         {
-            axios({
-                method: "GET",
-                url: '/users/me',
-                headers: {
-                    "Authorization": localStorage.getItem("token")
-                },
-            }).then(res => {
-                this.myid = res.data.user.userId;
+            if(this.userid != this.board.data.user.userId)
+            {
+                axios({
+                    method: "GET",
+                    url: '/users/me',
+                    headers: {
+                        "Authorization": localStorage.getItem("token")
+                    },
+                }).then(res => {
+                    this.myid = res.data.user.userId;
 
-                this.$router.push({
-                name: "Chat",
-                params: {
-                    roomname: this.board.data.user.userId+"_"+this.myid,
-                }
-            })
-            })
+                    this.$router.push({
+                    name: "Chat",
+                    params: {
+                        roomname: this.board.data.user.userId+"_"+this.myid,
+                    }
+                })
+                })
+            }
+=
         }
     },
     created() {
