@@ -5,7 +5,7 @@
       <div class="i-box">
         <img :src="getthumbnail()" alt="profilImg" class="pimg-box">
         <button bcolor="babypink" btype="medium" class="f-button"><h3>게시글</h3><span>{{this.mywritesLength}}</span></button>
-        <button bcolor="babypink" btype="medium" class="f-button" @click="showFollow2()"><h3>팔로워</h3><span>{{this.followerLength}}</span></button>
+        <button bcolor="babypink" btype="medium" class="f-button" @click="showFollower()"><h3>팔로워</h3><span>{{this.followerLength}}</span></button>
         <button bcolor="babypink" btype="medium" class="f-button" @click="showFollow()"><h3>팔로우</h3><span>{{this.followLength}}</span></button>
       </div>
       <div class="l-box">
@@ -24,14 +24,14 @@
         </div>
       </div>
     </div>
-    <Modal v-if="showModal" @close="showModal=false">
+    <Modal v-if="showModal" @close="showModal=false" @ok="showModal=false">
       <div v-for="flist in followList" :key="flist.id">
-        {{flist}}
+        {{flist.list}}
       </div>
     </Modal>
-    <Modal v-if="showModal2" @close="showModal2=false">
+    <Modal v-if="showModal2" @close="showModal2=false" @ok="showModal=false">
       <div v-for="flist in followerList" :key="flist.id">
-        {{flist}}
+        {{flist.list}}
       </div>
     </Modal>
     <Footer :isActive="isActive"></Footer>
@@ -187,6 +187,15 @@ export default {
       console.log(res);
       this.followList = res.data.followList;
       this.followerList = res.data.followerList;
+
+      res.data.followList.forEach(element => {
+        this.followList.push({'list':element});
+      });
+
+      res.data.followerList.forEach(element => {
+        this.followerList.push({'list':element});
+      });
+
       const data = {
             nickname: res.data.user.nickname,
             thumbnail: res.data.user.thumbnail,
