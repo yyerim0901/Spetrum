@@ -115,7 +115,7 @@ export default {
     imageChange(){
       this.profileImg = this.$refs.profileImage.files[0];
       if (this.profileImg) {
-        this.imgprev = URL.createObjectURL(this.profileImg[0]);
+        this.imgprev = URL.createObjectURL(this.profileImg);
         }
     },
     updateUserInfo(){
