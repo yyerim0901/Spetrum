@@ -3,6 +3,7 @@
         <Header :isLogo="false" :isBack="true" title="나의 도깅"></Header>
         <div class="p-box">
             <div>여기는 map 자리</div>
+            <p>{{ dogging }}</p>
             <div></div>
         </div>
         <Footer :isActive="isActive"></Footer>
@@ -28,6 +29,7 @@ export default {
   },
   created(){
     this.doggingId = this.$route.params.doggingid;
+    this.getDoggingDetail()
   },
   methods: {
     getDoggingDetail() {
