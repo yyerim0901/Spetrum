@@ -22,7 +22,7 @@
             <h3>{{mydogging.location}}</h3>
             <p style="font-size:small;"> 총 거리 : {{mydogging.distance}}km</p>
             <p style="font-size:small;">도깅 시간 : {{mydogging.time}}</p>
-            <p style="font-size:small;">도깅 날짜 : {{mydogging.created.substr(0,10)}}</p>
+            <p style="font-size:small;">도깅 날짜 : {{mydogging.date.substr(0,10)}}</p>
           </div>
         </div>
       </div>
