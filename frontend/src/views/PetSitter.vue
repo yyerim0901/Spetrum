@@ -112,7 +112,6 @@ export default {
     .sitter-box-in-second{
         width: 100%;
         padding:0px 60px;
-        display: flex;
         overflow-y: scroll;
     }
     .null-text{
