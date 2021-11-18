@@ -65,7 +65,7 @@ export default {
                                 'Authorization':localStorage.getItem('token'),
                             },
                             params:{
-                                content : inputtedContent,
+                                content : inputtedContent.replace("\n","<br>"),
                                 title : inputtedTitle,
                                 lat : curlat,
                                 lng : curlon,
