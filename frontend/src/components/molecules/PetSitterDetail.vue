@@ -35,8 +35,13 @@ export default {
             })
         },
         fullURL(url){
-            const full = this.BASE_URL + url;
-            return full;
+        if (url !== null){
+                var full = this.BASE_URL + url;
+            } else{
+                full = require('@/assets/noimage.png')
+            }
+            return full;            
+            
         },
 
     }

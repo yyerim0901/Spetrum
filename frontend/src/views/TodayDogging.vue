@@ -1,6 +1,6 @@
 <template>
   <div class="Dogging-Wrapper">
-      <Header :isLogo="false" :isBack="false" title="도깅"></Header>
+      <Header :isLogo="false" :isBack="true" title="도깅"></Header>
       <h3>오늘의 도깅</h3>
       <div class="addbox">
         <img :src="this.imgprev" alt="" class="prev-img">
