@@ -14,26 +14,10 @@ import javax.servlet.Filter;
 import java.nio.charset.Charset;
 
 @SpringBootApplication
-@Configuration
-@EnableAutoConfiguration
-@ComponentScan
 public class BackendApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(BackendApplication.class, args);
-	}
-
-	@Bean
-	public HttpMessageConverter<String> responseBodyConverter() {
-		return new StringHttpMessageConverter(Charset.forName("UTF-8"));
-	}
-
-	@Bean
-	public Filter characterEncodingFilter() {
-		CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
-		characterEncodingFilter.setEncoding("UTF-8");
-		characterEncodingFilter.setForceEncoding(true);
-		return characterEncodingFilter;
 	}
 
 }
