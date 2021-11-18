@@ -26,12 +26,12 @@
     </div>
     <Modal v-if="showModal" @close="showModal=false" @ok="showModal=false">
       <div v-for="flist in followList" :key="flist.id">
-        {{flist.list}}
+        {{flist}}
       </div>
     </Modal>
     <Modal v-if="showModal2" @close="showModal2=false" @ok="showModal=false">
       <div v-for="flist in followerList" :key="flist.id">
-        {{flist.list}}
+        {{flist}}
       </div>
     </Modal>
     <Footer :isActive="isActive"></Footer>
@@ -185,16 +185,6 @@ export default {
     this.$store.dispatch('requestUser2',this.userid)
     .then(res=>{
       console.log(res);
-      this.followList = res.data.followList;
-      this.followerList = res.data.followerList;
-
-      res.data.followList.forEach(element => {
-        this.followList.push({'list':element});
-      });
-
-      res.data.followerList.forEach(element => {
-        this.followerList.push({'list':element});
-      });
 
       const data = {
             nickname: res.data.user.nickname,
@@ -204,6 +194,10 @@ export default {
             followList: res.data.followList,
             followerList: res.data.followerList,
           }
+
+        this.followList = res.data.followList;
+        this.followerList = res.data.followerList;
+
         this.$store.commit('SET_USER_INFO',data);
 
         this.$store.dispatch('bringSBoard',this.page)
