@@ -59,7 +59,6 @@ export default {
   methods: {
     getthumbnail(){
       if(this.userInfo.thumbnail){
-        console.log(this.userInfo.thumbnail,'섬네일');
         var fullurl = this.BASE_URL + this.userInfo.thumbnail
         return fullurl
       }

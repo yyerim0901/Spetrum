@@ -51,6 +51,7 @@ export default {
                 }
             }).then(res => {
                 console.log(res)
+                console.clear();
                 this.$router.go();
             }).catch(err => {
                 console.log(err)
@@ -72,6 +73,7 @@ export default {
                 }
             }).then(res => {
                 console.log(res)
+                console.clear();
                 this.$router.go();
             }).catch(err => {
                 console.log(err)
@@ -81,7 +83,6 @@ export default {
         {
             if(this.userid != userid)
             {
-                console.log(userid);
                 this.$router.push({
                     name: "Chat",
                     params: {

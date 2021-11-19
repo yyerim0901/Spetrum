@@ -73,7 +73,6 @@ export default {
     this.boardid = this.$route.params.boardid;
     this.$store.dispatch('detailSBoard',this.$route.params.boardid)
     .then(res=>{
-      console.log(res);
       this.files = res.data.data.filelist;
       this.content = res.data.data.content;
       this.likes = res.data.data.likes;
@@ -85,8 +84,6 @@ export default {
       }
       this.$store.dispatch('requestSBoardUser',this.writerid)
       .then(res=>{
-        console.log(res);
-        console.log('유저인포');
         this.writernickname = res.data.user.nickname;
         this.profile = res.data.user.thumbnail;
       })
@@ -117,7 +114,6 @@ export default {
     getthumbnail(){
       if (this.profile !== null) {
         var fullurl = this.BASE_URL + this.profile;
-        console.log(fullurl,'fullurl');
         return fullurl
       }else{
         return require("@/assets/img_logo.jpg")
@@ -130,9 +126,11 @@ export default {
       this.$store.dispatch('requestSComment',formdata)
       .then(res=>{
         console.log(res);
+        console.clear();
         this.$store.dispatch('bringSBoardComments',this.boardid)
         .then(res=>{
           console.log(res);
+          console.clear();
           this.commentList = res.data.data;
           this.comment = '';
         })
@@ -142,7 +140,6 @@ export default {
       this.showModal = true;
     },
     handleDelete(){
-        console.log(this.boardid)
         this.$store.dispatch('handleMomentDelete',this.boardid)
         this.$router.push("/mymoment")
     },

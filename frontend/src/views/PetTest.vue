@@ -43,7 +43,6 @@ export default {
     choiceBtn(answer){
       if (this.page === this.maxLength){
         const result = this.result;
-        console.log(result);
         if (result.a > result.c){
           if (result.e > result.i){
             this.type = '13';

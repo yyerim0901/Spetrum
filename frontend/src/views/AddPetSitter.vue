@@ -35,7 +35,6 @@ export default {
     },
     methods: {
         imageChange(){
-            console.log('여기서 작동합니다.')
             this.inputImage = this.$refs.profileImage.files[0];
             if (this.inputImage) {
                 this.imgprev = URL.createObjectURL(this.inputImage)
@@ -50,7 +49,6 @@ export default {
                 navigator.geolocation.getCurrentPosition(function(pos) {
                     var curlat = pos.coords.latitude
                     var curlon = pos.coords.longitude
-                    console.log(curlat, curlon, 'addpetsitter의 위치!!')
                     if (inputtedImage && inputtedContent && inputtedTitle){
                         const formData = new FormData();
                         formData.append('image', inputtedImage);
@@ -74,6 +72,7 @@ export default {
                             console.log(res);
                             this.$store.dispatch('getBoards')
                             push;
+                            console.clear();
                         }).catch(err =>{
                             console.log(err)
                         })

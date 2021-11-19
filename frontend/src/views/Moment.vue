@@ -108,7 +108,6 @@ export default {
     getthumbnail(){
       if (this.userInfo.thumbnail) {
         var fullurl = this.BASE_URL + this.userInfo.thumbnail
-        console.log(fullurl,'fullurl');
         return fullurl
       }else{
         return require("@/assets/img_logo.jpg")
@@ -126,7 +125,6 @@ export default {
       this.$router.push({name:'AddMoment'})
     },
     moveDetail(id){
-      console.log(id);
       this.$router.push({name:'MDetail',params:{'boardid':id}});
     },
     handleInfiniteScroll(e) {
@@ -139,22 +137,15 @@ export default {
         this.$store.dispatch('bringSBoard',this.page)
         .then(res=>{
           this.mywrites.push(...res.data.data);
-          console.log(this.mywrites,'게시물');
         })
       } 
     },
     showFollow()
     {
-      console.log(this.followList)
-      console.log(typeof(this.followList));
-      console.log(typeof(this.userInfo.followList));
       this.showModal = true;
     },
     showFollower()
     {
-      console.log(this.followerList)
-      console.log(typeof(this.followerList));
-      console.log(typeof(this.userInfo.followerList));
       this.showModal2 = true;
     }
   },
@@ -197,7 +188,6 @@ export default {
     // })
     this.$store.dispatch('requestUser2',this.userid)
     .then(res=>{
-      console.log(res);
 
       const data = {
             nickname: res.data.user.nickname,
@@ -216,11 +206,8 @@ export default {
         this.$store.dispatch('bringSBoard',this.page)
           .then(res=>{
             this.mywrites = res.data.data;
-            console.log('여기서에러')
-            console.log(res)
           })
           .catch(err=>{
-            console.log('나는 게시판 받아오는 에러');
             console.log(err)
           })
       })

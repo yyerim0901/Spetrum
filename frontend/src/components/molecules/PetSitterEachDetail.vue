@@ -102,7 +102,6 @@ export default {
         .then((res) => {
           this.board = res.data;
           this.content = res.data.data.content.replaceAll(/\n/g, '<br>');
-          console.log(res);
         })
         .catch((err) => {
           console.log(err);
@@ -142,6 +141,7 @@ export default {
         })
           .then((res) => {
             console.log(res.data);
+            console.clear();
             this.$router.go();
           })
           .catch((err) => {
@@ -172,6 +172,7 @@ export default {
       })
         .then((res) => {
           console.log(res.data);
+          console.clear();
           this.$router.push({ name: "PetSitter" });
         })
         .catch((err) => {

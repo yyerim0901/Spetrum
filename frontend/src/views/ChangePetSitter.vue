@@ -35,7 +35,6 @@ export default {
     },
     methods: {
         imageChange(){
-            console.log('여기서 작동합니다.')
             this.inputImage = this.$refs.profileImage.files[0];
             if (this.inputImage) {
                 this.imgprev = URL.createObjectURL(this.inputImage)
@@ -51,7 +50,6 @@ export default {
                 navigator.geolocation.getCurrentPosition(function(pos) {
                     var curlat = pos.coords.latitude
                     var curlon = pos.coords.longitude
-                    console.log(curlat, curlon, 'changepetsitter의 위치!!')
                     if (inputtedImage && inputtedContent && inputtedTitle){
                         const formData = new FormData();
                         formData.append('image', inputtedImage);
@@ -73,6 +71,7 @@ export default {
                             }
                         }).then(res=> {
                             console.log(res);
+                            console.clear();
                             push;
                         }).catch(err =>{
                             console.log(err)
@@ -99,7 +98,6 @@ export default {
                 this.imgprev = 'http://spetrum.io/resources/' + this.board.data.picture;
                 this.inputContent = this.board.data.content;
                 this.inputTitle = this.board.data.title;
-                console.log(this.board, '수정페이지의 board는 이 내용입니다.')
             }).catch(err => {
                 console.log(err)
             })

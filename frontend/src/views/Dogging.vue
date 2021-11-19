@@ -64,7 +64,6 @@ export default {
         /* global kakao */ 
         script.onload = () =>{
           kakao.maps.load(this.initMap); 
-          console.log('이거 계속 로드됨???')
         } 
         script.src = '//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=8b07795e21cc36039de160da0cd01ffd&libraries=services';
         document.head.appendChild(script); 
@@ -107,15 +106,9 @@ export default {
                 if (lat !== 0 && lng !== 0 && that.totalTime !== 0) {
                   // 초기 값은 0으로 들어가게 되고 그때 작동하면 안됨
                   var distance = getDistanceFromLatLonInKm(lat, lng, pos.coords.latitude, pos.coords.longitude)
-                  console.log('여긴들어와??')
-                  console.log(distance, '이게 거리 km')
-                  console.log(that.totalDistance, '추가 전 총 거리')
                   that.totalDistance += distance
-                  console.log(that.totalDistance, '추가 후 총 거리')
                   that.curDistance = parseFloat(Math.round(that.totalDistance * 100) / 100).toFixed(2)
                 } 
-                console.log(pos.coords)
-                console.log(pos,'여긴가?')
                 lat = pos.coords.latitude
                 lng = pos.coords.longitude
                 that.latlist.push(lat)
@@ -166,7 +159,6 @@ export default {
               },
               data: formData,
             }).then(res => {
-              console.log(res)
               let finishedLat = this.latlist;
               let finishedLng = this.lnglist
               this.totalDistance = 0
@@ -199,7 +191,6 @@ export default {
           marker.setMap(map); 
           
           this.liveWatchId = navigator.geolocation.watchPosition(function(pos) {
-            console.log('실행이 되고 있어 watchposition??')
             var lat = pos.coords.latitude,
                 lon = pos.coords.longitude;
             

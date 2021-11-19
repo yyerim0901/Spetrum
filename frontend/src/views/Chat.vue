@@ -109,6 +109,7 @@ export default {
       axios.post("/pboard/saveChat",listdata)
       .then(res => {
         console.log(res);
+        console.clear();
         this.$router.go(-1)
       })
 
@@ -150,6 +151,7 @@ export default {
           // 소켓 연결 성공
           this.connected = true;
           console.log('소켓 연결 성공', frame);
+          console.clear();
           // 서버의 메시지 전송 endpoint를 구독합니다.
           // 이런형태를 pub sub 구조라고 합니다.
           this.stompClient.subscribe("/send", res => {

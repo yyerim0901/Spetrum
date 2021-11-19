@@ -90,6 +90,7 @@ export default {
     updatemypetsitter(pboardId){
       //update페이지 즉 상세 입력 페이지로 이동한 후에 dispatch로 실행
       console.log(pboardId)
+      console.clear();
     },
     checkdelete(pboardId){
       this.showModal = true;
@@ -105,23 +106,17 @@ export default {
         return;
       if (this.mypetsitters && this.mypetsitters.length % 5 === 0) {
         //게시물이 1페이지 전채 개수가 넘으면
-        console.log(this.mypetsitters.length,'길이');
         this.page +=  1;
-        console.log(this.page);
         this.$store.dispatch('bringMyPBoard',{userid:this.userid,page:this.page})
         .then(res=>{
-          console.log(res);
           this.mypetsitters.push(...res.data.data);
-          console.log(this.mypetsitters,'게시물');
         })
       }
     }
   },
   created() {
     this.userid = localStorage.getItem('userid')
-    console.log(this.userid)
     this.$store.dispatch('bringMyPBoard',this.userid)
-    console.log(this.mypetsitterList)
   }
 }
 </script>

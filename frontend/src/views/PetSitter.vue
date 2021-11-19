@@ -72,7 +72,6 @@ export default {
                         "Authorization": `KakaoAK 129bac39970b463ea7ef94eff7029109`
                         },
                     }).then(res => {
-                        console.log(res.data.documents[0].road_address.address_name)
                         if (res.data.meta.total_count === 0) {
                             this.location = "주소를 찾을 수 없어요."
                         } else {
