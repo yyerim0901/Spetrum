@@ -12,7 +12,9 @@
       </div>
       <img :src="fullURL(this.files)" alt="" class="pre-img">
       <div style="margin:5px 40px; display:flex; flex-direction:column;">
-        <div style="height:60px; text-align:start; border:solid; border-width:1px 0; border-color:#E5EAEF; padding:8px; font-size:15px; font-weight:400;">{{this.content}}</div>
+        <div style="height:60px; text-align:start; border:solid; 
+        border-width:1px 0; border-color:#E5EAEF; padding:8px; font-size:15px; 
+        font-weight:bold;" v-html="this.content"></div>
         <div style="margin : 3px 1px" v-for="c in commentList" :key="c.id">
           <p class="comment">
             <span style=" border-radius:5px; padding:2px; font-weight:700;">{{ c.user.nickname }}</span>
