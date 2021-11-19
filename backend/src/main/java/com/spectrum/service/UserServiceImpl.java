@@ -300,7 +300,7 @@ public class UserServiceImpl implements UserService{
 
         for (Follow follow : followlist)
         {
-            userList.add(follow.getFollow().getUserId());
+            userList.add(follow.getFollow().getNickname());
         }
         return userList;
     }
@@ -312,7 +312,7 @@ public class UserServiceImpl implements UserService{
 
         for (Follow follow : followlist)
         {
-            userList.add(follow.getFollower().getUserId());
+            userList.add(follow.getFollower().getNickname());
         }
         return userList;
     }
