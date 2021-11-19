@@ -26,19 +26,22 @@
     </div>
     <Modal v-if="showModal" @close="showModal=false" @ok="showModal=false">
       <h3 slot="header">
-            팔로우
-        <div style="text-align: center;" slot="body" v-for="flist in followList" :key="flist.id">
-           {{flist}}
-        </div>
+            팔로우 리스트
       </h3>
+      <br>
+        <div style="text-align: left;" slot="body" v-for="flist in followList" :key="flist.id">
+           <div style="margin-top:10px; color:black; border-bottom:1px solid lightgray; padding:10px 0px;">@ {{flist}}</div>
+        </div>
     </Modal>
     <Modal v-if="showModal2" @close="showModal2=false" @ok="showModal=false">
       <h3 slot="header">
-            팔로워
-        <div style="text-align: center;" slot="body" v-for="flist in followerList" :key="flist.id">
-           {{flist}}
-        </div>
+            팔로워 리스트
       </h3>
+        <br>
+        <div style="text-align: left;" 
+        slot="body" v-for="flist in followerList" :key="flist.id">
+           <div style="margin-top:10px; color:black; border-bottom:1px solid lightgray; padding:10px 0px;">@ {{flist}}</div>
+        </div>
     </Modal>
     <Footer :isActive="isActive"></Footer>
   </div>
