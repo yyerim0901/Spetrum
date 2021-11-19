@@ -116,7 +116,6 @@ export default {
         formData.append("password",this.password);
         formData.append("userId",this.userId);
         if(this.profileImg) {formData.append("thumbnail",this.profileImg);}
-        console.log(this.profileImg,'프로필이미지s');
         // this.$store.dispatch('requestSignup',formData);
         axios({
           url:'https://spetrum.io:8080/api/users/regist',
@@ -129,6 +128,7 @@ export default {
         })
           .then(res=>{
             console.log(res);
+            console.clear();
             this.$router.push({name:'SignIn'})
           })
       }
@@ -139,7 +139,6 @@ export default {
     nickCheck(){
       this.$store.dispatch('nickCheck',this.nickname)
       .then(res=>{
-        console.log(res);
         if (res.data.statusCode === 200) {
           this.nickcheck = true
           alert('사용가능한 닉네임입니다')
@@ -151,7 +150,6 @@ export default {
     idCheck(){
       this.$store.dispatch('idCheck',this.userId)
       .then(res=>{
-        console.log(res);
         if (res.data.statusCode === 200) {
           this.idcheck = true
           alert('사용가능한 아이디입니다')
@@ -162,7 +160,6 @@ export default {
     },
     imageChange(){
       this.profileImg = this.$refs.profileImage.files[0];
-      console.log(this.profileImg);
       if (this.profileImg) {
         this.imgprev = URL.createObjectURL(this.profileImg);
         }

@@ -50,7 +50,6 @@ export default {
         method:'get',
       })
       .then(res=>{
-        console.log(res);
         this.myanimal = res.data;
         if (this.userInfo.type === '111' || this.userInfo.type === '211') {
           this.recommend = '온순하고 사람을 잘따르는 친구!';

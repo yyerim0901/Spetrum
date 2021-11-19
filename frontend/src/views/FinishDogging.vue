@@ -50,13 +50,10 @@ export default {
                 var forline = new kakao.maps.LatLng(forlats[i], forlngs[i])
                 centerlat += forlats[i]
                 centerlng += forlngs[i]
-                console.log(i, '번째에서', forlats[i], forlngs[i], '가 추가됩니다.')
                 linePath.push(forline)
             }
             centerlat /= latlen
             centerlng /= latlen
-            console.log(centerlat, centerlng, '나눈 값', typeof(centerlat))
-            console.log(linePath, '라인에 추가후!')
             var mapOption = {
                 center: new kakao.maps.LatLng(centerlat, centerlng), //지도에 찍힐 위치
                 // 33.450701, 126.570667

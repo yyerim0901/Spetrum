@@ -35,7 +35,6 @@ export default {
             this.addimage = this.$refs.profileImage.files[0];
             if (this.addimage) {
                 // this.imgprev = URL.createObjectURL(this.addimage);
-                console.log(this.imgprev)
                 const formData = new FormData();
                 formData.append('multipartFile', this.addimage);
                 axios({
@@ -54,7 +53,6 @@ export default {
                     this.doggingInfo = res.data
                     let imageUrl = res.data.customPicturePath.slice(58)
                     this.imgprev = 'https://spetrum.io/resources/' + imageUrl
-                    console.log(this.imgprev, '들어가는 이미지 경로')
                 })
             }
         },

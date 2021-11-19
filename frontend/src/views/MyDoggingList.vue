@@ -39,7 +39,6 @@ export default {
   },
   created(){
     this.userid = localStorage.getItem('userid')
-    console.log(this.userid) 
     this.getDogging()
   },
   methods: {

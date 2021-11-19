@@ -98,7 +98,7 @@ export default new Vuex.Store({
       state.mypetsitterList = payload;
     },
     GET_BOARDS(state, boards) {
-      console.log('mutation GET_BOARDS실행!!')
+      // console.log('mutation GET_BOARDS실행!!')
       state.Boards = boards.data
     },
     SET_USER_TYPE(state,payload){
@@ -184,7 +184,7 @@ export default new Vuex.Store({
         navigator.geolocation.getCurrentPosition(function(pos) {
           curlat = pos.coords.latitude
           curlon = pos.coords.longitude
-          console.log(curlat, curlon, 'get board !!axios들어가기 전 위치!')
+          // console.log(curlat, curlon, 'get board !!axios들어가기 전 위치!')
           const data = {
             lat : curlat,
             lng : curlon,
@@ -302,14 +302,16 @@ export default new Vuex.Store({
       .then(res=>{
         console.log(res);
         router.push({name:'MyPage'})
+        console.clear();
       })
       .catch(err=>{
         console.log(err)
       })
     },
     userme(state){
-      console.log("★★★")
+      // console.log("★★★")
       console.log(state)
+      console.clear();
       axios({
         url: '/users/me',
         method:'GET',
@@ -346,7 +348,6 @@ export default new Vuex.Store({
         url: `/pboard/mylist/${payload}`,
         method: 'get'
       }).then(res => {
-        console.log(res.data.data)
         this.commit('SET_MY_PETSITTER', res.data.data);
 
         var flag = new Boolean(false)
@@ -364,6 +365,7 @@ export default new Vuex.Store({
       })
       .then(res=>{
         console.log(res);
+        console.clear();
         router.push({name:'Moment'})
       })
     },
@@ -374,6 +376,7 @@ export default new Vuex.Store({
       })
       .then(res=>{
         console.log(res);
+        console.clear();
         router.push({name:'Moment'})
       })
     },
@@ -390,6 +393,7 @@ export default new Vuex.Store({
         data : payload,
       }).then(res => {
         console.log(res)
+        console.clear();
         this.$router.push({name:'MyPetsitterList'})
       })
     },
@@ -402,6 +406,7 @@ export default new Vuex.Store({
         }
       }).then(res => {
           console.log(res.data)
+          console.clear();
           this.$router.push({name:'MyPetsitterList'})
       })
     },

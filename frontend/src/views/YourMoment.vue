@@ -72,14 +72,11 @@ export default {
         this.page +=  1;
         this.$store.dispatch('bringOtherSBoard',{userid:this.userid, page:this.page})
         .then(res=>{
-          console.log(res); 
           this.writes.push(...res.data.data);
-          console.log(this.writes,'게시물');
         })
       } 
     },
     moveDetail(id){
-      console.log(id);
       this.$router.push({name:'MDetail',params:{'boardid':id}});
     },
 
@@ -112,7 +109,7 @@ export default {
     const nowUser = this.$route.params.userid;
     if (nowUser == localStorage.getItem('userid')){
       this.$router.push({name:'Moment'});
-      console.log('돌아가');
+
     }
     else{
       this.$store.dispatch('requestSBoardUser',nowUser)
