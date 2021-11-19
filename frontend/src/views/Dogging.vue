@@ -142,8 +142,6 @@ export default {
             navigator.geolocation.clearWatch(this.liveWatchId)
             // components의 데이터 초기화해야함
             this.doggingflag = false
-            console.log(this.totalDistance, utc.substr(utc.indexOf(":") - 2, 8), 'axios보낼 총 거리와 시간 주소@@', typeof(utc.substr(utc.indexOf(":") - 2, 8)), '시간의 타입!!!')
-            console.log(this.latlist, this.lnglist, 'axios보낼 array@@@')
             const formData = new FormData();
             formData.append('distance', this.totalDistance);
             formData.append('lats', this.latlist);
