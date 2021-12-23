@@ -58,7 +58,7 @@ public class PBoardController {
     @GetMapping("/test")
     private ResponseEntity<?> testOfList() throws Exception{
         List<PBoard> list = pBoardService.sortOfDistance();
-        System.out.println("야호");
+//        System.out.println("야호");
         return new ResponseEntity<List<PBoard>>(list,HttpStatus.OK);
     }
 
