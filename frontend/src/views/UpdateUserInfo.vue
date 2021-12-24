@@ -61,7 +61,7 @@ export default {
       nickcheck:true,
       profileImg:null,
       imgprev:null,
-      BASE_URL : 'https://spetrum.io/resources/',
+      BASE_URL : 'https://localhost:8080/resources/',
     }
   },
   computed:{

@@ -25,7 +25,7 @@ export default {
     return{
       files:[],
       content: undefined,
-      BASE_URL : 'http://spetrum.io/resources/',
+      BASE_URL : 'https://localhost:8080/resources/',
       addimage:null,
       imgprev:null,
       boardid:null,

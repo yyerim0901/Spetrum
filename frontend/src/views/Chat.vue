@@ -140,8 +140,8 @@ export default {
       })
     },
     connect() {
-      const serverURL = "https://spetrum.io:8080/chat"
-      // const serverURL = "http://localhost:8080/chat"
+      // const serverURL = "https://spetrum.io:8080/chat"
+      const serverURL = "https://localhost:8080/chat"
       let socket = new SockJS(serverURL);
       this.stompClient = Stomp.over(socket);
 

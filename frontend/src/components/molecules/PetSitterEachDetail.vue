@@ -84,7 +84,7 @@ export default {
       comments: {},
       isActive: 3,
       inputContent: "",
-      BASE_URL: "https://spetrum.io/resources/",
+      BASE_URL: "https://localhost:8080/resources/",
       myid: "",
       showModal: false,
       content: "",

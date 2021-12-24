@@ -34,7 +34,7 @@ export default {
       page : 1,
       mydoggings:[],
       userid:"",
-      BASE_URL : 'https://spetrum.io/resources/',
+      BASE_URL : 'https://localhost:8080/resources/',
     }
   },
   created(){
@@ -44,7 +44,7 @@ export default {
   methods: {
     getDogging() {
       axios({
-        url: 'https://spetrum.io:8080/api/dogging/',
+        url: 'https://localhost:8080/api/dogging/',
         method: "GET",
         headers: {
           'Authorization':localStorage.getItem('token'),

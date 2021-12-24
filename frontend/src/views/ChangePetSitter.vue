@@ -54,7 +54,7 @@ export default {
                         const formData = new FormData();
                         formData.append('image', inputtedImage);
                         axios({
-                            url: 'https://spetrum.io:8080/api/pboard/',
+                            url: 'https://localhost:8080/api/pboard/',
                             method: 'PUT',
                             data: formData,
                             headers:{
@@ -87,7 +87,7 @@ export default {
         getPetSitterDetail() {
             axios({
                 method: "GET",
-                url: `https://spetrum.io:8080/api/pboard/detail/${this.boardId}`,
+                url: `https://localhost:8080/api/pboard/detail/${this.boardId}`,
                 headers:{
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin':'*',
@@ -95,7 +95,7 @@ export default {
                 }
             }).then(res => {
                 this.board = res.data
-                this.imgprev = 'http://spetrum.io/resources/' + this.board.data.picture;
+                this.imgprev = 'https://localhost:8080/resources/' + this.board.data.picture;
                 this.inputContent = this.board.data.content;
                 this.inputTitle = this.board.data.title;
             }).catch(err => {

@@ -51,7 +51,7 @@ export default {
       followList:[],
       writes:[],
       page:1,
-      BASE_URL : 'https://spetrum.io/resources/'
+      BASE_URL : 'https://localhost:8080/resources/'
     }
   },
   methods:{

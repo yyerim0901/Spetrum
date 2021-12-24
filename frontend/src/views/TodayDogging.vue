@@ -38,7 +38,7 @@ export default {
                 const formData = new FormData();
                 formData.append('multipartFile', this.addimage);
                 axios({
-                    url: 'https://spetrum.io:8080/api/dogging/image',
+                    url: 'https://localhost:8080/api/dogging/image',
                     method: 'POST',
                     headers:{
                         'Content-Type': 'multipart/form-data',
@@ -52,7 +52,7 @@ export default {
                 }).then(res => {
                     this.doggingInfo = res.data
                     let imageUrl = res.data.customPicturePath.slice(58)
-                    this.imgprev = 'https://spetrum.io/resources/' + imageUrl
+                    this.imgprev = 'https://localhost:8080/resources/' + imageUrl
                 })
             }
         },

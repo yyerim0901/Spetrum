@@ -61,7 +61,7 @@ export default {
     return{
       isActive:5,
       mypetsitters:[],
-      BASE_URL : 'https://spetrum.io/resources/',
+      BASE_URL : 'https://localhost:8080/resources/',
       userid:"",
       showModal:false,
       deletepboardId:"",
