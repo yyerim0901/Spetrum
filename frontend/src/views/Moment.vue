@@ -70,7 +70,7 @@ export default {
       userid: '',
       isfollowed:true,
       mywrites:[],
-      BASE_URL : 'https://localhost:8080/resources/',
+      BASE_URL : 'https://localhost:8000/resources/',
       page:1,
       showModal:false,
       showModal2:false,
@@ -168,7 +168,7 @@ export default {
     // console.log(localStorage.getItem)
     // console.log(this.userid)
     // axios({
-    //     url:'https://spetrum.io:8080/api/sns/',
+    //     url:'https://spetrum.io:8000/api/sns/',
     //     method:'get',
     //     params:{
     //       page:1,

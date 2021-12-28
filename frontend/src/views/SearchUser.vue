@@ -32,7 +32,7 @@ export default {
     return{
       keyword:'',
       userlist :[],
-      BASE_URL : 'https://localhost:8080/resources/',
+      BASE_URL : 'https://localhost:8000/resources/',
     }
   },
   methods:{

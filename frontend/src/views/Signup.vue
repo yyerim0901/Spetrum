@@ -118,7 +118,7 @@ export default {
         if(this.profileImg) {formData.append("thumbnail",this.profileImg);}
         // this.$store.dispatch('requestSignup',formData);
         axios({
-          url:'https://localhost:8080/api/users/regist',
+          url:'https://localhost:8000/api/users/regist',
           method:'post',
           data:formData,
           headers:{

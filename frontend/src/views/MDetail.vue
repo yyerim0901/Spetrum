@@ -58,7 +58,7 @@ export default {
       files:[],
       content:undefined,
       likes:undefined,
-      BASE_URL : 'https://localhost:8080/resources/',
+      BASE_URL : 'https://localhost:8000/resources/',
       comment:undefined,
       boardid:undefined,
       commentList:null,

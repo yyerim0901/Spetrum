@@ -49,7 +49,7 @@ export default {
     return{
       isActive:5,
       userid : "",
-      BASE_URL : 'https://localhost:8080/resources/',
+      BASE_URL : 'https://localhost:8000/resources/',
       showModal : false,
     }
   },
