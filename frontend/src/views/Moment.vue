@@ -70,7 +70,7 @@ export default {
       userid: '',
       isfollowed:true,
       mywrites:[],
-      BASE_URL : 'https://localhost:8000/resources/',
+      BASE_URL : 'https://spetrum.ddns.net:8000/resources/',
       page:1,
       showModal:false,
       showModal2:false,

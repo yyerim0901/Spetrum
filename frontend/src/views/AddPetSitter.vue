@@ -54,7 +54,7 @@ export default {
                         formData.append('image', inputtedImage);
                         axios({
                             // url: 'https://spetrum.io:8000/api/pboard/',
-                            url: 'https://localhost:8000/api/pboard/',
+                            url: 'https://spetrum.ddns.net:8000/api/pboard/',
                             method: 'POST',
                             data: formData,
                             headers:{

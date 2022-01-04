@@ -150,7 +150,7 @@ export default {
             formData.append('location', this.location);
             
             axios({
-              url: 'https://localhost:8000/api/dogging',
+              url: 'https://spetrum.ddns.net:8000/api/dogging',
               method: 'POST',
               headers: {
                 "Authorization": localStorage.getItem("token")

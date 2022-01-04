@@ -51,7 +51,7 @@ export default {
       followList:[],
       writes:[],
       page:1,
-      BASE_URL : 'https://localhost:8000/resources/'
+      BASE_URL : 'https://spetrum.ddns.net:8000/resources/'
     }
   },
   methods:{
