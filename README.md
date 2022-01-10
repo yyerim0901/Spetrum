@@ -56,3 +56,4 @@ feature/<FE or BE>/<function>
 	2.  gitlab에서 작업
 
     **최신 develop코드 반영 완료된** branch를 merge request를 통해 develop과 merge!
+프라이빗 푸시
