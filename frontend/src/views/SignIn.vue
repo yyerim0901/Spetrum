@@ -4,7 +4,7 @@
     <img src="../assets/img_logo.jpg" alt="dog" class="dog-img">
     <div class="FormContainer">
       <StyledLabel for="userid">아이디</StyledLabel>
-      젠킨스 
+      젠킨스 좀 되라
       <StyledInput  :value="userId" v-model="userId" @change="validIdCheck"></StyledInput>
       <ErrorMessage :message="iderror">{{this.iderror}}</ErrorMessage>
       <StyledLabel for="password">비밀번호</StyledLabel>
