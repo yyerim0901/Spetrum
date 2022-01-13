@@ -14,9 +14,10 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
 public class CustomImage extends JPanel {
-
-    static String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/image";
-    static String LOGO_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/logo_image/white_logo.png";
+    static String BASE_PATH = "/var/jenkins_home/workspace/spetrum/backend/src/main/resources/image";
+    //static String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/image";
+    //static String LOGO_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/logo_image/white_logo.png";
+    static String LOGO_PATH = "/var/jenkins_home/workspace/spetrum/backend/src/main/resources/logo_image/white_logo.png";
     static String local_logo_path = "src/main/resources/logo_image/white_logo.png";
 
     public static String customImage(MultipartFile multipartFile, Dogging dogging) throws IOException {

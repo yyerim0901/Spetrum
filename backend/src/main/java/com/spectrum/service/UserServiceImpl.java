@@ -46,8 +46,8 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     SBoardFileRepository sBoardFileRepository;
-
-    String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/";
+    String BASE_PATH = "/var/jenkins_home/workspace/spetrum/backend/src/main/resources/";
+//    String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/";
 
     @Override
     public void createUser(UserRegisterPostReq registerInfo) throws IOException {
@@ -86,7 +86,8 @@ public class UserServiceImpl implements UserService{
 
         User tmpuser = userRepository.save(res);
         // sns 유저 폴더 생성
-        String user_path = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/image/sns/" + tmpuser.getId();
+
+        String user_path = "/var/jenkins_home/workspace/spetrum/backend/src/main/resources/image/sns/" + tmpuser.getId();
 //        String user_path = new File("").getAbsolutePath() + "/src/main/resources/image/sns/" + tmpuser.getId();
         File createFolder = new File(user_path);
         if(!createFolder.exists()) {

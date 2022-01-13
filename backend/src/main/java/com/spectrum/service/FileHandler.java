@@ -23,8 +23,8 @@ public class FileHandler {
     SBoardService sBoardService;
     @Autowired
     ResourceLoader resourceLoader;
-
-    String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/";
+    String BASE_PATH = "/var/jenkins_home/workspace/spetrum/backend/src/main/resources/";
+//    String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/";
 //    String BASE_PATH = new File("").getAbsolutePath() + "/src/main/resources/";
     public void deleteFile(User user, Long sboardid, Optional<List<SBoardFile>> photoList) {
 

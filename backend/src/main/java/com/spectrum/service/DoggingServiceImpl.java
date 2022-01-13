@@ -44,7 +44,8 @@ public class DoggingServiceImpl implements DoggingService{
 
     private static User user;
     private static String filePath = "src/main/resources/";
-    String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/";
+    String BASE_PATH = "/var/jenkins_home/workspace/spetrum/backend/src/main/resources/";
+//    String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/";
 
     public DoggingServiceImpl() {
     }
