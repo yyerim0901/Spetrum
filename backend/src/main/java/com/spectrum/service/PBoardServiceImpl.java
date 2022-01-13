@@ -48,8 +48,8 @@ public class PBoardServiceImpl implements PBoardService {
 
     @Autowired
     private PCommentRepository pCommentRepository;
-
-   String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/";
+    String BASE_PATH = "/var/jenkins_home/workspace/spetrum/backend/src/main/resources/";
+//  String BASE_PATH = "/var/lib/jenkins/workspace/PJT/backend/src/main/resources/";
 //     String BASE_PATH = new File("").getAbsolutePath() + "/src/main/resources/";
 
     private final EntityManager em;
