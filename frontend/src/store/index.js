@@ -203,7 +203,7 @@ export default new Vuex.Store({
             }
           }).then(res => {
             context.commit("GET_BOARDS", res.data)
-
+            console.log(res.data)
             var flag = new Boolean(false)
             if (res.data == null) flag = true;
             else flag = false;
