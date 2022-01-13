@@ -25,7 +25,7 @@ export default {
     return{
       files:[],
       content: undefined,
-      BASE_URL : 'https://spetrum.ddns.net:8000/resources/',
+      BASE_URL : 'https://spetrum.ddns.net/resources/',
       addimage:null,
       imgprev:null,
       boardid:null,

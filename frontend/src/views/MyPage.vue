@@ -49,7 +49,7 @@ export default {
     return{
       isActive:5,
       userid : "",
-      BASE_URL : 'https://spetrum.ddns.net:8000/resources/',
+      BASE_URL : 'https://spetrum.ddns.net/resources/',
       showModal : false,
     }
   },

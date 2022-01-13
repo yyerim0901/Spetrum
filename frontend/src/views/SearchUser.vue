@@ -32,7 +32,7 @@ export default {
     return{
       keyword:'',
       userlist :[],
-      BASE_URL : 'https://spetrum.ddns.net:8000/resources/',
+      BASE_URL : 'https://spetrum.ddns.net/resources/',
     }
   },
   methods:{

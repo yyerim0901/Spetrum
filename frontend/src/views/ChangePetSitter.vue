@@ -95,7 +95,7 @@ export default {
                 }
             }).then(res => {
                 this.board = res.data
-                this.imgprev = 'https://spetrum.ddns.net:8000/resources/' + this.board.data.picture;
+                this.imgprev = 'https://spetrum.ddns.net/resources/' + this.board.data.picture;
                 this.inputContent = this.board.data.content;
                 this.inputTitle = this.board.data.title;
             }).catch(err => {

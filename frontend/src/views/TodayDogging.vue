@@ -52,7 +52,7 @@ export default {
                 }).then(res => {
                     this.doggingInfo = res.data
                     let imageUrl = res.data.customPicturePath.slice(58)
-                    this.imgprev = 'https://spetrum.ddns.net:8000/resources/' + imageUrl
+                    this.imgprev = 'https://spetrum.ddns.net/resources/' + imageUrl
                 })
             }
         },

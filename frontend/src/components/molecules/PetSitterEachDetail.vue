@@ -84,7 +84,7 @@ export default {
       comments: {},
       isActive: 3,
       inputContent: "",
-      BASE_URL: "https://spetrum.ddns.net:8000/resources/",
+      BASE_URL: "https://spetrum.ddns.net/resources/",
       myid: "",
       showModal: false,
       content: "",

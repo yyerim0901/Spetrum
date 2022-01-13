@@ -16,7 +16,7 @@ export default {
     name: "PetSitterDetail",
     data () {
         return{
-            BASE_URL : 'https://spetrum.ddns.net:8000/resources/',
+            BASE_URL : 'https://spetrum.ddns.net/resources/',
         }
     },
 

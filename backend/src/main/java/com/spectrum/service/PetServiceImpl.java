@@ -35,6 +35,11 @@ public class PetServiceImpl implements PetService {
         if(list.isEmpty()){
             List<Pet> all = petRepository.findAll();
             size = list.size();
+            int idx = 0;
+            while(true){
+
+
+            }
             pet = list.get(rand.nextInt(size));
 
         }else {
