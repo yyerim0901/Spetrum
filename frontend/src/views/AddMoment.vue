@@ -42,7 +42,8 @@ export default {
         formData.append('content',this.contents);
         formData.append('snsfiles',this.addimage);
         axios({
-          url:'https://spetrum.io:8000/api/sns/',
+          // url:'https://spetrum.io:8000/api/sns/',
+          url:'https://spetrum.ddns.net:8000/api/sns/',
           method:'post',
           data:formData,
           headers:{

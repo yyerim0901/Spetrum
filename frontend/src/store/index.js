@@ -94,7 +94,6 @@ export default new Vuex.Store({
       state.MyLocation.lng = payload.lng;
     },
     SET_MY_PETSITTER(state, payload) {
-      //클리어 하고 다시 받고 싶당
       state.mypetsitterList = payload;
     },
     GET_BOARDS(state, boards) {
@@ -139,7 +138,7 @@ export default new Vuex.Store({
         }
         else {
 
-          alert('로그인에 실패했습다');
+          alert('로그인에 실패했습니다');
         }
 
       })

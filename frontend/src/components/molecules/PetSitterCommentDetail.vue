@@ -44,7 +44,7 @@ export default {
                 method: "DELETE",
                 url: '/pcomment',
                 headers: {
-                    "Authorization": localStorage.getItem("toekn")
+                    "Authorization": localStorage.getItem("token")
                 },
                 params: {
                     commentId: this.comment.id

@@ -69,7 +69,10 @@ export default {
                             y : pos.coords.latitude,
                         },
                         headers: {
-                        "Authorization": `KakaoAK 129bac39970b463ea7ef94eff7029109`
+                            "Authorization": `KakaoAK 129bac39970b463ea7ef94eff7029109`
+                        //************************************************************여기 확인하기!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+                        // "Authorization": `KakaoAK 129bac39970b463ea7ef94eff7029109` //주소 한글 변환 API KEY(?)
+                        //******************************************************************** */
                         },
                     }).then(res => {
                         if (res.data.meta.total_count === 0) {

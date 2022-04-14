@@ -27,6 +27,7 @@
 
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script>
+// import dotenv from 'dotenv'
 import Footer from '../components/molecules/Footer.vue'
 import Header from '../components/molecules/Header.vue'
 import StyledButton from '../components/atoms/StyledButton'
@@ -65,6 +66,13 @@ export default {
         script.onload = () =>{
           kakao.maps.load(this.initMap); 
         } 
+        // dotenv.config()
+        // //
+        // console.log(process.env)
+        // const API_KEY = process.env.VUE_APP_MAP_KAKAO;
+        // //const API = "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=" + process.env.VUE_APP_KAKAO + "&libraries=LIBRARY"
+        // console.log(API_KEY)
+        // script.src = "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=c1bf6e1b0e26f56540bf0f67ecedf831&libraries=LIBRARY";
         script.src = '//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=8b07795e21cc36039de160da0cd01ffd&libraries=services';
         document.head.appendChild(script); 
       }

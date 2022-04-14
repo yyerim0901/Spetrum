@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.24.0",
     "core-js": "^3.6.5",
+    "dotenv": "^8.6.0",
     "sendbird": "^3.0.160",
     "sockjs-client": "^1.5.2",
     "vue": "^2.6.11",
