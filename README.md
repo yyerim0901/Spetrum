@@ -104,7 +104,7 @@
 
 ### [ERDCloud Link](https://www.erdcloud.com/d/fg2a5Scm3Mzpy54FK)
 
-![ERD](exec/assets/ERD.png)
+![ERD](./exec/assets/ERD.PNG)
 
 [목차로 돌아가기](#목차)
 
