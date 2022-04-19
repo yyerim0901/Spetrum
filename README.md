@@ -124,14 +124,14 @@
 
 | 기능 | VIEW | NOTE |
 | :----: | :----: | :----: |
-| 회원가입 | <img src="./exec/assets/회원가입.png" width="50%"/><img src="./exec/assets/회원가입유효성검사.png" width="50%"/> | - 아이디 중복 검사<br>- 닉네임 중복 검사<br>- 프로필 사진 포함<br>- 유효성 검사 |
-| 로그인 | <img src="./exec/assets/로그인.png" width="50%"/><img src="./exec/assets/로그인유효성검사.png" width="50%"/> | - ID/PW 유효성 검사 |
-| 회원 정보 수정 | <img src="./exec/assets/회원정보수정.png"/> | |
-| 회원 탈퇴 | <img src="./exec/assets/회원탈퇴.png"/> | - 모달창으로 한 번 더 확인 |
-| 팔로우 하기 | <img src="./exec/assets/냥댕모먼트팔로우하기.png"/> | |
-| 팔로우 끊기 | <img src="./exec/assets/냥댕모먼트팔로우끊기.png"/> | |
-| 팔로우/팔로워 리스트 | <img src="./exec/assets/냥댕모먼트팔로우리스트.png"/> | |
-| 마이페이지 | <img src="./exec/assets/마이페이지.png"/> | |
+| 회원가입 | <img src="./exec/assets/회원가입.PNG" width="50%"/><img src="./exec/assets/회원가입유효성검사.PNG" width="50%"/> | - 아이디 중복 검사<br>- 닉네임 중복 검사<br>- 프로필 사진 포함<br>- 유효성 검사 |
+| 로그인 | <img src="./exec/assets/로그인.PNG" width="50%"/><img src="./exec/assets/로그인유효성검사.PNG" width="50%"/> | - ID/PW 유효성 검사 |
+| 회원 정보 수정 | <img src="./exec/assets/회원정보수정.PNG"/> | |
+| 회원 탈퇴 | <img src="./exec/assets/회원탈퇴.PNG"/> | - 모달창으로 한 번 더 확인 |
+| 팔로우 하기 | <img src="./exec/assets/냥댕모먼트팔로우하기.PNG"/> | |
+| 팔로우 끊기 | <img src="./exec/assets/냥댕모먼트팔로우끊기.PNG"/> | |
+| 팔로우/팔로워 리스트 | <img src="./exec/assets/냥댕모먼트팔로우리스트.PNG"/> | |
+| 마이페이지 | <img src="./exec/assets/마이페이지.PNG"/> | |
 
 [목차로 돌아가기](#목차)
 
@@ -141,7 +141,7 @@
 
 | 기능 | VIEW | NOTE |
 | :----: | :----: | :----: |
-| 도깅 기록 | <img src="./exec/assets/도깅진행페이지.png" width="50%"/><img src="./exec/assets/도깅결과페이지.png" width="50%"/> | - 도깅을 통해 이동한 거리를 Polygon으로 표시 |
+| 도깅 기록 | <img src="./exec/assets/도깅진행페이지.PNG" width="50%"/><img src="./exec/assets/도깅결과페이지.PNG" width="50%"/> | - 도깅을 통해 이동한 거리를 Polygon으로 표시 |
 | 도깅 사진 생성 | <img src="./exec/assets/도깅사진.png"/> | - 도깅을 한 날짜, 시간, 거리를 사진에 기록<br>- 스펫트럼 로고도 함께 기록 |
 
 [목차로 돌아가기](#목차)
@@ -152,12 +152,12 @@
 
 | 기능 | VIEW | NOTE |
 | :----: | :----: | :----: |
-| 내 글 보기 | <img src="./exec/assets/냥댕모먼트내글피드.png"/> |      |
-| 팔로워 글 보기 | <img src="./exec/assets/냥댕모먼트팔로워피드.png"/> | |
-| 게시글 추가, 수정 | <img src="./exec/assets/냥댕모먼트글작성.png"/> | |
-| 게시글 조회,삭제 | <img src="./exec/assets/냥댕모먼트글상세페이지.png"/> | |
-| 댓글 쓰기 | <img src="./exec/assets/냥댕모먼트댓글작성전.png" width="50%"/><img src="./exec/assets/냥댕모먼트댓글작성후.png" width="50%"/> | |
-| 유저 검색 | <img src="./exec/assets/냥댕모먼트유저검색.png"/> | - 실시간 검색어 결과 보여줌 |
+| 내 글 보기 | <img src="./exec/assets/냥댕모먼트내글피드.PNG"/> |      |
+| 팔로워 글 보기 | <img src="./exec/assets/냥댕모먼트팔로워피드.PNG"/> | |
+| 게시글 추가, 수정 | <img src="./exec/assets/냥댕모먼트글작성.PNG"/> | |
+| 게시글 조회,삭제 | <img src="./exec/assets/냥댕모먼트글상세페이지.PNG"/> | |
+| 댓글 쓰기 | <img src="./exec/assets/냥댕모먼트댓글작성전.PNG" width="50%"/><img src="./exec/assets/냥댕모먼트댓글작성후.PNG" width="50%"/> | |
+| 유저 검색 | <img src="./exec/assets/냥댕모먼트유저검색.PNG"/> | - 실시간 검색어 결과 보여줌 |
 
 [목차로 돌아가기](#목차)
 
@@ -167,13 +167,13 @@
 
 | 기능 | VIEW | NOTE |
 | :----: | :----: | :----: |
-| 게시글 리스트 | <img src="./exec/assets/겟시터글목록.png"/> | - 글 거리순 정렬<br>(나에게 일정 거리 이내에서 작성된 글만 보여준다 / 거리에 따라 오름차순 정렬)<br>- Pagination 설정 |
-| 현재 위치 | <img src="./exec/assets/겟시터현재위치.png"/> | - 글 쓰기 전 내 현재 위치 한글로 확인 가능 |
-| 내 글 리스트 | <img src="./exec/assets/겟시터나의게시글목록.png"/> | - 자세히 보기 버튼을 통해 상세 페이지 이동 |
-| 내 글 상세 페이지 | <img src="./exec/assets/겟시터나의게시글상세페이지.png"/> | - 내 글에서만 수정, 삭제 버튼을 통해 글 변경 가능 |
-| 게시글 작성 (수정) | <img src="./exec/assets/겟시터글작성화면.png"/> | - 기본 글 양식 제공 |
-| 글 상세 페이지 | <img src="./exec/assets/겟시터글상세페이지.png"/> | - 작성일자, 작성자 정보 제공 |
-| 댓글 (작성, 수정, 삭제) | <img src="./exec/assets/겟시터댓글작성수정삭제.png"/> | - 댓글의 채팅 버튼을 통해 채팅 활성화 가능 |
+| 게시글 리스트 | <img src="./exec/assets/겟시터글목록.PNG"/> | - 글 거리순 정렬<br>(나에게 일정 거리 이내에서 작성된 글만 보여준다 / 거리에 따라 오름차순 정렬)<br>- Pagination 설정 |
+| 현재 위치 | <img src="./exec/assets/겟시터현재위치.PNG"/> | - 글 쓰기 전 내 현재 위치 한글로 확인 가능 |
+| 내 글 리스트 | <img src="./exec/assets/겟시터나의게시글목록.PNG"/> | - 자세히 보기 버튼을 통해 상세 페이지 이동 |
+| 내 글 상세 페이지 | <img src="./exec/assets/겟시터나의게시글상세페이지.PNG"/> | - 내 글에서만 수정, 삭제 버튼을 통해 글 변경 가능 |
+| 게시글 작성 (수정) | <img src="./exec/assets/겟시터글작성화면.PNG"/> | - 기본 글 양식 제공 |
+| 글 상세 페이지 | <img src="./exec/assets/겟시터글상세페이지.PNG"/> | - 작성일자, 작성자 정보 제공 |
+| 댓글 (작성, 수정, 삭제) | <img src="./exec/assets/겟시터댓글작성수정삭제.PNG"/> | - 댓글의 채팅 버튼을 통해 채팅 활성화 가능 |
 
 [목차로 돌아가기](#목차)
 
@@ -183,8 +183,8 @@
 
 | 기능 | VIEW | NOTE |
 | :----: | :----: | :----: |
-| 검사 진행 | <img src="./exec/assets/펫피티아이시작화면.png" width="50%"/><img src="./exec/assets/펫피티아이진행화면.png" width="50%"/> | - 공공데이터 크롤링 후 재조합하여 DB에 삽입 |
-| 검사 결과 | <img src="./exec/assets/펫피티아이결과화면.png"/> | - 분류된 반려동물의 성격에 따라 결과 제공 |
+| 검사 진행 | <img src="./exec/assets/펫피티아이시작화면.PNG" width="50%"/><img src="./exec/assets/펫피티아이진행화면.PNG" width="50%"/> | - 공공데이터 크롤링 후 재조합하여 DB에 삽입 |
+| 검사 결과 | <img src="./exec/assets/펫피티아이결과화면.PNG"/> | - 분류된 반려동물의 성격에 따라 결과 제공 |
 
 [목차로 돌아가기](#목차)
 
