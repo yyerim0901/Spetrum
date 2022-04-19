@@ -86,7 +86,7 @@ public class DoggingController {
     
     @ApiOperation(
             value = "GPX파일을 위한 임시 API",
-            notes = "나아아아아아아ㅏ아아중에 지울거니까 무시해도 돼~!~!"
+            notes = "JPX확인"
     )
     @PostMapping("/test")
     public ResponseEntity<?> test(HttpServletRequest request, Float[] lat, Float[] lng) throws IOException{
